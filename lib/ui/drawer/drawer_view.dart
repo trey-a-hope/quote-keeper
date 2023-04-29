@@ -2,7 +2,6 @@ import 'package:book_quotes/constants/globals.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:shimmer/shimmer.dart';
 import 'drawer_view_model.dart';
 
 class DrawerView extends StatelessWidget {
@@ -15,72 +14,38 @@ class DrawerView extends StatelessWidget {
       builder: (model) => Drawer(
         child: SafeArea(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 20, bottom: 20),
+              DrawerHeader(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[],
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Text(
+                        'Welcome back Trey',
+                        style: context.textTheme.headline4,
+                      ),
+                    ),
+                    const CircleAvatar(
+                      radius: 40,
+                      backgroundImage:
+                          NetworkImage(Globals.dummyProfilePhotoUrl),
+                    ),
+                  ],
                 ),
               ),
               const Divider(),
               ListTile(
-                leading: const Icon(
-                  Icons.person,
-                ),
+                leading: const Icon(Icons.book),
                 title: Text(
-                  'Profile',
+                  'Quotes',
                   style: context.theme.textTheme.headline5,
                 ),
                 onTap: () {
-                  // Get.toNamed(Globals.routeProfile);
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.settings),
-                title: Text(
-                  'Settings',
-                  style: context.theme.textTheme.headline5,
-                ),
-                onTap: () {
-                  // Get.toNamed(Globals.routeSettings);
-                },
-              ),
-              const Divider(),
-              ListTile(
-                title: Text(
-                  'Logout',
-                  style: context.theme.textTheme.headline5,
-                ),
-                leading: const Icon(
-                  Icons.logout,
-                ),
-                onTap: () async {
-                  // /// Ask user if they're sure about log out.
-                  // bool? confirm = await _modalService.showConfirmation(
-                  //   context: context,
-                  //   title: 'Logout',
-                  //   message: 'Are you sure?',
-                  // );
-                  // if (confirm == null || confirm) {
-                  //   try {
-                  //     await model.logout();
-                  //   } catch (error) {
-                  //     Get.showSnackbar(
-                  //       GetSnackBar(
-                  //         title: 'Error',
-                  //         message: error.toString(),
-                  //         backgroundColor: Colors.red,
-                  //         icon: const Icon(Icons.error),
-                  //         duration: const Duration(seconds: 3),
-                  //       ),
-                  //     );
-                  //   }
-                  // }
+                  Get.toNamed(Globals.routeQuotes);
                 },
               ),
               const Spacer(),
+              const Divider(),
               Center(
                 child: Text(
                   'Version ${_getStorage.read(Globals.appVersion)} + ${_getStorage.read(Globals.appBuildNumber)}',

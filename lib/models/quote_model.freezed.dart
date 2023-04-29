@@ -22,7 +22,9 @@ QuoteModel _$QuoteModelFromJson(Map<String, dynamic> json) {
 mixin _$QuoteModel {
   String? get id => throw _privateConstructorUsedError;
   String get quote => throw _privateConstructorUsedError;
-  String get bookTile => throw _privateConstructorUsedError;
+  String get bookTitle => throw _privateConstructorUsedError;
+  String get author => throw _privateConstructorUsedError;
+  String get imgPath => throw _privateConstructorUsedError;
   DateTime get createdAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -37,7 +39,13 @@ abstract class $QuoteModelCopyWith<$Res> {
           QuoteModel value, $Res Function(QuoteModel) then) =
       _$QuoteModelCopyWithImpl<$Res, QuoteModel>;
   @useResult
-  $Res call({String? id, String quote, String bookTile, DateTime createdAt});
+  $Res call(
+      {String? id,
+      String quote,
+      String bookTitle,
+      String author,
+      String imgPath,
+      DateTime createdAt});
 }
 
 /// @nodoc
@@ -55,7 +63,9 @@ class _$QuoteModelCopyWithImpl<$Res, $Val extends QuoteModel>
   $Res call({
     Object? id = freezed,
     Object? quote = null,
-    Object? bookTile = null,
+    Object? bookTitle = null,
+    Object? author = null,
+    Object? imgPath = null,
     Object? createdAt = null,
   }) {
     return _then(_value.copyWith(
@@ -67,9 +77,17 @@ class _$QuoteModelCopyWithImpl<$Res, $Val extends QuoteModel>
           ? _value.quote
           : quote // ignore: cast_nullable_to_non_nullable
               as String,
-      bookTile: null == bookTile
-          ? _value.bookTile
-          : bookTile // ignore: cast_nullable_to_non_nullable
+      bookTitle: null == bookTitle
+          ? _value.bookTitle
+          : bookTitle // ignore: cast_nullable_to_non_nullable
+              as String,
+      author: null == author
+          ? _value.author
+          : author // ignore: cast_nullable_to_non_nullable
+              as String,
+      imgPath: null == imgPath
+          ? _value.imgPath
+          : imgPath // ignore: cast_nullable_to_non_nullable
               as String,
       createdAt: null == createdAt
           ? _value.createdAt
@@ -87,7 +105,13 @@ abstract class _$$_QuoteModelCopyWith<$Res>
       __$$_QuoteModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? id, String quote, String bookTile, DateTime createdAt});
+  $Res call(
+      {String? id,
+      String quote,
+      String bookTitle,
+      String author,
+      String imgPath,
+      DateTime createdAt});
 }
 
 /// @nodoc
@@ -103,7 +127,9 @@ class __$$_QuoteModelCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? quote = null,
-    Object? bookTile = null,
+    Object? bookTitle = null,
+    Object? author = null,
+    Object? imgPath = null,
     Object? createdAt = null,
   }) {
     return _then(_$_QuoteModel(
@@ -115,9 +141,17 @@ class __$$_QuoteModelCopyWithImpl<$Res>
           ? _value.quote
           : quote // ignore: cast_nullable_to_non_nullable
               as String,
-      bookTile: null == bookTile
-          ? _value.bookTile
-          : bookTile // ignore: cast_nullable_to_non_nullable
+      bookTitle: null == bookTitle
+          ? _value.bookTitle
+          : bookTitle // ignore: cast_nullable_to_non_nullable
+              as String,
+      author: null == author
+          ? _value.author
+          : author // ignore: cast_nullable_to_non_nullable
+              as String,
+      imgPath: null == imgPath
+          ? _value.imgPath
+          : imgPath // ignore: cast_nullable_to_non_nullable
               as String,
       createdAt: null == createdAt
           ? _value.createdAt
@@ -133,7 +167,9 @@ class _$_QuoteModel with DiagnosticableTreeMixin implements _QuoteModel {
   _$_QuoteModel(
       {this.id,
       required this.quote,
-      required this.bookTile,
+      required this.bookTitle,
+      required this.author,
+      required this.imgPath,
       required this.createdAt});
 
   factory _$_QuoteModel.fromJson(Map<String, dynamic> json) =>
@@ -144,13 +180,17 @@ class _$_QuoteModel with DiagnosticableTreeMixin implements _QuoteModel {
   @override
   final String quote;
   @override
-  final String bookTile;
+  final String bookTitle;
+  @override
+  final String author;
+  @override
+  final String imgPath;
   @override
   final DateTime createdAt;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'QuoteModel(id: $id, quote: $quote, bookTile: $bookTile, createdAt: $createdAt)';
+    return 'QuoteModel(id: $id, quote: $quote, bookTitle: $bookTitle, author: $author, imgPath: $imgPath, createdAt: $createdAt)';
   }
 
   @override
@@ -160,7 +200,9 @@ class _$_QuoteModel with DiagnosticableTreeMixin implements _QuoteModel {
       ..add(DiagnosticsProperty('type', 'QuoteModel'))
       ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('quote', quote))
-      ..add(DiagnosticsProperty('bookTile', bookTile))
+      ..add(DiagnosticsProperty('bookTitle', bookTitle))
+      ..add(DiagnosticsProperty('author', author))
+      ..add(DiagnosticsProperty('imgPath', imgPath))
       ..add(DiagnosticsProperty('createdAt', createdAt));
   }
 
@@ -171,15 +213,18 @@ class _$_QuoteModel with DiagnosticableTreeMixin implements _QuoteModel {
             other is _$_QuoteModel &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.quote, quote) || other.quote == quote) &&
-            (identical(other.bookTile, bookTile) ||
-                other.bookTile == bookTile) &&
+            (identical(other.bookTitle, bookTitle) ||
+                other.bookTitle == bookTitle) &&
+            (identical(other.author, author) || other.author == author) &&
+            (identical(other.imgPath, imgPath) || other.imgPath == imgPath) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, quote, bookTile, createdAt);
+  int get hashCode => Object.hash(
+      runtimeType, id, quote, bookTitle, author, imgPath, createdAt);
 
   @JsonKey(ignore: true)
   @override
@@ -199,7 +244,9 @@ abstract class _QuoteModel implements QuoteModel {
   factory _QuoteModel(
       {final String? id,
       required final String quote,
-      required final String bookTile,
+      required final String bookTitle,
+      required final String author,
+      required final String imgPath,
       required final DateTime createdAt}) = _$_QuoteModel;
 
   factory _QuoteModel.fromJson(Map<String, dynamic> json) =
@@ -210,7 +257,11 @@ abstract class _QuoteModel implements QuoteModel {
   @override
   String get quote;
   @override
-  String get bookTile;
+  String get bookTitle;
+  @override
+  String get author;
+  @override
+  String get imgPath;
   @override
   DateTime get createdAt;
   @override

@@ -1,9 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
-// import 'package:critic/converters/timestamp_converter.dart';
 
 part 'quote_model.freezed.dart';
-
 part 'quote_model.g.dart';
 
 @freezed
@@ -11,7 +9,9 @@ class QuoteModel with _$QuoteModel {
   factory QuoteModel({
     String? id,
     required String quote,
-    required String bookTile,
+    required String bookTitle,
+    required String author,
+    required String imgPath,
     required DateTime createdAt,
   }) = _QuoteModel;
 
