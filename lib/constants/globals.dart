@@ -5,6 +5,7 @@ class Globals {
   static const String routeCreateQuote = '/createQuote';
   static const String routeDashboard = '/dashboard';
   static const String routeQuotes = '/quotes';
+  static const String routeEditQuote = '/editQuote';
 
   /// Package info
   static const String appVersion = 'app_version';

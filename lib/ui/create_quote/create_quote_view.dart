@@ -152,10 +152,12 @@ class CreateQuoteView extends StatelessWidget {
                 ),
               ),
               InkWell(
-                onTap: () => model.updateImage(
-                  bookTitle: 'afea',
-                  imageSource: ImageSource.gallery,
-                ),
+                onTap: () => _bookTitleController.text.isNotEmpty
+                    ? model.updateImage(
+                        bookTitle: _bookTitleController.text,
+                        imageSource: ImageSource.gallery,
+                      )
+                    : null,
                 child: CachedNetworkImage(
                   imageUrl: model.imgPath ?? Globals.dummyProfilePhotoUrl,
                   imageBuilder: (context, imageProvider) => CircleAvatar(

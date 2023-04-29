@@ -1,3 +1,4 @@
+import 'package:book_quotes/constants/globals.dart';
 import 'package:book_quotes/models/quote_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -11,9 +12,16 @@ class QuoteWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5),
+      child: InkWell(
+        onTap: () => Get.toNamed(
+          Globals.routeEditQuote,
+          arguments: {
+            'quote': quote,
+          },
+        ),
+        child: Container(
           padding: const EdgeInsets.only(left: 10.0, right: 10.0),
           height: 200,
           child: Row(
@@ -83,182 +91,7 @@ class QuoteWidget extends StatelessWidget {
             ],
           ),
         ),
-        // Padding(
-        //   padding: EdgeInsets.symmetric(horizontal: 10),
-        //   child: Row(
-        //     children: [
-        //       Text(
-        //         critique.created.isAfter(
-        //                 DateTime.now().toUtc().subtract(Duration(days: 6)))
-        //             ? 'Posted ${_timeAgoService.timeAgoSinceDate(dateTime: critique.created)}'
-        //             : 'Posted ${DateFormat('MMM dd, yyyy').format(critique.created.toLocal())}',
-        //       ),
-        //       SizedBox(
-        //         width: 10,
-        //       ),
-        //       Spacer(),
-        //       LikeButton(
-        //         size: 25,
-        //         isLiked: model.isLiked,
-        //         circleColor: CircleColor(
-        //             start: Color(0xff00ddff), end: Color(0xff0099cc)),
-        //         bubblesColor: BubblesColor(
-        //           dotPrimaryColor: Color(0xff33b5e5),
-        //           dotSecondaryColor: Color(0xff0099cc),
-        //         ),
-        //         likeBuilder: (bool isLiked) {
-        //           return Icon(
-        //             Icons.favorite,
-        //             color: isLiked ? Colors.red : Colors.grey,
-        //             size: 25,
-        //           );
-        //         },
-        //         likeCount: model.critique.likes.length,
-        //         countBuilder: (int? count, bool isLiked, String text) {
-        //           return Text(text);
-        //         },
-        //         onTap: (bool isLiked) async {
-        //           if (_debounce?.isActive ?? false) _debounce!.cancel();
-        //           _debounce = Timer(const Duration(milliseconds: 250), () {
-        //             try {
-        //               isLiked ? model.unlikeCritique() : model.likeCritique();
-        //             } catch (e) {}
-        //           });
-        //           return !isLiked;
-        //         },
-        //       ),
-        //       IconButton(
-        //         onPressed: () {
-        //           Get.defaultDialog(
-        //             title: 'Critique For ${model.movie.title}',
-        //             middleText: 'What would you like to do?',
-        //             titleStyle: context.theme.textTheme.headline4,
-        //             middleTextStyle: context.theme.textTheme.headline5,
-        //             actions: [
-        //               model.postedByMe
-        //                   ? ElevatedButton(
-        //                       onPressed: () async {
-        //                         Get.back();
-
-        //                         // Ask user if they want to delete critique.
-        //                         final bool? confirm =
-        //                             await _modalService.showConfirmation(
-        //                                 context: context,
-        //                                 title: 'Delete Critique',
-        //                                 message: 'Are you sure?');
-
-        //                         // Return if not true.
-        //                         if (confirm == null || !confirm) return;
-
-        //                         // Proceed to delete critique.
-        //                         bool success = await model.deleteCritique();
-
-        //                         // Show success or error message based on response.
-        //                         if (success) {
-        //                           Get.snackbar(
-        //                             'Success',
-        //                             'Your critique has been deleted.',
-        //                             icon: Icon(
-        //                               Icons.check,
-        //                               color: Colors.white,
-        //                             ),
-        //                             snackPosition: SnackPosition.BOTTOM,
-        //                             backgroundColor: Colors.green,
-        //                             colorText: Colors.white,
-        //                           );
-        //                         } else {
-        //                           Get.snackbar(
-        //                             'Error',
-        //                             'There was an issue deleting your critique.',
-        //                             icon: Icon(
-        //                               Icons.cancel,
-        //                               color: Colors.white,
-        //                             ),
-        //                             snackPosition: SnackPosition.BOTTOM,
-        //                             backgroundColor: Colors.red,
-        //                             colorText: Colors.white,
-        //                           );
-        //                         }
-        //                       },
-        //                       child: Text('Delete'),
-        //                     )
-        //                   : ElevatedButton(
-        //                       onPressed: () async {
-        //                         Get.back();
-
-        //                         // Ask user if they want to delete critique.
-        //                         final bool? confirm =
-        //                             await _modalService.showConfirmation(
-        //                           context: context,
-        //                           title: 'Report Critique',
-        //                           message:
-        //                               'Is the content of this critique grotesque, vulgar, or inappropriate in any way?',
-        //                         );
-
-        //                         // Return if not true.
-        //                         if (confirm == null || !confirm) return;
-
-        //                         // Proceed to delete critique.
-        //                         bool success = await model.deleteCritique();
-
-        //                         // Show success or error message based on response.
-        //                         if (success) {
-        //                           Get.snackbar(
-        //                             'Success',
-        //                             'The critique has been flagged as inappropriate.',
-        //                             icon: Icon(
-        //                               Icons.check,
-        //                               color: Colors.white,
-        //                             ),
-        //                             snackPosition: SnackPosition.BOTTOM,
-        //                             backgroundColor: Colors.green,
-        //                             colorText: Colors.white,
-        //                           );
-        //                         } else {
-        //                           Get.snackbar(
-        //                             'Error',
-        //                             'There was an issue flagged this critique as inappropriate.',
-        //                             icon: Icon(
-        //                               Icons.cancel,
-        //                               color: Colors.white,
-        //                             ),
-        //                             snackPosition: SnackPosition.BOTTOM,
-        //                             backgroundColor: Colors.red,
-        //                             colorText: Colors.white,
-        //                           );
-        //                         }
-        //                       },
-        //                       child: Text('Report'),
-        //                     ),
-        //               ElevatedButton(
-        //                 onPressed: () async {
-        //                   Get.back();
-
-        //                   List<String> likeUids = model.critique.likes;
-
-        //                   Get.toNamed(
-        //                     Globals.ROUTES_USERS_LIST,
-        //                     arguments: {'uids': likeUids, 'title': 'Likes'},
-        //                   );
-        //                 },
-        //                 child: Text('View Likes'),
-        //               )
-        //             ],
-        //             barrierDismissible: true,
-        //             radius: 10,
-        //             // ),
-        //           );
-        //         },
-        //         icon: Icon(
-        //           MdiIcons.dotsVertical,
-        //           color: Colors.grey,
-        //         ),
-        //       ),
-        //     ],
-        //   ),
-        // ),
-        Divider(),
-      ],
+      ),
     );
   }
 }
