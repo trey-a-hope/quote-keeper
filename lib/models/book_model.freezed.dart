@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'quote_model.dart';
+part of 'book_model.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,44 +14,43 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-QuoteModel _$QuoteModelFromJson(Map<String, dynamic> json) {
-  return _QuoteModel.fromJson(json);
+BookModel _$BookModelFromJson(Map<String, dynamic> json) {
+  return _BookModel.fromJson(json);
 }
 
 /// @nodoc
-mixin _$QuoteModel {
+mixin _$BookModel {
   String? get id => throw _privateConstructorUsedError;
   String get quote => throw _privateConstructorUsedError;
-  String get bookTitle => throw _privateConstructorUsedError;
+  String get title => throw _privateConstructorUsedError;
   String get author => throw _privateConstructorUsedError;
   String get imgPath => throw _privateConstructorUsedError;
   DateTime get createdAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $QuoteModelCopyWith<QuoteModel> get copyWith =>
+  $BookModelCopyWith<BookModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $QuoteModelCopyWith<$Res> {
-  factory $QuoteModelCopyWith(
-          QuoteModel value, $Res Function(QuoteModel) then) =
-      _$QuoteModelCopyWithImpl<$Res, QuoteModel>;
+abstract class $BookModelCopyWith<$Res> {
+  factory $BookModelCopyWith(BookModel value, $Res Function(BookModel) then) =
+      _$BookModelCopyWithImpl<$Res, BookModel>;
   @useResult
   $Res call(
       {String? id,
       String quote,
-      String bookTitle,
+      String title,
       String author,
       String imgPath,
       DateTime createdAt});
 }
 
 /// @nodoc
-class _$QuoteModelCopyWithImpl<$Res, $Val extends QuoteModel>
-    implements $QuoteModelCopyWith<$Res> {
-  _$QuoteModelCopyWithImpl(this._value, this._then);
+class _$BookModelCopyWithImpl<$Res, $Val extends BookModel>
+    implements $BookModelCopyWith<$Res> {
+  _$BookModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -63,7 +62,7 @@ class _$QuoteModelCopyWithImpl<$Res, $Val extends QuoteModel>
   $Res call({
     Object? id = freezed,
     Object? quote = null,
-    Object? bookTitle = null,
+    Object? title = null,
     Object? author = null,
     Object? imgPath = null,
     Object? createdAt = null,
@@ -77,9 +76,9 @@ class _$QuoteModelCopyWithImpl<$Res, $Val extends QuoteModel>
           ? _value.quote
           : quote // ignore: cast_nullable_to_non_nullable
               as String,
-      bookTitle: null == bookTitle
-          ? _value.bookTitle
-          : bookTitle // ignore: cast_nullable_to_non_nullable
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
               as String,
       author: null == author
           ? _value.author
@@ -98,28 +97,27 @@ class _$QuoteModelCopyWithImpl<$Res, $Val extends QuoteModel>
 }
 
 /// @nodoc
-abstract class _$$_QuoteModelCopyWith<$Res>
-    implements $QuoteModelCopyWith<$Res> {
-  factory _$$_QuoteModelCopyWith(
-          _$_QuoteModel value, $Res Function(_$_QuoteModel) then) =
-      __$$_QuoteModelCopyWithImpl<$Res>;
+abstract class _$$_BookModelCopyWith<$Res> implements $BookModelCopyWith<$Res> {
+  factory _$$_BookModelCopyWith(
+          _$_BookModel value, $Res Function(_$_BookModel) then) =
+      __$$_BookModelCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
       {String? id,
       String quote,
-      String bookTitle,
+      String title,
       String author,
       String imgPath,
       DateTime createdAt});
 }
 
 /// @nodoc
-class __$$_QuoteModelCopyWithImpl<$Res>
-    extends _$QuoteModelCopyWithImpl<$Res, _$_QuoteModel>
-    implements _$$_QuoteModelCopyWith<$Res> {
-  __$$_QuoteModelCopyWithImpl(
-      _$_QuoteModel _value, $Res Function(_$_QuoteModel) _then)
+class __$$_BookModelCopyWithImpl<$Res>
+    extends _$BookModelCopyWithImpl<$Res, _$_BookModel>
+    implements _$$_BookModelCopyWith<$Res> {
+  __$$_BookModelCopyWithImpl(
+      _$_BookModel _value, $Res Function(_$_BookModel) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -127,12 +125,12 @@ class __$$_QuoteModelCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? quote = null,
-    Object? bookTitle = null,
+    Object? title = null,
     Object? author = null,
     Object? imgPath = null,
     Object? createdAt = null,
   }) {
-    return _then(_$_QuoteModel(
+    return _then(_$_BookModel(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -141,9 +139,9 @@ class __$$_QuoteModelCopyWithImpl<$Res>
           ? _value.quote
           : quote // ignore: cast_nullable_to_non_nullable
               as String,
-      bookTitle: null == bookTitle
-          ? _value.bookTitle
-          : bookTitle // ignore: cast_nullable_to_non_nullable
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
               as String,
       author: null == author
           ? _value.author
@@ -163,24 +161,24 @@ class __$$_QuoteModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_QuoteModel with DiagnosticableTreeMixin implements _QuoteModel {
-  _$_QuoteModel(
+class _$_BookModel with DiagnosticableTreeMixin implements _BookModel {
+  _$_BookModel(
       {this.id,
       required this.quote,
-      required this.bookTitle,
+      required this.title,
       required this.author,
       required this.imgPath,
       required this.createdAt});
 
-  factory _$_QuoteModel.fromJson(Map<String, dynamic> json) =>
-      _$$_QuoteModelFromJson(json);
+  factory _$_BookModel.fromJson(Map<String, dynamic> json) =>
+      _$$_BookModelFromJson(json);
 
   @override
   final String? id;
   @override
   final String quote;
   @override
-  final String bookTitle;
+  final String title;
   @override
   final String author;
   @override
@@ -190,17 +188,17 @@ class _$_QuoteModel with DiagnosticableTreeMixin implements _QuoteModel {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'QuoteModel(id: $id, quote: $quote, bookTitle: $bookTitle, author: $author, imgPath: $imgPath, createdAt: $createdAt)';
+    return 'BookModel(id: $id, quote: $quote, title: $title, author: $author, imgPath: $imgPath, createdAt: $createdAt)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'QuoteModel'))
+      ..add(DiagnosticsProperty('type', 'BookModel'))
       ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('quote', quote))
-      ..add(DiagnosticsProperty('bookTitle', bookTitle))
+      ..add(DiagnosticsProperty('title', title))
       ..add(DiagnosticsProperty('author', author))
       ..add(DiagnosticsProperty('imgPath', imgPath))
       ..add(DiagnosticsProperty('createdAt', createdAt));
@@ -210,11 +208,10 @@ class _$_QuoteModel with DiagnosticableTreeMixin implements _QuoteModel {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_QuoteModel &&
+            other is _$_BookModel &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.quote, quote) || other.quote == quote) &&
-            (identical(other.bookTitle, bookTitle) ||
-                other.bookTitle == bookTitle) &&
+            (identical(other.title, title) || other.title == title) &&
             (identical(other.author, author) || other.author == author) &&
             (identical(other.imgPath, imgPath) || other.imgPath == imgPath) &&
             (identical(other.createdAt, createdAt) ||
@@ -223,41 +220,41 @@ class _$_QuoteModel with DiagnosticableTreeMixin implements _QuoteModel {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, quote, bookTitle, author, imgPath, createdAt);
+  int get hashCode =>
+      Object.hash(runtimeType, id, quote, title, author, imgPath, createdAt);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_QuoteModelCopyWith<_$_QuoteModel> get copyWith =>
-      __$$_QuoteModelCopyWithImpl<_$_QuoteModel>(this, _$identity);
+  _$$_BookModelCopyWith<_$_BookModel> get copyWith =>
+      __$$_BookModelCopyWithImpl<_$_BookModel>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_QuoteModelToJson(
+    return _$$_BookModelToJson(
       this,
     );
   }
 }
 
-abstract class _QuoteModel implements QuoteModel {
-  factory _QuoteModel(
+abstract class _BookModel implements BookModel {
+  factory _BookModel(
       {final String? id,
       required final String quote,
-      required final String bookTitle,
+      required final String title,
       required final String author,
       required final String imgPath,
-      required final DateTime createdAt}) = _$_QuoteModel;
+      required final DateTime createdAt}) = _$_BookModel;
 
-  factory _QuoteModel.fromJson(Map<String, dynamic> json) =
-      _$_QuoteModel.fromJson;
+  factory _BookModel.fromJson(Map<String, dynamic> json) =
+      _$_BookModel.fromJson;
 
   @override
   String? get id;
   @override
   String get quote;
   @override
-  String get bookTitle;
+  String get title;
   @override
   String get author;
   @override
@@ -266,6 +263,6 @@ abstract class _QuoteModel implements QuoteModel {
   DateTime get createdAt;
   @override
   @JsonKey(ignore: true)
-  _$$_QuoteModelCopyWith<_$_QuoteModel> get copyWith =>
+  _$$_BookModelCopyWith<_$_BookModel> get copyWith =>
       throw _privateConstructorUsedError;
 }

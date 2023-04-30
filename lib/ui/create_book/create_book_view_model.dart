@@ -1,17 +1,15 @@
 import 'dart:io';
 
-import 'package:book_quotes/models/quote_model.dart';
-import 'package:book_quotes/services/quote_service.dart';
+import 'package:book_quotes/models/book_model.dart';
+import 'package:book_quotes/services/book_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage_wrapper/firebase_storage_wrapper.dart';
 
-class CreateQuoteViewModel extends GetxController {
-  final GetStorage _getStorage = GetStorage();
-  final QuoteService _quoteService = QuoteService();
+class CreateBookViewModel extends GetxController {
+  final BookService _bookService = BookService();
 
   String? imgPath;
 
@@ -22,21 +20,21 @@ class CreateQuoteViewModel extends GetxController {
     update();
   }
 
-  Future createQuote({
+  Future create({
     required String author,
     required String quote,
-    required String bookTitle,
+    required String title,
   }) async {
     if (imgPath == null) {
       throw Exception('Must select image first.');
     }
     try {
-      await _quoteService.createQuote(
-        quote: QuoteModel(
+      await _bookService.create(
+        book: BookModel(
           imgPath: imgPath!,
           author: author,
           quote: quote,
-          bookTitle: bookTitle,
+          title: title,
           createdAt: DateTime.now(),
         ),
       );
@@ -61,15 +59,6 @@ class CreateQuoteViewModel extends GetxController {
         file: image,
         path: 'BookQuotes/Books/$bookTitle',
       );
-
-      // await _userService.updateUser(
-      //   uid: uid,
-      //   data: {
-      //     'imgUrl': newImgUrl,
-      //   },
-      // );
-
-      // user = await _userService.retrieveUser(uid: uid);
 
       update();
     } catch (error) {

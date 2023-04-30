@@ -1,6 +1,6 @@
 import 'package:book_quotes/constants/globals.dart';
-import 'package:book_quotes/ui/quotes/quotes_view_model.dart';
-import 'package:book_quotes/widgets/quote_widget.dart';
+import 'package:book_quotes/ui/books/books_view_model.dart';
+import 'package:book_quotes/widgets/book_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:simple_page_widget/ui/simple_page_widget.dart';
@@ -10,8 +10,8 @@ class QuotesView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<QuotesViewModel>(
-      init: QuotesViewModel(),
+    return GetBuilder<BooksViewModel>(
+      init: BooksViewModel(),
       builder: (model) => SimplePageWidget(
         floatingActionButton: FloatingActionButton(
           onPressed: () => model.load(),
@@ -29,11 +29,11 @@ class QuotesView extends StatelessWidget {
             Get.toNamed(Globals.routeCreateQuote);
           },
         ),
-        title: 'Quotes',
+        title: 'Books',
         child: ListView.builder(
-          itemCount: model.quotes.length,
-          itemBuilder: (_, index) => QuoteWidget(
-            quote: model.quotes[index],
+          itemCount: model.books.length,
+          itemBuilder: (_, index) => BookWidget(
+            book: model.books[index],
           ),
         ),
       ),

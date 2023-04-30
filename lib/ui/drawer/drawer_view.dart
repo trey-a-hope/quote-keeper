@@ -18,12 +18,19 @@ class DrawerView extends StatelessWidget {
               DrawerHeader(
                 child: Column(
                   children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Text(
-                        'Welcome back Trey',
-                        style: context.textTheme.headline4,
-                      ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Text(
+                              'Welcome back Trey',
+                              textAlign: TextAlign.center,
+                              style: context.textTheme.headline4,
+                            ),
+                          ),
+                        )
+                      ],
                     ),
                     const CircleAvatar(
                       radius: 40,
@@ -33,11 +40,10 @@ class DrawerView extends StatelessWidget {
                   ],
                 ),
               ),
-              const Divider(),
               ListTile(
                 leading: const Icon(Icons.book),
                 title: Text(
-                  'Quotes',
+                  'Books',
                   style: context.theme.textTheme.headline5,
                 ),
                 onTap: () {
@@ -48,7 +54,7 @@ class DrawerView extends StatelessWidget {
               const Divider(),
               Center(
                 child: Text(
-                  'Version ${_getStorage.read(Globals.appVersion)} + ${_getStorage.read(Globals.appBuildNumber)}',
+                  'Version ${Globals.version!} + ${Globals.buildNumber!}',
                 ),
               )
             ],

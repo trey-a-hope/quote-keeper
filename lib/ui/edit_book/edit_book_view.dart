@@ -1,13 +1,13 @@
 import 'package:book_quotes/services/model_service.dart';
 import 'package:book_quotes/ui/drawer/drawer_view.dart';
-import 'package:book_quotes/ui/edit_quote/edit_quote_view_model.dart';
+import 'package:book_quotes/ui/edit_book/edit_book_view_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:simple_page_widget/ui/simple_page_widget.dart';
 
-class EditQuoteView extends StatelessWidget {
-  EditQuoteView({Key? key}) : super(key: key);
+class EditBookView extends StatelessWidget {
+  EditBookView({Key? key}) : super(key: key);
 
   /// Key that holds the current state of the scaffold.
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -18,8 +18,8 @@ class EditQuoteView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<EditQuoteViewModel>(
-      init: EditQuoteViewModel(),
+    return GetBuilder<EditBookViewModel>(
+      init: EditBookViewModel(),
       builder: (model) => SimplePageWidget(
         drawer: DrawerView(),
         scaffoldKey: _scaffoldKey,
@@ -60,7 +60,7 @@ class EditQuoteView extends StatelessWidget {
             }
           },
         ),
-        title: 'Edit Quote',
+        title: 'Edit Book',
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -78,15 +78,14 @@ class EditQuoteView extends StatelessWidget {
                     fontSize: 16,
                     color: Theme.of(context).textTheme.headline3!.color,
                   ),
-                  maxLines: 5,
-                  maxLength: 200,
+                  maxLines: 10,
                   decoration: InputDecoration(
                     errorStyle: TextStyle(
                         color: Theme.of(context).textTheme.headline6!.color),
                     counterStyle: TextStyle(
                         color: Theme.of(context).textTheme.headline6!.color),
                     hintText:
-                        'Enter new favorite quote from ${model.quoteModel.bookTitle}',
+                        'Enter new favorite quote from ${model.book.title}',
                     hintStyle: const TextStyle(
                       color: Colors.grey,
                     ),
@@ -94,7 +93,7 @@ class EditQuoteView extends StatelessWidget {
                 ),
               ),
               CachedNetworkImage(
-                imageUrl: model.quoteModel.imgPath,
+                imageUrl: model.book.imgPath,
                 imageBuilder: (context, imageProvider) => CircleAvatar(
                   radius: 30,
                   backgroundImage: imageProvider,

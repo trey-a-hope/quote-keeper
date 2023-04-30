@@ -1,6 +1,6 @@
 import 'package:book_quotes/constants/globals.dart';
 import 'package:book_quotes/services/model_service.dart';
-import 'package:book_quotes/ui/create_quote/create_quote_view_model.dart';
+import 'package:book_quotes/ui/create_book/create_book_view_model.dart';
 import 'package:book_quotes/ui/drawer/drawer_view.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -8,8 +8,8 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:simple_page_widget/ui/simple_page_widget.dart';
 
-class CreateQuoteView extends StatelessWidget {
-  CreateQuoteView({Key? key}) : super(key: key);
+class CreateBookView extends StatelessWidget {
+  CreateBookView({Key? key}) : super(key: key);
 
   /// Key that holds the current state of the scaffold.
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -22,8 +22,8 @@ class CreateQuoteView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<CreateQuoteViewModel>(
-      init: CreateQuoteViewModel(),
+    return GetBuilder<CreateBookViewModel>(
+      init: CreateBookViewModel(),
       builder: (model) => SimplePageWidget(
         drawer: DrawerView(),
         scaffoldKey: _scaffoldKey,
@@ -47,8 +47,8 @@ class CreateQuoteView extends StatelessWidget {
             }
 
             try {
-              await model.createQuote(
-                bookTitle: _bookTitleController.text,
+              await model.create(
+                title: _bookTitleController.text,
                 author: _authorController.text,
                 quote: _quoteController.text,
               );
@@ -136,8 +136,7 @@ class CreateQuoteView extends StatelessWidget {
                     fontSize: 16,
                     color: Theme.of(context).textTheme.headline3!.color,
                   ),
-                  maxLines: 5,
-                  maxLength: 200,
+                  maxLines: 10,
                   decoration: InputDecoration(
                     errorStyle: TextStyle(
                         color: Theme.of(context).textTheme.headline6!.color),

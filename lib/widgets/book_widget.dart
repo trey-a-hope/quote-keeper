@@ -1,14 +1,14 @@
 import 'package:book_quotes/constants/globals.dart';
-import 'package:book_quotes/models/quote_model.dart';
+import 'package:book_quotes/models/book_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-class QuoteWidget extends StatelessWidget {
-  const QuoteWidget({super.key, required this.quote});
+class BookWidget extends StatelessWidget {
+  const BookWidget({super.key, required this.book});
 
-  final QuoteModel quote;
+  final BookModel book;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class QuoteWidget extends StatelessWidget {
         onTap: () => Get.toNamed(
           Globals.routeEditQuote,
           arguments: {
-            'quote': quote,
+            'book': book,
           },
         ),
         child: Container(
@@ -29,7 +29,7 @@ class QuoteWidget extends StatelessWidget {
               SizedBox(
                 width: 130,
                 child: CachedNetworkImage(
-                  imageUrl: quote.imgPath,
+                  imageUrl: book.imgPath,
                   imageBuilder: (context, imageProvider) => Container(
                     decoration: BoxDecoration(
                       border:
@@ -62,12 +62,12 @@ class QuoteWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        quote.bookTitle,
+                        book.title,
                         style: Theme.of(context).textTheme.headline5,
                       ),
                       const Divider(),
                       Text(
-                        '"${quote.quote}"',
+                        '"${book.quote}"',
                         style: context.textTheme.headline6,
                       ),
                       const Spacer(),
@@ -75,11 +75,11 @@ class QuoteWidget extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            quote.author,
+                            book.author,
                             style: Theme.of(context).textTheme.headline6,
                           ),
                           Text(
-                            DateFormat('MMM dd, yyyy').format(quote.createdAt),
+                            'Posted ${DateFormat('MMM dd, yyyy').format(book.createdAt)}',
                             style: Theme.of(context).textTheme.headline6,
                           ),
                         ],

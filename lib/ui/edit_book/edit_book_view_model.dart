@@ -1,14 +1,14 @@
-import 'package:book_quotes/models/quote_model.dart';
-import 'package:book_quotes/services/quote_service.dart';
+import 'package:book_quotes/models/book_model.dart';
+import 'package:book_quotes/services/book_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class EditQuoteViewModel extends GetxController {
-  EditQuoteViewModel();
+class EditBookViewModel extends GetxController {
+  EditBookViewModel();
 
-  final QuoteService _quoteService = QuoteService();
+  final BookService _bookService = BookService();
 
-  final QuoteModel quoteModel = Get.arguments['quote'];
+  final BookModel book = Get.arguments['book'];
 
   @override
   void onInit() async {
@@ -21,8 +21,8 @@ class EditQuoteViewModel extends GetxController {
     required String quote,
   }) async {
     try {
-      await _quoteService.updateQuote(
-        id: quoteModel.id!,
+      await _bookService.update(
+        id: book.id!,
         data: {
           'quote': quote,
         },
