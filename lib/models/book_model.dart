@@ -1,4 +1,3 @@
-
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
 
@@ -14,6 +13,7 @@ class BookModel with _$BookModel {
     required String author,
     required String imgPath,
     required DateTime createdAt,
+    required DateTime modified,
   }) = _BookModel;
 
   factory BookModel.fromJson(Map<String, dynamic> json) =>

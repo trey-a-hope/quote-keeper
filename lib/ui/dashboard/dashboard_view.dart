@@ -1,10 +1,8 @@
 import 'package:book_quotes/ui/drawer/drawer_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:simple_page_widget/ui/simple_page_widget.dart';
 import 'dashboard_view_model.dart';
-import 'package:timeago/timeago.dart' as timeago;
 
 class DashboardView extends StatelessWidget {
   DashboardView({Key? key}) : super(key: key);
@@ -25,6 +23,12 @@ class DashboardView extends StatelessWidget {
           icon: const Icon(Icons.menu),
           onPressed: () {
             _scaffoldKey.currentState!.openDrawer();
+          },
+        ),
+        rightIconButton: IconButton(
+          icon: const Icon(Icons.refresh),
+          onPressed: () {
+            model.load();
           },
         ),
         title: 'QOTD',

@@ -2,7 +2,6 @@ import 'package:book_quotes/models/book_model.dart';
 import 'package:book_quotes/services/book_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 
 class DashboardViewModel extends GetxController {
   final BookService _bookService = BookService();
@@ -13,13 +12,12 @@ class DashboardViewModel extends GetxController {
   void onInit() async {
     super.onInit();
 
-    await _load();
+    await load();
   }
 
-  Future _load() async {
+  Future load() async {
     try {
-      List<BookModel> books = await _bookService.list();
-      book = books[0];
+      book = await _bookService.getRandom();
       update();
     } catch (e) {
       debugPrint('');

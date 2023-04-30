@@ -36,6 +36,7 @@ class CreateBookViewModel extends GetxController {
           quote: quote,
           title: title,
           createdAt: DateTime.now(),
+          modified: DateTime.now(),
         ),
       );
     } catch (error) {

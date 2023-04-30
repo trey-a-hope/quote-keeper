@@ -26,6 +26,7 @@ mixin _$BookModel {
   String get author => throw _privateConstructorUsedError;
   String get imgPath => throw _privateConstructorUsedError;
   DateTime get createdAt => throw _privateConstructorUsedError;
+  DateTime get modified => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -44,7 +45,8 @@ abstract class $BookModelCopyWith<$Res> {
       String title,
       String author,
       String imgPath,
-      DateTime createdAt});
+      DateTime createdAt,
+      DateTime modified});
 }
 
 /// @nodoc
@@ -66,6 +68,7 @@ class _$BookModelCopyWithImpl<$Res, $Val extends BookModel>
     Object? author = null,
     Object? imgPath = null,
     Object? createdAt = null,
+    Object? modified = null,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -92,6 +95,10 @@ class _$BookModelCopyWithImpl<$Res, $Val extends BookModel>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      modified: null == modified
+          ? _value.modified
+          : modified // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ) as $Val);
   }
 }
@@ -109,7 +116,8 @@ abstract class _$$_BookModelCopyWith<$Res> implements $BookModelCopyWith<$Res> {
       String title,
       String author,
       String imgPath,
-      DateTime createdAt});
+      DateTime createdAt,
+      DateTime modified});
 }
 
 /// @nodoc
@@ -129,6 +137,7 @@ class __$$_BookModelCopyWithImpl<$Res>
     Object? author = null,
     Object? imgPath = null,
     Object? createdAt = null,
+    Object? modified = null,
   }) {
     return _then(_$_BookModel(
       id: freezed == id
@@ -155,6 +164,10 @@ class __$$_BookModelCopyWithImpl<$Res>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      modified: null == modified
+          ? _value.modified
+          : modified // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ));
   }
 }
@@ -168,7 +181,8 @@ class _$_BookModel with DiagnosticableTreeMixin implements _BookModel {
       required this.title,
       required this.author,
       required this.imgPath,
-      required this.createdAt});
+      required this.createdAt,
+      required this.modified});
 
   factory _$_BookModel.fromJson(Map<String, dynamic> json) =>
       _$$_BookModelFromJson(json);
@@ -185,10 +199,12 @@ class _$_BookModel with DiagnosticableTreeMixin implements _BookModel {
   final String imgPath;
   @override
   final DateTime createdAt;
+  @override
+  final DateTime modified;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'BookModel(id: $id, quote: $quote, title: $title, author: $author, imgPath: $imgPath, createdAt: $createdAt)';
+    return 'BookModel(id: $id, quote: $quote, title: $title, author: $author, imgPath: $imgPath, createdAt: $createdAt, modified: $modified)';
   }
 
   @override
@@ -201,7 +217,8 @@ class _$_BookModel with DiagnosticableTreeMixin implements _BookModel {
       ..add(DiagnosticsProperty('title', title))
       ..add(DiagnosticsProperty('author', author))
       ..add(DiagnosticsProperty('imgPath', imgPath))
-      ..add(DiagnosticsProperty('createdAt', createdAt));
+      ..add(DiagnosticsProperty('createdAt', createdAt))
+      ..add(DiagnosticsProperty('modified', modified));
   }
 
   @override
@@ -215,13 +232,15 @@ class _$_BookModel with DiagnosticableTreeMixin implements _BookModel {
             (identical(other.author, author) || other.author == author) &&
             (identical(other.imgPath, imgPath) || other.imgPath == imgPath) &&
             (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt));
+                other.createdAt == createdAt) &&
+            (identical(other.modified, modified) ||
+                other.modified == modified));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, quote, title, author, imgPath, createdAt);
+  int get hashCode => Object.hash(
+      runtimeType, id, quote, title, author, imgPath, createdAt, modified);
 
   @JsonKey(ignore: true)
   @override
@@ -244,7 +263,8 @@ abstract class _BookModel implements BookModel {
       required final String title,
       required final String author,
       required final String imgPath,
-      required final DateTime createdAt}) = _$_BookModel;
+      required final DateTime createdAt,
+      required final DateTime modified}) = _$_BookModel;
 
   factory _BookModel.fromJson(Map<String, dynamic> json) =
       _$_BookModel.fromJson;
@@ -261,6 +281,8 @@ abstract class _BookModel implements BookModel {
   String get imgPath;
   @override
   DateTime get createdAt;
+  @override
+  DateTime get modified;
   @override
   @JsonKey(ignore: true)
   _$$_BookModelCopyWith<_$_BookModel> get copyWith =>

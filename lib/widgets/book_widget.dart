@@ -62,13 +62,8 @@ class BookWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        book.title,
-                        style: Theme.of(context).textTheme.headline5,
-                      ),
-                      const Divider(),
-                      Text(
                         '"${book.quote}"',
-                        style: context.textTheme.headline6,
+                        style: context.textTheme.bodySmall,
                       ),
                       const Spacer(),
                       Row(
