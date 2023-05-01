@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:simple_page_widget/ui/simple_page_widget.dart';
 
-class QuotesView extends StatelessWidget {
-  const QuotesView({Key? key}) : super(key: key);
+class BooksView extends StatelessWidget {
+  const BooksView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class QuotesView extends StatelessWidget {
       builder: (model) => SimplePageWidget(
         floatingActionButton: FloatingActionButton(
           onPressed: () => model.load(),
-          child: Icon(Icons.refresh),
+          child: const Icon(Icons.refresh),
         ),
         leftIconButton: IconButton(
           icon: const Icon(Icons.chevron_left),

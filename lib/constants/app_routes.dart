@@ -19,7 +19,7 @@ class AppRoutes {
     ),
     GetPage(
       name: Globals.routeQuotes,
-      page: () => const QuotesView(),
+      page: () => const BooksView(),
     ),
     GetPage(
       name: Globals.routeEditQuote,
