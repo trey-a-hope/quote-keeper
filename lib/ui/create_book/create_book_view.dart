@@ -1,7 +1,6 @@
 import 'package:book_quotes/constants/globals.dart';
 import 'package:book_quotes/services/model_service.dart';
 import 'package:book_quotes/ui/create_book/create_book_view_model.dart';
-import 'package:book_quotes/ui/drawer/drawer_view.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -25,7 +24,6 @@ class CreateBookView extends StatelessWidget {
     return GetBuilder<CreateBookViewModel>(
       init: CreateBookViewModel(),
       builder: (model) => SimplePageWidget(
-        drawer: DrawerView(),
         scaffoldKey: _scaffoldKey,
         leftIconButton: IconButton(
           icon: const Icon(Icons.chevron_left),
@@ -151,22 +149,32 @@ class CreateBookView extends StatelessWidget {
                 ),
               ),
               InkWell(
-                onTap: () => _bookTitleController.text.isNotEmpty
-                    ? model.updateImage(
-                        bookTitle: _bookTitleController.text,
-                        imageSource: ImageSource.gallery,
-                      )
-                    : null,
-                child: CachedNetworkImage(
-                  imageUrl: model.imgPath ?? Globals.dummyProfilePhotoUrl,
-                  imageBuilder: (context, imageProvider) => CircleAvatar(
-                    radius: 30,
-                    backgroundImage: imageProvider,
+                onTap: () => model.updateImage(
+                  bookTitle: _bookTitleController.text,
+                  imageSource: ImageSource.gallery,
+                ),
+                child: SizedBox(
+                  height: 200,
+                  width: 130,
+                  child: CachedNetworkImage(
+                    imageUrl: model.imgPath ?? Globals.dummyProfilePhotoUrl,
+                    imageBuilder: (context, imageProvider) => Container(
+                      decoration: BoxDecoration(
+                        border:
+                            Border.all(color: Colors.grey.shade300, width: 1.0),
+                        image: DecorationImage(
+                          image: imageProvider,
+                          fit: BoxFit.fitHeight,
+                        ),
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(10),
+                          bottomLeft: Radius.circular(10),
+                        ),
+                      ),
+                    ),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
                   ),
-                  placeholder: (context, url) => const Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                  errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
               ),
             ],

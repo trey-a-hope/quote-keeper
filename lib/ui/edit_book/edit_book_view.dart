@@ -1,5 +1,4 @@
 import 'package:book_quotes/services/model_service.dart';
-import 'package:book_quotes/ui/drawer/drawer_view.dart';
 import 'package:book_quotes/ui/edit_book/edit_book_view_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +20,6 @@ class EditBookView extends StatelessWidget {
     return GetBuilder<EditBookViewModel>(
       init: EditBookViewModel(),
       builder: (model) => SimplePageWidget(
-        drawer: DrawerView(),
         scaffoldKey: _scaffoldKey,
         leftIconButton: IconButton(
           icon: const Icon(Icons.chevron_left),

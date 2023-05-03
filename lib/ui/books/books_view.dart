@@ -13,9 +13,12 @@ class BooksView extends StatelessWidget {
     return GetBuilder<BooksViewModel>(
       init: BooksViewModel(),
       builder: (model) => SimplePageWidget(
-        floatingActionButton: FloatingActionButton(
+        floatingActionButton: FloatingActionButton.extended(
+          label: const Text('Refresh'),
+          icon: const Icon(Icons.refresh),
+          heroTag: 'refresh2',
+          backgroundColor: Colors.green,
           onPressed: () => model.load(),
-          child: const Icon(Icons.refresh),
         ),
         leftIconButton: IconButton(
           icon: const Icon(Icons.chevron_left),

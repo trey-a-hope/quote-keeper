@@ -4,7 +4,7 @@ class Globals {
   /// Routes
   static const String routeCreateQuote = '/createQuote';
   static const String routeDashboard = '/dashboard';
-  static const String routeQuotes = '/quotes';
+  static const String routeBooks = '/books';
   static const String routeEditQuote = '/editQuote';
 
   static const String cloudMessagingServerKey =

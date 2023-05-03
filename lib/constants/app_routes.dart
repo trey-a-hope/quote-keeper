@@ -15,10 +15,10 @@ class AppRoutes {
     ),
     GetPage(
       name: Globals.routeDashboard,
-      page: () => DashboardView(),
+      page: () => const DashboardView(),
     ),
     GetPage(
-      name: Globals.routeQuotes,
+      name: Globals.routeBooks,
       page: () => const BooksView(),
     ),
     GetPage(

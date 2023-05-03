@@ -3,7 +3,6 @@ import 'package:book_quotes/models/book_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 
 class BookWidget extends StatelessWidget {
   const BookWidget({super.key, required this.book});
@@ -62,23 +61,22 @@ class BookWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
+                        book.title,
+                        style: Theme.of(context).textTheme.headline6,
+                      ),
+                      const Divider(),
+                      Text(
                         '"${book.quote}"',
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 8,
+                        softWrap: false,
                         style: context.textTheme.bodySmall,
                       ),
                       const Spacer(),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            book.author,
-                            style: Theme.of(context).textTheme.headline6,
-                          ),
-                          Text(
-                            'Posted ${DateFormat('MMM dd, yyyy').format(book.createdAt)}',
-                            style: Theme.of(context).textTheme.headline6,
-                          ),
-                        ],
-                      )
+                      Text(
+                        book.author,
+                        style: Theme.of(context).textTheme.headline6,
+                      ),
                     ],
                   ),
                 ),
