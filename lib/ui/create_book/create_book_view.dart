@@ -166,9 +166,8 @@ class CreateBookView extends StatelessWidget {
                           image: imageProvider,
                           fit: BoxFit.fitHeight,
                         ),
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          bottomLeft: Radius.circular(10),
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(10),
                         ),
                       ),
                     ),
