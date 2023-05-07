@@ -1,6 +1,5 @@
 import 'dart:math';
-
-import 'package:book_quotes/models/book_model.dart';
+import 'package:book_quotes/domain/models/books/book_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
@@ -17,14 +16,12 @@ extension on Query<BookModel> {
   }
 }
 
-// Books Collection
 final _booksDB = FirebaseFirestore.instance
     .collection('BookQuotes')
     .withConverter<BookModel>(
         fromFirestore: (snapshot, _) => BookModel.fromJson(snapshot.data()!),
         toFirestore: (model, _) => model.toJson());
 
-// Book IDs Collection
 final CollectionReference _booksIdsDB = FirebaseFirestore.instance
     .collection('BookQuotesIds')
     .withConverter<dynamic>(
@@ -34,7 +31,6 @@ final CollectionReference _booksIdsDB = FirebaseFirestore.instance
 class BookService extends GetxService {
   BookQuery query = BookQuery.title;
 
-  /// Create a user.
   Future<void> create({required BookModel book}) async {
     try {
       // Create batch instance.
@@ -70,7 +66,6 @@ class BookService extends GetxService {
     }
   }
 
-  /// Retrieve a user.
   Future<BookModel?> _get({required String id}) async {
     try {
       final DocumentReference model = _booksDB.doc(id);
@@ -111,7 +106,6 @@ class BookService extends GetxService {
     }
   }
 
-  /// Update a user.
   Future<void> update({
     required String id,
     required Map<String, dynamic> data,
@@ -127,7 +121,6 @@ class BookService extends GetxService {
     }
   }
 
-  /// Retrieve users.
   Future<List<BookModel>> list({int? limit, String? orderBy}) async {
     try {
       Query q = _booksDB.queryBy(query);

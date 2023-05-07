@@ -1,5 +1,5 @@
-import 'package:book_quotes/models/book_model.dart';
-import 'package:book_quotes/services/book_service.dart';
+import 'package:book_quotes/data/services/book_service.dart';
+import 'package:book_quotes/domain/models/books/book_model.dart';
 import 'package:get/get.dart';
 
 class BooksViewModel extends GetxController {

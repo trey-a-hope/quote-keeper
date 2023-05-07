@@ -1,6 +1,6 @@
-import 'package:book_quotes/constants/globals.dart';
-import 'package:book_quotes/ui/books/books_view_model.dart';
-import 'package:book_quotes/widgets/book_widget.dart';
+import 'package:book_quotes/presentation/pages/books/books_view_model.dart';
+import 'package:book_quotes/utils/constants/globals.dart';
+import 'package:book_quotes/presentation/widgets/book_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:simple_page_widget/ui/simple_page_widget.dart';

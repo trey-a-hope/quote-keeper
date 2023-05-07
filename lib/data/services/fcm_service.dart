@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:convert' show json;
-import 'package:book_quotes/constants/globals.dart';
+import 'package:book_quotes/utils/constants/globals.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;

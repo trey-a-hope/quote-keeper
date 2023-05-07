@@ -1,5 +1,5 @@
-import 'package:book_quotes/constants/globals.dart';
-import 'package:book_quotes/models/book_model.dart';
+import 'package:book_quotes/domain/models/books/book_model.dart';
+import 'package:book_quotes/utils/constants/globals.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

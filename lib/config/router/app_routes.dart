@@ -1,8 +1,9 @@
-import 'package:book_quotes/constants/globals.dart';
-import 'package:book_quotes/ui/create_book/create_book_view.dart';
-import 'package:book_quotes/ui/dashboard/dashboard_view.dart';
-import 'package:book_quotes/ui/edit_book/edit_book_view.dart';
-import 'package:book_quotes/ui/books/books_view.dart';
+import 'package:book_quotes/presentation/pages/books/books_view.dart';
+import 'package:book_quotes/presentation/pages/create_book/create_book_view.dart';
+import 'package:book_quotes/presentation/pages/dashboard/dashboard_view.dart';
+import 'package:book_quotes/presentation/pages/edit_book/edit_book_view.dart';
+import 'package:book_quotes/utils/constants/globals.dart';
+
 import 'package:get/get_navigation/src/routes/get_route.dart';
 
 class AppRoutes {

@@ -1,6 +1,6 @@
-import 'package:book_quotes/constants/globals.dart';
-import 'package:book_quotes/services/model_service.dart';
-import 'package:book_quotes/ui/create_book/create_book_view_model.dart';
+import 'package:book_quotes/presentation/pages/create_book/create_book_view_model.dart';
+import 'package:book_quotes/utils/constants/globals.dart';
+import 'package:book_quotes/data/services/modal_service.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
