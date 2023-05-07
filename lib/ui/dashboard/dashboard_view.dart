@@ -1,6 +1,7 @@
 import 'package:book_quotes/constants/globals.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:share_plus/share_plus.dart';
 import 'dashboard_view_model.dart';
 
 class DashboardView extends StatelessWidget {
@@ -44,8 +45,10 @@ class DashboardView extends StatelessWidget {
                     child: Text(
                       '"${model.book!.quote}"',
                       textAlign: TextAlign.center,
-                      style: context.textTheme.displayMedium!
-                          .copyWith(color: Colors.white),
+                      style: context.textTheme.displayMedium!.copyWith(
+                        color: Colors.white,
+                        letterSpacing: 1.0,
+                      ),
                     ),
                   ),
                 ),
@@ -65,7 +68,18 @@ class DashboardView extends StatelessWidget {
                             onPressed: () => Get.toNamed(Globals.routeBooks),
                           ),
                           FloatingActionButton.extended(
-                            label: const Text('Refresh'),
+                            label: const Text('Share'),
+                            icon: const Icon(Icons.share),
+                            heroTag: 'share',
+                            backgroundColor: Colors.blue,
+                            onPressed: () => Share.share(
+                              model.book!.quote,
+                              subject:
+                                  '${model.book!.title} by ${model.book!.author}',
+                            ),
+                          ),
+                          FloatingActionButton.extended(
+                            label: const Text('Reload'),
                             icon: const Icon(Icons.refresh),
                             heroTag: 'refresh',
                             backgroundColor: Colors.green,

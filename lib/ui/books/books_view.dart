@@ -14,7 +14,7 @@ class BooksView extends StatelessWidget {
       init: BooksViewModel(),
       builder: (model) => SimplePageWidget(
         floatingActionButton: FloatingActionButton.extended(
-          label: const Text('Refresh'),
+          label: const Text('Reload'),
           icon: const Icon(Icons.refresh),
           heroTag: 'refresh2',
           backgroundColor: Colors.green,
@@ -32,7 +32,7 @@ class BooksView extends StatelessWidget {
             Get.toNamed(Globals.routeCreateQuote);
           },
         ),
-        title: 'Books',
+        title: 'Books - ${model.totalBookAccount}',
         child: ListView.builder(
           itemCount: model.books.length,
           itemBuilder: (_, index) => BookWidget(

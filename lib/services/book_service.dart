@@ -4,13 +4,35 @@ import 'package:book_quotes/models/book_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
-class BookService extends GetxService {
-  /// Users collection reference.
-  final CollectionReference _booksDB =
-      FirebaseFirestore.instance.collection('BookQuotes');
+enum BookQuery { title, author }
 
-  final CollectionReference _booksIdsDB =
-      FirebaseFirestore.instance.collection('BookQuotesIds');
+extension on Query<BookModel> {
+  Query<BookModel> queryBy(BookQuery query) {
+    switch (query) {
+      case BookQuery.title:
+        return orderBy('title', descending: true);
+      case BookQuery.author:
+        return orderBy('author', descending: true);
+    }
+  }
+}
+
+// Books Collection
+final _booksDB = FirebaseFirestore.instance
+    .collection('BookQuotes')
+    .withConverter<BookModel>(
+        fromFirestore: (snapshot, _) => BookModel.fromJson(snapshot.data()!),
+        toFirestore: (model, _) => model.toJson());
+
+// Book IDs Collection
+final CollectionReference _booksIdsDB = FirebaseFirestore.instance
+    .collection('BookQuotesIds')
+    .withConverter<dynamic>(
+        fromFirestore: (snapshot, _) => snapshot.data()!,
+        toFirestore: (model, _) => model);
+
+class BookService extends GetxService {
+  BookQuery query = BookQuery.title;
 
   /// Create a user.
   Future<void> create({required BookModel book}) async {
@@ -19,23 +41,23 @@ class BookService extends GetxService {
       final WriteBatch batch = FirebaseFirestore.instance.batch();
 
       // Create document reference of user.
-      final DocumentReference userDocRef = _booksDB.doc();
+      final DocumentReference bookDocRef = _booksDB.doc();
 
       _booksIdsDB.doc('books').update(
         {
           'ids': FieldValue.arrayUnion(
             [
-              userDocRef.id,
+              bookDocRef.id,
             ],
           )
         },
       );
 
-      book = book.copyWith(id: userDocRef.id);
+      book = book.copyWith(id: bookDocRef.id);
 
       // Set the user data to the document reference.
       batch.set(
-        userDocRef,
+        bookDocRef,
         book.toJson(),
       );
       // Execute batch.
@@ -51,11 +73,19 @@ class BookService extends GetxService {
   /// Retrieve a user.
   Future<BookModel?> _get({required String id}) async {
     try {
-      final DocumentReference model = _booksDB.doc(id).withConverter<BookModel>(
-          fromFirestore: (snapshot, _) => BookModel.fromJson(snapshot.data()!),
-          toFirestore: (model, _) => model.toJson());
-
+      final DocumentReference model = _booksDB.doc(id);
       return (await model.get()).data() as BookModel;
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  Future<int> getTotalBookCount() async {
+    try {
+      final DocumentReference model = _booksIdsDB.doc('books');
+      Map map = (await model.get()).data() as Map;
+      List<dynamic> ids = map['ids'];
+      return ids.length;
     } catch (e) {
       throw Exception(e.toString());
     }
@@ -63,11 +93,7 @@ class BookService extends GetxService {
 
   Future<BookModel?> getRandom() async {
     try {
-      final DocumentReference model = _booksIdsDB
-          .doc('books')
-          .withConverter<dynamic>(
-              fromFirestore: (snapshot, _) => snapshot.data()!,
-              toFirestore: (model, _) => model);
+      final DocumentReference model = _booksIdsDB.doc('books');
 
       Map map = (await model.get()).data() as Map;
       List<dynamic> ids = map['ids'];
@@ -104,32 +130,22 @@ class BookService extends GetxService {
   /// Retrieve users.
   Future<List<BookModel>> list({int? limit, String? orderBy}) async {
     try {
-      Query query = _booksDB;
+      Query q = _booksDB.queryBy(query);
 
       if (limit != null) {
-        query = query.limit(limit);
+        q = q.limit(limit);
       }
 
       if (orderBy != null) {
-        query = query.orderBy(orderBy, descending: true);
+        q = q.orderBy(orderBy, descending: true);
       }
 
-      List<Future<DocumentSnapshot<BookModel>>> s = (await query.get())
+      List<BookModel> books = (await q.get())
           .docs
-          .map((doc) => (doc.reference
-              .withConverter<BookModel>(
-                  fromFirestore: (snapshot, _) =>
-                      BookModel.fromJson(snapshot.data()!),
-                  toFirestore: (model, _) => model.toJson())
-              .get()))
+          .map(
+            (doc) => doc.data() as BookModel,
+          )
           .toList();
-
-      List<BookModel> books = [];
-
-      for (int i = 0; i < s.length; i++) {
-        DocumentSnapshot<BookModel> res = await s[i];
-        books.add(res.data()!);
-      }
 
       return books;
     } catch (e) {

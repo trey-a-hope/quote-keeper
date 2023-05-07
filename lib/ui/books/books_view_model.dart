@@ -7,6 +7,8 @@ class BooksViewModel extends GetxController {
 
   List<BookModel> books = [];
 
+  int? totalBookAccount;
+
   @override
   void onInit() async {
     update();
@@ -18,6 +20,7 @@ class BooksViewModel extends GetxController {
   void load() async {
     try {
       books = await _bookService.list();
+      totalBookAccount = await _bookService.getTotalBookCount();
       update();
     } catch (error) {
       throw Exception();
