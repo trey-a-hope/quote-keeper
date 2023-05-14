@@ -1,5 +1,6 @@
 import 'package:book_quotes/utils/constants/globals.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
 import 'dashboard_view_model.dart';
@@ -58,34 +59,37 @@ class DashboardView extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(32.0),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          FloatingActionButton.extended(
-                            label: const Text('Books'),
-                            icon: const Icon(Icons.book),
-                            heroTag: 'books',
-                            backgroundColor: Colors.red,
-                            onPressed: () => Get.toNamed(Globals.routeBooks),
-                          ),
-                          FloatingActionButton.extended(
-                            label: const Text('Share'),
-                            icon: const Icon(Icons.share),
-                            heroTag: 'share',
-                            backgroundColor: Colors.blue,
-                            onPressed: () => Share.share(
-                              model.book!.quote,
-                              subject:
-                                  '${model.book!.title} by ${model.book!.author}',
+                        children: AnimateList(
+                          interval: 400.ms,
+                          effects: Globals.fadeEffect,
+                          children: [
+                            FloatingActionButton.extended(
+                              label: const Text('Books'),
+                              icon: const Icon(Icons.book),
+                              heroTag: 'books',
+                              backgroundColor: Colors.red,
+                              onPressed: () => Get.toNamed(Globals.routeBooks),
                             ),
-                          ),
-                          FloatingActionButton.extended(
-                            label: const Text('Reload'),
-                            icon: const Icon(Icons.refresh),
-                            heroTag: 'refresh',
-                            backgroundColor: Colors.green,
-                            onPressed: () => model.load(),
-                          ),
-                        ],
+                            FloatingActionButton.extended(
+                              label: const Text('Share'),
+                              icon: const Icon(Icons.share),
+                              heroTag: 'share',
+                              backgroundColor: Colors.blue,
+                              onPressed: () => Share.share(
+                                model.book!.quote,
+                                subject:
+                                    '${model.book!.title} by ${model.book!.author}',
+                              ),
+                            ),
+                            FloatingActionButton.extended(
+                              label: const Text('Reload'),
+                              icon: const Icon(Icons.refresh),
+                              heroTag: 'refresh',
+                              backgroundColor: Colors.green,
+                              onPressed: () => model.load(),
+                            ),
+                          ],
+                        ),
                       ),
                     )
                   ],

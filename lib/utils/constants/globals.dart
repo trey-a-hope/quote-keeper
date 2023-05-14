@@ -1,3 +1,5 @@
+import 'package:flutter_animate/flutter_animate.dart';
+
 class Globals {
   Globals._();
 
@@ -18,4 +20,8 @@ class Globals {
 
   static String? version;
   static String? buildNumber;
+
+  static List<Effect<dynamic>> fadeEffect = <Effect>[
+    FadeEffect(duration: 300.ms),
+  ];
 }

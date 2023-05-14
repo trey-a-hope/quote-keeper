@@ -2,6 +2,7 @@ import 'package:book_quotes/presentation/pages/books/books_view_model.dart';
 import 'package:book_quotes/utils/constants/globals.dart';
 import 'package:book_quotes/presentation/widgets/book_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:simple_page_widget/ui/simple_page_widget.dart';
 
@@ -37,7 +38,7 @@ class BooksView extends StatelessWidget {
           itemCount: model.books.length,
           itemBuilder: (_, index) => BookWidget(
             book: model.books[index],
-          ),
+          ).animate().fadeIn(duration: 1000.ms).then(delay: 1000.ms),
         ),
       ),
     );

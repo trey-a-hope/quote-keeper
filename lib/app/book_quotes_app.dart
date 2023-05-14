@@ -1,6 +1,7 @@
 import 'package:book_quotes/app/initial_bindings.dart';
-import 'package:book_quotes/config/router/app_routes.dart';
-import 'package:book_quotes/config/theme/app_themes.dart';
+import 'package:book_quotes/config/app_routes.dart';
+import 'package:book_quotes/config/app_themes.dart';
+
 import 'package:book_quotes/utils/constants/globals.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

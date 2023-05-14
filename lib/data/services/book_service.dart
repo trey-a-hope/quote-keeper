@@ -33,12 +33,12 @@ class BookService extends GetxService {
 
   Future<void> create({required BookModel book}) async {
     try {
-      // Create batch instance.
-      final WriteBatch batch = FirebaseFirestore.instance.batch();
+      //TODO: Need a way to use the batch.commit() here.
 
-      // Create document reference of user.
+      // Create document reference of book.
       final DocumentReference bookDocRef = _booksDB.doc();
 
+      // Add the book ID to the list of book ids collection.
       _booksIdsDB.doc('books').update(
         {
           'ids': FieldValue.arrayUnion(
@@ -49,15 +49,12 @@ class BookService extends GetxService {
         },
       );
 
+      // Update ID of the book.
       book = book.copyWith(id: bookDocRef.id);
 
-      // Set the user data to the document reference.
-      batch.set(
-        bookDocRef,
-        book.toJson(),
-      );
-      // Execute batch.
-      await batch.commit();
+      // Set book data.
+      bookDocRef.set(book);
+
       return;
     } catch (e) {
       throw Exception(

@@ -3,6 +3,7 @@ import 'package:book_quotes/utils/constants/globals.dart';
 import 'package:book_quotes/data/services/modal_service.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:simple_page_widget/ui/simple_page_widget.dart';
@@ -68,115 +69,119 @@ class CreateBookView extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: TextFormField(
-                  onChanged: (value) => {model.update()},
-                  textCapitalization: TextCapitalization.sentences,
-                  cursorColor: Theme.of(context).textTheme.headline4!.color,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  controller: _bookTitleController,
-                  keyboardType: TextInputType.text,
-                  textInputAction: TextInputAction.done,
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Theme.of(context).textTheme.headline3!.color,
-                  ),
-                  decoration: InputDecoration(
-                    errorStyle: TextStyle(
-                        color: Theme.of(context).textTheme.headline6!.color),
-                    counterStyle: TextStyle(
-                        color: Theme.of(context).textTheme.headline6!.color),
-                    hintText: 'Enter book title.',
-                    hintStyle: const TextStyle(
-                      color: Colors.grey,
+            children: AnimateList(
+              interval: 400.ms,
+              effects: Globals.fadeEffect,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: TextFormField(
+                    onChanged: (value) => {model.update()},
+                    textCapitalization: TextCapitalization.sentences,
+                    cursorColor: Theme.of(context).textTheme.headline4!.color,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    controller: _bookTitleController,
+                    keyboardType: TextInputType.text,
+                    textInputAction: TextInputAction.done,
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Theme.of(context).textTheme.headline3!.color,
                     ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: TextFormField(
-                  onChanged: (value) => {model.update()},
-                  textCapitalization: TextCapitalization.sentences,
-                  cursorColor: Theme.of(context).textTheme.headline4!.color,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  controller: _authorController,
-                  keyboardType: TextInputType.text,
-                  textInputAction: TextInputAction.done,
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Theme.of(context).textTheme.headline3!.color,
-                  ),
-                  decoration: InputDecoration(
-                    errorStyle: TextStyle(
-                        color: Theme.of(context).textTheme.headline6!.color),
-                    counterStyle: TextStyle(
-                        color: Theme.of(context).textTheme.headline6!.color),
-                    hintText: 'Enter book author.',
-                    hintStyle: const TextStyle(
-                      color: Colors.grey,
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: TextFormField(
-                  textCapitalization: TextCapitalization.sentences,
-                  cursorColor: Theme.of(context).textTheme.headline4!.color,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  controller: _quoteController,
-                  keyboardType: TextInputType.text,
-                  textInputAction: TextInputAction.done,
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Theme.of(context).textTheme.headline3!.color,
-                  ),
-                  maxLines: 10,
-                  decoration: InputDecoration(
-                    errorStyle: TextStyle(
-                        color: Theme.of(context).textTheme.headline6!.color),
-                    counterStyle: TextStyle(
-                        color: Theme.of(context).textTheme.headline6!.color),
-                    hintText:
-                        'Enter your favorite quote from ${_bookTitleController.text}',
-                    hintStyle: const TextStyle(
-                      color: Colors.grey,
-                    ),
-                  ),
-                ),
-              ),
-              InkWell(
-                onTap: () => model.updateImage(
-                  bookTitle: _bookTitleController.text,
-                  imageSource: ImageSource.gallery,
-                ),
-                child: SizedBox(
-                  height: 200,
-                  width: 130,
-                  child: CachedNetworkImage(
-                    imageUrl: model.imgPath ?? Globals.dummyProfilePhotoUrl,
-                    imageBuilder: (context, imageProvider) => Container(
-                      decoration: BoxDecoration(
-                        border:
-                            Border.all(color: Colors.grey.shade300, width: 1.0),
-                        image: DecorationImage(
-                          image: imageProvider,
-                          fit: BoxFit.fitHeight,
-                        ),
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(10),
-                        ),
+                    decoration: InputDecoration(
+                      errorStyle: TextStyle(
+                          color: Theme.of(context).textTheme.headline6!.color),
+                      counterStyle: TextStyle(
+                          color: Theme.of(context).textTheme.headline6!.color),
+                      hintText: 'Enter book title.',
+                      hintStyle: const TextStyle(
+                        color: Colors.grey,
                       ),
                     ),
-                    errorWidget: (context, url, error) =>
-                        const Icon(Icons.error),
                   ),
                 ),
-              ),
-            ],
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: TextFormField(
+                    onChanged: (value) => {model.update()},
+                    textCapitalization: TextCapitalization.sentences,
+                    cursorColor: Theme.of(context).textTheme.headline4!.color,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    controller: _authorController,
+                    keyboardType: TextInputType.text,
+                    textInputAction: TextInputAction.done,
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Theme.of(context).textTheme.headline3!.color,
+                    ),
+                    decoration: InputDecoration(
+                      errorStyle: TextStyle(
+                          color: Theme.of(context).textTheme.headline6!.color),
+                      counterStyle: TextStyle(
+                          color: Theme.of(context).textTheme.headline6!.color),
+                      hintText: 'Enter book author.',
+                      hintStyle: const TextStyle(
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: TextFormField(
+                    textCapitalization: TextCapitalization.sentences,
+                    cursorColor: Theme.of(context).textTheme.headline4!.color,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    controller: _quoteController,
+                    keyboardType: TextInputType.text,
+                    textInputAction: TextInputAction.done,
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Theme.of(context).textTheme.headline3!.color,
+                    ),
+                    maxLines: 10,
+                    decoration: InputDecoration(
+                      errorStyle: TextStyle(
+                          color: Theme.of(context).textTheme.headline6!.color),
+                      counterStyle: TextStyle(
+                          color: Theme.of(context).textTheme.headline6!.color),
+                      hintText:
+                          'Enter your favorite quote from ${_bookTitleController.text}',
+                      hintStyle: const TextStyle(
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ),
+                ),
+                InkWell(
+                  onTap: () => model.updateImage(
+                    bookTitle: _bookTitleController.text,
+                    imageSource: ImageSource.gallery,
+                  ),
+                  child: SizedBox(
+                    height: 200,
+                    width: 130,
+                    child: CachedNetworkImage(
+                      imageUrl: model.imgPath ?? Globals.dummyProfilePhotoUrl,
+                      imageBuilder: (context, imageProvider) => Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                              color: Colors.grey.shade300, width: 1.0),
+                          image: DecorationImage(
+                            image: imageProvider,
+                            fit: BoxFit.fitHeight,
+                          ),
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(10),
+                          ),
+                        ),
+                      ),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
