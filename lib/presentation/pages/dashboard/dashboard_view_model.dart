@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DashboardViewModel extends GetxController {
-  final BookService _bookService = BookService();
+  final BookService _bookService = Get.find();
 
   BookModel? book;
 

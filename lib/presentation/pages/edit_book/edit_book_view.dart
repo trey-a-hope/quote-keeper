@@ -13,7 +13,7 @@ class EditBookView extends StatelessWidget {
 
   final TextEditingController _quoteController = TextEditingController();
 
-  final ModalService _modalService = ModalService();
+  final ModalService _modalService = Get.find();
 
   @override
   Widget build(BuildContext context) {

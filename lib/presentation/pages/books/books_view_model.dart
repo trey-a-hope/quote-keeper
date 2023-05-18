@@ -3,7 +3,7 @@ import 'package:book_quotes/domain/models/books/book_model.dart';
 import 'package:get/get.dart';
 
 class BooksViewModel extends GetxController {
-  final BookService _bookService = BookService();
+  final BookService _bookService = Get.find();
 
   List<BookModel> books = [];
 

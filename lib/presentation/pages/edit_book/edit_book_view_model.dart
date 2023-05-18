@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 class EditBookViewModel extends GetxController {
   EditBookViewModel();
 
-  final BookService _bookService = BookService();
+  final BookService _bookService = Get.find();
 
   final BookModel book = Get.arguments['book'];
 

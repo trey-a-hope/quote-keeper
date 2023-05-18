@@ -1,7 +1,9 @@
+import 'dart:io';
+
 import 'package:book_quotes/presentation/pages/create_book/create_book_view_model.dart';
 import 'package:book_quotes/utils/constants/globals.dart';
 import 'package:book_quotes/data/services/modal_service.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
@@ -18,7 +20,7 @@ class CreateBookView extends StatelessWidget {
   final TextEditingController _bookTitleController = TextEditingController();
   final TextEditingController _authorController = TextEditingController();
 
-  final ModalService _modalService = ModalService();
+  final ModalService _modalService = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -157,28 +159,30 @@ class CreateBookView extends StatelessWidget {
                     bookTitle: _bookTitleController.text,
                     imageSource: ImageSource.gallery,
                   ),
-                  child: SizedBox(
-                    height: 200,
-                    width: 130,
-                    child: CachedNetworkImage(
-                      imageUrl: model.imgPath ?? Globals.dummyProfilePhotoUrl,
-                      imageBuilder: (context, imageProvider) => Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                              color: Colors.grey.shade300, width: 1.0),
-                          image: DecorationImage(
-                            image: imageProvider,
-                            fit: BoxFit.fitHeight,
+                  child: model.selectedCroppedFile == null
+                      ? DottedBorder(
+                          borderType: BorderType.RRect,
+                          radius: const Radius.circular(10),
+                          dashPattern: const [4],
+                          color: Colors.black,
+                          strokeWidth: 1,
+                          child: Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: Column(
+                              children: const [
+                                Icon(Icons.add),
+                                Text('Add Photo'),
+                              ],
+                            ),
                           ),
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(10),
+                        )
+                      : SizedBox(
+                          height: 200,
+                          width: 130,
+                          child: Image.file(
+                            File(model.selectedCroppedFile!.path),
                           ),
                         ),
-                      ),
-                      errorWidget: (context, url, error) =>
-                          const Icon(Icons.error),
-                    ),
-                  ),
                 ),
               ],
             ),
