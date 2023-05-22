@@ -1,12 +1,16 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:flutter/foundation.dart';
 
+ 
 part 'book_model.freezed.dart';
 part 'book_model.g.dart';
 
+/// {@template book_model}
+/// BookModel description
+/// {@endtemplate}
 @freezed
 class BookModel with _$BookModel {
-  factory BookModel({
+  /// {@macro book_model}
+  const factory BookModel({ 
     String? id,
     required String quote,
     required String title,
@@ -15,9 +19,7 @@ class BookModel with _$BookModel {
     required DateTime createdAt,
     required DateTime modified,
   }) = _BookModel;
-
-  factory BookModel.fromJson(Map<String, dynamic> json) =>
-      _$BookModelFromJson(json);
+  
+    /// Creates a BookModel from Json map
+  factory BookModel.fromJson(Map<String, dynamic> data) => _$BookModelFromJson(data);
 }
-
-//flutter pub run build_runner build --delete-conflicting-outputs

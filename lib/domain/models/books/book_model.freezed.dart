@@ -174,8 +174,8 @@ class __$$_BookModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_BookModel with DiagnosticableTreeMixin implements _BookModel {
-  _$_BookModel(
+class _$_BookModel implements _BookModel {
+  const _$_BookModel(
       {this.id,
       required this.quote,
       required this.title,
@@ -203,22 +203,8 @@ class _$_BookModel with DiagnosticableTreeMixin implements _BookModel {
   final DateTime modified;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'BookModel(id: $id, quote: $quote, title: $title, author: $author, imgPath: $imgPath, createdAt: $createdAt, modified: $modified)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'BookModel'))
-      ..add(DiagnosticsProperty('id', id))
-      ..add(DiagnosticsProperty('quote', quote))
-      ..add(DiagnosticsProperty('title', title))
-      ..add(DiagnosticsProperty('author', author))
-      ..add(DiagnosticsProperty('imgPath', imgPath))
-      ..add(DiagnosticsProperty('createdAt', createdAt))
-      ..add(DiagnosticsProperty('modified', modified));
   }
 
   @override
@@ -257,7 +243,7 @@ class _$_BookModel with DiagnosticableTreeMixin implements _BookModel {
 }
 
 abstract class _BookModel implements BookModel {
-  factory _BookModel(
+  const factory _BookModel(
       {final String? id,
       required final String quote,
       required final String title,
