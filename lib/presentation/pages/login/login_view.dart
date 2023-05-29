@@ -35,7 +35,6 @@ class LoginView extends StatelessWidget {
           ),
           child: FlutterLogin(
             title: 'Book Quotes',
-            logo: 'assets/images/logo.png',
             theme: LoginTheme(
               primaryColor: Colors.deepOrange,
               accentColor: Colors.white,

@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:book_quotes/utils/constants/globals.dart';
-import 'package:book_quotes/utils/extensions/hex_color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -18,13 +17,13 @@ class SplashView extends StatelessWidget {
         body: Container(
           width: double.infinity,
           height: double.infinity,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topRight,
               end: Alignment.bottomLeft,
               colors: [
-                HexColor('0E8DF5'),
-                HexColor('17CB89'),
+                Colors.deepOrange,
+                Colors.orange,
               ],
             ),
           ),
@@ -34,11 +33,6 @@ class SplashView extends StatelessWidget {
             children: [
               Column(
                 children: [
-                  // Image.asset(
-                  //   Globals.ASSET_APP_ICON_LIGHT,
-                  //   height: 300.0,
-                  //   width: 300.0,
-                  // ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
                     child: Text(
