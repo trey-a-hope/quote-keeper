@@ -1,16 +1,18 @@
 import 'dart:io';
 
-import 'package:book_quotes/data/services/storage_service.dart';
-import 'package:book_quotes/domain/models/books/book_model.dart';
-import 'package:book_quotes/data/services/book_service.dart';
+import 'package:book_quotes/services/storage_service.dart';
+import 'package:book_quotes/models/books/book_model.dart';
+import 'package:book_quotes/services/book_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
 class CreateBookViewModel extends GetxController {
   final BookService _bookService = Get.find();
   final StorageService _storageService = Get.find();
+  final GetStorage _getStorage = Get.find();
 
   CroppedFile? selectedCroppedFile;
 
@@ -31,12 +33,13 @@ class CreateBookViewModel extends GetxController {
 
       // Save book info to cloud firestore.
       await _bookService.create(
+        uid: _getStorage.read('uid'),
         book: BookModel(
           imgPath: imgPath,
           author: author,
           quote: quote,
           title: title,
-          createdAt: DateTime.now(),
+          created: DateTime.now(),
           modified: DateTime.now(),
         ),
       );

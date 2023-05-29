@@ -1,7 +1,10 @@
-import 'dart:math';
-import 'package:book_quotes/domain/models/books/book_model.dart';
+import 'package:book_quotes/models/books/book_model.dart';
+import 'package:book_quotes/models/users/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
+
+const String users = 'users';
+const String books = 'books';
 
 enum BookQuery { title, author }
 
@@ -16,10 +19,10 @@ extension on Query<BookModel> {
   }
 }
 
-final _booksDB = FirebaseFirestore.instance
-    .collection('BookQuotes')
-    .withConverter<BookModel>(
-        fromFirestore: (snapshot, _) => BookModel.fromJson(snapshot.data()!),
+final _usersDB = FirebaseFirestore.instance
+    .collection(users)
+    .withConverter<UserModel>(
+        fromFirestore: (snapshot, _) => UserModel.fromJson(snapshot.data()!),
         toFirestore: (model, _) => model.toJson());
 
 final CollectionReference _booksIdsDB = FirebaseFirestore.instance
@@ -31,15 +34,26 @@ final CollectionReference _booksIdsDB = FirebaseFirestore.instance
 class BookService extends GetxService {
   BookQuery query = BookQuery.title;
 
-  Future<void> create({required BookModel book}) async {
+  CollectionReference<BookModel> _booksDB({required String uid}) {
+    CollectionReference<BookModel> bookCol = _usersDB
+        .doc(uid)
+        .collection(books)
+        .withConverter<BookModel>(
+          fromFirestore: (snapshot, _) => BookModel.fromJson(snapshot.data()!),
+          toFirestore: (model, _) => model.toJson(),
+        );
+    return bookCol;
+  }
+
+  Future<void> create({required String uid, required BookModel book}) async {
     try {
       //TODO: Need a way to use the batch.commit() here.
 
       // Create document reference of book.
-      final DocumentReference bookDocRef = _booksDB.doc();
+      final DocumentReference bookDocRef = _booksDB(uid: uid).doc();
 
       // Add the book ID to the list of book ids collection.
-      _booksIdsDB.doc('books').update(
+      _booksIdsDB.doc(books).update(
         {
           'ids': FieldValue.arrayUnion(
             [
@@ -63,9 +77,9 @@ class BookService extends GetxService {
     }
   }
 
-  Future<BookModel?> _get({required String id}) async {
+  Future<BookModel?> _get({required String uid, required String id}) async {
     try {
-      final DocumentReference model = _booksDB.doc(id);
+      final DocumentReference model = _booksDB(uid: uid).doc(id);
       return (await model.get()).data() as BookModel;
     } catch (e) {
       throw Exception(e.toString());
@@ -74,7 +88,7 @@ class BookService extends GetxService {
 
   Future<int> getTotalBookCount() async {
     try {
-      final DocumentReference model = _booksIdsDB.doc('books');
+      final DocumentReference model = _booksIdsDB.doc(books);
       Map map = (await model.get()).data() as Map;
       List<dynamic> ids = map['ids'];
       return ids.length;
@@ -83,19 +97,22 @@ class BookService extends GetxService {
     }
   }
 
-  Future<BookModel?> getRandom() async {
+  Future<BookModel?> getRandom({required String uid}) async {
     try {
-      final DocumentReference model = _booksIdsDB.doc('books');
+      // final DocumentReference model = _booksIdsDB.doc(books);
 
-      Map map = (await model.get()).data() as Map;
-      List<dynamic> ids = map['ids'];
+      // Map map = (await model.get()).data() as Map;
+      // List<dynamic> ids = map['ids'];
 
-      Random random = Random();
-      int index = random.nextInt(ids.length);
+      // Random random = Random();
+      // int index = random.nextInt(ids.length);
 
-      String id = ids[index];
-
-      BookModel? book = await _get(id: id);
+      // String id = ids[index];
+      String id = 'n1sKihwnyLbLDJOZfrsB'; //TODO: Fix this.
+      BookModel? book = await _get(
+        uid: uid,
+        id: id,
+      );
 
       return book;
     } catch (e) {
@@ -104,12 +121,13 @@ class BookService extends GetxService {
   }
 
   Future<void> update({
+    required String uid,
     required String id,
     required Map<String, dynamic> data,
   }) async {
     try {
       data['modified'] = DateTime.now().toUtc();
-      await _booksDB.doc(id).update(data);
+      await _booksDB(uid: uid).doc(id).update(data);
       return;
     } catch (e) {
       throw Exception(
@@ -118,9 +136,22 @@ class BookService extends GetxService {
     }
   }
 
-  Future<List<BookModel>> list({int? limit, String? orderBy}) async {
+  Future<List<BookModel>> list({
+    required String uid,
+    int? limit,
+    String? orderBy,
+  }) async {
     try {
-      Query q = _booksDB.queryBy(query);
+      CollectionReference<BookModel> bookCol = FirebaseFirestore.instance
+          .collection(users)
+          .doc(uid)
+          .collection('books')
+          .withConverter<BookModel>(
+              fromFirestore: (snapshot, _) =>
+                  BookModel.fromJson(snapshot.data()!),
+              toFirestore: (model, _) => model.toJson());
+
+      Query q = bookCol.queryBy(query);
 
       if (limit != null) {
         q = q.limit(limit);

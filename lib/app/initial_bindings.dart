@@ -1,7 +1,8 @@
-import 'package:book_quotes/data/services/book_service.dart';
-import 'package:book_quotes/data/services/fcm_service.dart';
-import 'package:book_quotes/data/services/modal_service.dart';
-import 'package:book_quotes/data/services/storage_service.dart';
+import 'package:book_quotes/services/book_service.dart';
+import 'package:book_quotes/services/fcm_service.dart';
+import 'package:book_quotes/services/modal_service.dart';
+import 'package:book_quotes/services/storage_service.dart';
+import 'package:book_quotes/services/user_service.dart';
 import 'package:get/get.dart';
 
 class InitialBinding implements Bindings {
@@ -11,5 +12,6 @@ class InitialBinding implements Bindings {
     Get.lazyPut(() => FCMService());
     Get.lazyPut(() => ModalService(), fenix: true);
     Get.lazyPut(() => StorageService());
+    Get.lazyPut(() => UserService());
   }
 }

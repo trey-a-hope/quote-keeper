@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:book_quotes/presentation/pages/create_book/create_book_view_model.dart';
 import 'package:book_quotes/utils/constants/globals.dart';
-import 'package:book_quotes/data/services/modal_service.dart';
+import 'package:book_quotes/services/modal_service.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';

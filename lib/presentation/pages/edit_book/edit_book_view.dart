@@ -1,5 +1,5 @@
 import 'package:book_quotes/presentation/pages/edit_book/edit_book_view_model.dart';
-import 'package:book_quotes/data/services/modal_service.dart';
+import 'package:book_quotes/services/modal_service.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

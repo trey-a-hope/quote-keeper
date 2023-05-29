@@ -25,7 +25,7 @@ class BookQuotesApp extends StatelessWidget {
       themeMode: ThemeMode.system,
       title: 'Book Quotes',
       initialBinding: InitialBinding(),
-      initialRoute: Globals.routeDashboard,
+      initialRoute: Globals.routeSplash,
       getPages: AppRoutes.routes,
     );
   }

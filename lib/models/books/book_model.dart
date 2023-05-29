@@ -1,6 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
- 
 part 'book_model.freezed.dart';
 part 'book_model.g.dart';
 
@@ -10,16 +9,19 @@ part 'book_model.g.dart';
 @freezed
 class BookModel with _$BookModel {
   /// {@macro book_model}
-  const factory BookModel({ 
+  const factory BookModel({
     String? id,
     required String quote,
     required String title,
     required String author,
     required String imgPath,
-    required DateTime createdAt,
+    required DateTime created,
     required DateTime modified,
   }) = _BookModel;
-  
-    /// Creates a BookModel from Json map
-  factory BookModel.fromJson(Map<String, dynamic> data) => _$BookModelFromJson(data);
+
+  /// Creates a BookModel from Json map
+  factory BookModel.fromJson(Map<String, dynamic> data) =>
+      _$BookModelFromJson(data);
 }
+
+//flutter pub run build_runner build --delete-conflicting-outputs
