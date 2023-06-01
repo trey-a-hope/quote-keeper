@@ -19,7 +19,10 @@ class DashboardViewModel extends GetxController {
 
   Future load() async {
     try {
-      book = await _bookService.getRandom(uid: _getStorage.read('uid'));
+      book = await _bookService.getRandom(
+        uid: _getStorage.read('uid'),
+      );
+
       update();
     } catch (e) {
       debugPrint('');

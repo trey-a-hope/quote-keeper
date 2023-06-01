@@ -24,7 +24,8 @@ class BooksViewModel extends GetxController {
       books = await _bookService.list(
         uid: _getStorage.read('uid'),
       );
-      totalBookAccount = await _bookService.getTotalBookCount();
+      totalBookAccount =
+          await _bookService.getTotalBookCount(uid: _getStorage.read('uid'));
       update();
     } catch (error) {
       throw Exception();

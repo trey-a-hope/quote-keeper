@@ -5,8 +5,6 @@ class _SplashViewModel extends GetxController {
   void onInit() async {
     super.onInit();
 
-    FirebaseAuth.instance.signOut();
-
     // Proceed to main page after 3 seconds.
     Timer(
       const Duration(seconds: 3),

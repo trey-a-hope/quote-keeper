@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:book_quotes/utils/extensions/hex_color.dart';
+import 'package:book_quotes/utils/extensions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
@@ -28,8 +28,8 @@ class LoginView extends StatelessWidget {
               begin: Alignment.topRight,
               end: Alignment.bottomLeft,
               colors: [
-                HexColor('0E8DF5'),
-                HexColor('17CB89'),
+                '0E8DF5'.getHexColor(),
+                '17CB89'.getHexColor(),
               ],
             ),
           ),

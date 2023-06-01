@@ -76,6 +76,7 @@ class _MainViewModel extends GetxController {
           uid: firebaseUser.uid,
           username: firebaseUser.displayName ?? firebaseUser.email,
           email: firebaseUser.email ?? '',
+          bookIDs: [],
         );
 
         await _userService.createUser(user: user);
