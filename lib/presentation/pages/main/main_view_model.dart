@@ -60,14 +60,11 @@ class _MainViewModel extends GetxController {
         // Fetch the fcm token for this device.
         String? token = await _firebaseMessaging.getToken();
 
-        // Validate that it's not null.
-        assert(token != null);
-
         // Update fcm token for this device in firebase.
-        userDocRef.update({'fcmToken': token});
+        if (token != null) {
+          userDocRef.update({'fcmToken': token});
+        }
       } else {
-        //Validate the are present in auth
-
         // Create user in firebase.
         UserModel user = UserModel(
           imgUrl: firebaseUser.photoURL ?? Globals.dummyProfilePhotoUrl,
