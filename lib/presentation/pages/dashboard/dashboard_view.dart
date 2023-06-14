@@ -1,12 +1,21 @@
+import 'package:book_quotes/services/modal_service.dart';
 import 'package:book_quotes/utils/constants/globals.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
 import 'dashboard_view_model.dart';
 
 class DashboardView extends StatelessWidget {
-  const DashboardView({Key? key}) : super(key: key);
+  DashboardView({Key? key}) : super(key: key);
+
+  static const TextStyle labelStyle = TextStyle(
+    fontWeight: FontWeight.w500,
+    color: Colors.white,
+  );
+
+  final ModalService _modalService = ModalService();
 
   @override
   Widget build(BuildContext context) {
@@ -59,39 +68,73 @@ class DashboardView extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(32.0),
                       child: Row(
-                        children: AnimateList(
-                          interval: 400.ms,
-                          effects: Globals.fadeEffect,
-                          children: [
-                            FloatingActionButton.extended(
-                              label: const Text('Books'),
-                              icon: const Icon(Icons.book),
-                              heroTag: 'books',
-                              backgroundColor: Colors.red,
-                              onPressed: () => Get.toNamed(Globals.routeBooks),
-                            ),
-                            FloatingActionButton.extended(
-                              label: const Text('Share'),
-                              icon: const Icon(Icons.share),
-                              heroTag: 'share',
-                              backgroundColor: Colors.blue,
-                              onPressed: () => Share.share(
-                                model.book!.quote,
-                                subject:
-                                    '${model.book!.title} by ${model.book!.author}',
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          SpeedDial(
+                            animatedIcon: AnimatedIcons.menu_close,
+                            animatedIconTheme: const IconThemeData(size: 28.0),
+                            backgroundColor: Colors.green[900],
+                            visible: true,
+                            curve: Curves.bounceInOut,
+                            children: [
+                              SpeedDialChild(
+                                child: const Icon(Icons.logout,
+                                    color: Colors.white),
+                                backgroundColor: Colors.red,
+                                onTap: () async {
+                                  bool? confirm =
+                                      await _modalService.showConfirmation(
+                                    context: context,
+                                    title: 'Logout',
+                                    message: 'Are you sure?',
+                                  );
+
+                                  if (confirm == null || confirm == false) {
+                                    return;
+                                  }
+
+                                  FirebaseAuth.instance.signOut();
+                                },
+                                label: 'Logout',
+                                labelStyle: labelStyle,
+                                labelBackgroundColor: Colors.black,
                               ),
-                            ),
-                            FloatingActionButton.extended(
-                              label: const Text('Reload'),
-                              icon: const Icon(Icons.refresh),
-                              heroTag: 'refresh',
-                              backgroundColor: Colors.green,
-                              onPressed: () => model.load(),
-                            ),
-                          ],
-                        ),
+                              SpeedDialChild(
+                                child:
+                                    const Icon(Icons.book, color: Colors.white),
+                                backgroundColor: Colors.green,
+                                onTap: () => Get.toNamed(Globals.routeBooks),
+                                label: 'Books',
+                                labelStyle: labelStyle,
+                                labelBackgroundColor: Colors.black,
+                              ),
+                              SpeedDialChild(
+                                child: const Icon(Icons.share,
+                                    color: Colors.white),
+                                backgroundColor: Colors.green,
+                                onTap: () => Share.share(
+                                  model.book!.quote,
+                                  subject:
+                                      '${model.book!.title} by ${model.book!.author}',
+                                ),
+                                label: 'Share',
+                                labelStyle: labelStyle,
+                                labelBackgroundColor: Colors.black,
+                              ),
+                              SpeedDialChild(
+                                child: const Icon(Icons.refresh,
+                                    color: Colors.white),
+                                backgroundColor: Colors.green,
+                                onTap: () => model.load(),
+                                label: 'Fetch New Book',
+                                labelStyle: labelStyle,
+                                labelBackgroundColor: Colors.black,
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
-                    )
+                    ),
                   ],
                 )
               ],

@@ -24,7 +24,7 @@ class AppRoutes {
     ),
     GetPage(
       name: Globals.routeDashboard,
-      page: () => const DashboardView(),
+      page: () => DashboardView(),
     ),
     GetPage(
       name: Globals.routeBooks,
