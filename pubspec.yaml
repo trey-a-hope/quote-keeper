@@ -23,6 +23,7 @@ dependencies:
   flutter_launcher_icons: ^0.13.1
   flutter_local_notifications: ^14.0.0+2
   flutter_login: ^4.1.1
+  flutter_speed_dial: ^7.0.0
   freezed_annotation:
   get: ^4.6.1
   get_storage: 
@@ -35,11 +36,12 @@ dependencies:
   json_serializable: ^6.5.4
   material_design_icons_flutter: ^6.0.7096
   package_info_plus: ^4.0.0
-  timeago: ^3.3.0
+  flutter_riverpod: ^2.3.6
   share_plus: ^7.0.0
   shimmer: ^2.0.0
   sign_in_with_apple: ^4.3.0
   simple_page_widget: ^0.1.0
+  timeago: ^3.3.0
   uuid: ^3.0.7
 
 dev_dependencies:
