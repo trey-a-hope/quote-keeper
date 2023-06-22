@@ -55,15 +55,17 @@ class _MainViewModel extends GetxController {
         if (userExists) {
           // Request permission from user to receive push notifications.
           if (Platform.isIOS) {
-            _firebaseMessaging.requestPermission();
+            await _firebaseMessaging.requestPermission();
           }
 
-          // Fetch the fcm token for this device.
-          String? token = await _firebaseMessaging.getToken();
+          if (await _firebaseMessaging.isSupported()) {
+            // Fetch the fcm token for this device.
+            String? token = await _firebaseMessaging.getToken();
 
-          // Update fcm token for this device in firebase.
-          if (token != null) {
-            userDocRef.update({'fcmToken': token});
+            // Update fcm token for this device in firebase.
+            if (token != null) {
+              userDocRef.update({'fcmToken': token});
+            }
           }
         } else {
           // Create user in firebase.
