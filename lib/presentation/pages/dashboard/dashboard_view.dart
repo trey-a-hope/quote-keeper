@@ -68,8 +68,14 @@ class DashboardView extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(32.0),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
+                          FloatingActionButton.extended(
+                            icon: const Icon(Icons.refresh),
+                            backgroundColor: Colors.blue,
+                            onPressed: () => model.load(),
+                            label: const Text('Fetch New Book'),
+                          ),
                           SpeedDial(
                             animatedIcon: AnimatedIcons.menu_close,
                             animatedIconTheme: const IconThemeData(size: 28.0),
@@ -97,21 +103,21 @@ class DashboardView extends StatelessWidget {
                                 },
                                 label: 'Logout',
                                 labelStyle: labelStyle,
-                                labelBackgroundColor: Colors.black,
+                                labelBackgroundColor: Colors.red.shade800,
                               ),
                               SpeedDialChild(
                                 child:
                                     const Icon(Icons.book, color: Colors.white),
-                                backgroundColor: Colors.green,
+                                backgroundColor: Colors.purple,
                                 onTap: () => Get.toNamed(Globals.routeBooks),
-                                label: 'Books',
+                                label: 'All Books',
                                 labelStyle: labelStyle,
-                                labelBackgroundColor: Colors.black,
+                                labelBackgroundColor: Colors.purple.shade800,
                               ),
                               SpeedDialChild(
                                 child: const Icon(Icons.share,
                                     color: Colors.white),
-                                backgroundColor: Colors.green,
+                                backgroundColor: Colors.teal,
                                 onTap: () => Share.share(
                                   model.book!.quote,
                                   subject:
@@ -119,16 +125,7 @@ class DashboardView extends StatelessWidget {
                                 ),
                                 label: 'Share',
                                 labelStyle: labelStyle,
-                                labelBackgroundColor: Colors.black,
-                              ),
-                              SpeedDialChild(
-                                child: const Icon(Icons.refresh,
-                                    color: Colors.white),
-                                backgroundColor: Colors.green,
-                                onTap: () => model.load(),
-                                label: 'Fetch New Book',
-                                labelStyle: labelStyle,
-                                labelBackgroundColor: Colors.black,
+                                labelBackgroundColor: Colors.teal.shade800,
                               ),
                             ],
                           ),

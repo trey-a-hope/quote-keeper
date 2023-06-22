@@ -16,20 +16,30 @@ class BookProvider extends ChangeNotifier {
 
   final String uid = 'Rdi7d2Sv50MqTjLJ384jW44FSRz2';
 
+  bool isLoading = false;
+
   BookProvider() {
     load();
   }
 
   void load() async {
     try {
+      isLoading = true;
+      notifyListeners();
+
       books = await _bookService.list(
         uid: uid,
       );
       totalBookAccount = await _bookService.getTotalBookCount(
         uid: uid,
       );
+
+      isLoading = false;
       notifyListeners();
     } catch (error) {
+      isLoading = false;
+      notifyListeners();
+
       throw Exception();
     }
   }
@@ -41,6 +51,9 @@ class BookProvider extends ChangeNotifier {
     required String title,
   }) async {
     try {
+      isLoading = true;
+      notifyListeners();
+
       // Upload image to storage.
       String imgPath = await _storageService.uploadFile(
         file: File(file.path),
@@ -67,8 +80,11 @@ class BookProvider extends ChangeNotifier {
       books.add(book);
       totalBookAccount++;
 
+      isLoading = false;
       notifyListeners();
     } catch (e) {
+      isLoading = false;
+      notifyListeners();
       throw Exception(e);
     }
   }

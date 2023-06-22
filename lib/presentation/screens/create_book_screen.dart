@@ -75,121 +75,132 @@ class CreateBookScreen extends ConsumerWidget {
         },
       ),
       title: 'Create Quote',
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: AnimateList(
-            interval: 400.ms,
-            effects: Globals.fadeEffect,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: TextFormField(
-                  textCapitalization: TextCapitalization.sentences,
-                  cursorColor: Theme.of(context).textTheme.headline4!.color,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  controller: _bookTitleController,
-                  keyboardType: TextInputType.text,
-                  textInputAction: TextInputAction.done,
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Theme.of(context).textTheme.headline3!.color,
-                  ),
-                  decoration: InputDecoration(
-                    errorStyle: TextStyle(
-                        color: Theme.of(context).textTheme.headline6!.color),
-                    counterStyle: TextStyle(
-                        color: Theme.of(context).textTheme.headline6!.color),
-                    hintText: 'Enter book title.',
-                    hintStyle: const TextStyle(
-                      color: Colors.grey,
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: TextFormField(
-                  textCapitalization: TextCapitalization.sentences,
-                  cursorColor: Theme.of(context).textTheme.headline4!.color,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  controller: _authorController,
-                  keyboardType: TextInputType.text,
-                  textInputAction: TextInputAction.done,
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Theme.of(context).textTheme.headline3!.color,
-                  ),
-                  decoration: InputDecoration(
-                    errorStyle: TextStyle(
-                        color: Theme.of(context).textTheme.headline6!.color),
-                    counterStyle: TextStyle(
-                        color: Theme.of(context).textTheme.headline6!.color),
-                    hintText: 'Enter book author.',
-                    hintStyle: const TextStyle(
-                      color: Colors.grey,
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: TextFormField(
-                  textCapitalization: TextCapitalization.sentences,
-                  cursorColor: Theme.of(context).textTheme.headline4!.color,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  controller: _quoteController,
-                  keyboardType: TextInputType.text,
-                  textInputAction: TextInputAction.done,
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Theme.of(context).textTheme.headline3!.color,
-                  ),
-                  maxLines: 10,
-                  decoration: InputDecoration(
-                    errorStyle: TextStyle(
-                        color: Theme.of(context).textTheme.headline6!.color),
-                    counterStyle: TextStyle(
-                        color: Theme.of(context).textTheme.headline6!.color),
-                    hintText:
-                        'Enter your favorite quote from ${_bookTitleController.text}',
-                    hintStyle: const TextStyle(
-                      color: Colors.grey,
-                    ),
-                  ),
-                ),
-              ),
-              InkWell(
-                onTap: () => photoProvider.updateImage(),
-                child: photoProvider.selectedCroppedFile == null
-                    ? DottedBorder(
-                        borderType: BorderType.RRect,
-                        radius: const Radius.circular(10),
-                        dashPattern: const [4],
-                        color: Colors.black,
-                        strokeWidth: 1,
-                        child: const Padding(
-                          padding: EdgeInsets.all(10),
-                          child: Column(
-                            children: [
-                              Icon(Icons.add),
-                              Text('Add Photo'),
-                            ],
+      child: bookProvider.isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                children: AnimateList(
+                  interval: 400.ms,
+                  effects: Globals.fadeEffect,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: TextFormField(
+                        textCapitalization: TextCapitalization.sentences,
+                        cursorColor:
+                            Theme.of(context).textTheme.headline4!.color,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        controller: _bookTitleController,
+                        keyboardType: TextInputType.text,
+                        textInputAction: TextInputAction.done,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Theme.of(context).textTheme.headline3!.color,
+                        ),
+                        decoration: InputDecoration(
+                          errorStyle: TextStyle(
+                              color:
+                                  Theme.of(context).textTheme.headline6!.color),
+                          counterStyle: TextStyle(
+                              color:
+                                  Theme.of(context).textTheme.headline6!.color),
+                          hintText: 'Enter book title.',
+                          hintStyle: const TextStyle(
+                            color: Colors.grey,
                           ),
                         ),
-                      )
-                    : SizedBox(
-                        height: 200,
-                        width: 130,
-                        child: Image.file(
-                          File(photoProvider.selectedCroppedFile!.path),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: TextFormField(
+                        textCapitalization: TextCapitalization.sentences,
+                        cursorColor:
+                            Theme.of(context).textTheme.headline4!.color,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        controller: _authorController,
+                        keyboardType: TextInputType.text,
+                        textInputAction: TextInputAction.done,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Theme.of(context).textTheme.headline3!.color,
+                        ),
+                        decoration: InputDecoration(
+                          errorStyle: TextStyle(
+                              color:
+                                  Theme.of(context).textTheme.headline6!.color),
+                          counterStyle: TextStyle(
+                              color:
+                                  Theme.of(context).textTheme.headline6!.color),
+                          hintText: 'Enter book author.',
+                          hintStyle: const TextStyle(
+                            color: Colors.grey,
+                          ),
                         ),
                       ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: TextFormField(
+                        textCapitalization: TextCapitalization.sentences,
+                        cursorColor:
+                            Theme.of(context).textTheme.headline4!.color,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        controller: _quoteController,
+                        keyboardType: TextInputType.text,
+                        textInputAction: TextInputAction.done,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Theme.of(context).textTheme.headline3!.color,
+                        ),
+                        maxLines: 10,
+                        decoration: InputDecoration(
+                          errorStyle: TextStyle(
+                              color:
+                                  Theme.of(context).textTheme.headline6!.color),
+                          counterStyle: TextStyle(
+                              color:
+                                  Theme.of(context).textTheme.headline6!.color),
+                          hintText:
+                              'Enter your favorite quote from ${_bookTitleController.text}',
+                          hintStyle: const TextStyle(
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () => photoProvider.updateImage(),
+                      child: photoProvider.selectedCroppedFile == null
+                          ? DottedBorder(
+                              borderType: BorderType.RRect,
+                              radius: const Radius.circular(10),
+                              dashPattern: const [4],
+                              color: Colors.black,
+                              strokeWidth: 1,
+                              child: const Padding(
+                                padding: EdgeInsets.all(10),
+                                child: Column(
+                                  children: [
+                                    Icon(Icons.add),
+                                    Text('Add Photo'),
+                                  ],
+                                ),
+                              ),
+                            )
+                          : SizedBox(
+                              height: 200,
+                              width: 130,
+                              child: Image.file(
+                                File(photoProvider.selectedCroppedFile!.path),
+                              ),
+                            ),
+                    ),
+                  ],
+                ),
               ),
-            ],
-          ),
-        ),
-      ),
+            ),
     );
   }
 }
