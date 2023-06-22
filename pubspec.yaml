@@ -2,7 +2,7 @@ name: book_quotes
 description: A new Flutter project.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.1.3+13
+version: 1.1.4+14
 
 environment:
   sdk: '>=2.19.6 <3.0.0'
@@ -17,7 +17,7 @@ dependencies:
   firebase_auth: ^4.2.3
   firebase_core: ^2.10.0
   firebase_crashlytics: ^3.3.3
-  firebase_messaging: ^14.2.1
+  firebase_messaging: ^14.6.3
   firebase_storage: ^11.2.1
   flutter_animate: ^4.1.1+1
   flutter_launcher_icons: ^0.13.1

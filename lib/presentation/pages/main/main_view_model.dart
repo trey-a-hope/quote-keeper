@@ -53,10 +53,19 @@ class _MainViewModel extends GetxController {
         await FirebaseCrashlytics.instance.setUserIdentifier(firebaseUser.uid);
 
         if (userExists) {
-          // Request permission from user to receive push notifications.
-          if (Platform.isIOS) {
-            await _firebaseMessaging.requestPermission();
-          }
+          //TODO: Firebase Messaging currently throwing error in production.
+          // // Request permission from user to receive push notifications.
+          // if (Platform.isIOS) {
+          //   await _firebaseMessaging.requestPermission();
+          // }
+
+          // // Fetch the fcm token for this device.
+          // String? token = await _firebaseMessaging.getToken();
+
+          // // Update fcm token for this device in firebase.
+          // if (token != null) {
+          //   userDocRef.update({'fcmToken': token});
+          // }
         } else {
           // Create user in firebase.
           UserModel user = UserModel(
