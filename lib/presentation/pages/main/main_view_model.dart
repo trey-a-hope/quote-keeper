@@ -57,16 +57,6 @@ class _MainViewModel extends GetxController {
           if (Platform.isIOS) {
             await _firebaseMessaging.requestPermission();
           }
-
-          if (await _firebaseMessaging.isSupported()) {
-            // Fetch the fcm token for this device.
-            String? token = await _firebaseMessaging.getToken();
-
-            // Update fcm token for this device in firebase.
-            if (token != null) {
-              userDocRef.update({'fcmToken': token});
-            }
-          }
         } else {
           // Create user in firebase.
           UserModel user = UserModel(
