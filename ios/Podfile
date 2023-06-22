@@ -32,6 +32,7 @@ target 'Runner' do
   pod 'Firebase/Core'
   pod 'Firebase/Firestore'
   pod 'Firebase/Auth'
+  pod 'Firebase/Crashlytics'
   
   use_frameworks!
   use_modular_headers!

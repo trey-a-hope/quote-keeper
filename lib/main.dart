@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:book_quotes/app/book_quotes_app.dart';
 import 'package:book_quotes/utils/constants/globals.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -5,19 +7,24 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  runZonedGuarded<Future<void>>(() async {
+    WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp();
+    await Firebase.initializeApp();
 
-  await GetStorage.init();
+    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
 
-  Get.lazyPut(() => GetStorage(), fenix: true);
+    await GetStorage.init();
 
-  PackageInfo packageInfo = await PackageInfo.fromPlatform();
-  Globals.version = packageInfo.version;
-  Globals.buildNumber = packageInfo.buildNumber;
+    Get.lazyPut(() => GetStorage(), fenix: true);
 
-  runApp(BookQuotesApp());
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    Globals.version = packageInfo.version;
+    Globals.buildNumber = packageInfo.buildNumber;
+
+    runApp(BookQuotesApp());
+  }, (error, stack) => FirebaseCrashlytics.instance.recordError(error, stack));
 }
