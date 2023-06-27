@@ -1,3 +1,4 @@
+import 'package:book_quotes/utils/timestamp_converter.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'book_model.freezed.dart';
@@ -15,8 +16,8 @@ class BookModel with _$BookModel {
     required String title,
     required String author,
     required String imgPath,
-    required DateTime created,
-    required DateTime modified,
+    @TimestampConverter() created,
+    @TimestampConverter() modified,
   }) = _BookModel;
 
   /// Creates a BookModel from Json map

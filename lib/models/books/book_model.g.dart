@@ -12,8 +12,8 @@ _$_BookModel _$$_BookModelFromJson(Map<String, dynamic> json) => _$_BookModel(
       title: json['title'] as String,
       author: json['author'] as String,
       imgPath: json['imgPath'] as String,
-      created: DateTime.parse(json['created'] as String),
-      modified: DateTime.parse(json['modified'] as String),
+      created: json['created'],
+      modified: json['modified'],
     );
 
 Map<String, dynamic> _$$_BookModelToJson(_$_BookModel instance) =>
@@ -23,6 +23,6 @@ Map<String, dynamic> _$$_BookModelToJson(_$_BookModel instance) =>
       'title': instance.title,
       'author': instance.author,
       'imgPath': instance.imgPath,
-      'created': instance.created.toIso8601String(),
-      'modified': instance.modified.toIso8601String(),
+      'created': instance.created,
+      'modified': instance.modified,
     };

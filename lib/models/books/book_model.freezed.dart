@@ -25,8 +25,10 @@ mixin _$BookModel {
   String get title => throw _privateConstructorUsedError;
   String get author => throw _privateConstructorUsedError;
   String get imgPath => throw _privateConstructorUsedError;
-  DateTime get created => throw _privateConstructorUsedError;
-  DateTime get modified => throw _privateConstructorUsedError;
+  @TimestampConverter()
+  dynamic get created => throw _privateConstructorUsedError;
+  @TimestampConverter()
+  dynamic get modified => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -45,8 +47,8 @@ abstract class $BookModelCopyWith<$Res> {
       String title,
       String author,
       String imgPath,
-      DateTime created,
-      DateTime modified});
+      @TimestampConverter() dynamic created,
+      @TimestampConverter() dynamic modified});
 }
 
 /// @nodoc
@@ -67,8 +69,8 @@ class _$BookModelCopyWithImpl<$Res, $Val extends BookModel>
     Object? title = null,
     Object? author = null,
     Object? imgPath = null,
-    Object? created = null,
-    Object? modified = null,
+    Object? created = freezed,
+    Object? modified = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -91,14 +93,14 @@ class _$BookModelCopyWithImpl<$Res, $Val extends BookModel>
           ? _value.imgPath
           : imgPath // ignore: cast_nullable_to_non_nullable
               as String,
-      created: null == created
+      created: freezed == created
           ? _value.created
           : created // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      modified: null == modified
+              as dynamic,
+      modified: freezed == modified
           ? _value.modified
           : modified // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as dynamic,
     ) as $Val);
   }
 }
@@ -116,8 +118,8 @@ abstract class _$$_BookModelCopyWith<$Res> implements $BookModelCopyWith<$Res> {
       String title,
       String author,
       String imgPath,
-      DateTime created,
-      DateTime modified});
+      @TimestampConverter() dynamic created,
+      @TimestampConverter() dynamic modified});
 }
 
 /// @nodoc
@@ -136,8 +138,8 @@ class __$$_BookModelCopyWithImpl<$Res>
     Object? title = null,
     Object? author = null,
     Object? imgPath = null,
-    Object? created = null,
-    Object? modified = null,
+    Object? created = freezed,
+    Object? modified = freezed,
   }) {
     return _then(_$_BookModel(
       id: freezed == id
@@ -160,14 +162,8 @@ class __$$_BookModelCopyWithImpl<$Res>
           ? _value.imgPath
           : imgPath // ignore: cast_nullable_to_non_nullable
               as String,
-      created: null == created
-          ? _value.created
-          : created // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      modified: null == modified
-          ? _value.modified
-          : modified // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+      created: freezed == created ? _value.created! : created,
+      modified: freezed == modified ? _value.modified! : modified,
     ));
   }
 }
@@ -181,8 +177,8 @@ class _$_BookModel implements _BookModel {
       required this.title,
       required this.author,
       required this.imgPath,
-      required this.created,
-      required this.modified});
+      @TimestampConverter() this.created,
+      @TimestampConverter() this.modified});
 
   factory _$_BookModel.fromJson(Map<String, dynamic> json) =>
       _$$_BookModelFromJson(json);
@@ -198,9 +194,11 @@ class _$_BookModel implements _BookModel {
   @override
   final String imgPath;
   @override
-  final DateTime created;
+  @TimestampConverter()
+  final dynamic created;
   @override
-  final DateTime modified;
+  @TimestampConverter()
+  final dynamic modified;
 
   @override
   String toString() {
@@ -217,15 +215,21 @@ class _$_BookModel implements _BookModel {
             (identical(other.title, title) || other.title == title) &&
             (identical(other.author, author) || other.author == author) &&
             (identical(other.imgPath, imgPath) || other.imgPath == imgPath) &&
-            (identical(other.created, created) || other.created == created) &&
-            (identical(other.modified, modified) ||
-                other.modified == modified));
+            const DeepCollectionEquality().equals(other.created, created) &&
+            const DeepCollectionEquality().equals(other.modified, modified));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType, id, quote, title, author, imgPath, created, modified);
+      runtimeType,
+      id,
+      quote,
+      title,
+      author,
+      imgPath,
+      const DeepCollectionEquality().hash(created),
+      const DeepCollectionEquality().hash(modified));
 
   @JsonKey(ignore: true)
   @override
@@ -248,8 +252,8 @@ abstract class _BookModel implements BookModel {
       required final String title,
       required final String author,
       required final String imgPath,
-      required final DateTime created,
-      required final DateTime modified}) = _$_BookModel;
+      @TimestampConverter() final dynamic created,
+      @TimestampConverter() final dynamic modified}) = _$_BookModel;
 
   factory _BookModel.fromJson(Map<String, dynamic> json) =
       _$_BookModel.fromJson;
@@ -265,9 +269,11 @@ abstract class _BookModel implements BookModel {
   @override
   String get imgPath;
   @override
-  DateTime get created;
+  @TimestampConverter()
+  dynamic get created;
   @override
-  DateTime get modified;
+  @TimestampConverter()
+  dynamic get modified;
   @override
   @JsonKey(ignore: true)
   _$$_BookModelCopyWith<_$_BookModel> get copyWith =>
