@@ -30,6 +30,7 @@ class BookProvider extends ChangeNotifier {
       books = await _bookService.list(
         uid: uid,
       );
+
       totalBookAccount = await _bookService.getTotalBookCount(
         uid: uid,
       );
@@ -68,6 +69,7 @@ class BookProvider extends ChangeNotifier {
         title: title,
         created: DateTime.now(),
         modified: DateTime.now(),
+        hidden: false,
       );
 
       // Save book info to cloud firestore.

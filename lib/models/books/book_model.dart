@@ -16,6 +16,7 @@ class BookModel with _$BookModel {
     required String title,
     required String author,
     required String imgPath,
+    required bool hidden,
     @TimestampConverter() created,
     @TimestampConverter() modified,
   }) = _BookModel;

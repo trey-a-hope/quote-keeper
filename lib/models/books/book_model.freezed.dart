@@ -25,6 +25,7 @@ mixin _$BookModel {
   String get title => throw _privateConstructorUsedError;
   String get author => throw _privateConstructorUsedError;
   String get imgPath => throw _privateConstructorUsedError;
+  bool get hidden => throw _privateConstructorUsedError;
   @TimestampConverter()
   dynamic get created => throw _privateConstructorUsedError;
   @TimestampConverter()
@@ -47,6 +48,7 @@ abstract class $BookModelCopyWith<$Res> {
       String title,
       String author,
       String imgPath,
+      bool hidden,
       @TimestampConverter() dynamic created,
       @TimestampConverter() dynamic modified});
 }
@@ -69,6 +71,7 @@ class _$BookModelCopyWithImpl<$Res, $Val extends BookModel>
     Object? title = null,
     Object? author = null,
     Object? imgPath = null,
+    Object? hidden = null,
     Object? created = freezed,
     Object? modified = freezed,
   }) {
@@ -93,6 +96,10 @@ class _$BookModelCopyWithImpl<$Res, $Val extends BookModel>
           ? _value.imgPath
           : imgPath // ignore: cast_nullable_to_non_nullable
               as String,
+      hidden: null == hidden
+          ? _value.hidden
+          : hidden // ignore: cast_nullable_to_non_nullable
+              as bool,
       created: freezed == created
           ? _value.created
           : created // ignore: cast_nullable_to_non_nullable
@@ -118,6 +125,7 @@ abstract class _$$_BookModelCopyWith<$Res> implements $BookModelCopyWith<$Res> {
       String title,
       String author,
       String imgPath,
+      bool hidden,
       @TimestampConverter() dynamic created,
       @TimestampConverter() dynamic modified});
 }
@@ -138,6 +146,7 @@ class __$$_BookModelCopyWithImpl<$Res>
     Object? title = null,
     Object? author = null,
     Object? imgPath = null,
+    Object? hidden = null,
     Object? created = freezed,
     Object? modified = freezed,
   }) {
@@ -162,6 +171,10 @@ class __$$_BookModelCopyWithImpl<$Res>
           ? _value.imgPath
           : imgPath // ignore: cast_nullable_to_non_nullable
               as String,
+      hidden: null == hidden
+          ? _value.hidden
+          : hidden // ignore: cast_nullable_to_non_nullable
+              as bool,
       created: freezed == created ? _value.created! : created,
       modified: freezed == modified ? _value.modified! : modified,
     ));
@@ -177,6 +190,7 @@ class _$_BookModel implements _BookModel {
       required this.title,
       required this.author,
       required this.imgPath,
+      required this.hidden,
       @TimestampConverter() this.created,
       @TimestampConverter() this.modified});
 
@@ -194,6 +208,8 @@ class _$_BookModel implements _BookModel {
   @override
   final String imgPath;
   @override
+  final bool hidden;
+  @override
   @TimestampConverter()
   final dynamic created;
   @override
@@ -202,7 +218,7 @@ class _$_BookModel implements _BookModel {
 
   @override
   String toString() {
-    return 'BookModel(id: $id, quote: $quote, title: $title, author: $author, imgPath: $imgPath, created: $created, modified: $modified)';
+    return 'BookModel(id: $id, quote: $quote, title: $title, author: $author, imgPath: $imgPath, hidden: $hidden, created: $created, modified: $modified)';
   }
 
   @override
@@ -215,6 +231,7 @@ class _$_BookModel implements _BookModel {
             (identical(other.title, title) || other.title == title) &&
             (identical(other.author, author) || other.author == author) &&
             (identical(other.imgPath, imgPath) || other.imgPath == imgPath) &&
+            (identical(other.hidden, hidden) || other.hidden == hidden) &&
             const DeepCollectionEquality().equals(other.created, created) &&
             const DeepCollectionEquality().equals(other.modified, modified));
   }
@@ -228,6 +245,7 @@ class _$_BookModel implements _BookModel {
       title,
       author,
       imgPath,
+      hidden,
       const DeepCollectionEquality().hash(created),
       const DeepCollectionEquality().hash(modified));
 
@@ -252,6 +270,7 @@ abstract class _BookModel implements BookModel {
       required final String title,
       required final String author,
       required final String imgPath,
+      required final bool hidden,
       @TimestampConverter() final dynamic created,
       @TimestampConverter() final dynamic modified}) = _$_BookModel;
 
@@ -268,6 +287,8 @@ abstract class _BookModel implements BookModel {
   String get author;
   @override
   String get imgPath;
+  @override
+  bool get hidden;
   @override
   @TimestampConverter()
   dynamic get created;
