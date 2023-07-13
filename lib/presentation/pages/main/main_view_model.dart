@@ -1,8 +1,6 @@
 part of 'main_view.dart';
 
 class _MainViewModel extends GetxController {
-  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
-
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   Rxn<User> firebaseUserObs = Rxn<User>();

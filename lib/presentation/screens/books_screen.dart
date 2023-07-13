@@ -40,6 +40,12 @@ class BooksScreen extends ConsumerWidget {
         itemCount: bookProvider.books.length,
         itemBuilder: (_, index) => BookWidget(
           book: bookProvider.books[index],
+          showBook: (_) => bookProvider.showBook(
+            book: bookProvider.books[index],
+          ),
+          hideBook: (_) => bookProvider.hideBook(
+            book: bookProvider.books[index],
+          ),
         ).animate().fadeIn(duration: 1000.ms).then(delay: 1000.ms),
       ),
     );

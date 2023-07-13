@@ -2,7 +2,7 @@ name: book_quotes
 description: A new Flutter project.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.1.6+16
+version: 1.1.7+17
 
 environment:
   sdk: '>=2.19.6 <3.0.0'
@@ -21,25 +21,26 @@ dependencies:
   firebase_storage: ^11.2.1
   flutter_animate: ^4.1.1+1
   flutter_launcher_icons: ^0.13.1
-  flutter_local_notifications: ^14.0.0+2
+  flutter_local_notifications: ^15.1.0+1
   flutter_login: ^4.1.1
+  flutter_slidable: ^3.0.0
   flutter_speed_dial: ^7.0.0
   freezed_annotation:
   get: ^4.6.1
   get_storage: 
-  google_sign_in: ^5.4.2
-  http: ^0.13.5
-  image_cropper: ^4.0.1
-  image_picker: ^0.8.4+9
+  google_sign_in: ^6.1.4
+  http: ^1.1.0
+  image_cropper: ^5.0.0
+  image_picker: ^1.0.1
   intl: ^0.18.1
   json_annotation: ^4.7.0
   json_serializable: ^6.5.4
-  material_design_icons_flutter: ^6.0.7096
+  material_design_icons_flutter: ^7.0.7296
   package_info_plus: ^4.0.0
   flutter_riverpod: ^2.3.6
   share_plus: ^7.0.0
-  shimmer: ^2.0.0
-  sign_in_with_apple: ^4.3.0
+  shimmer: ^3.0.0
+  sign_in_with_apple: ^5.0.0
   simple_page_widget: ^0.1.0
   timeago: ^3.3.0
   uuid: ^3.0.7

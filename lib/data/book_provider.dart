@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:book_quotes/models/books/book_model.dart';
 import 'package:book_quotes/services/book_service.dart';
 import 'package:book_quotes/services/storage_service.dart';
@@ -87,6 +86,42 @@ class BookProvider extends ChangeNotifier {
     } catch (e) {
       isLoading = false;
       notifyListeners();
+      throw Exception(e);
+    }
+  }
+
+  Future hideBook({required BookModel book}) async {
+    try {
+      // Update 'hidden' property on the BE.
+      await _bookService.update(
+        uid: uid,
+        id: book.id!,
+        data: {'hidden': true},
+      );
+
+      // Update 'hidden' property on the FE.
+      books[books.indexOf(book)] = book.copyWith(hidden: true);
+
+      notifyListeners();
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future showBook({required BookModel book}) async {
+    try {
+      // Update 'hidden' property on the BE.
+      await _bookService.update(
+        uid: uid,
+        id: book.id!,
+        data: {'hidden': false},
+      );
+
+      // Update 'hidden' property on the FE.
+      books[books.indexOf(book)] = book.copyWith(hidden: false);
+
+      notifyListeners();
+    } catch (e) {
       throw Exception(e);
     }
   }

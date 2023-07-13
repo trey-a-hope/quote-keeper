@@ -1,7 +1,6 @@
-import 'dart:math';
-
 import 'package:book_quotes/models/books/book_model.dart';
 import 'package:book_quotes/models/users/user_model.dart';
+import 'package:book_quotes/utils/extensions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
@@ -47,33 +46,6 @@ class BookService extends GetxService {
     return bookCol;
   }
 
-  Future<BookModel> _getBook({required String uid, required String id}) async {
-    try {
-      final DocumentReference model = _booksDB(uid: uid).doc(id);
-      return (await model.get()).data() as BookModel;
-    } catch (e) {
-      throw Exception(e.toString());
-    }
-  }
-
-  Future<String> _getRandomBookID({required String uid}) async {
-    try {
-      final UserModel? user = (await _usersDB.doc(uid).get()).data();
-
-      if (user == null) {
-        throw Exception('User is null');
-      }
-
-      Random random = Random();
-
-      List<String> bookIDs = user.bookIDs;
-
-      return bookIDs[random.nextInt(bookIDs.length)];
-    } catch (e) {
-      throw Exception(e.toString());
-    }
-  }
-
   Future<void> create({required String uid, required BookModel book}) async {
     try {
       //TODO: Need a way to use the batch.commit() here.
@@ -115,13 +87,32 @@ class BookService extends GetxService {
     }
   }
 
+// https://stackoverflow.com/questions/46798981/firestore-how-to-get-random-documents-in-a-collection
   Future<BookModel> getRandom({required String uid}) async {
     try {
-      String randomBookID = await _getRandomBookID(uid: uid);
+      String randomString = 20.getRandomString();
 
-      final BookModel book = await _getBook(uid: uid, id: randomBookID);
+      Query<BookModel> query = (_booksDB(uid: uid)
+          .where('hidden', isEqualTo: false)
+          .orderBy('id')
+          .limit(1));
 
-      return book;
+      List<QueryDocumentSnapshot<BookModel>> firstRoundDocs =
+          (await query.where('id', isGreaterThanOrEqualTo: randomString).get())
+              .docs;
+
+      if (firstRoundDocs.isNotEmpty) {
+        return firstRoundDocs[0].data();
+      }
+
+      List<QueryDocumentSnapshot<BookModel>> secondRoundDocs =
+          (await query.where('id', isGreaterThanOrEqualTo: '').get()).docs;
+
+      if (secondRoundDocs.isNotEmpty) {
+        return secondRoundDocs[0].data();
+      }
+
+      throw Exception('No random book found.');
     } catch (e) {
       throw Exception(e.toString());
     }
