@@ -48,29 +48,14 @@ class BookService extends GetxService {
 
   Future<void> create({required String uid, required BookModel book}) async {
     try {
-      //TODO: Need a way to use the batch.commit() here.
-
       // Create document reference of book.s
       final DocumentReference bookDocRef = _booksDB(uid: uid).doc();
-
-      // Add the book ID to the list of book ids collection.
-      _usersDB.doc(uid).update(
-        {
-          'bookIDs': FieldValue.arrayUnion(
-            [
-              bookDocRef.id,
-            ],
-          )
-        },
-      );
 
       // Update ID of the book.
       book = book.copyWith(id: bookDocRef.id);
 
       // Set book data.
-      bookDocRef.set(book);
-
-      return;
+      return bookDocRef.set(book);
     } catch (e) {
       throw Exception(
         e.toString(),
