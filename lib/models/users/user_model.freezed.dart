@@ -29,7 +29,6 @@ mixin _$UserModel {
   @TimestampConverter()
   dynamic get modified => throw _privateConstructorUsedError;
   String get username => throw _privateConstructorUsedError;
-  List<String> get bookIDs => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -49,8 +48,7 @@ abstract class $UserModelCopyWith<$Res> {
       String? fcmToken,
       @TimestampConverter() dynamic created,
       @TimestampConverter() dynamic modified,
-      String username,
-      List<String> bookIDs});
+      String username});
 }
 
 /// @nodoc
@@ -73,7 +71,6 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
     Object? created = freezed,
     Object? modified = freezed,
     Object? username = null,
-    Object? bookIDs = null,
   }) {
     return _then(_value.copyWith(
       uid: null == uid
@@ -104,10 +101,6 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
               as String,
-      bookIDs: null == bookIDs
-          ? _value.bookIDs
-          : bookIDs // ignore: cast_nullable_to_non_nullable
-              as List<String>,
     ) as $Val);
   }
 }
@@ -126,8 +119,7 @@ abstract class _$$_UserModelCopyWith<$Res> implements $UserModelCopyWith<$Res> {
       String? fcmToken,
       @TimestampConverter() dynamic created,
       @TimestampConverter() dynamic modified,
-      String username,
-      List<String> bookIDs});
+      String username});
 }
 
 /// @nodoc
@@ -148,7 +140,6 @@ class __$$_UserModelCopyWithImpl<$Res>
     Object? created = freezed,
     Object? modified = freezed,
     Object? username = null,
-    Object? bookIDs = null,
   }) {
     return _then(_$_UserModel(
       uid: null == uid
@@ -173,10 +164,6 @@ class __$$_UserModelCopyWithImpl<$Res>
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
               as String,
-      bookIDs: null == bookIDs
-          ? _value._bookIDs
-          : bookIDs // ignore: cast_nullable_to_non_nullable
-              as List<String>,
     ));
   }
 }
@@ -191,9 +178,7 @@ class _$_UserModel implements _UserModel {
       this.fcmToken,
       @TimestampConverter() this.created,
       @TimestampConverter() this.modified,
-      required this.username,
-      required final List<String> bookIDs})
-      : _bookIDs = bookIDs;
+      required this.username});
 
   factory _$_UserModel.fromJson(Map<String, dynamic> json) =>
       _$$_UserModelFromJson(json);
@@ -214,17 +199,10 @@ class _$_UserModel implements _UserModel {
   final dynamic modified;
   @override
   final String username;
-  final List<String> _bookIDs;
-  @override
-  List<String> get bookIDs {
-    if (_bookIDs is EqualUnmodifiableListView) return _bookIDs;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_bookIDs);
-  }
 
   @override
   String toString() {
-    return 'UserModel(uid: $uid, email: $email, imgUrl: $imgUrl, fcmToken: $fcmToken, created: $created, modified: $modified, username: $username, bookIDs: $bookIDs)';
+    return 'UserModel(uid: $uid, email: $email, imgUrl: $imgUrl, fcmToken: $fcmToken, created: $created, modified: $modified, username: $username)';
   }
 
   @override
@@ -240,8 +218,7 @@ class _$_UserModel implements _UserModel {
             const DeepCollectionEquality().equals(other.created, created) &&
             const DeepCollectionEquality().equals(other.modified, modified) &&
             (identical(other.username, username) ||
-                other.username == username) &&
-            const DeepCollectionEquality().equals(other._bookIDs, _bookIDs));
+                other.username == username));
   }
 
   @JsonKey(ignore: true)
@@ -254,8 +231,7 @@ class _$_UserModel implements _UserModel {
       fcmToken,
       const DeepCollectionEquality().hash(created),
       const DeepCollectionEquality().hash(modified),
-      username,
-      const DeepCollectionEquality().hash(_bookIDs));
+      username);
 
   @JsonKey(ignore: true)
   @override
@@ -279,8 +255,7 @@ abstract class _UserModel implements UserModel {
       final String? fcmToken,
       @TimestampConverter() final dynamic created,
       @TimestampConverter() final dynamic modified,
-      required final String username,
-      required final List<String> bookIDs}) = _$_UserModel;
+      required final String username}) = _$_UserModel;
 
   factory _UserModel.fromJson(Map<String, dynamic> json) =
       _$_UserModel.fromJson;
@@ -301,8 +276,6 @@ abstract class _UserModel implements UserModel {
   dynamic get modified;
   @override
   String get username;
-  @override
-  List<String> get bookIDs;
   @override
   @JsonKey(ignore: true)
   _$$_UserModelCopyWith<_$_UserModel> get copyWith =>

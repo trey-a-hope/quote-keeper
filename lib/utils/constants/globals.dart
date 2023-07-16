@@ -34,4 +34,7 @@ class Globals {
   /// Package info
   static const String appVersion = 'app_version';
   static const String appBuildNumber = 'build_number';
+
+  /// Book page fetch limit.
+  static const int bookPageFetchLimit = 5;
 }

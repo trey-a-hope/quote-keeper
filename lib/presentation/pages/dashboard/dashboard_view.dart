@@ -5,7 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:get/get.dart';
-import 'package:share_plus/share_plus.dart';
 import 'dashboard_view_model.dart';
 
 class DashboardView extends StatelessWidget {

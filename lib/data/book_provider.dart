@@ -5,14 +5,11 @@ import 'package:book_quotes/services/share_service.dart';
 import 'package:book_quotes/services/storage_service.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
-import 'package:share_plus/share_plus.dart';
 
 class BookProvider extends ChangeNotifier {
   final BookService _bookService = BookService();
   final StorageService _storageService = StorageService();
   final ShareService _shareService = ShareService();
-
-  List<BookModel> books = [];
 
   int totalBookAccount = 0;
 
@@ -28,10 +25,6 @@ class BookProvider extends ChangeNotifier {
     try {
       isLoading = true;
       notifyListeners();
-
-      books = await _bookService.list(
-        uid: uid,
-      );
 
       totalBookAccount = await _bookService.getTotalBookCount(
         uid: uid,
@@ -80,10 +73,6 @@ class BookProvider extends ChangeNotifier {
         book: book,
       );
 
-      // Add new book to current state.
-      books.add(book);
-      totalBookAccount++;
-
       isLoading = false;
       notifyListeners();
     } catch (e) {
@@ -93,7 +82,8 @@ class BookProvider extends ChangeNotifier {
     }
   }
 
-  Future hideBook({required BookModel book}) async {
+  Future hideBook(
+      {required BookModel book, required List<BookModel> books}) async {
     try {
       // Update 'hidden' property on the BE.
       await _bookService.update(
@@ -111,7 +101,8 @@ class BookProvider extends ChangeNotifier {
     }
   }
 
-  Future showBook({required BookModel book}) async {
+  Future showBook(
+      {required BookModel book, required List<BookModel> books}) async {
     try {
       // Update 'hidden' property on the BE.
       await _bookService.update(

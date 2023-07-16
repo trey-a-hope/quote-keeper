@@ -11,6 +11,7 @@ enum BookQuery {
   title,
   author,
   quote,
+  created,
 }
 
 extension on Query<BookModel> {
@@ -22,6 +23,8 @@ extension on Query<BookModel> {
         return orderBy('author', descending: true);
       case BookQuery.quote:
         return orderBy('quote', descending: true);
+      case BookQuery.created:
+        return orderBy('created', descending: false);
     }
   }
 }
@@ -48,21 +51,8 @@ class BookService extends GetxService {
 
   Future<void> create({required String uid, required BookModel book}) async {
     try {
-      //TODO: Need a way to use the batch.commit() here.
-
       // Create document reference of book.s
       final DocumentReference bookDocRef = _booksDB(uid: uid).doc();
-
-      // Add the book ID to the list of book ids collection.
-      _usersDB.doc(uid).update(
-        {
-          'bookIDs': FieldValue.arrayUnion(
-            [
-              bookDocRef.id,
-            ],
-          )
-        },
-      );
 
       // Update ID of the book.
       book = book.copyWith(id: bookDocRef.id);
@@ -88,7 +78,6 @@ class BookService extends GetxService {
   }
 
   // https://stackoverflow.com/questions/46798981/firestore-how-to-get-random-documents-in-a-collection
-
   Future<BookModel> getRandom({required String uid}) async {
     try {
       // Create a random string to use as the index.
@@ -166,6 +155,45 @@ class BookService extends GetxService {
 
       List<BookModel> books = (await q.get())
           .docs
+          .map(
+            (doc) => doc.data() as BookModel,
+          )
+          .toList();
+
+      return books;
+    } catch (e) {
+      throw Exception(
+        e.toString(),
+      );
+    }
+  }
+
+  Future<List<BookModel>> fetchPage({
+    required Timestamp? created,
+    required int limit,
+    required String uid,
+  }) async {
+    try {
+      CollectionReference<BookModel> bookCol = FirebaseFirestore.instance
+          .collection(users)
+          .doc(uid)
+          .collection('books')
+          .withConverter<BookModel>(
+              fromFirestore: (snapshot, _) =>
+                  BookModel.fromJson(snapshot.data()!),
+              toFirestore: (model, _) => model.toJson());
+
+      Query q = bookCol.queryBy(BookQuery.created);
+
+      q = q.limit(limit);
+
+      if (created != null) {
+        q = q.startAfter([created]);
+      }
+
+      List<QueryDocumentSnapshot<Object?>> docs = (await q.get()).docs;
+
+      List<BookModel> books = docs
           .map(
             (doc) => doc.data() as BookModel,
           )
