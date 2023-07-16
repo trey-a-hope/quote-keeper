@@ -1,13 +1,16 @@
 import 'dart:io';
 import 'package:book_quotes/models/books/book_model.dart';
 import 'package:book_quotes/services/book_service.dart';
+import 'package:book_quotes/services/share_service.dart';
 import 'package:book_quotes/services/storage_service.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
+import 'package:share_plus/share_plus.dart';
 
 class BookProvider extends ChangeNotifier {
   final BookService _bookService = BookService();
   final StorageService _storageService = StorageService();
+  final ShareService _shareService = ShareService();
 
   List<BookModel> books = [];
 
@@ -121,6 +124,16 @@ class BookProvider extends ChangeNotifier {
       books[books.indexOf(book)] = book.copyWith(hidden: false);
 
       notifyListeners();
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future shareBook({required BookModel book}) async {
+    try {
+      _shareService.share(
+        book: book,
+      );
     } catch (e) {
       throw Exception(e);
     }

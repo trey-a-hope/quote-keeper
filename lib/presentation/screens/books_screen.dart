@@ -46,6 +46,9 @@ class BooksScreen extends ConsumerWidget {
           hideBook: (_) => bookProvider.hideBook(
             book: bookProvider.books[index],
           ),
+          shareBook: (_) => bookProvider.shareBook(
+            book: bookProvider.books[index],
+          ),
         ).animate().fadeIn(duration: 1000.ms).then(delay: 1000.ms),
       ),
     );

@@ -87,16 +87,20 @@ class BookService extends GetxService {
     }
   }
 
-// https://stackoverflow.com/questions/46798981/firestore-how-to-get-random-documents-in-a-collection
+  // https://stackoverflow.com/questions/46798981/firestore-how-to-get-random-documents-in-a-collection
+
   Future<BookModel> getRandom({required String uid}) async {
     try {
+      // Create a random string to use as the index.
       String randomString = 20.getRandomString();
 
+      // Create a base query for books that are not hidden.
       Query<BookModel> query = (_booksDB(uid: uid)
           .where('hidden', isEqualTo: false)
           .orderBy('id')
           .limit(1));
 
+      // Check for books with a greater index than random, (results maybe).
       List<QueryDocumentSnapshot<BookModel>> firstRoundDocs =
           (await query.where('id', isGreaterThanOrEqualTo: randomString).get())
               .docs;
@@ -105,6 +109,7 @@ class BookService extends GetxService {
         return firstRoundDocs[0].data();
       }
 
+      // Check for books with a greater index than the empty string, (results guaranteed).
       List<QueryDocumentSnapshot<BookModel>> secondRoundDocs =
           (await query.where('id', isGreaterThanOrEqualTo: '').get()).docs;
 

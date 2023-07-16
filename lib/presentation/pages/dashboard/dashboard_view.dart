@@ -1,4 +1,5 @@
 import 'package:book_quotes/services/modal_service.dart';
+import 'package:book_quotes/services/share_service.dart';
 import 'package:book_quotes/utils/constants/globals.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ class DashboardView extends StatelessWidget {
   );
 
   final ModalService _modalService = ModalService();
+  final ShareService _shareService = ShareService();
 
   @override
   Widget build(BuildContext context) {
@@ -118,11 +120,8 @@ class DashboardView extends StatelessWidget {
                                 child: const Icon(Icons.share,
                                     color: Colors.white),
                                 backgroundColor: Colors.teal,
-                                onTap: () => Share.share(
-                                  model.book!.quote,
-                                  subject:
-                                      '${model.book!.title} by ${model.book!.author}',
-                                ),
+                                onTap: () =>
+                                    _shareService.share(book: model.book!),
                                 label: 'Share',
                                 labelStyle: labelStyle,
                                 labelBackgroundColor: Colors.teal.shade800,
