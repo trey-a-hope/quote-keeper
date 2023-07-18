@@ -12,12 +12,14 @@ class BookWidget extends StatelessWidget {
     required this.hideBook,
     required this.showBook,
     required this.shareBook,
+    required this.deleteBook,
   });
 
   final BookModel book;
   final void Function(BuildContext) hideBook;
   final void Function(BuildContext) showBook;
   final void Function(BuildContext) shareBook;
+  final void Function(BuildContext) deleteBook;
 
   static const List<Color> _colors = [
     Color(0xFFFE4A49),
@@ -79,6 +81,13 @@ class BookWidget extends StatelessWidget {
               foregroundColor: Colors.white,
               icon: Icons.edit,
               label: 'Edit',
+            ),
+            SlidableAction(
+              onPressed: deleteBook,
+              backgroundColor: _colors[0],
+              foregroundColor: Colors.white,
+              icon: Icons.delete,
+              label: 'Delete',
             ),
           ],
         ),

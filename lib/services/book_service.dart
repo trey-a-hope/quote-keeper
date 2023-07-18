@@ -128,6 +128,20 @@ class BookService extends GetxService {
     }
   }
 
+  Future<void> delete({
+    required String uid,
+    required String id,
+  }) async {
+    try {
+      await _booksDB(uid: uid).doc(id).delete();
+      return;
+    } catch (e) {
+      throw Exception(
+        e.toString(),
+      );
+    }
+  }
+
   Future<List<BookModel>> list({
     required String uid,
     int? limit,

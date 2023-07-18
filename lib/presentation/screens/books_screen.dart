@@ -2,6 +2,7 @@ import 'package:book_quotes/data/book_provider.dart';
 import 'package:book_quotes/data/providers.dart';
 import 'package:book_quotes/models/books/book_model.dart';
 import 'package:book_quotes/services/book_service.dart';
+import 'package:book_quotes/services/modal_service.dart';
 import 'package:book_quotes/utils/constants/globals.dart';
 import 'package:book_quotes/presentation/widgets/book_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -25,6 +26,7 @@ class BooksScreen extends ConsumerWidget {
   Timestamp? _lastDate;
 
   final BookService _bookService = BookService();
+  final ModalService _modalService = ModalService();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -55,19 +57,33 @@ class BooksScreen extends ConsumerWidget {
         pagingController: _pagingController,
         builderDelegate: PagedChildBuilderDelegate<BookModel>(
           itemBuilder: (context, item, index) => BookWidget(
-            book: item,
-            showBook: (_) => bookProvider.showBook(
-              book: item,
-              books: _pagingController.itemList!,
-            ),
-            hideBook: (_) => bookProvider.hideBook(
-              book: item,
-              books: _pagingController.itemList!,
-            ),
-            shareBook: (_) => bookProvider.shareBook(
-              book: item,
-            ),
-          ).animate().fadeIn(duration: 1000.ms).then(
+                  book: item,
+                  showBook: (_) => bookProvider.showBook(
+                        book: item,
+                        books: _pagingController.itemList!,
+                      ),
+                  hideBook: (_) => bookProvider.hideBook(
+                        book: item,
+                        books: _pagingController.itemList!,
+                      ),
+                  shareBook: (_) => bookProvider.shareBook(
+                        book: item,
+                      ),
+                  deleteBook: (_) async {
+                    bool? confirm = await _modalService.showConfirmation(
+                      context: context,
+                      title: 'Delete Book',
+                      message: 'Are you sure?',
+                    );
+
+                    if (confirm == null || confirm == false) {
+                      return;
+                    }
+
+                    bookProvider.deleteBook(
+                      book: item,
+                    );
+                  }).animate().fadeIn(duration: 1000.ms).then(
                 delay: 1000.ms,
               ),
         ),

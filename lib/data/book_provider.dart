@@ -129,4 +129,18 @@ class BookProvider extends ChangeNotifier {
       throw Exception(e);
     }
   }
+
+  Future deleteBook({required BookModel book}) async {
+    try {
+      // Delete book from firestore.
+      await _bookService.delete(uid: uid, id: book.id!);
+
+      // Delete image from storage.
+      await _storageService.deleteFile(
+        path: 'users/$uid/books/${book.title}',
+      );
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
 }
