@@ -11,7 +11,6 @@ class _MainViewModel extends GetxController {
       FirebaseFirestore.instance.collection('users');
 
   final UserService _userService = Get.find();
-
   final GetStorage _getStorage = Get.find();
 
   @override
@@ -39,7 +38,7 @@ class _MainViewModel extends GetxController {
         // Check if user already exists.
         bool userExists = (await userDocRef.get()).exists;
 
-        // Set UID to get storage.
+        // Set UID to storage for persistence.
         await _getStorage.write('uid', firebaseUser.uid);
 
         // Set app version and build number.

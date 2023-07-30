@@ -1,7 +1,8 @@
 import 'package:book_quotes/models/books/book_model.dart';
+import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
 
-class ShareService {
+class ShareService extends GetxService {
   void share({required BookModel book}) {
     Share.share(
       book.quote,

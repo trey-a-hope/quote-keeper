@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:simple_page_widget/ui/simple_page_widget.dart';
 
@@ -25,8 +26,10 @@ class BooksScreen extends ConsumerWidget {
 
   Timestamp? _lastDate;
 
-  final BookService _bookService = BookService();
-  final ModalService _modalService = ModalService();
+  final BookService _bookService = Get.find();
+  final ModalService _modalService = Get.find();
+
+  final GetStorage _getStorage = Get.find();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -94,7 +97,7 @@ class BooksScreen extends ConsumerWidget {
   Future<void> _fetchPage(int pageKey) async {
     try {
       final List<BookModel> books = await _bookService.fetchPage(
-        uid: 'Rdi7d2Sv50MqTjLJ384jW44FSRz2',
+        uid: _getStorage.read('uid'),
         created: _lastDate,
         limit: Globals.bookPageFetchLimit,
       );

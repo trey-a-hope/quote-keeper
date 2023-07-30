@@ -4,20 +4,24 @@ import 'package:book_quotes/services/book_service.dart';
 import 'package:book_quotes/services/share_service.dart';
 import 'package:book_quotes/services/storage_service.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:image_cropper/image_cropper.dart';
 
 class BookProvider extends ChangeNotifier {
-  final BookService _bookService = BookService();
-  final StorageService _storageService = StorageService();
-  final ShareService _shareService = ShareService();
+  final BookService _bookService = Get.find();
+  final StorageService _storageService = Get.find();
+  final ShareService _shareService = Get.find();
+  final GetStorage _getStorage = Get.find();
 
   int totalBookAccount = 0;
 
-  final String uid = 'Rdi7d2Sv50MqTjLJ384jW44FSRz2';
+  late String uid;
 
   bool isLoading = false;
 
   BookProvider() {
+    uid = _getStorage.read('uid');
     load();
   }
 
