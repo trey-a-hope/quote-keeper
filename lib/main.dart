@@ -10,6 +10,8 @@ import 'package:get_storage/get_storage.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
+import 'package:googleapis/books/v1.dart';
+
 void main() async {
   runZonedGuarded<Future<void>>(() async {
     WidgetsFlutterBinding.ensureInitialized();
