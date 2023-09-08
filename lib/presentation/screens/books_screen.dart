@@ -1,5 +1,5 @@
-import 'package:book_quotes/data/book_provider.dart';
-import 'package:book_quotes/data/providers.dart';
+import 'package:book_quotes/domain/providers/book_provider.dart';
+import 'package:book_quotes/domain/providers/providers.dart';
 import 'package:book_quotes/utils/constants/globals.dart';
 import 'package:book_quotes/presentation/widgets/book_widget.dart';
 import 'package:flutter/material.dart';

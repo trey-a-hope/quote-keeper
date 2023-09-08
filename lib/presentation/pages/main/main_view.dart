@@ -1,5 +1,5 @@
-import 'package:book_quotes/models/users/user_model.dart';
-import 'package:book_quotes/services/user_service.dart';
+import 'package:book_quotes/data/services/user_service.dart';
+import 'package:book_quotes/domain/models/users/user_model.dart';
 import 'package:book_quotes/utils/constants/globals.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';

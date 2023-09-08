@@ -1,6 +1,6 @@
-import 'package:book_quotes/models/books/book_model.dart';
-import 'package:book_quotes/models/users/user_model.dart';
-import 'package:book_quotes/utils/extensions.dart';
+import 'package:book_quotes/domain/models/books/book_model.dart';
+import 'package:book_quotes/domain/models/users/user_model.dart';
+import 'package:book_quotes/utils/extensions/int_extensions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 

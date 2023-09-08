@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:book_quotes/utils/extensions.dart';
+import 'package:book_quotes/utils/extensions/string_extensions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';

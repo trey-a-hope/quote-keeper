@@ -8,7 +8,7 @@ import 'package:book_quotes/utils/constants/globals.dart';
 
 import 'package:get/get_navigation/src/routes/get_route.dart';
 
-import '../presentation/pages/login/login_view.dart';
+import '../../presentation/pages/login/login_view.dart';
 
 class AppRoutes {
   AppRoutes._();

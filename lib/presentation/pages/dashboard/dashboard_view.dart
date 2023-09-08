@@ -1,4 +1,4 @@
-import 'package:book_quotes/services/modal_service.dart';
+import 'package:book_quotes/data/services/modal_service.dart';
 import 'package:book_quotes/utils/constants/globals.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

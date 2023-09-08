@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:book_quotes/app/book_quotes_app.dart';
 import 'package:book_quotes/utils/constants/globals.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +8,9 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:book_quotes/utils/config/initial_bindings.dart';
+import 'package:book_quotes/utils/config/app_routes.dart';
+import 'package:book_quotes/utils/config/app_themes.dart';
 
 void main() async {
   runZonedGuarded<Future<void>>(() async {
@@ -22,13 +24,29 @@ void main() async {
 
     Get.lazyPut(() => GetStorage(), fenix: true);
 
+    // Set app version and build number.
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     Globals.version = packageInfo.version;
     Globals.buildNumber = packageInfo.buildNumber;
 
+    // Set light/dark mode theme.
+    final GetStorage getStorage = Get.find();
+    Get.changeThemeMode(getStorage.read(Globals.darkModeEnabled) ?? false
+        ? ThemeMode.dark
+        : ThemeMode.light);
+
     runApp(
       ProviderScope(
-        child: BookQuotesApp(),
+        child: GetMaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: AppThemes.lightTheme,
+          darkTheme: AppThemes.darkTheme,
+          themeMode: ThemeMode.system,
+          title: 'Book Quotes',
+          initialBinding: InitialBinding(),
+          initialRoute: Globals.routeSplash,
+          getPages: AppRoutes.routes,
+        ),
       ),
     );
   }, (error, stack) => FirebaseCrashlytics.instance.recordError(error, stack));
