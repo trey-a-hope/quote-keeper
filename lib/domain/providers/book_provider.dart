@@ -1,23 +1,27 @@
 import 'dart:io';
+import 'package:book_quotes/data/services/share_service.dart';
 import 'package:book_quotes/domain/models/books/book_model.dart';
 import 'package:book_quotes/data/services/book_service.dart';
 import 'package:book_quotes/data/services/storage_service.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:image_cropper/image_cropper.dart';
 
 class BookProvider extends ChangeNotifier {
-  final BookService _bookService = BookService();
-  final StorageService _storageService = StorageService();
-
-  List<BookModel> books = [];
+  final BookService _bookService = Get.find();
+  final StorageService _storageService = Get.find();
+  final ShareService _shareService = Get.find();
+  final GetStorage _getStorage = Get.find();
 
   int totalBookAccount = 0;
 
-  final String uid = 'Rdi7d2Sv50MqTjLJ384jW44FSRz2';
+  late String uid;
 
   bool isLoading = false;
 
   BookProvider() {
+    uid = _getStorage.read('uid');
     load();
   }
 
@@ -25,10 +29,6 @@ class BookProvider extends ChangeNotifier {
     try {
       isLoading = true;
       notifyListeners();
-
-      books = await _bookService.list(
-        uid: uid,
-      );
 
       totalBookAccount = await _bookService.getTotalBookCount(
         uid: uid,
@@ -77,10 +77,6 @@ class BookProvider extends ChangeNotifier {
         book: book,
       );
 
-      // Add new book to current state.
-      books.add(book);
-      totalBookAccount++;
-
       isLoading = false;
       notifyListeners();
     } catch (e) {
@@ -90,7 +86,8 @@ class BookProvider extends ChangeNotifier {
     }
   }
 
-  Future hideBook({required BookModel book}) async {
+  Future hideBook(
+      {required BookModel book, required List<BookModel> books}) async {
     try {
       // Update 'hidden' property on the BE.
       await _bookService.update(
@@ -108,7 +105,8 @@ class BookProvider extends ChangeNotifier {
     }
   }
 
-  Future showBook({required BookModel book}) async {
+  Future showBook(
+      {required BookModel book, required List<BookModel> books}) async {
     try {
       // Update 'hidden' property on the BE.
       await _bookService.update(
@@ -121,6 +119,30 @@ class BookProvider extends ChangeNotifier {
       books[books.indexOf(book)] = book.copyWith(hidden: false);
 
       notifyListeners();
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future shareBook({required BookModel book}) async {
+    try {
+      _shareService.share(
+        book: book,
+      );
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future deleteBook({required BookModel book}) async {
+    try {
+      // Delete book from firestore.
+      await _bookService.delete(uid: uid, id: book.id!);
+
+      // Delete image from storage.
+      await _storageService.deleteFile(
+        path: 'users/$uid/books/${book.title}',
+      );
     } catch (e) {
       throw Exception(e);
     }

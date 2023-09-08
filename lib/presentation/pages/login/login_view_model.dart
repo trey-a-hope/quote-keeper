@@ -89,6 +89,7 @@ class _LoginViewModel extends GetxController {
 
       // Once signed in, return the UserCredential.
       await _auth.signInWithCredential(credential);
+
       return null;
     } catch (error) {
       return error.toString();

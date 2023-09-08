@@ -11,11 +11,15 @@ class BookWidget extends StatelessWidget {
     required this.book,
     required this.hideBook,
     required this.showBook,
+    required this.shareBook,
+    required this.deleteBook,
   });
 
   final BookModel book;
   final void Function(BuildContext) hideBook;
   final void Function(BuildContext) showBook;
+  final void Function(BuildContext) shareBook;
+  final void Function(BuildContext) deleteBook;
 
   static const List<Color> _colors = [
     Color(0xFFFE4A49),
@@ -33,6 +37,7 @@ class BookWidget extends StatelessWidget {
         startActionPane: ActionPane(
           motion: const ScrollMotion(),
           children: [
+            // If the book is hidden, display the 'Show' panel.
             if (book.hidden) ...[
               SlidableAction(
                 onPressed: showBook,
@@ -42,6 +47,7 @@ class BookWidget extends StatelessWidget {
                 label: 'Show',
               ),
             ],
+            // If the book is not hidden, display the 'Hide' panel.
             if (!book.hidden) ...[
               SlidableAction(
                 onPressed: hideBook,
@@ -51,6 +57,14 @@ class BookWidget extends StatelessWidget {
                 label: 'Hide',
               ),
             ],
+
+            SlidableAction(
+              onPressed: shareBook,
+              backgroundColor: _colors[0],
+              foregroundColor: Colors.white,
+              icon: Icons.share,
+              label: 'Share',
+            ),
           ],
         ),
         endActionPane: ActionPane(
@@ -67,6 +81,13 @@ class BookWidget extends StatelessWidget {
               foregroundColor: Colors.white,
               icon: Icons.edit,
               label: 'Edit',
+            ),
+            SlidableAction(
+              onPressed: deleteBook,
+              backgroundColor: _colors[0],
+              foregroundColor: Colors.white,
+              icon: Icons.delete,
+              label: 'Delete',
             ),
           ],
         ),

@@ -1,10 +1,11 @@
 import 'package:book_quotes/data/services/modal_service.dart';
+import 'package:book_quotes/data/services/share_service.dart';
 import 'package:book_quotes/utils/constants/globals.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:get/get.dart';
-import 'package:share_plus/share_plus.dart';
+import 'package:get_storage/get_storage.dart';
 import 'dashboard_view_model.dart';
 
 class DashboardView extends StatelessWidget {
@@ -15,7 +16,9 @@ class DashboardView extends StatelessWidget {
     color: Colors.white,
   );
 
-  final ModalService _modalService = ModalService();
+  final ModalService _modalService = Get.find();
+  final ShareService _shareService = Get.find();
+  final GetStorage _getStorage = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -99,6 +102,9 @@ class DashboardView extends StatelessWidget {
                                     return;
                                   }
 
+                                  // Clear the uid from storage.
+                                  await _getStorage.remove('uid');
+
                                   FirebaseAuth.instance.signOut();
                                 },
                                 label: 'Logout',
@@ -118,11 +124,8 @@ class DashboardView extends StatelessWidget {
                                 child: const Icon(Icons.share,
                                     color: Colors.white),
                                 backgroundColor: Colors.teal,
-                                onTap: () => Share.share(
-                                  model.book!.quote,
-                                  subject:
-                                      '${model.book!.title} by ${model.book!.author}',
-                                ),
+                                onTap: () =>
+                                    _shareService.share(book: model.book!),
                                 label: 'Share',
                                 labelStyle: labelStyle,
                                 labelBackgroundColor: Colors.teal.shade800,

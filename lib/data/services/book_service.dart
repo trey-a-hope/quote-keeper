@@ -11,6 +11,7 @@ enum BookQuery {
   title,
   author,
   quote,
+  created,
 }
 
 extension on Query<BookModel> {
@@ -22,6 +23,8 @@ extension on Query<BookModel> {
         return orderBy('author', descending: true);
       case BookQuery.quote:
         return orderBy('quote', descending: true);
+      case BookQuery.created:
+        return orderBy('created', descending: false);
     }
   }
 }
@@ -72,16 +75,19 @@ class BookService extends GetxService {
     }
   }
 
-// https://stackoverflow.com/questions/46798981/firestore-how-to-get-random-documents-in-a-collection
+  // https://stackoverflow.com/questions/46798981/firestore-how-to-get-random-documents-in-a-collection
   Future<BookModel> getRandom({required String uid}) async {
     try {
+      // Create a random string to use as the index.
       String randomString = 20.getRandomString();
 
+      // Create a base query for books that are not hidden.
       Query<BookModel> query = (_booksDB(uid: uid)
           .where('hidden', isEqualTo: false)
           .orderBy('id')
           .limit(1));
 
+      // Check for books with a greater index than random, (results maybe).
       List<QueryDocumentSnapshot<BookModel>> firstRoundDocs =
           (await query.where('id', isGreaterThanOrEqualTo: randomString).get())
               .docs;
@@ -90,6 +96,7 @@ class BookService extends GetxService {
         return firstRoundDocs[0].data();
       }
 
+      // Check for books with a greater index than the empty string, (results guaranteed).
       List<QueryDocumentSnapshot<BookModel>> secondRoundDocs =
           (await query.where('id', isGreaterThanOrEqualTo: '').get()).docs;
 
@@ -111,6 +118,20 @@ class BookService extends GetxService {
     try {
       data['modified'] = DateTime.now().toUtc();
       await _booksDB(uid: uid).doc(id).update(data);
+      return;
+    } catch (e) {
+      throw Exception(
+        e.toString(),
+      );
+    }
+  }
+
+  Future<void> delete({
+    required String uid,
+    required String id,
+  }) async {
+    try {
+      await _booksDB(uid: uid).doc(id).delete();
       return;
     } catch (e) {
       throw Exception(
@@ -146,6 +167,45 @@ class BookService extends GetxService {
 
       List<BookModel> books = (await q.get())
           .docs
+          .map(
+            (doc) => doc.data() as BookModel,
+          )
+          .toList();
+
+      return books;
+    } catch (e) {
+      throw Exception(
+        e.toString(),
+      );
+    }
+  }
+
+  Future<List<BookModel>> fetchPage({
+    required Timestamp? created,
+    required int limit,
+    required String uid,
+  }) async {
+    try {
+      CollectionReference<BookModel> bookCol = FirebaseFirestore.instance
+          .collection(users)
+          .doc(uid)
+          .collection('books')
+          .withConverter<BookModel>(
+              fromFirestore: (snapshot, _) =>
+                  BookModel.fromJson(snapshot.data()!),
+              toFirestore: (model, _) => model.toJson());
+
+      Query q = bookCol.queryBy(BookQuery.created);
+
+      q = q.limit(limit);
+
+      if (created != null) {
+        q = q.startAfter([created]);
+      }
+
+      List<QueryDocumentSnapshot<Object?>> docs = (await q.get()).docs;
+
+      List<BookModel> books = docs
           .map(
             (doc) => doc.data() as BookModel,
           )
