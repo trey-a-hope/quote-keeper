@@ -1,3 +1,6 @@
+import 'package:book_quotes/data/services/book_service.dart';
+import 'package:book_quotes/data/services/modal_service.dart';
+import 'package:book_quotes/domain/models/books/book_model.dart';
 import 'package:book_quotes/domain/providers/book_provider.dart';
 import 'package:book_quotes/domain/providers/providers.dart';
 import 'package:book_quotes/utils/constants/globals.dart';

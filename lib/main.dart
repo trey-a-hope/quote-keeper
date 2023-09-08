@@ -12,8 +12,6 @@ import 'package:book_quotes/utils/config/initial_bindings.dart';
 import 'package:book_quotes/utils/config/app_routes.dart';
 import 'package:book_quotes/utils/config/app_themes.dart';
 
-import 'package:googleapis/books/v1.dart';
-
 void main() async {
   runZonedGuarded<Future<void>>(() async {
     WidgetsFlutterBinding.ensureInitialized();
