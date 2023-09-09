@@ -49,12 +49,6 @@ class BooksScreen extends ConsumerWidget {
           Get.back(result: false);
         },
       ),
-      rightIconButton: IconButton(
-        icon: const Icon(Icons.add),
-        onPressed: () async {
-          Get.toNamed(Globals.routeCreateQuote);
-        },
-      ),
       title: 'Books - ${bookProvider.totalBookAccount}',
       child: PagedListView<int, BookModel>(
         pagingController: _pagingController,

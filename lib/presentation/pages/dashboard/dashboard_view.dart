@@ -116,9 +116,19 @@ class DashboardView extends StatelessWidget {
                                     const Icon(Icons.book, color: Colors.white),
                                 backgroundColor: Colors.purple,
                                 onTap: () => Get.toNamed(Globals.routeBooks),
-                                label: 'All Books',
+                                label: 'View All Books',
                                 labelStyle: labelStyle,
                                 labelBackgroundColor: Colors.purple.shade800,
+                              ),
+                              SpeedDialChild(
+                                child:
+                                    const Icon(Icons.add, color: Colors.white),
+                                backgroundColor: Colors.cyan,
+                                onTap: () =>
+                                    Get.toNamed(Globals.routeCreateQuote),
+                                label: 'Create New Book',
+                                labelStyle: labelStyle,
+                                labelBackgroundColor: Colors.cyan.shade800,
                               ),
                               SpeedDialChild(
                                 child: const Icon(Icons.share,
@@ -126,7 +136,7 @@ class DashboardView extends StatelessWidget {
                                 backgroundColor: Colors.teal,
                                 onTap: () =>
                                     _shareService.share(book: model.book!),
-                                label: 'Share',
+                                label: 'Share This Book',
                                 labelStyle: labelStyle,
                                 labelBackgroundColor: Colors.teal.shade800,
                               ),
