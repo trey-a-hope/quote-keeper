@@ -28,4 +28,9 @@ class DashboardViewModel extends GetxController {
       debugPrint('');
     }
   }
+
+  void updateBook({required BookModel newBook}) {
+    book = newBook;
+    update();
+  }
 }

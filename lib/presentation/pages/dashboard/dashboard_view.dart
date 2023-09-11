@@ -1,5 +1,6 @@
 import 'package:book_quotes/data/services/modal_service.dart';
 import 'package:book_quotes/data/services/share_service.dart';
+import 'package:book_quotes/domain/models/books/book_model.dart';
 import 'package:book_quotes/utils/constants/globals.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -77,7 +78,7 @@ class DashboardView extends StatelessWidget {
                             icon: const Icon(Icons.refresh),
                             backgroundColor: Colors.blue,
                             onPressed: () => model.load(),
-                            label: const Text('Fetch New Book'),
+                            label: const Text('Get Random Quote'),
                           ),
                           SpeedDial(
                             animatedIcon: AnimatedIcons.menu_close,
@@ -115,8 +116,13 @@ class DashboardView extends StatelessWidget {
                                 child:
                                     const Icon(Icons.book, color: Colors.white),
                                 backgroundColor: Colors.purple,
-                                onTap: () => Get.toNamed(Globals.routeBooks),
-                                label: 'View All Books',
+                                onTap: () async {
+                                  BookModel newBook =
+                                      await Get.toNamed(Globals.routeBooks);
+
+                                  model.updateBook(newBook: newBook);
+                                },
+                                label: 'View All Quotes',
                                 labelStyle: labelStyle,
                                 labelBackgroundColor: Colors.purple.shade800,
                               ),
@@ -126,7 +132,7 @@ class DashboardView extends StatelessWidget {
                                 backgroundColor: Colors.cyan,
                                 onTap: () =>
                                     Get.toNamed(Globals.routeCreateQuote),
-                                label: 'Create New Book',
+                                label: 'Add New Quote',
                                 labelStyle: labelStyle,
                                 labelBackgroundColor: Colors.cyan.shade800,
                               ),
@@ -136,7 +142,7 @@ class DashboardView extends StatelessWidget {
                                 backgroundColor: Colors.teal,
                                 onTap: () =>
                                     _shareService.share(book: model.book!),
-                                label: 'Share This Book',
+                                label: 'Share This Quote',
                                 labelStyle: labelStyle,
                                 labelBackgroundColor: Colors.teal.shade800,
                               ),

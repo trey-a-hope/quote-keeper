@@ -13,6 +13,7 @@ class BookWidget extends StatelessWidget {
     required this.showBook,
     required this.shareBook,
     required this.deleteBook,
+    this.onTap,
   });
 
   final BookModel book;
@@ -20,6 +21,7 @@ class BookWidget extends StatelessWidget {
   final void Function(BuildContext) showBook;
   final void Function(BuildContext) shareBook;
   final void Function(BuildContext) deleteBook;
+  final void Function()? onTap;
 
   static const List<Color> _colors = [
     Color(0xFFFE4A49),
@@ -32,67 +34,70 @@ class BookWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5),
-      child: Slidable(
-        key: const ValueKey(0),
-        startActionPane: ActionPane(
-          motion: const ScrollMotion(),
-          children: [
-            // If the book is hidden, display the 'Show' panel.
-            if (book.hidden) ...[
-              SlidableAction(
-                onPressed: showBook,
-                backgroundColor: _colors[1],
-                foregroundColor: Colors.white,
-                icon: Icons.present_to_all,
-                label: 'Show',
-              ),
-            ],
-            // If the book is not hidden, display the 'Hide' panel.
-            if (!book.hidden) ...[
-              SlidableAction(
-                onPressed: hideBook,
-                backgroundColor: _colors[2],
-                foregroundColor: Colors.white,
-                icon: Icons.hide_image,
-                label: 'Hide',
-              ),
-            ],
+      child: GestureDetector(
+        onTap: onTap,
+        child: Slidable(
+          key: const ValueKey(0),
+          startActionPane: ActionPane(
+            motion: const ScrollMotion(),
+            children: [
+              // If the book is hidden, display the 'Show' panel.
+              if (book.hidden) ...[
+                SlidableAction(
+                  onPressed: showBook,
+                  backgroundColor: _colors[1],
+                  foregroundColor: Colors.white,
+                  icon: Icons.present_to_all,
+                  label: 'Show',
+                ),
+              ],
+              // If the book is not hidden, display the 'Hide' panel.
+              if (!book.hidden) ...[
+                SlidableAction(
+                  onPressed: hideBook,
+                  backgroundColor: _colors[2],
+                  foregroundColor: Colors.white,
+                  icon: Icons.hide_image,
+                  label: 'Hide',
+                ),
+              ],
 
-            SlidableAction(
-              onPressed: shareBook,
-              backgroundColor: _colors[0],
-              foregroundColor: Colors.white,
-              icon: Icons.share,
-              label: 'Share',
-            ),
-          ],
-        ),
-        endActionPane: ActionPane(
-          motion: const ScrollMotion(),
-          children: [
-            SlidableAction(
-              onPressed: (_) => Get.toNamed(
-                Globals.routeEditQuote,
-                arguments: {
-                  'book': book,
-                },
+              SlidableAction(
+                onPressed: shareBook,
+                backgroundColor: _colors[0],
+                foregroundColor: Colors.white,
+                icon: Icons.share,
+                label: 'Share',
               ),
-              backgroundColor: _colors[3],
-              foregroundColor: Colors.white,
-              icon: Icons.edit,
-              label: 'Edit',
-            ),
-            SlidableAction(
-              onPressed: deleteBook,
-              backgroundColor: _colors[0],
-              foregroundColor: Colors.white,
-              icon: Icons.delete,
-              label: 'Delete',
-            ),
-          ],
-        ),
-        child: _BookWidgetView(
-          book: book,
+            ],
+          ),
+          endActionPane: ActionPane(
+            motion: const ScrollMotion(),
+            children: [
+              SlidableAction(
+                onPressed: (_) => Get.toNamed(
+                  Globals.routeEditQuote,
+                  arguments: {
+                    'book': book,
+                  },
+                ),
+                backgroundColor: _colors[3],
+                foregroundColor: Colors.white,
+                icon: Icons.edit,
+                label: 'Edit',
+              ),
+              SlidableAction(
+                onPressed: deleteBook,
+                backgroundColor: _colors[0],
+                foregroundColor: Colors.white,
+                icon: Icons.delete,
+                label: 'Delete',
+              ),
+            ],
+          ),
+          child: _BookWidgetView(
+            book: book,
+          ),
         ),
       ),
     );

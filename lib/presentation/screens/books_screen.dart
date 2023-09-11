@@ -53,18 +53,21 @@ class BooksScreen extends ConsumerWidget {
       child: PagedListView<int, BookModel>(
         pagingController: _pagingController,
         builderDelegate: PagedChildBuilderDelegate<BookModel>(
-          itemBuilder: (context, item, index) => BookWidget(
-                  book: item,
+          itemBuilder: (context, book, index) => BookWidget(
+                  onTap: () {
+                    Navigator.of(context).pop(book);
+                  },
+                  book: book,
                   showBook: (_) => bookProvider.showBook(
-                        book: item,
+                        book: book,
                         books: _pagingController.itemList!,
                       ),
                   hideBook: (_) => bookProvider.hideBook(
-                        book: item,
+                        book: book,
                         books: _pagingController.itemList!,
                       ),
                   shareBook: (_) => bookProvider.shareBook(
-                        book: item,
+                        book: book,
                       ),
                   deleteBook: (_) async {
                     bool? confirm = await _modalService.showConfirmation(
@@ -78,7 +81,7 @@ class BooksScreen extends ConsumerWidget {
                     }
 
                     bookProvider.deleteBook(
-                      book: item,
+                      book: book,
                     );
                   }).animate().fadeIn(duration: 1000.ms).then(
                 delay: 1000.ms,
