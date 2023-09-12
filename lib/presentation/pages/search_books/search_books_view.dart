@@ -1,5 +1,5 @@
 import 'package:book_quotes/domain/models/search_book_result/search_books_result_model.dart';
-import 'package:book_quotes/search_books/search_books_view_model.dart';
+import 'package:book_quotes/presentation/pages/search_books/search_books_view_model.dart';
 import 'package:book_quotes/utils/constants/globals.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';

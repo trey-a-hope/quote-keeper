@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:book_quotes/domain/models/search_book_result/search_books_result_model.dart';
-import 'package:book_quotes/search_books/search_books_cache.dart';
-import 'package:book_quotes/search_books/search_books_repository.dart';
-import 'package:book_quotes/search_books/search_books_result.dart';
+import 'package:book_quotes/data/cache/search_books_cache.dart';
+import 'package:book_quotes/domain/repositories/search_books_repository.dart';
+import 'package:book_quotes/domain/models/search_books_result.dart';
 import 'package:get/get.dart';
 
 class SearchBooksViewModel extends GetxController {

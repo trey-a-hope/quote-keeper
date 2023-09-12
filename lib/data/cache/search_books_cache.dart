@@ -1,4 +1,4 @@
-import 'package:book_quotes/search_books/search_books_result.dart';
+import 'package:book_quotes/domain/models/search_books_result.dart';
 
 class SearchBooksCache {
   final _cache = <String, SearchBooksResult>{};

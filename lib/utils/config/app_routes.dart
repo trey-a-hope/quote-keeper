@@ -1,10 +1,10 @@
 import 'package:book_quotes/presentation/pages/dashboard/dashboard_view.dart';
 import 'package:book_quotes/presentation/pages/edit_book/edit_book_view.dart';
 import 'package:book_quotes/presentation/pages/main/main_view.dart';
+import 'package:book_quotes/presentation/pages/search_books/search_books_view.dart';
 import 'package:book_quotes/presentation/pages/splash/splash_view.dart';
 import 'package:book_quotes/presentation/screens/books_screen.dart';
 import 'package:book_quotes/presentation/screens/create_book_screen.dart';
-import 'package:book_quotes/search_books/search_books_view.dart';
 import 'package:book_quotes/utils/constants/globals.dart';
 
 import 'package:get/get_navigation/src/routes/get_route.dart';

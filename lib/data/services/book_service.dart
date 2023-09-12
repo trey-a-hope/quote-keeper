@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:book_quotes/domain/models/books/book_model.dart';
 import 'package:book_quotes/domain/models/users/user_model.dart';
-import 'package:book_quotes/search_books/search_books_result.dart';
+import 'package:book_quotes/domain/models/search_books_result.dart';
 import 'package:book_quotes/utils/constants/globals.dart';
 import 'package:book_quotes/utils/extensions/int_extensions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -226,9 +226,14 @@ class BookService extends GetxService {
 
   /// Search for books by search term.
   Future<SearchBooksResult> search({required String term}) async {
+    // Request URL.
     final String baseUrl =
         'https://www.googleapis.com/books/v1/volumes?q=$term&key=${Globals.googleBooksAPIKey}';
+
+    // Send http request.
     final response = await http.get(Uri.parse(baseUrl));
+
+    // Convert body to json.
     final results = json.decode(response.body);
 
     if (results['Response'] == 'False') {
