@@ -1,8 +1,13 @@
+import 'dart:convert';
+
 import 'package:book_quotes/domain/models/books/book_model.dart';
 import 'package:book_quotes/domain/models/users/user_model.dart';
+import 'package:book_quotes/search_books/search_books_result.dart';
+import 'package:book_quotes/utils/constants/globals.dart';
 import 'package:book_quotes/utils/extensions/int_extensions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 
 const String users = 'users';
 const String books = 'books';
@@ -216,6 +221,20 @@ class BookService extends GetxService {
       throw Exception(
         e.toString(),
       );
+    }
+  }
+
+  /// Search for books by search term.
+  Future<SearchBooksResult> search({required String term}) async {
+    final String baseUrl =
+        'https://www.googleapis.com/books/v1/volumes?q=$term&key=${Globals.googleBooksAPIKey}';
+    final response = await http.get(Uri.parse(baseUrl));
+    final results = json.decode(response.body);
+
+    if (results['Response'] == 'False') {
+      throw Exception(results['Error']);
+    } else {
+      return SearchBooksResult.fromJson(results);
     }
   }
 }

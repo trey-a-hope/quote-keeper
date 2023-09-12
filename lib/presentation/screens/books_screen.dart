@@ -72,7 +72,7 @@ class BooksScreen extends ConsumerWidget {
                   deleteBook: (_) async {
                     bool? confirm = await _modalService.showConfirmation(
                       context: context,
-                      title: 'Delete Book',
+                      title: 'Delete ${book.title}',
                       message: 'Are you sure?',
                     );
 

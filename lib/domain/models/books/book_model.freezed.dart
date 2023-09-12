@@ -24,7 +24,7 @@ mixin _$BookModel {
   String get quote => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   String get author => throw _privateConstructorUsedError;
-  String get imgPath => throw _privateConstructorUsedError;
+  String? get imgPath => throw _privateConstructorUsedError;
   bool get hidden => throw _privateConstructorUsedError;
   @TimestampConverter()
   dynamic get created => throw _privateConstructorUsedError;
@@ -47,7 +47,7 @@ abstract class $BookModelCopyWith<$Res> {
       String quote,
       String title,
       String author,
-      String imgPath,
+      String? imgPath,
       bool hidden,
       @TimestampConverter() dynamic created,
       @TimestampConverter() dynamic modified});
@@ -70,7 +70,7 @@ class _$BookModelCopyWithImpl<$Res, $Val extends BookModel>
     Object? quote = null,
     Object? title = null,
     Object? author = null,
-    Object? imgPath = null,
+    Object? imgPath = freezed,
     Object? hidden = null,
     Object? created = freezed,
     Object? modified = freezed,
@@ -92,10 +92,10 @@ class _$BookModelCopyWithImpl<$Res, $Val extends BookModel>
           ? _value.author
           : author // ignore: cast_nullable_to_non_nullable
               as String,
-      imgPath: null == imgPath
+      imgPath: freezed == imgPath
           ? _value.imgPath
           : imgPath // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       hidden: null == hidden
           ? _value.hidden
           : hidden // ignore: cast_nullable_to_non_nullable
@@ -124,7 +124,7 @@ abstract class _$$_BookModelCopyWith<$Res> implements $BookModelCopyWith<$Res> {
       String quote,
       String title,
       String author,
-      String imgPath,
+      String? imgPath,
       bool hidden,
       @TimestampConverter() dynamic created,
       @TimestampConverter() dynamic modified});
@@ -145,7 +145,7 @@ class __$$_BookModelCopyWithImpl<$Res>
     Object? quote = null,
     Object? title = null,
     Object? author = null,
-    Object? imgPath = null,
+    Object? imgPath = freezed,
     Object? hidden = null,
     Object? created = freezed,
     Object? modified = freezed,
@@ -167,10 +167,10 @@ class __$$_BookModelCopyWithImpl<$Res>
           ? _value.author
           : author // ignore: cast_nullable_to_non_nullable
               as String,
-      imgPath: null == imgPath
+      imgPath: freezed == imgPath
           ? _value.imgPath
           : imgPath // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       hidden: null == hidden
           ? _value.hidden
           : hidden // ignore: cast_nullable_to_non_nullable
@@ -206,7 +206,7 @@ class _$_BookModel implements _BookModel {
   @override
   final String author;
   @override
-  final String imgPath;
+  final String? imgPath;
   @override
   final bool hidden;
   @override
@@ -269,7 +269,7 @@ abstract class _BookModel implements BookModel {
       required final String quote,
       required final String title,
       required final String author,
-      required final String imgPath,
+      required final String? imgPath,
       required final bool hidden,
       @TimestampConverter() final dynamic created,
       @TimestampConverter() final dynamic modified}) = _$_BookModel;
@@ -286,7 +286,7 @@ abstract class _BookModel implements BookModel {
   @override
   String get author;
   @override
-  String get imgPath;
+  String? get imgPath;
   @override
   bool get hidden;
   @override

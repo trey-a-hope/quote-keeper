@@ -1,16 +1,12 @@
-import 'dart:io';
 import 'package:book_quotes/data/services/share_service.dart';
 import 'package:book_quotes/domain/models/books/book_model.dart';
 import 'package:book_quotes/data/services/book_service.dart';
-import 'package:book_quotes/data/services/storage_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:image_cropper/image_cropper.dart';
 
 class BookProvider extends ChangeNotifier {
   final BookService _bookService = Get.find();
-  final StorageService _storageService = Get.find();
   final ShareService _shareService = Get.find();
   final GetStorage _getStorage = Get.find();
 
@@ -45,25 +41,19 @@ class BookProvider extends ChangeNotifier {
   }
 
   Future createBook({
-    required CroppedFile file,
-    required String author,
+    required String? author,
     required String quote,
     required String title,
+    required String? imgUrl,
   }) async {
     try {
       isLoading = true;
       notifyListeners();
 
-      // Upload image to storage.
-      String imgPath = await _storageService.uploadFile(
-        file: File(file.path),
-        path: 'users/$uid/books/$title',
-      );
-
       // Create book model.
       BookModel book = BookModel(
-        imgPath: imgPath,
-        author: author,
+        imgPath: imgUrl,
+        author: author ?? 'Author Unknown',
         quote: quote,
         title: title,
         created: DateTime.now(),
@@ -138,11 +128,6 @@ class BookProvider extends ChangeNotifier {
     try {
       // Delete book from firestore.
       await _bookService.delete(uid: uid, id: book.id!);
-
-      // Delete image from storage.
-      await _storageService.deleteFile(
-        path: 'users/$uid/books/${book.title}',
-      );
     } catch (e) {
       throw Exception(e);
     }

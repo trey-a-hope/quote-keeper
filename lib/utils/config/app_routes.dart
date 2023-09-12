@@ -4,6 +4,7 @@ import 'package:book_quotes/presentation/pages/main/main_view.dart';
 import 'package:book_quotes/presentation/pages/splash/splash_view.dart';
 import 'package:book_quotes/presentation/screens/books_screen.dart';
 import 'package:book_quotes/presentation/screens/create_book_screen.dart';
+import 'package:book_quotes/search_books/search_books_view.dart';
 import 'package:book_quotes/utils/constants/globals.dart';
 
 import 'package:get/get_navigation/src/routes/get_route.dart';
@@ -41,6 +42,10 @@ class AppRoutes {
     GetPage(
       name: Globals.routeLogin,
       page: () => const LoginView(),
+    ),
+    GetPage(
+      name: Globals.routeSearchBooks,
+      page: () => SearchBooksView(),
     ),
   ];
 }

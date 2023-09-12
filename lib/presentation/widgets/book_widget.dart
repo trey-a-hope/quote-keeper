@@ -121,7 +121,9 @@ class _BookWidgetView extends StatelessWidget {
             SizedBox(
               width: 130,
               child: CachedNetworkImage(
-                imageUrl: book.imgPath,
+                imageUrl: book.imgPath != null
+                    ? book.imgPath!
+                    : Globals.libraryBackground,
                 imageBuilder: (context, imageProvider) => Container(
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.grey.shade300, width: 1.0),

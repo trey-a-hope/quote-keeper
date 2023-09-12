@@ -11,7 +11,7 @@ _$_BookModel _$$_BookModelFromJson(Map<String, dynamic> json) => _$_BookModel(
       quote: json['quote'] as String,
       title: json['title'] as String,
       author: json['author'] as String,
-      imgPath: json['imgPath'] as String,
+      imgPath: json['imgPath'] as String?,
       hidden: json['hidden'] as bool,
       created: json['created'],
       modified: json['modified'],

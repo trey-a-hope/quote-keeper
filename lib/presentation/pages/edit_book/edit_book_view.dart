@@ -1,6 +1,5 @@
 import 'package:book_quotes/presentation/pages/edit_book/edit_book_view_model.dart';
 import 'package:book_quotes/data/services/modal_service.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:simple_page_widget/ui/simple_page_widget.dart';
@@ -89,17 +88,6 @@ class EditBookView extends StatelessWidget {
                     ),
                   ),
                 ),
-              ),
-              CachedNetworkImage(
-                imageUrl: model.book.imgPath,
-                imageBuilder: (context, imageProvider) => CircleAvatar(
-                  radius: 30,
-                  backgroundImage: imageProvider,
-                ),
-                placeholder: (context, url) => const Center(
-                  child: CircularProgressIndicator(),
-                ),
-                errorWidget: (context, url, error) => const Icon(Icons.error),
               ),
             ],
           ),

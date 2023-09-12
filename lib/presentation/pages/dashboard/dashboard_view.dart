@@ -34,7 +34,9 @@ class DashboardView extends StatelessWidget {
                   height: MediaQuery.of(context).size.height,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: Image.network(model.book!.imgPath).image,
+                      image: model.book!.imgPath != null
+                          ? Image.network(model.book!.imgPath!).image
+                          : Image.network(Globals.libraryBackground).image,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -131,7 +133,7 @@ class DashboardView extends StatelessWidget {
                                     const Icon(Icons.add, color: Colors.white),
                                 backgroundColor: Colors.cyan,
                                 onTap: () =>
-                                    Get.toNamed(Globals.routeCreateQuote),
+                                    Get.toNamed(Globals.routeSearchBooks),
                                 label: 'Add New Quote',
                                 labelStyle: labelStyle,
                                 labelBackgroundColor: Colors.cyan.shade800,

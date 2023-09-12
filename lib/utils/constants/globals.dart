@@ -12,7 +12,15 @@ class Globals {
   static const String routeLogin = '/login';
   static const String routeMain = '/main';
   static const String routeSplash = '/splash';
+  static const String routeSearchBooks = '/searchBooks';
 
+  /// Images
+  static const String libraryBackground =
+      'https://images.unsplash.com/photo-1521587760476-6c12a4b040da?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bGlicmFyeSUyMGJhY2tncm91bmR8ZW58MHx8MHx8fDA%3D&w=1000&q=80MGJhY2tncm91bmR8ZW58MHx8MHx8fDA%253D%26w%3D1000%26q%3D80%22&aqs=chrome..69i57.393j0j7&sourceid=chrome&ie=UTF-8';
+
+  /// API Keys
+  static const String googleBooksAPIKey =
+      'AIzaSyB3fwTeLyIoErtbZjqj9WWlooi6Hhf5KO0';
   static const String cloudMessagingServerKey =
       'AAAAzo15CQU:APA91bH040ySf7LL4P-m68WqWqY3uVPeQspn93KZq3335E-K4e3UhkD9jX6m27xKB1P9IG7XIfVwL5evi59TJOyLioIilO3G0ea5NEELUEe0VciUGV-pRg3phNHGPntVnx_DszYPnzmP';
 
