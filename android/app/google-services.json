@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "20452466446",
+    "project_id": "book-quotes-4e31c",
+    "storage_bucket": "book-quotes-4e31c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:20452466446:android:8a70d01e95146764da015f",
+        "android_client_info": {
+          "package_name": "com.io.book_quotes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "20452466446-iqafvf7kvi77ssl043l7ci4c9e9hogea.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.io.book_quotes",
+            "certificate_hash": "139601a909adc9c0faf6308543c4177d992ce6a8"
+          }
+        },
+        {
+          "client_id": "20452466446-749t7oejo4g9btfcu37qi5ve67kaasc5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDOnjF8oBaSo45XB4M91C-rK0Eb1kIyG8o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "20452466446-749t7oejo4g9btfcu37qi5ve67kaasc5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "20452466446-nabv83mu68a0l2svcjths8u05ald9rdv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.book-quotes"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
