@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:book_quotes/utils/extensions/string_extensions.dart';
+import 'package:quote_keeper/utils/extensions/string_extensions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
@@ -34,7 +34,7 @@ class LoginView extends StatelessWidget {
             ),
           ),
           child: FlutterLogin(
-            title: 'Book Quotes',
+            title: 'QuoteKeeper',
             theme: LoginTheme(
               primaryColor: Colors.deepOrange,
               accentColor: Colors.white,

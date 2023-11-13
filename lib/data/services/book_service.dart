@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-import 'package:book_quotes/domain/models/books/book_model.dart';
-import 'package:book_quotes/domain/models/users/user_model.dart';
-import 'package:book_quotes/domain/models/search_books_result.dart';
-import 'package:book_quotes/utils/constants/globals.dart';
-import 'package:book_quotes/utils/extensions/int_extensions.dart';
+import 'package:quote_keeper/domain/models/books/book_model.dart';
+import 'package:quote_keeper/domain/models/users/user_model.dart';
+import 'package:quote_keeper/domain/models/search_books_result.dart';
+import 'package:quote_keeper/utils/constants/globals.dart';
+import 'package:quote_keeper/utils/extensions/int_extensions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;

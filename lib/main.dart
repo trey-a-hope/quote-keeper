@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:book_quotes/utils/constants/globals.dart';
+import 'package:quote_keeper/utils/constants/globals.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -8,9 +8,9 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:book_quotes/utils/config/initial_bindings.dart';
-import 'package:book_quotes/utils/config/app_routes.dart';
-import 'package:book_quotes/utils/config/app_themes.dart';
+import 'package:quote_keeper/utils/config/initial_bindings.dart';
+import 'package:quote_keeper/utils/config/app_routes.dart';
+import 'package:quote_keeper/utils/config/app_themes.dart';
 
 void main() async {
   runZonedGuarded<Future<void>>(() async {
@@ -42,7 +42,7 @@ void main() async {
           theme: AppThemes.lightTheme,
           darkTheme: AppThemes.darkTheme,
           themeMode: ThemeMode.system,
-          title: 'Book Quotes',
+          title: 'QuoteKeeper',
           initialBinding: InitialBinding(),
           initialRoute: Globals.routeSplash,
           getPages: AppRoutes.routes,

@@ -1,10 +1,10 @@
-import 'package:book_quotes/data/services/book_service.dart';
-import 'package:book_quotes/data/services/modal_service.dart';
-import 'package:book_quotes/domain/models/books/book_model.dart';
-import 'package:book_quotes/domain/providers/book_provider.dart';
-import 'package:book_quotes/domain/providers/providers.dart';
-import 'package:book_quotes/utils/constants/globals.dart';
-import 'package:book_quotes/presentation/widgets/book_widget.dart';
+import 'package:quote_keeper/data/services/book_service.dart';
+import 'package:quote_keeper/data/services/modal_service.dart';
+import 'package:quote_keeper/domain/models/books/book_model.dart';
+import 'package:quote_keeper/domain/providers/book_provider.dart';
+import 'package:quote_keeper/domain/providers/providers.dart';
+import 'package:quote_keeper/utils/constants/globals.dart';
+import 'package:quote_keeper/presentation/widgets/book_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';

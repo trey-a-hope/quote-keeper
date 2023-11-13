@@ -1,6 +1,6 @@
-import 'package:book_quotes/data/services/book_service.dart';
-import 'package:book_quotes/data/cache/search_books_cache.dart';
-import 'package:book_quotes/domain/models/search_books_result.dart';
+import 'package:quote_keeper/data/services/book_service.dart';
+import 'package:quote_keeper/data/cache/search_books_cache.dart';
+import 'package:quote_keeper/domain/models/search_books_result.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

@@ -1,4 +1,4 @@
-import 'package:book_quotes/domain/models/books/book_model.dart';
+import 'package:quote_keeper/domain/models/books/book_model.dart';
 import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
 

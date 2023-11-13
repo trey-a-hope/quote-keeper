@@ -1,5 +1,5 @@
-import 'package:book_quotes/domain/providers/book_provider.dart';
-import 'package:book_quotes/domain/providers/photo_provider.dart';
+import 'package:quote_keeper/domain/providers/book_provider.dart';
+import 'package:quote_keeper/domain/providers/photo_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class Providers {

@@ -1,9 +1,9 @@
-import 'package:book_quotes/data/services/book_service.dart';
-import 'package:book_quotes/data/services/fcm_service.dart';
-import 'package:book_quotes/data/services/modal_service.dart';
-import 'package:book_quotes/data/services/share_service.dart';
-import 'package:book_quotes/data/services/storage_service.dart';
-import 'package:book_quotes/data/services/user_service.dart';
+import 'package:quote_keeper/data/services/book_service.dart';
+import 'package:quote_keeper/data/services/fcm_service.dart';
+import 'package:quote_keeper/data/services/modal_service.dart';
+import 'package:quote_keeper/data/services/share_service.dart';
+import 'package:quote_keeper/data/services/storage_service.dart';
+import 'package:quote_keeper/data/services/user_service.dart';
 import 'package:get/get.dart';
 
 class InitialBinding implements Bindings {

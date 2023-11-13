@@ -1,4 +1,4 @@
-import 'package:book_quotes/utils/converters/timestamp_converters.dart';
+import 'package:quote_keeper/utils/converters/timestamp_converters.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'book_model.freezed.dart';

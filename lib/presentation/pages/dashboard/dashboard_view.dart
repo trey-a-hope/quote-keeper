@@ -1,7 +1,7 @@
-import 'package:book_quotes/data/services/modal_service.dart';
-import 'package:book_quotes/data/services/share_service.dart';
-import 'package:book_quotes/domain/models/books/book_model.dart';
-import 'package:book_quotes/utils/constants/globals.dart';
+import 'package:quote_keeper/data/services/modal_service.dart';
+import 'package:quote_keeper/data/services/share_service.dart';
+import 'package:quote_keeper/domain/models/books/book_model.dart';
+import 'package:quote_keeper/utils/constants/globals.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';

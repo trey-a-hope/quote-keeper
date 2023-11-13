@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:book_quotes/utils/constants/globals.dart';
+import 'package:quote_keeper/utils/constants/globals.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
