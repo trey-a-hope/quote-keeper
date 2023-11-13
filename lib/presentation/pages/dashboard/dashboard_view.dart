@@ -25,7 +25,7 @@ class DashboardView extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<DashboardViewModel>(
       init: DashboardViewModel(),
-      builder: (model) => model.book == null
+      builder: (model) => model.isLoading
           ? const Center(child: CircularProgressIndicator())
           : Stack(
               children: [
@@ -34,7 +34,7 @@ class DashboardView extends StatelessWidget {
                   height: MediaQuery.of(context).size.height,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: model.book!.imgPath != null
+                      image: model.book?.imgPath != null
                           ? Image.network(model.book!.imgPath!).image
                           : Image.network(Globals.libraryBackground).image,
                       fit: BoxFit.cover,
@@ -59,7 +59,9 @@ class DashboardView extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(32.0),
                     child: Text(
-                      '"${model.book!.quote}"',
+                      model.book?.quote != null
+                          ? '"${model.book!.quote}"'
+                          : 'You don\'t have any quotes yet, let\'s create one.',
                       textAlign: TextAlign.center,
                       style: context.textTheme.displayMedium!.copyWith(
                         color: Colors.white,
@@ -76,12 +78,15 @@ class DashboardView extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          FloatingActionButton.extended(
-                            icon: const Icon(Icons.refresh),
-                            backgroundColor: Colors.blue,
-                            onPressed: () => model.load(),
-                            label: const Text('Get Random Quote'),
-                          ),
+                          if (model.book != null) ...[
+                            FloatingActionButton.extended(
+                              icon: const Icon(Icons.refresh),
+                              backgroundColor: Colors.blue,
+                              onPressed: () => model.load(),
+                              label: const Text('Get Random Quote'),
+                            ),
+                          ],
+                          const Spacer(),
                           SpeedDial(
                             animatedIcon: AnimatedIcons.menu_close,
                             animatedIconTheme: const IconThemeData(size: 28.0),
@@ -114,20 +119,33 @@ class DashboardView extends StatelessWidget {
                                 labelStyle: labelStyle,
                                 labelBackgroundColor: Colors.red.shade800,
                               ),
-                              SpeedDialChild(
-                                child:
-                                    const Icon(Icons.book, color: Colors.white),
-                                backgroundColor: Colors.purple,
-                                onTap: () async {
-                                  BookModel newBook =
-                                      await Get.toNamed(Globals.routeBooks);
+                              if (model.book != null) ...[
+                                SpeedDialChild(
+                                  child: const Icon(Icons.book,
+                                      color: Colors.white),
+                                  backgroundColor: Colors.purple,
+                                  onTap: () async {
+                                    BookModel newBook =
+                                        await Get.toNamed(Globals.routeBooks);
 
-                                  model.updateBook(newBook: newBook);
-                                },
-                                label: 'View All Quotes',
-                                labelStyle: labelStyle,
-                                labelBackgroundColor: Colors.purple.shade800,
-                              ),
+                                    model.updateBook(newBook: newBook);
+                                  },
+                                  label: 'View All Quotes',
+                                  labelStyle: labelStyle,
+                                  labelBackgroundColor: Colors.purple.shade800,
+                                ),
+                              ],
+                              if (model.book == null) ...[
+                                SpeedDialChild(
+                                  child: const Icon(Icons.refresh,
+                                      color: Colors.white),
+                                  backgroundColor: Colors.purple,
+                                  onTap: () => model.load(),
+                                  label: 'Refresh',
+                                  labelStyle: labelStyle,
+                                  labelBackgroundColor: Colors.purple.shade800,
+                                ),
+                              ],
                               SpeedDialChild(
                                 child:
                                     const Icon(Icons.add, color: Colors.white),
@@ -138,16 +156,18 @@ class DashboardView extends StatelessWidget {
                                 labelStyle: labelStyle,
                                 labelBackgroundColor: Colors.cyan.shade800,
                               ),
-                              SpeedDialChild(
-                                child: const Icon(Icons.share,
-                                    color: Colors.white),
-                                backgroundColor: Colors.teal,
-                                onTap: () =>
-                                    _shareService.share(book: model.book!),
-                                label: 'Share This Quote',
-                                labelStyle: labelStyle,
-                                labelBackgroundColor: Colors.teal.shade800,
-                              ),
+                              if (model.book != null) ...[
+                                SpeedDialChild(
+                                  child: const Icon(Icons.share,
+                                      color: Colors.white),
+                                  backgroundColor: Colors.teal,
+                                  onTap: () =>
+                                      _shareService.share(book: model.book!),
+                                  label: 'Share This Quote',
+                                  labelStyle: labelStyle,
+                                  labelBackgroundColor: Colors.teal.shade800,
+                                ),
+                              ],
                             ],
                           ),
                         ],

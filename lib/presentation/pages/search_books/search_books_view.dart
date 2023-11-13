@@ -88,7 +88,7 @@ class SearchBooksView extends StatelessWidget {
                                     Theme.of(context).textTheme.headlineSmall,
                               ),
                               subtitle: Text(
-                                book.author!,
+                                book.author ?? 'Unknown',
                                 style: Theme.of(context).textTheme.bodyLarge,
                               ),
                               trailing: Icon(

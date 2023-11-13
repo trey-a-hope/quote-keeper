@@ -10,19 +10,28 @@ class DashboardViewModel extends GetxController {
 
   BookModel? book;
 
+  bool _isLoading = true;
+  bool get isLoading => _isLoading;
+
   @override
   void onInit() async {
     super.onInit();
-
     await load();
   }
 
   Future load() async {
     try {
-      book = await _bookService.getRandom(
+      var exists = await _bookService.booksCollectionExists(
         uid: _getStorage.read('uid'),
       );
 
+      if (exists) {
+        book = await _bookService.getRandom(
+          uid: _getStorage.read('uid'),
+        );
+      }
+
+      _isLoading = false;
       update();
     } catch (e) {
       debugPrint('');
