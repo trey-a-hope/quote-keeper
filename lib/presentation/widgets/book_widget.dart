@@ -162,7 +162,7 @@ class _BookWidgetView extends StatelessWidget {
                     Text(
                       '"${book.quote}"',
                       overflow: TextOverflow.ellipsis,
-                      maxLines: 8,
+                      maxLines: 6,
                       softWrap: false,
                       style: context.textTheme.bodySmall,
                     ),

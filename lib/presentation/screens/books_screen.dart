@@ -1,3 +1,4 @@
+import 'package:animated_search_bar/animated_search_bar.dart';
 import 'package:quote_keeper/data/services/book_service.dart';
 import 'package:quote_keeper/data/services/modal_service.dart';
 import 'package:quote_keeper/domain/models/books/book_model.dart';
@@ -19,16 +20,13 @@ class BooksScreen extends ConsumerWidget {
       PagingController(firstPageKey: 0);
 
   BooksScreen({Key? key}) : super(key: key) {
-    _pagingController.addPageRequestListener((pageKey) {
-      _fetchPage(pageKey);
-    });
+    _pagingController.addPageRequestListener((pageKey) => _fetchPage(pageKey));
   }
 
   Timestamp? _lastDate;
 
   final BookService _bookService = Get.find();
   final ModalService _modalService = Get.find();
-
   final GetStorage _getStorage = Get.find();
 
   @override
@@ -36,59 +34,110 @@ class BooksScreen extends ConsumerWidget {
     final BookProvider bookProvider = ref.watch(Providers.bookProvider);
 
     return SimplePageWidget(
-      floatingActionButton: FloatingActionButton.extended(
-        label: const Text('Reload'),
-        icon: const Icon(Icons.refresh),
-        heroTag: 'refresh2',
-        backgroundColor: Colors.green,
-        onPressed: () => bookProvider.load(),
-      ),
-      leftIconButton: IconButton(
-        icon: const Icon(Icons.chevron_left),
-        onPressed: () {
-          Get.back(result: false);
-        },
-      ),
-      title: 'Books - ${bookProvider.totalBookAccount}',
-      child: PagedListView<int, BookModel>(
-        pagingController: _pagingController,
-        builderDelegate: PagedChildBuilderDelegate<BookModel>(
-          itemBuilder: (context, book, index) => BookWidget(
-                  onTap: () {
-                    Navigator.of(context).pop(book);
-                  },
-                  book: book,
-                  showBook: (_) => bookProvider.showBook(
-                        book: book,
-                        books: _pagingController.itemList!,
-                      ),
-                  hideBook: (_) => bookProvider.hideBook(
-                        book: book,
-                        books: _pagingController.itemList!,
-                      ),
-                  shareBook: (_) => bookProvider.shareBook(
-                        book: book,
-                      ),
-                  deleteBook: (_) async {
-                    bool? confirm = await _modalService.showConfirmation(
-                      context: context,
-                      title: 'Delete ${book.title}',
-                      message: 'Are you sure?',
-                    );
-
-                    if (confirm == null || confirm == false) {
-                      return;
-                    }
-
-                    bookProvider.deleteBook(
-                      book: book,
-                    );
-                  }).animate().fadeIn(duration: 1000.ms).then(
-                delay: 1000.ms,
-              ),
+        leftIconButton: IconButton(
+          icon: const Icon(Icons.chevron_left),
+          onPressed: () {
+            Get.back(result: false);
+          },
         ),
-      ),
-    );
+        title: 'Books - ${bookProvider.totalBookAccount}',
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: AnimatedSearchBar(
+                label: 'Search Your Favorite Quotes',
+                onChanged: (value) => bookProvider.updateSearchText(value),
+              ),
+            ),
+            bookProvider.search.isNotEmpty
+                ? bookProvider.bookSearchResults.isEmpty
+                    ? const Center(
+                        child: Text('No Results Found'),
+                      )
+                    : Column(
+                        children: [
+                          for (var book in bookProvider.bookSearchResults) ...[
+                            BookWidget(
+                                    onTap: () {
+                                      Navigator.of(context).pop(book);
+                                    },
+                                    book: book,
+                                    showBook: (_) => bookProvider.showBook(
+                                          book: book,
+                                          books: _pagingController.itemList!,
+                                        ),
+                                    hideBook: (_) => bookProvider.hideBook(
+                                          book: book,
+                                          books: _pagingController.itemList!,
+                                        ),
+                                    shareBook: (_) => bookProvider.shareBook(
+                                          book: book,
+                                        ),
+                                    deleteBook: (_) async {
+                                      bool? confirm =
+                                          await _modalService.showConfirmation(
+                                        context: context,
+                                        title: 'Delete ${book.title}',
+                                        message: 'Are you sure?',
+                                      );
+
+                                      if (confirm == null || confirm == false) {
+                                        return;
+                                      }
+
+                                      bookProvider.deleteBook(
+                                        book: book,
+                                      );
+                                    }).animate().fadeIn(duration: 1000.ms).then(
+                                  delay: 1000.ms,
+                                ),
+                          ]
+                        ],
+                      )
+                : Expanded(
+                    child: PagedListView<int, BookModel>(
+                      pagingController: _pagingController,
+                      builderDelegate: PagedChildBuilderDelegate<BookModel>(
+                        itemBuilder: (context, book, index) => BookWidget(
+                                onTap: () {
+                                  Navigator.of(context).pop(book);
+                                },
+                                book: book,
+                                showBook: (_) => bookProvider.showBook(
+                                      book: book,
+                                      books: _pagingController.itemList!,
+                                    ),
+                                hideBook: (_) => bookProvider.hideBook(
+                                      book: book,
+                                      books: _pagingController.itemList!,
+                                    ),
+                                shareBook: (_) => bookProvider.shareBook(
+                                      book: book,
+                                    ),
+                                deleteBook: (_) async {
+                                  bool? confirm =
+                                      await _modalService.showConfirmation(
+                                    context: context,
+                                    title: 'Delete ${book.title}',
+                                    message: 'Are you sure?',
+                                  );
+
+                                  if (confirm == null || confirm == false) {
+                                    return;
+                                  }
+
+                                  bookProvider.deleteBook(
+                                    book: book,
+                                  );
+                                }).animate().fadeIn(duration: 1000.ms).then(
+                              delay: 1000.ms,
+                            ),
+                      ),
+                    ),
+                  ),
+          ],
+        ));
   }
 
   Future<void> _fetchPage(int pageKey) async {

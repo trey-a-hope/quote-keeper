@@ -3,8 +3,9 @@ import 'package:flutter_animate/flutter_animate.dart';
 class Globals {
   Globals._();
 
-  /// Routes
+  static var algolia = _AlgoliaConfig();
 
+  /// Routes
   static const String routeBooks = '/books';
   static const String routeCreateQuote = '/createQuote';
   static const String routeDashboard = '/dashboard';
@@ -45,4 +46,10 @@ class Globals {
 
   /// Book page fetch limit.
   static const int bookPageFetchLimit = 5;
+}
+
+class _AlgoliaConfig {
+  final String appId = '5YW6LL0ZS7';
+  final String apiKey = '4705c4904923eacfa4e2a3ec7b3a4847';
+  final String booksIndex = 'books';
 }

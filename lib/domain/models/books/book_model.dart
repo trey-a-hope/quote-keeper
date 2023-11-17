@@ -19,6 +19,7 @@ class BookModel with _$BookModel {
     required bool hidden,
     @TimestampConverter() created,
     @TimestampConverter() modified,
+    required String uid,
   }) = _BookModel;
 
   /// Creates a BookModel from Json map

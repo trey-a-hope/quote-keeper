@@ -1,7 +1,5 @@
 import 'dart:convert';
-
 import 'package:quote_keeper/domain/models/books/book_model.dart';
-import 'package:quote_keeper/domain/models/users/user_model.dart';
 import 'package:quote_keeper/domain/models/search_books_result.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
 import 'package:quote_keeper/utils/extensions/int_extensions.dart';
@@ -9,7 +7,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
-const String users = 'users';
 const String books = 'books';
 
 enum BookQuery {
@@ -34,34 +31,23 @@ extension on Query<BookModel> {
   }
 }
 
-final _usersDB = FirebaseFirestore.instance
-    .collection(users)
-    .withConverter<UserModel>(
-        fromFirestore: (snapshot, _) => UserModel.fromJson(snapshot.data()!),
+final _booksDB = FirebaseFirestore.instance
+    .collection(books)
+    .withConverter<BookModel>(
+        fromFirestore: (snapshot, _) => BookModel.fromJson(snapshot.data()!),
         toFirestore: (model, _) => model.toJson());
 
 class BookService extends GetxService {
   BookQuery query = BookQuery.title;
 
-  CollectionReference<BookModel> _booksDB({required String uid}) {
-    CollectionReference<BookModel> bookCol = _usersDB
-        .doc(uid)
-        .collection(books)
-        .withConverter<BookModel>(
-          fromFirestore: (snapshot, _) => BookModel.fromJson(snapshot.data()!),
-          toFirestore: (model, _) => model.toJson(),
-        );
-    return bookCol;
-  }
-
   // Return true if a user already has books in their collection.
   Future<bool> booksCollectionExists({required String uid}) async =>
-      (await _booksDB(uid: uid).get()).docs.isNotEmpty;
+      (await _booksDB.where('uid', isEqualTo: uid).get()).docs.isNotEmpty;
 
-  Future<void> create({required String uid, required BookModel book}) async {
+  Future<void> create({required BookModel book}) async {
     try {
       // Create document reference of book.s
-      final DocumentReference bookDocRef = _booksDB(uid: uid).doc();
+      final DocumentReference bookDocRef = _booksDB.doc();
 
       // Update ID of the book.
       book = book.copyWith(id: bookDocRef.id);
@@ -76,12 +62,10 @@ class BookService extends GetxService {
   }
 
   Future<int> getTotalBookCount({required String uid}) async {
-    try {
-      AggregateQuery count = _usersDB.doc(uid).collection(books).count();
-      return (await count.get()).count;
-    } catch (e) {
-      throw Exception(e.toString());
-    }
+    Query<BookModel> query = _booksDB.where('uid', isEqualTo: uid);
+    AggregateQuery count = query.count();
+    AggregateQuerySnapshot snapshot = await count.get();
+    return snapshot.count;
   }
 
   // https://stackoverflow.com/questions/46798981/firestore-how-to-get-random-documents-in-a-collection
@@ -91,7 +75,8 @@ class BookService extends GetxService {
       String randomString = 20.getRandomString();
 
       // Create a base query for books that are not hidden.
-      Query<BookModel> query = (_booksDB(uid: uid)
+      Query<BookModel> query = (_booksDB
+          .where('uid', isEqualTo: uid)
           .where('hidden', isEqualTo: false)
           .orderBy('id')
           .limit(1));
@@ -126,7 +111,7 @@ class BookService extends GetxService {
   }) async {
     try {
       data['modified'] = DateTime.now().toUtc();
-      await _booksDB(uid: uid).doc(id).update(data);
+      await _booksDB.doc(id).update(data);
       return;
     } catch (e) {
       throw Exception(
@@ -140,48 +125,8 @@ class BookService extends GetxService {
     required String id,
   }) async {
     try {
-      await _booksDB(uid: uid).doc(id).delete();
+      await _booksDB.doc(id).delete();
       return;
-    } catch (e) {
-      throw Exception(
-        e.toString(),
-      );
-    }
-  }
-
-  Future<List<BookModel>> list({
-    required String uid,
-    int? limit,
-    String? orderBy,
-  }) async {
-    try {
-      CollectionReference<BookModel> bookCol = FirebaseFirestore.instance
-          .collection(users)
-          .doc(uid)
-          .collection('books')
-          .withConverter<BookModel>(
-              fromFirestore: (snapshot, _) =>
-                  BookModel.fromJson(snapshot.data()!),
-              toFirestore: (model, _) => model.toJson());
-
-      Query q = bookCol.queryBy(query);
-
-      if (limit != null) {
-        q = q.limit(limit);
-      }
-
-      if (orderBy != null) {
-        q = q.orderBy(orderBy, descending: true);
-      }
-
-      List<BookModel> books = (await q.get())
-          .docs
-          .map(
-            (doc) => doc.data() as BookModel,
-          )
-          .toList();
-
-      return books;
     } catch (e) {
       throw Exception(
         e.toString(),
@@ -195,16 +140,14 @@ class BookService extends GetxService {
     required String uid,
   }) async {
     try {
-      CollectionReference<BookModel> bookCol = FirebaseFirestore.instance
-          .collection(users)
-          .doc(uid)
-          .collection('books')
+      Query<BookModel> bookQuery = _booksDB
+          .where('uid', isEqualTo: uid)
           .withConverter<BookModel>(
               fromFirestore: (snapshot, _) =>
                   BookModel.fromJson(snapshot.data()!),
               toFirestore: (model, _) => model.toJson());
 
-      Query q = bookCol.queryBy(BookQuery.created);
+      Query q = bookQuery.queryBy(BookQuery.created);
 
       q = q.limit(limit);
 

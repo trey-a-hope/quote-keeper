@@ -1,24 +1,88 @@
+import 'package:algoliasearch/algoliasearch.dart';
 import 'package:quote_keeper/data/services/share_service.dart';
 import 'package:quote_keeper/domain/models/books/book_model.dart';
 import 'package:quote_keeper/data/services/book_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:quote_keeper/utils/constants/globals.dart';
 
 class BookProvider extends ChangeNotifier {
+  // Initialize services.
   final BookService _bookService = Get.find();
   final ShareService _shareService = Get.find();
   final GetStorage _getStorage = Get.find();
 
-  int totalBookAccount = 0;
+  // Total book, or "quote" count.
+  int _totalBookAccount = 0;
+  int get totalBookAccount => _totalBookAccount;
 
-  late String uid;
+  // UID of current user.
+  late String _uid;
 
   bool isLoading = false;
 
+  // Search text.
+  String _search = '';
+  String get search => _search;
+
+  // List of search results for books.
+  List<BookModel> _bookSearchResults = [];
+  List<BookModel> get bookSearchResults => _bookSearchResults;
+
+  // Creating an instance of the search client with given App ID and API key.
+  final SearchClient _client = SearchClient(
+    appId: Globals.algolia.appId,
+    apiKey: Globals.algolia.apiKey,
+  );
+
   BookProvider() {
-    uid = _getStorage.read('uid');
+    _uid = _getStorage.read('uid');
     load();
+  }
+
+  // Update search, and perform search if search string present.
+  void updateSearchText(String val) {
+    _search = val;
+
+    if (_search.isNotEmpty) {
+      _performSearch();
+    }
+
+    notifyListeners();
+  }
+
+  void _performSearch() async {
+    // Constructing a query to search for hits in the index.
+    final SearchForHits queryHits = SearchForHits(
+      indexName: Globals.algolia.booksIndex,
+      query: _search,
+      hitsPerPage: 5,
+      facetFilters: ['uid:$_uid'],
+    );
+
+    // Execute the search request.
+    final SearchResponse responseHits =
+        await _client.searchIndex(request: queryHits);
+
+    // Convert hits to list of book search results.
+    _bookSearchResults = responseHits.hits
+        .map(
+          (hit) => BookModel(
+            id: hit['id'],
+            quote: hit['quote'],
+            title: hit['title'],
+            author: hit['author'],
+            imgPath: hit['imgPath'],
+            hidden: hit['hidden'],
+            uid: hit['uid'],
+            created: DateTime.fromMillisecondsSinceEpoch(hit['created']),
+            modified: DateTime.fromMillisecondsSinceEpoch(hit['modified']),
+          ),
+        )
+        .toList();
+
+    notifyListeners();
   }
 
   void load() async {
@@ -26,8 +90,8 @@ class BookProvider extends ChangeNotifier {
       isLoading = true;
       notifyListeners();
 
-      totalBookAccount = await _bookService.getTotalBookCount(
-        uid: uid,
+      _totalBookAccount = await _bookService.getTotalBookCount(
+        uid: _uid,
       );
 
       isLoading = false;
@@ -59,13 +123,15 @@ class BookProvider extends ChangeNotifier {
         created: DateTime.now(),
         modified: DateTime.now(),
         hidden: false,
+        uid: _uid,
       );
 
       // Save book info to cloud firestore.
       await _bookService.create(
-        uid: uid,
         book: book,
       );
+
+      _totalBookAccount += 1;
 
       isLoading = false;
       notifyListeners();
@@ -81,7 +147,7 @@ class BookProvider extends ChangeNotifier {
     try {
       // Update 'hidden' property on the BE.
       await _bookService.update(
-        uid: uid,
+        uid: _uid,
         id: book.id!,
         data: {'hidden': true},
       );
@@ -100,7 +166,7 @@ class BookProvider extends ChangeNotifier {
     try {
       // Update 'hidden' property on the BE.
       await _bookService.update(
-        uid: uid,
+        uid: _uid,
         id: book.id!,
         data: {'hidden': false},
       );
@@ -127,7 +193,9 @@ class BookProvider extends ChangeNotifier {
   Future deleteBook({required BookModel book}) async {
     try {
       // Delete book from firestore.
-      await _bookService.delete(uid: uid, id: book.id!);
+      await _bookService.delete(uid: _uid, id: book.id!);
+
+      _totalBookAccount -= 1;
     } catch (e) {
       throw Exception(e);
     }
