@@ -48,6 +48,7 @@ class BooksScreen extends ConsumerWidget {
               child: AnimatedSearchBar(
                 label: 'Search Your Favorite Quotes',
                 onChanged: (value) => bookProvider.updateSearchText(value),
+                textInputAction: TextInputAction.done,
               ),
             ),
             bookProvider.search.isNotEmpty
@@ -55,45 +56,57 @@ class BooksScreen extends ConsumerWidget {
                     ? const Center(
                         child: Text('No Results Found'),
                       )
-                    : Column(
-                        children: [
-                          for (var book in bookProvider.bookSearchResults) ...[
-                            BookWidget(
-                                    onTap: () {
-                                      Navigator.of(context).pop(book);
-                                    },
-                                    book: book,
-                                    showBook: (_) => bookProvider.showBook(
-                                          book: book,
-                                          books: _pagingController.itemList!,
-                                        ),
-                                    hideBook: (_) => bookProvider.hideBook(
-                                          book: book,
-                                          books: _pagingController.itemList!,
-                                        ),
-                                    shareBook: (_) => bookProvider.shareBook(
-                                          book: book,
-                                        ),
-                                    deleteBook: (_) async {
-                                      bool? confirm =
-                                          await _modalService.showConfirmation(
-                                        context: context,
-                                        title: 'Delete ${book.title}',
-                                        message: 'Are you sure?',
-                                      );
-
-                                      if (confirm == null || confirm == false) {
-                                        return;
-                                      }
-
-                                      bookProvider.deleteBook(
+                    : Expanded(
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              for (var book
+                                  in bookProvider.bookSearchResults) ...[
+                                BookWidget(
+                                        onTap: () {
+                                          Navigator.of(context).pop(book);
+                                        },
                                         book: book,
-                                      );
-                                    }).animate().fadeIn(duration: 1000.ms).then(
-                                  delay: 1000.ms,
-                                ),
-                          ]
-                        ],
+                                        showBook: (_) => bookProvider.showBook(
+                                              book: book,
+                                              books:
+                                                  _pagingController.itemList!,
+                                            ),
+                                        hideBook: (_) => bookProvider.hideBook(
+                                              book: book,
+                                              books:
+                                                  _pagingController.itemList!,
+                                            ),
+                                        shareBook: (_) =>
+                                            bookProvider.shareBook(
+                                              book: book,
+                                            ),
+                                        deleteBook: (_) async {
+                                          bool? confirm = await _modalService
+                                              .showConfirmation(
+                                            context: context,
+                                            title: 'Delete ${book.title}',
+                                            message: 'Are you sure?',
+                                          );
+
+                                          if (confirm == null ||
+                                              confirm == false) {
+                                            return;
+                                          }
+
+                                          bookProvider.deleteBook(
+                                            book: book,
+                                          );
+                                        })
+                                    .animate()
+                                    .fadeIn(duration: 1000.ms)
+                                    .then(
+                                      delay: 1000.ms,
+                                    ),
+                              ]
+                            ],
+                          ),
+                        ),
                       )
                 : Expanded(
                     child: PagedListView<int, BookModel>(
