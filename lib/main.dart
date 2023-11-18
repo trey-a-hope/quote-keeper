@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,7 @@ void main() async {
 
     await Firebase.initializeApp();
 
-    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+    await _setupCrashlytics();
 
     await GetStorage.init();
 
@@ -50,4 +51,21 @@ void main() async {
       ),
     );
   }, (error, stack) => FirebaseCrashlytics.instance.recordError(error, stack));
+}
+
+Future<void> _setupCrashlytics() async {
+  final FirebaseCrashlytics crashlytics = FirebaseCrashlytics.instance;
+
+  await crashlytics.setCrashlyticsCollectionEnabled(true);
+
+  FlutterError.onError = (errorDetails) async {
+    await crashlytics.recordFlutterFatalError(errorDetails);
+    await crashlytics.recordFlutterError(errorDetails);
+  };
+
+  // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
+  PlatformDispatcher.instance.onError = (error, stack) {
+    crashlytics.recordError(error, stack, fatal: true);
+    return true;
+  };
 }
