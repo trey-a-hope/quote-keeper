@@ -91,6 +91,7 @@ class DashboardView extends StatelessWidget {
                             animatedIcon: AnimatedIcons.menu_close,
                             animatedIconTheme: const IconThemeData(size: 28.0),
                             backgroundColor: Colors.green[900],
+                            foregroundColor: Colors.white,
                             visible: true,
                             curve: Curves.bounceInOut,
                             children: [
@@ -125,10 +126,12 @@ class DashboardView extends StatelessWidget {
                                       color: Colors.white),
                                   backgroundColor: Colors.purple,
                                   onTap: () async {
-                                    BookModel newBook =
+                                    var res =
                                         await Get.toNamed(Globals.routeBooks);
 
-                                    model.updateBook(newBook: newBook);
+                                    if (res is BookModel) {
+                                      model.updateBook(newBook: res);
+                                    }
                                   },
                                   label: 'View All Quotes',
                                   labelStyle: labelStyle,

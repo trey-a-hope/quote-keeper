@@ -5,12 +5,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class Providers {
   static final ref = ProviderContainer();
 
-  static final bookProvider = ChangeNotifierProvider(
+  static final bookProvider = ChangeNotifierProvider.autoDispose(
     (_) => BookProvider(),
   );
 
-  static final photoProvider =
-      ChangeNotifierProvider.family<PhotoProvider, PhotoProviderTag>(
+  static final photoProvider = ChangeNotifierProvider.autoDispose
+      .family<PhotoProvider, PhotoProviderTag>(
     (ref, tag) {
       switch (tag) {
         case PhotoProviderTag.createBook:
