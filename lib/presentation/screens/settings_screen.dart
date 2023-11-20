@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:quote_keeper/data/services/modal_service.dart';
 import 'package:quote_keeper/domain/providers/auth_provider.dart';
 import 'package:quote_keeper/domain/providers/providers.dart';
+import 'package:quote_keeper/utils/constants/globals.dart';
 import 'package:simple_page_widget/ui/simple_page_widget.dart';
 
 class SettingsScreen extends ConsumerWidget {
@@ -26,6 +27,21 @@ class SettingsScreen extends ConsumerWidget {
       child: SettingsList(
         backgroundColor: Colors.white,
         sections: [
+          SettingsSection(
+            title: 'About',
+            tiles: [
+              SettingsTile(
+                title: 'Version',
+                leading: const Icon(Icons.numbers),
+                trailing: Text(Globals.version),
+              ),
+              SettingsTile(
+                title: 'Build Number',
+                leading: const Icon(Icons.build),
+                trailing: Text(Globals.buildNumber),
+              ),
+            ],
+          ),
           SettingsSection(
             title: 'Profile',
             tiles: [
@@ -66,7 +82,11 @@ class SettingsScreen extends ConsumerWidget {
                   try {
                     await authProvider.deleteAccount();
                   } catch (e) {
-                    debugPrint(e.toString());
+                    _modalService.showAlert(
+                      context: context,
+                      title: 'Error',
+                      message: e.toString(),
+                    );
                   }
                 },
               ),
