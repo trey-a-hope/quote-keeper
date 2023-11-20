@@ -14,6 +14,7 @@ class Globals {
   static const String routeMain = '/main';
   static const String routeSplash = '/splash';
   static const String routeSearchBooks = '/searchBooks';
+  static const String routeSettings = '/settings';
 
   /// Images
   static const String libraryBackground =
@@ -31,8 +32,8 @@ class Globals {
 
   static const String darkModeEnabled = 'dark_mode_enabled';
 
-  static String? version;
-  static String? buildNumber;
+  static late String version;
+  static late String buildNumber;
 
   static List<Effect<dynamic>> fadeEffect = <Effect>[
     FadeEffect(duration: 300.ms),

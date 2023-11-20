@@ -1,9 +1,14 @@
+import 'package:quote_keeper/domain/providers/auth_provider.dart';
 import 'package:quote_keeper/domain/providers/book_provider.dart';
 import 'package:quote_keeper/domain/providers/photo_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class Providers {
   static final ref = ProviderContainer();
+
+  static final authProvider = ChangeNotifierProvider.autoDispose(
+    (_) => AuthProvider(),
+  );
 
   static final bookProvider = ChangeNotifierProvider.autoDispose(
     (_) => BookProvider(),

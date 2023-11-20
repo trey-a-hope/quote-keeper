@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:quote_keeper/domain/models/books/book_model.dart';
 import 'package:quote_keeper/domain/models/search_books_result.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
@@ -7,6 +8,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
+final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 const String books = 'books';
 
 enum BookQuery {
@@ -31,11 +33,9 @@ extension on Query<BookModel> {
   }
 }
 
-final _booksDB = FirebaseFirestore.instance
-    .collection(books)
-    .withConverter<BookModel>(
-        fromFirestore: (snapshot, _) => BookModel.fromJson(snapshot.data()!),
-        toFirestore: (model, _) => model.toJson());
+final _booksDB = _firestore.collection(books).withConverter<BookModel>(
+    fromFirestore: (snapshot, _) => BookModel.fromJson(snapshot.data()!),
+    toFirestore: (model, _) => model.toJson());
 
 class BookService extends GetxService {
   BookQuery query = BookQuery.title;
@@ -187,6 +187,32 @@ class BookService extends GetxService {
       throw Exception(results['Error']);
     } else {
       return SearchBooksResult.fromJson(results);
+    }
+  }
+
+  // Delete all books that a user posted, as well as the user themselves.
+  Future<void> deleteUserAndBooks({required String uid}) async {
+    try {
+      final querySnapshot = await _firestore
+          .collection('books')
+          .where('uid', isEqualTo: uid)
+          .get();
+
+      final batch = _firestore.batch();
+
+      // Add firestore user to batch.
+      var userDocRef = _firestore.collection('users').doc(uid);
+      batch.delete(userDocRef);
+
+      // Add book posts to batch.
+      for (var doc in querySnapshot.docs) {
+        var docRef = _firestore.collection('books').doc(doc.id);
+        batch.delete(docRef);
+      }
+
+      await batch.commit();
+    } catch (e) {
+      debugPrint(e.toString());
     }
   }
 }
