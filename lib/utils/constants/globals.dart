@@ -14,6 +14,7 @@ class Globals {
   static const String routeMain = '/main';
   static const String routeSplash = '/splash';
   static const String routeSearchBooks = '/searchBooks';
+  static const String routeSettings = '/settings';
 
   /// Images
   static const String libraryBackground =
