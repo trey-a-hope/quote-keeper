@@ -31,6 +31,7 @@ mixin _$BookModel {
   @TimestampConverter()
   dynamic get modified => throw _privateConstructorUsedError;
   String get uid => throw _privateConstructorUsedError;
+  bool get complete => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -52,7 +53,8 @@ abstract class $BookModelCopyWith<$Res> {
       bool hidden,
       @TimestampConverter() dynamic created,
       @TimestampConverter() dynamic modified,
-      String uid});
+      String uid,
+      bool complete});
 }
 
 /// @nodoc
@@ -77,6 +79,7 @@ class _$BookModelCopyWithImpl<$Res, $Val extends BookModel>
     Object? created = freezed,
     Object? modified = freezed,
     Object? uid = null,
+    Object? complete = null,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -115,6 +118,10 @@ class _$BookModelCopyWithImpl<$Res, $Val extends BookModel>
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
               as String,
+      complete: null == complete
+          ? _value.complete
+          : complete // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -135,7 +142,8 @@ abstract class _$$_BookModelCopyWith<$Res> implements $BookModelCopyWith<$Res> {
       bool hidden,
       @TimestampConverter() dynamic created,
       @TimestampConverter() dynamic modified,
-      String uid});
+      String uid,
+      bool complete});
 }
 
 /// @nodoc
@@ -158,6 +166,7 @@ class __$$_BookModelCopyWithImpl<$Res>
     Object? created = freezed,
     Object? modified = freezed,
     Object? uid = null,
+    Object? complete = null,
   }) {
     return _then(_$_BookModel(
       id: freezed == id
@@ -190,6 +199,10 @@ class __$$_BookModelCopyWithImpl<$Res>
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
               as String,
+      complete: null == complete
+          ? _value.complete
+          : complete // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -206,7 +219,8 @@ class _$_BookModel implements _BookModel {
       required this.hidden,
       @TimestampConverter() this.created,
       @TimestampConverter() this.modified,
-      required this.uid});
+      required this.uid,
+      required this.complete});
 
   factory _$_BookModel.fromJson(Map<String, dynamic> json) =>
       _$$_BookModelFromJson(json);
@@ -231,10 +245,12 @@ class _$_BookModel implements _BookModel {
   final dynamic modified;
   @override
   final String uid;
+  @override
+  final bool complete;
 
   @override
   String toString() {
-    return 'BookModel(id: $id, quote: $quote, title: $title, author: $author, imgPath: $imgPath, hidden: $hidden, created: $created, modified: $modified, uid: $uid)';
+    return 'BookModel(id: $id, quote: $quote, title: $title, author: $author, imgPath: $imgPath, hidden: $hidden, created: $created, modified: $modified, uid: $uid, complete: $complete)';
   }
 
   @override
@@ -250,7 +266,9 @@ class _$_BookModel implements _BookModel {
             (identical(other.hidden, hidden) || other.hidden == hidden) &&
             const DeepCollectionEquality().equals(other.created, created) &&
             const DeepCollectionEquality().equals(other.modified, modified) &&
-            (identical(other.uid, uid) || other.uid == uid));
+            (identical(other.uid, uid) || other.uid == uid) &&
+            (identical(other.complete, complete) ||
+                other.complete == complete));
   }
 
   @JsonKey(ignore: true)
@@ -265,7 +283,8 @@ class _$_BookModel implements _BookModel {
       hidden,
       const DeepCollectionEquality().hash(created),
       const DeepCollectionEquality().hash(modified),
-      uid);
+      uid,
+      complete);
 
   @JsonKey(ignore: true)
   @override
@@ -291,7 +310,8 @@ abstract class _BookModel implements BookModel {
       required final bool hidden,
       @TimestampConverter() final dynamic created,
       @TimestampConverter() final dynamic modified,
-      required final String uid}) = _$_BookModel;
+      required final String uid,
+      required final bool complete}) = _$_BookModel;
 
   factory _BookModel.fromJson(Map<String, dynamic> json) =
       _$_BookModel.fromJson;
@@ -316,6 +336,8 @@ abstract class _BookModel implements BookModel {
   dynamic get modified;
   @override
   String get uid;
+  @override
+  bool get complete;
   @override
   @JsonKey(ignore: true)
   _$$_BookModelCopyWith<_$_BookModel> get copyWith =>

@@ -75,6 +75,7 @@ class BookProvider extends ChangeNotifier {
             author: hit['author'],
             imgPath: hit['imgPath'],
             hidden: hit['hidden'],
+            complete: hit['complete'],
             uid: hit['uid'],
             created: DateTime.fromMillisecondsSinceEpoch(hit['created']),
             modified: DateTime.fromMillisecondsSinceEpoch(hit['modified']),
@@ -123,6 +124,7 @@ class BookProvider extends ChangeNotifier {
         created: DateTime.now(),
         modified: DateTime.now(),
         hidden: false,
+        complete: false,
         uid: _uid,
       );
 
