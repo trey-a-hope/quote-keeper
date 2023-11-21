@@ -16,6 +16,7 @@ _$_BookModel _$$_BookModelFromJson(Map<String, dynamic> json) => _$_BookModel(
       created: json['created'],
       modified: json['modified'],
       uid: json['uid'] as String,
+      complete: json['complete'] as bool,
     );
 
 Map<String, dynamic> _$$_BookModelToJson(_$_BookModel instance) =>
@@ -29,4 +30,5 @@ Map<String, dynamic> _$$_BookModelToJson(_$_BookModel instance) =>
       'created': instance.created,
       'modified': instance.modified,
       'uid': instance.uid,
+      'complete': instance.complete,
     };

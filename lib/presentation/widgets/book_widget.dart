@@ -173,12 +173,25 @@ class _BookWidgetView extends StatelessWidget {
                           book.author,
                           style: Theme.of(context).textTheme.headline6,
                         ),
+                        const Spacer(),
                         if (book.hidden) ...[
-                          const Spacer(),
-                          const Icon(
-                            Icons.hide_image,
-                            color: Colors.green,
-                            size: 15,
+                          const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 4.0),
+                            child: Icon(
+                              Icons.hide_image,
+                              color: Colors.green,
+                              size: 15,
+                            ),
+                          )
+                        ],
+                        if (book.complete) ...[
+                          const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 4.0),
+                            child: Icon(
+                              Icons.check,
+                              color: Colors.blue,
+                              size: 15,
+                            ),
                           )
                         ]
                       ],
