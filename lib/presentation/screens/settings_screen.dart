@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_settings_ui/flutter_settings_ui.dart';
 import 'package:get/get.dart';
 import 'package:quote_keeper/data/services/modal_service.dart';
+import 'package:quote_keeper/domain/models/users/user_model.dart';
 import 'package:quote_keeper/domain/providers/auth_provider.dart';
 import 'package:quote_keeper/domain/providers/providers.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
@@ -68,11 +69,14 @@ class SettingsScreen extends ConsumerWidget {
                 leading: const Icon(Icons.delete),
                 trailing: const Icon(Icons.chevron_right),
                 onPressed: (_) async {
-                  bool? confirm = await _modalService.showConfirmation(
+                  UserModel user = await authProvider.getUser();
+
+                  bool? confirm =
+                      await _modalService.showInputMatchConfirmation(
                     context: context,
-                    title: 'Delete Account',
-                    message:
-                        'Are you sure? This cannot be undone, and all of your quotes will be deleted.',
+                    title: 'Delete Account?',
+                    hintText: 'Enter your email to confirm.',
+                    match: user.email,
                   );
 
                   if (confirm == null || confirm == false) {

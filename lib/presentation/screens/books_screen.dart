@@ -5,7 +5,7 @@ import 'package:quote_keeper/domain/models/books/book_model.dart';
 import 'package:quote_keeper/domain/providers/book_provider.dart';
 import 'package:quote_keeper/domain/providers/providers.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
-import 'package:quote_keeper/presentation/widgets/book_widget.dart';
+import 'package:quote_keeper/presentation/widgets/book/book_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
