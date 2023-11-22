@@ -32,6 +32,7 @@ class DashboardViewModel extends GetxController {
       }
 
       _isLoading = false;
+
       update();
     } catch (e) {
       debugPrint('');

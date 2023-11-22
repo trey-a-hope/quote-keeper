@@ -1,3 +1,4 @@
+import 'package:quote_keeper/data/services/tutorial_service.dart';
 import 'package:quote_keeper/domain/models/search_book_result/search_books_result_model.dart';
 import 'package:quote_keeper/presentation/pages/search_books/search_books_view_model.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
@@ -15,101 +16,109 @@ class SearchBooksView extends StatelessWidget {
   /// Key for the scaffold.
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
+  final TutorialService _tutorialService = Get.find();
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<SearchBooksViewModel>(
       init: SearchBooksViewModel(),
-      builder: (model) => SimplePageWidget(
-        scaffoldKey: _scaffoldKey,
-        leftIconButton: IconButton(
-          icon: const Icon(Icons.chevron_left),
-          onPressed: () {
-            Get.back();
-          },
-        ),
-        title: 'Search Books',
-        child: Column(
-          children: [
-            TextField(
-              style: context.textTheme.headline5!,
-              controller: _textController,
-              autocorrect: false,
-              onChanged: (text) {
-                model.udpateSearchText(text: text);
-              },
-              cursorColor: Theme.of(context).textTheme.headline5!.color,
-              decoration: InputDecoration(
-                errorStyle: const TextStyle(color: Colors.white),
-                prefixIcon: Icon(
-                  Icons.search,
-                  color: Theme.of(context).iconTheme.color,
-                ),
-                suffixIcon: GestureDetector(
-                  child: Icon(
-                    Icons.clear,
+      builder: (model) {
+        _tutorialService.showSearchBookTutorial(context);
+
+        return SimplePageWidget(
+          scaffoldKey: _scaffoldKey,
+          leftIconButton: IconButton(
+            icon: const Icon(Icons.chevron_left),
+            onPressed: () {
+              Get.back();
+            },
+          ),
+          title: 'Search Books',
+          child: Column(
+            children: [
+              TextField(
+                style: context.textTheme.headline5!,
+                controller: _textController,
+                autocorrect: false,
+                onChanged: (text) {
+                  model.udpateSearchText(text: text);
+                },
+                cursorColor: Theme.of(context).textTheme.headline5!.color,
+                decoration: InputDecoration(
+                  errorStyle: const TextStyle(color: Colors.white),
+                  prefixIcon: Icon(
+                    key: _tutorialService.searchBookTarget1,
+                    Icons.search,
                     color: Theme.of(context).iconTheme.color,
                   ),
-                  onTap: () {
-                    _textController.clear();
-                    model.udpateSearchText(text: '');
-                  },
+                  suffixIcon: GestureDetector(
+                    child: Icon(
+                      Icons.clear,
+                      color: Theme.of(context).iconTheme.color,
+                    ),
+                    onTap: () {
+                      _textController.clear();
+                      model.udpateSearchText(text: '');
+                    },
+                  ),
+                  border: InputBorder.none,
+                  hintText: 'Enter title here...',
+                  hintStyle: Theme.of(context).textTheme.bodyLarge,
                 ),
-                border: InputBorder.none,
-                hintText: 'Enter title here...',
-                hintStyle: Theme.of(context).textTheme.bodyLarge,
               ),
-            ),
-            model.isLoading
-                ? const Center(child: CircularProgressIndicator())
-                : model.errorMessage != null
-                    ? Center(child: Text(model.errorMessage!))
-                    : Expanded(
-                        child: ListView.builder(
-                          itemCount: model.books.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            final SearchBooksResultModel book =
-                                model.books[index];
+              model.isLoading
+                  ? const Center(child: CircularProgressIndicator())
+                  : model.errorMessage != null
+                      ? Center(child: Text(model.errorMessage!))
+                      : Expanded(
+                          child: ListView.builder(
+                            itemCount: model.books.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              final SearchBooksResultModel book =
+                                  model.books[index];
 
-                            return ListTile(
-                              leading: CachedNetworkImage(
-                                imageUrl: '${book.imgUrl}',
-                                imageBuilder: (context, imageProvider) => Image(
-                                  image: imageProvider,
-                                  height: 100,
+                              return ListTile(
+                                leading: CachedNetworkImage(
+                                  imageUrl: '${book.imgUrl}',
+                                  imageBuilder: (context, imageProvider) =>
+                                      Image(
+                                    image: imageProvider,
+                                    height: 100,
+                                  ),
+                                  placeholder: (context, url) =>
+                                      const CircularProgressIndicator(),
+                                  errorWidget: (context, url, error) =>
+                                      const Icon(Icons.error),
                                 ),
-                                placeholder: (context, url) =>
-                                    const CircularProgressIndicator(),
-                                errorWidget: (context, url, error) =>
-                                    const Icon(Icons.error),
-                              ),
-                              title: Text(
-                                book.title,
-                                style:
-                                    Theme.of(context).textTheme.headlineSmall,
-                              ),
-                              subtitle: Text(
-                                book.author ?? 'Unknown',
-                                style: Theme.of(context).textTheme.bodyLarge,
-                              ),
-                              trailing: Icon(
-                                Icons.chevron_right,
-                                color: Theme.of(context).iconTheme.color,
-                              ),
-                              onTap: () async {
-                                Get.toNamed(
-                                  Globals.routeCreateQuote,
-                                  arguments: {
-                                    'book': book,
-                                  },
-                                );
-                              },
-                            );
-                          },
+                                title: Text(
+                                  book.title,
+                                  style:
+                                      Theme.of(context).textTheme.headlineSmall,
+                                ),
+                                subtitle: Text(
+                                  book.author ?? 'Unknown',
+                                  style: Theme.of(context).textTheme.bodyLarge,
+                                ),
+                                trailing: Icon(
+                                  Icons.chevron_right,
+                                  color: Theme.of(context).iconTheme.color,
+                                ),
+                                onTap: () async {
+                                  Get.toNamed(
+                                    Globals.routeCreateQuote,
+                                    arguments: {
+                                      'book': book,
+                                    },
+                                  );
+                                },
+                              );
+                            },
+                          ),
                         ),
-                      ),
-          ],
-        ),
-      ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

@@ -41,6 +41,9 @@ class _MainViewModel extends GetxController {
         // Set UID to storage for persistence.
         await _getStorage.write('uid', firebaseUser.uid);
 
+        // Set tutorial completion flag to false by default.
+        await _getStorage.write(Globals.tutorialComplete, false);
+
         // Set app version and build number.
         PackageInfo packageInfo = await PackageInfo.fromPlatform();
         _getStorage.write(Globals.appBuildNumber, packageInfo.buildNumber);

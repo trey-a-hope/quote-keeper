@@ -1,16 +1,16 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:quote_keeper/data/services/tutorial_service.dart';
 import 'package:quote_keeper/domain/models/search_book_result/search_books_result_model.dart';
-import 'package:quote_keeper/domain/providers/book_provider.dart';
 import 'package:quote_keeper/domain/providers/providers.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
 import 'package:quote_keeper/data/services/modal_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:simple_page_widget/ui/simple_page_widget.dart';
 
-class CreateBookScreen extends ConsumerWidget {
-  CreateBookScreen({Key? key}) : super(key: key);
+class CreateQuoteScreen extends ConsumerWidget {
+  CreateQuoteScreen({Key? key}) : super(key: key);
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -18,11 +18,16 @@ class CreateBookScreen extends ConsumerWidget {
 
   final ModalService _modalService = Get.find();
 
+  final TutorialService _tutorialService = Get.find();
+
   final SearchBooksResultModel book = Get.arguments['book'];
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final BookProvider bookProvider = ref.watch(Providers.bookProvider);
+    final bookProvider = ref.watch(Providers.bookProvider);
+
+    _tutorialService.showCreateQuoteTutorial(context);
+
     return SimplePageWidget(
       scaffoldKey: _scaffoldKey,
       leftIconButton: IconButton(
@@ -32,7 +37,7 @@ class CreateBookScreen extends ConsumerWidget {
         },
       ),
       rightIconButton: IconButton(
-        icon: const Icon(Icons.check),
+        icon: Icon(key: _tutorialService.createQuoteTarget1, Icons.check),
         onPressed: () async {
           bool? confirm = await _modalService.showConfirmation(
             context: context,
@@ -55,6 +60,8 @@ class CreateBookScreen extends ConsumerWidget {
             // Return to dashboard by removing two screens.
             Get.back();
             Get.back();
+
+            _tutorialService.showRefreshDashboardTutorial(context);
           } catch (error) {
             Get.showSnackbar(
               GetSnackBar(
