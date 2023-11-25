@@ -1,5 +1,6 @@
 import 'package:algoliasearch/algoliasearch.dart';
 import 'package:quote_keeper/data/services/share_service.dart';
+import 'package:quote_keeper/data/services/user_service.dart';
 import 'package:quote_keeper/domain/models/books/book_model.dart';
 import 'package:quote_keeper/data/services/book_service.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ import 'package:quote_keeper/utils/constants/globals.dart';
 class BookProvider extends ChangeNotifier {
   // Initialize services.
   final BookService _bookService = Get.find();
+  final UserService _userService = Get.find();
   final ShareService _shareService = Get.find();
   final GetStorage _getStorage = Get.find();
 
@@ -40,8 +42,13 @@ class BookProvider extends ChangeNotifier {
     apiKey: Globals.algolia.apiKey,
   );
 
+  bool _showTutorial = false;
+  bool get showTutorial => _showTutorial;
+
   BookProvider() {
     _uid = _getStorage.read('uid');
+    // Determine if the tutorial should be shown.
+    _showTutorial = !_getStorage.read(Globals.tutorialComplete);
     load();
   }
 
@@ -145,8 +152,16 @@ class BookProvider extends ChangeNotifier {
 
       isLoading = false;
 
-      // Set tutorial complete flag to true. TODO: Maybe only update this once in the future?
-      await _getStorage.write(Globals.tutorialComplete, true);
+      // Set tutorialComplete flag to true. TODO: Maybe only update this once in the future?
+      await _userService.updateUser(
+        uid: _uid,
+        data: {
+          'tutorialComplete': true,
+        },
+      );
+
+      // Turn off tutorial flag.
+      _getStorage.write(Globals.tutorialComplete, true);
 
       notifyListeners();
     } catch (e) {

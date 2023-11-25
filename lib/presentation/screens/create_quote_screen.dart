@@ -36,7 +36,9 @@ class CreateQuoteScreen extends ConsumerWidget {
       child: bookProvider.isLoading
           ? const Center(child: CircularProgressIndicator())
           : Builder(builder: (context) {
-              _tutorialService.showCreateQuoteTutorial(context);
+              if (bookProvider.showTutorial) {
+                _tutorialService.showCreateQuoteTutorial(context);
+              }
 
               return Padding(
                 padding: const EdgeInsets.all(16.0),
@@ -83,7 +85,7 @@ class CreateQuoteScreen extends ConsumerWidget {
                       ),
                       const Spacer(),
                       ElevatedButton(
-                        key: _tutorialService.createQuoteTarget1,
+                        key: _tutorialService.createQuoteTarget,
                         onPressed: bookProvider.quote.isEmpty
                             ? null
                             : () async {
@@ -107,13 +109,9 @@ class CreateQuoteScreen extends ConsumerWidget {
                                     imgUrl: book.imgUrl,
                                   );
 
-                                  // Return to dashboard by removing two screens.
+                                  // Return to dashboard.
                                   Get.back();
                                   Get.back();
-
-                                  // Display tutorial for successful quote.
-                                  _tutorialService
-                                      .showRefreshDashboardTutorial(context);
                                 } catch (error) {
                                   Get.showSnackbar(
                                     GetSnackBar(

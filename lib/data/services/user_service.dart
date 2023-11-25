@@ -38,7 +38,7 @@ class UserService extends GetxService {
   }
 
   /// Retrieve a user.
-  Future<UserModel?> retrieveUser({required String uid}) async {
+  Future<UserModel> retrieveUser({required String uid}) async {
     try {
       final DocumentReference model = _usersDB
           .doc(uid)
@@ -46,12 +46,6 @@ class UserService extends GetxService {
               fromFirestore: (snapshot, _) =>
                   UserModel.fromJson(snapshot.data()!),
               toFirestore: (model, _) => model.toJson());
-
-      bool userExists = (await model.get()).exists;
-
-      if (!userExists) {
-        return null;
-      }
 
       return (await model.get()).data() as UserModel;
     } catch (e) {

@@ -41,9 +41,6 @@ class _MainViewModel extends GetxController {
         // Set UID to storage for persistence.
         await _getStorage.write('uid', firebaseUser.uid);
 
-        // Set tutorial completion flag to false by default.
-        await _getStorage.write(Globals.tutorialComplete, false);
-
         // Set app version and build number.
         PackageInfo packageInfo = await PackageInfo.fromPlatform();
         _getStorage.write(Globals.appBuildNumber, packageInfo.buildNumber);
@@ -53,6 +50,9 @@ class _MainViewModel extends GetxController {
         await FirebaseCrashlytics.instance.setUserIdentifier(firebaseUser.uid);
 
         if (userExists) {
+          var user = await _userService.retrieveUser(uid: firebaseUser.uid);
+          _getStorage.write(Globals.tutorialComplete, user.tutorialComplete);
+
           //TODO: Firebase Messaging currently throwing error in production.
           // // Request permission from user to receive push notifications.
           // if (Platform.isIOS) {
@@ -75,9 +75,11 @@ class _MainViewModel extends GetxController {
             uid: firebaseUser.uid,
             username: firebaseUser.displayName ?? firebaseUser.email,
             email: firebaseUser.email ?? '',
+            tutorialComplete: false,
           );
 
           await _userService.createUser(user: user);
+          _getStorage.write(Globals.tutorialComplete, user.tutorialComplete);
         }
 
         // Proceed to home page.

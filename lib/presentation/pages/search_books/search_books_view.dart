@@ -23,7 +23,9 @@ class SearchBooksView extends StatelessWidget {
     return GetBuilder<SearchBooksViewModel>(
       init: SearchBooksViewModel(),
       builder: (model) {
-        _tutorialService.showSearchBookTutorial(context);
+        if (model.showTutorial) {
+          _tutorialService.showSearchBookTutorial(context);
+        }
 
         return SimplePageWidget(
           scaffoldKey: _scaffoldKey,
@@ -37,6 +39,7 @@ class SearchBooksView extends StatelessWidget {
           child: Column(
             children: [
               TextField(
+                key: _tutorialService.searchBookTarget,
                 style: context.textTheme.headline5!,
                 controller: _textController,
                 autocorrect: false,
@@ -47,7 +50,6 @@ class SearchBooksView extends StatelessWidget {
                 decoration: InputDecoration(
                   errorStyle: const TextStyle(color: Colors.white),
                   prefixIcon: Icon(
-                    key: _tutorialService.searchBookTarget1,
                     Icons.search,
                     color: Theme.of(context).iconTheme.color,
                   ),

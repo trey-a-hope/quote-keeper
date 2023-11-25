@@ -27,7 +27,9 @@ class DashboardView extends StatelessWidget {
             ? const Center(child: CircularProgressIndicator())
             : Builder(
                 builder: (context) {
-                  _tutorialService.showDashboardTutorial(context);
+                  if (model.showTutorial) {
+                    _tutorialService.showDashboardTutorial(context);
+                  }
 
                   return Stack(
                     children: [
@@ -90,7 +92,7 @@ class DashboardView extends StatelessWidget {
                                 ],
                                 const Spacer(),
                                 SpeedDial(
-                                  key: _tutorialService.dashboardTarget1,
+                                  key: _tutorialService.dashboardTarget,
                                   animatedIcon: AnimatedIcons.menu_close,
                                   animatedIconTheme:
                                       const IconThemeData(size: 28.0),
