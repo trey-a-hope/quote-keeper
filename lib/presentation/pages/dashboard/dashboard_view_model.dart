@@ -8,7 +8,8 @@ class DashboardViewModel extends GetxController {
   final BookService _bookService = Get.find();
   final GetStorage _getStorage = Get.find();
 
-  BookModel? book;
+  BookModel? _book;
+  BookModel? get book => _book;
 
   bool _isLoading = true;
   bool get isLoading => _isLoading;
@@ -26,7 +27,7 @@ class DashboardViewModel extends GetxController {
       );
 
       if (exists) {
-        book = await _bookService.getRandom(
+        _book = await _bookService.getRandom(
           uid: _getStorage.read('uid'),
         );
       }
@@ -40,7 +41,7 @@ class DashboardViewModel extends GetxController {
   }
 
   void updateBook({required BookModel newBook}) {
-    book = newBook;
+    _book = newBook;
     update();
   }
 }

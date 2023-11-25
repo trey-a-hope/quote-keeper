@@ -14,8 +14,6 @@ class CreateQuoteScreen extends ConsumerWidget {
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  final TextEditingController _quoteController = TextEditingController();
-
   final ModalService _modalService = Get.find();
 
   final TutorialService _tutorialService = Get.find();
@@ -26,8 +24,6 @@ class CreateQuoteScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final bookProvider = ref.watch(Providers.bookProvider);
 
-    _tutorialService.showCreateQuoteTutorial(context);
-
     return SimplePageWidget(
       scaffoldKey: _scaffoldKey,
       leftIconButton: IconButton(
@@ -36,89 +32,107 @@ class CreateQuoteScreen extends ConsumerWidget {
           Get.back(result: false);
         },
       ),
-      rightIconButton: IconButton(
-        icon: Icon(key: _tutorialService.createQuoteTarget1, Icons.check),
-        onPressed: () async {
-          bool? confirm = await _modalService.showConfirmation(
-            context: context,
-            title: 'Submit Quote for ${book.title}',
-            message: 'Are you sure?',
-          );
-
-          if (confirm == null || confirm == false) {
-            return;
-          }
-
-          try {
-            await bookProvider.createBook(
-              title: book.title,
-              author: book.author,
-              quote: _quoteController.text,
-              imgUrl: book.imgUrl,
-            );
-
-            // Return to dashboard by removing two screens.
-            Get.back();
-            Get.back();
-
-            _tutorialService.showRefreshDashboardTutorial(context);
-          } catch (error) {
-            Get.showSnackbar(
-              GetSnackBar(
-                title: 'Error',
-                message: error.toString(),
-                backgroundColor: Colors.red,
-                icon: const Icon(Icons.error),
-                duration: const Duration(seconds: 3),
-              ),
-            );
-          }
-        },
-      ),
       title: 'Create Quote',
       child: bookProvider.isLoading
           ? const Center(child: CircularProgressIndicator())
-          : Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: AnimateList(
-                  interval: 400.ms,
-                  effects: Globals.fadeEffect,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: TextFormField(
-                        textCapitalization: TextCapitalization.sentences,
-                        cursorColor:
-                            Theme.of(context).textTheme.headline4!.color,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        controller: _quoteController,
-                        keyboardType: TextInputType.text,
-                        textInputAction: TextInputAction.done,
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Theme.of(context).textTheme.headline3!.color,
-                        ),
-                        maxLines: 10,
-                        decoration: InputDecoration(
-                          errorStyle: TextStyle(
-                              color:
-                                  Theme.of(context).textTheme.headline6!.color),
-                          counterStyle: TextStyle(
-                              color:
-                                  Theme.of(context).textTheme.headline6!.color),
-                          hintText:
-                              'Enter your favorite quote from ${book.title}...',
-                          hintStyle: const TextStyle(
-                            color: Colors.grey,
+          : Builder(builder: (context) {
+              _tutorialService.showCreateQuoteTutorial(context);
+
+              return Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  children: AnimateList(
+                    interval: 400.ms,
+                    effects: Globals.fadeEffect,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: TextFormField(
+                          onChanged: (val) {
+                            bookProvider.updateQuote(val);
+                          },
+                          textCapitalization: TextCapitalization.sentences,
+                          cursorColor:
+                              Theme.of(context).textTheme.headline4!.color,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          keyboardType: TextInputType.text,
+                          textInputAction: TextInputAction.done,
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Theme.of(context).textTheme.headline3!.color,
+                          ),
+                          maxLines: 10,
+                          decoration: InputDecoration(
+                            errorStyle: TextStyle(
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .headline6!
+                                    .color),
+                            counterStyle: TextStyle(
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .headline6!
+                                    .color),
+                            hintText:
+                                'Enter your favorite quote from ${book.title}...',
+                            hintStyle: const TextStyle(
+                              color: Colors.grey,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                      const Spacer(),
+                      ElevatedButton(
+                        key: _tutorialService.createQuoteTarget1,
+                        onPressed: bookProvider.quote.isEmpty
+                            ? null
+                            : () async {
+                                // Prompt user for submitting quote.
+                                bool? confirm =
+                                    await _modalService.showConfirmation(
+                                  context: context,
+                                  title: 'Submit Quote for ${book.title}',
+                                  message: 'Are you sure?',
+                                );
+
+                                if (confirm == null || confirm == false) {
+                                  return;
+                                }
+
+                                try {
+                                  // Submit the quote.
+                                  await bookProvider.createBook(
+                                    title: book.title,
+                                    author: book.author,
+                                    imgUrl: book.imgUrl,
+                                  );
+
+                                  // Return to dashboard by removing two screens.
+                                  Get.back();
+                                  Get.back();
+
+                                  // Display tutorial for successful quote.
+                                  _tutorialService
+                                      .showRefreshDashboardTutorial(context);
+                                } catch (error) {
+                                  Get.showSnackbar(
+                                    GetSnackBar(
+                                      title: 'Error',
+                                      message: error.toString(),
+                                      backgroundColor: Colors.red,
+                                      icon: const Icon(Icons.error),
+                                      duration: const Duration(seconds: 3),
+                                    ),
+                                  );
+                                }
+                              },
+                        child: const Text('Submit Quote'),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ),
+              );
+            }),
     );
   }
 }

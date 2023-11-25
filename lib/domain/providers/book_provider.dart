@@ -26,6 +26,10 @@ class BookProvider extends ChangeNotifier {
   String _search = '';
   String get search => _search;
 
+  // Quote for submission.
+  String _quote = '';
+  String get quote => _quote;
+
   // List of search results for books.
   List<BookModel> _bookSearchResults = [];
   List<BookModel> get bookSearchResults => _bookSearchResults;
@@ -49,6 +53,11 @@ class BookProvider extends ChangeNotifier {
       _performSearch();
     }
 
+    notifyListeners();
+  }
+
+  void updateQuote(String val) {
+    _quote = val;
     notifyListeners();
   }
 
@@ -107,7 +116,6 @@ class BookProvider extends ChangeNotifier {
 
   Future createBook({
     required String? author,
-    required String quote,
     required String title,
     required String? imgUrl,
   }) async {
@@ -119,7 +127,7 @@ class BookProvider extends ChangeNotifier {
       BookModel book = BookModel(
         imgPath: imgUrl,
         author: author ?? 'Author Unknown',
-        quote: quote,
+        quote: _quote,
         title: title,
         created: DateTime.now(),
         modified: DateTime.now(),
@@ -136,6 +144,10 @@ class BookProvider extends ChangeNotifier {
       _totalBookAccount += 1;
 
       isLoading = false;
+
+      // Set tutorial complete flag to true. TODO: Maybe only update this once in the future?
+      await _getStorage.write(Globals.tutorialComplete, true);
+
       notifyListeners();
     } catch (e) {
       isLoading = false;
@@ -144,8 +156,10 @@ class BookProvider extends ChangeNotifier {
     }
   }
 
-  Future hideBook(
-      {required BookModel book, required List<BookModel> books}) async {
+  Future hideBook({
+    required BookModel book,
+    required List<BookModel> books,
+  }) async {
     try {
       // Update 'hidden' property on the BE.
       await _bookService.update(
@@ -163,8 +177,10 @@ class BookProvider extends ChangeNotifier {
     }
   }
 
-  Future showBook(
-      {required BookModel book, required List<BookModel> books}) async {
+  Future showBook({
+    required BookModel book,
+    required List<BookModel> books,
+  }) async {
     try {
       // Update 'hidden' property on the BE.
       await _bookService.update(

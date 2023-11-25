@@ -105,7 +105,9 @@ class TutorialService extends GetxService {
           keyTarget: createQuoteTarget1,
           contents: [
             TargetContent(
-              align: ContentAlign.bottom,
+              align: ContentAlign.top,
+              padding:
+                  const EdgeInsets.symmetric(vertical: 100, horizontal: 20),
               child: const Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -113,14 +115,15 @@ class TutorialService extends GetxService {
                   Text(
                     'Enter your favorite quote.',
                     style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        fontSize: 20.0),
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontSize: 20.0,
+                    ),
                   ),
                   Padding(
                     padding: EdgeInsets.only(top: 10.0),
                     child: Text(
-                      'What line from the book inspired you the most? Enter it here, then click the check button to submit.',
+                      'What line from the book inspired you the most? Enter it above, then click here to submit.',
                       style: TextStyle(color: Colors.white),
                     ),
                   )
@@ -186,9 +189,8 @@ class TutorialService extends GetxService {
     }
   }
 
-  void showRefreshDashboardTutorial(BuildContext context) async {
+  void showRefreshDashboardTutorial(BuildContext context) {
     if (_showRefreshDashboardTutorial && _refreshDashboardTargets.isNotEmpty) {
-      await _getStorage.write(Globals.tutorialComplete, true);
       _showTutorial(context, _refreshDashboardTargets);
       _showRefreshDashboardTutorial = false;
     }
