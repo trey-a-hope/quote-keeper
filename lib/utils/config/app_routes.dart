@@ -4,7 +4,7 @@ import 'package:quote_keeper/presentation/pages/main/main_view.dart';
 import 'package:quote_keeper/presentation/pages/search_books/search_books_view.dart';
 import 'package:quote_keeper/presentation/pages/splash/splash_view.dart';
 import 'package:quote_keeper/presentation/screens/books_screen.dart';
-import 'package:quote_keeper/presentation/screens/create_book_screen.dart';
+import 'package:quote_keeper/presentation/screens/create_quote_screen.dart';
 import 'package:quote_keeper/presentation/screens/settings_screen.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
 
@@ -22,7 +22,7 @@ class AppRoutes {
     ),
     GetPage(
       name: Globals.routeCreateQuote,
-      page: () => CreateBookScreen(),
+      page: () => CreateQuoteScreen(),
     ),
     GetPage(
       name: Globals.routeDashboard,

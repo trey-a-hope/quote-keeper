@@ -4,6 +4,7 @@ import 'package:quote_keeper/data/services/firestore_util_service.dart';
 import 'package:quote_keeper/data/services/modal_service.dart';
 import 'package:quote_keeper/data/services/share_service.dart';
 import 'package:quote_keeper/data/services/storage_service.dart';
+import 'package:quote_keeper/data/services/tutorial_service.dart';
 import 'package:quote_keeper/data/services/user_service.dart';
 import 'package:get/get.dart';
 
@@ -16,6 +17,7 @@ class InitialBinding implements Bindings {
     Get.lazyPut(() => ModalService(), fenix: true);
     Get.lazyPut(() => ShareService());
     Get.lazyPut(() => StorageService());
+    Get.lazyPut(() => TutorialService());
     Get.lazyPut(() => UserService());
   }
 }
