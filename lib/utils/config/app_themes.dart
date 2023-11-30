@@ -88,6 +88,10 @@ class AppThemes {
   static ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
     canvasColor: Colors.white,
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+      backgroundColor: Colors.blue.shade900,
+      foregroundColor: Colors.white,
+    ),
     listTileTheme: ListTileThemeData(
       iconColor: Colors.green.shade700,
     ),
@@ -109,6 +113,10 @@ class AppThemes {
   static ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
     canvasColor: Colors.grey.shade900,
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+      backgroundColor: Colors.blue.shade900,
+      foregroundColor: Colors.white,
+    ),
     listTileTheme: ListTileThemeData(
       iconColor: Colors.green.shade300,
     ),

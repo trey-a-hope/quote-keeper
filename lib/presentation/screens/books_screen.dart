@@ -63,44 +63,8 @@ class BooksScreen extends ConsumerWidget {
                               for (var book
                                   in bookProvider.bookSearchResults) ...[
                                 BookWidget(
-                                        onTap: () {
-                                          Navigator.of(context).pop(book);
-                                        },
-                                        book: book,
-                                        showBook: (_) => bookProvider.showBook(
-                                              book: book,
-                                              books:
-                                                  _pagingController.itemList!,
-                                            ),
-                                        hideBook: (_) => bookProvider.hideBook(
-                                              book: book,
-                                              books:
-                                                  _pagingController.itemList!,
-                                            ),
-                                        shareBook: (_) =>
-                                            bookProvider.shareBook(
-                                              book: book,
-                                            ),
-                                        deleteBook: (_) async {
-                                          bool? confirm = await _modalService
-                                              .showConfirmation(
-                                            context: context,
-                                            title: 'Delete ${book.title}',
-                                            message: 'Are you sure?',
-                                          );
-
-                                          if (confirm == null ||
-                                              confirm == false) {
-                                            return;
-                                          }
-
-                                          bookProvider.deleteBook(
-                                            book: book,
-                                          );
-                                        })
-                                    .animate()
-                                    .fadeIn(duration: 1000.ms)
-                                    .then(
+                                  book: book,
+                                ).animate().fadeIn(duration: 1000.ms).then(
                                       delay: 1000.ms,
                                     ),
                               ]
@@ -113,37 +77,8 @@ class BooksScreen extends ConsumerWidget {
                       pagingController: _pagingController,
                       builderDelegate: PagedChildBuilderDelegate<BookModel>(
                         itemBuilder: (context, book, index) => BookWidget(
-                                onTap: () {
-                                  Navigator.of(context).pop(book);
-                                },
-                                book: book,
-                                showBook: (_) => bookProvider.showBook(
-                                      book: book,
-                                      books: _pagingController.itemList!,
-                                    ),
-                                hideBook: (_) => bookProvider.hideBook(
-                                      book: book,
-                                      books: _pagingController.itemList!,
-                                    ),
-                                shareBook: (_) => bookProvider.shareBook(
-                                      book: book,
-                                    ),
-                                deleteBook: (_) async {
-                                  bool? confirm =
-                                      await _modalService.showConfirmation(
-                                    context: context,
-                                    title: 'Delete ${book.title}',
-                                    message: 'Are you sure?',
-                                  );
-
-                                  if (confirm == null || confirm == false) {
-                                    return;
-                                  }
-
-                                  bookProvider.deleteBook(
-                                    book: book,
-                                  );
-                                }).animate().fadeIn(duration: 1000.ms).then(
+                          book: book,
+                        ).animate().fadeIn(duration: 1000.ms).then(
                               delay: 1000.ms,
                             ),
                       ),
