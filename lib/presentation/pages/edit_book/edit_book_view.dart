@@ -46,7 +46,7 @@ class EditBookView extends StatelessWidget {
               }
               await model.deleteQuote();
 
-              Navigator.of(context).pop();
+              Get.back();
             },
           ),
           title: 'Edit Book',
@@ -57,26 +57,28 @@ class EditBookView extends StatelessWidget {
                 Text(
                   model.book.title,
                   textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: TextFormField(
                     textCapitalization: TextCapitalization.sentences,
-                    cursorColor: Theme.of(context).textTheme.headline4!.color,
+                    cursorColor:
+                        Theme.of(context).textTheme.headlineMedium!.color,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     controller: _quoteController,
                     keyboardType: TextInputType.text,
                     textInputAction: TextInputAction.done,
                     style: TextStyle(
                       fontSize: 16,
-                      color: Theme.of(context).textTheme.headline3!.color,
+                      color: Theme.of(context).textTheme.displaySmall!.color,
                     ),
                     maxLines: 10,
                     decoration: InputDecoration(
                       errorStyle: TextStyle(
-                          color: Theme.of(context).textTheme.headline6!.color),
+                          color: Theme.of(context).textTheme.titleLarge!.color),
                       counterStyle: TextStyle(
-                          color: Theme.of(context).textTheme.headline6!.color),
+                          color: Theme.of(context).textTheme.titleLarge!.color),
                       hintText:
                           'Enter new favorite quote from ${model.book.title}',
                       hintStyle: const TextStyle(
@@ -86,20 +88,28 @@ class EditBookView extends StatelessWidget {
                   ),
                 ),
                 SwitchListTile(
-                  title: Text(model.isHidden ? 'Hidden' : 'Visible'),
-                  value: model.isHidden,
+                  title: Text(model.isHidden ? 'Hidden' : 'Visible',
+                      style: Theme.of(context).textTheme.headlineSmall),
+                  subtitle: Text(
+                      'Book ${model.isHidden ? 'cannot' : 'can'} be fetched by the "Get Random Quote" button on the dashboard.',
+                      style: Theme.of(context).textTheme.bodyMedium),
+                  value: !model.isHidden,
                   onChanged: model.toggleIsHidden,
-                  secondary:
-                      Icon(model.isHidden ? Icons.hide_image : Icons.image),
+                  secondary: Icon(
+                      model.isHidden ? Icons.hide_image : Icons.image,
+                      color: Theme.of(context).iconTheme.color),
                   activeTrackColor: Colors.lightGreenAccent,
                   activeColor: Colors.green,
                 ),
                 SwitchListTile(
                   title: Text(model.isComplete ? 'Complete' : 'Incomplete'),
+                  subtitle: Text(
+                      'You have ${model.isComplete ? '' : 'not '}finished reading this book.',
+                      style: Theme.of(context).textTheme.bodyMedium),
                   value: model.isComplete,
                   onChanged: model.toggleIsComplete,
-                  secondary:
-                      Icon(model.isComplete ? Icons.check : Icons.cancel),
+                  secondary: Icon(model.isComplete ? Icons.check : Icons.cancel,
+                      color: Theme.of(context).iconTheme.color),
                   activeTrackColor: Colors.lightGreenAccent,
                   activeColor: Colors.green,
                 ),
@@ -118,8 +128,6 @@ class EditBookView extends StatelessWidget {
                     }
 
                     await model.updateQuote(quote: _quoteController.text);
-
-                    Navigator.of(context).pop();
                   },
                 )
               ],

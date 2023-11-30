@@ -26,7 +26,7 @@ class EditBookViewModel extends GetxController {
   }
 
   void toggleIsHidden(bool val) {
-    _isHidden = val;
+    _isHidden = !val; // Negating here to have appropriate view on view.
     update();
   }
 

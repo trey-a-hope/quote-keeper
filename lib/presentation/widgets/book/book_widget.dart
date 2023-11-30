@@ -59,7 +59,7 @@ class BookWidget extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       book.title,
-                      style: Theme.of(context).textTheme.headline6,
+                      style: Theme.of(context).textTheme.titleLarge,
                     ),
                     const Divider(),
                     Text(
@@ -73,29 +73,28 @@ class BookWidget extends StatelessWidget {
                     Row(
                       children: [
                         if (book.hidden) ...[
-                          const Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 4.0),
+                            Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 4.0),
                             child: Icon(
                               Icons.hide_image,
-                              color: Colors.green,
-                              size: 20,
+                              color: Theme.of(context).iconTheme.color,
                             ),
                           )
                         ],
                         if (book.complete) ...[
-                          const Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 4.0),
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 4.0),
                             child: Icon(
                               Icons.check,
-                              color: Colors.blue,
-                              size: 20,
+                              color: Theme.of(context).iconTheme.color,
                             ),
                           )
                         ],
                         const Spacer(),
                         Text(
                           book.author,
-                          style: Theme.of(context).textTheme.headline6,
+                          style: Theme.of(context).textTheme.titleLarge,
                         ),
                       ],
                     ),

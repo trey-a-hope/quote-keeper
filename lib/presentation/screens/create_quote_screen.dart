@@ -55,25 +55,26 @@ class CreateQuoteScreen extends ConsumerWidget {
                           },
                           textCapitalization: TextCapitalization.sentences,
                           cursorColor:
-                              Theme.of(context).textTheme.headline4!.color,
+                              Theme.of(context).textTheme.headlineMedium!.color,
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           keyboardType: TextInputType.text,
                           textInputAction: TextInputAction.done,
                           style: TextStyle(
                             fontSize: 16,
-                            color: Theme.of(context).textTheme.headline3!.color,
+                            color:
+                                Theme.of(context).textTheme.displaySmall!.color,
                           ),
                           maxLines: 10,
                           decoration: InputDecoration(
                             errorStyle: TextStyle(
                                 color: Theme.of(context)
                                     .textTheme
-                                    .headline6!
+                                    .titleLarge!
                                     .color),
                             counterStyle: TextStyle(
                                 color: Theme.of(context)
                                     .textTheme
-                                    .headline6!
+                                    .titleLarge!
                                     .color),
                             hintText:
                                 'Enter your favorite quote from ${book.title}...',

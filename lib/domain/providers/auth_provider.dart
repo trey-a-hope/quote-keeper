@@ -19,7 +19,7 @@ class AuthProvider extends ChangeNotifier {
       throw Exception();
     }
 
-    return (await _userService.retrieveUser(uid: user.uid))!;
+    return (await _userService.retrieveUser(uid: user.uid));
   }
 
   Future<void> deleteAccount() async {
