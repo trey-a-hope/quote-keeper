@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:quote_keeper/data/services/user_service.dart';
 import 'package:quote_keeper/domain/models/search_book_result/search_books_result_model.dart';
 import 'package:quote_keeper/data/cache/search_books_cache.dart';
 import 'package:quote_keeper/domain/repositories/search_books_repository.dart';

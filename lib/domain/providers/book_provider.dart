@@ -233,4 +233,18 @@ class BookProvider extends ChangeNotifier {
       throw Exception(e);
     }
   }
+
+  Future updateBook({required BookModel book}) async {
+    try {
+      await _bookService.update(
+        uid: _getStorage.read('uid'),
+        id: book.id!,
+        data: {
+          'quote': quote,
+        },
+      );
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
 }

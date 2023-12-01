@@ -40,13 +40,13 @@ class SearchBooksView extends StatelessWidget {
             children: [
               TextField(
                 key: _tutorialService.searchBookTarget,
-                style: context.textTheme.headline5!,
+                style: context.textTheme.headlineSmall!,
                 controller: _textController,
                 autocorrect: false,
                 onChanged: (text) {
                   model.udpateSearchText(text: text);
                 },
-                cursorColor: Theme.of(context).textTheme.headline5!.color,
+                cursorColor: Theme.of(context).textTheme.headlineSmall!.color,
                 decoration: InputDecoration(
                   errorStyle: const TextStyle(color: Colors.white),
                   prefixIcon: Icon(

@@ -85,9 +85,18 @@ class DashboardView extends StatelessWidget {
                                 if (model.book != null) ...[
                                   FloatingActionButton.extended(
                                     icon: const Icon(Icons.refresh),
-                                    backgroundColor: Colors.blue,
+                                    backgroundColor: Theme.of(context)
+                                        .floatingActionButtonTheme
+                                        .backgroundColor,
                                     onPressed: () => model.load(),
-                                    label: const Text('Get Random Quote'),
+                                    label: Text(
+                                      'Get Random Quote',
+                                      style: TextStyle(
+                                        color: Theme.of(context)
+                                            .floatingActionButtonTheme
+                                            .foregroundColor,
+                                      ),
+                                    ),
                                   ),
                                 ],
                                 const Spacer(),
@@ -96,26 +105,42 @@ class DashboardView extends StatelessWidget {
                                   animatedIcon: AnimatedIcons.menu_close,
                                   animatedIconTheme:
                                       const IconThemeData(size: 28.0),
-                                  backgroundColor: Colors.green[900],
-                                  foregroundColor: Colors.white,
+                                  backgroundColor: Theme.of(context)
+                                      .floatingActionButtonTheme
+                                      .backgroundColor,
+                                  foregroundColor: Theme.of(context)
+                                      .floatingActionButtonTheme
+                                      .foregroundColor,
                                   visible: true,
                                   curve: Curves.bounceInOut,
                                   children: [
                                     SpeedDialChild(
                                       child: const Icon(Icons.settings,
                                           color: Colors.white),
-                                      backgroundColor: Colors.red,
+                                      backgroundColor: Theme.of(context)
+                                          .floatingActionButtonTheme
+                                          .backgroundColor,
+                                      foregroundColor: Theme.of(context)
+                                          .floatingActionButtonTheme
+                                          .foregroundColor,
                                       onTap: () =>
                                           Get.toNamed(Globals.routeSettings),
                                       label: 'Settings',
                                       labelStyle: labelStyle,
-                                      labelBackgroundColor: Colors.red.shade800,
+                                      labelBackgroundColor: Theme.of(context)
+                                          .floatingActionButtonTheme
+                                          .backgroundColor,
                                     ),
                                     if (model.book != null) ...[
                                       SpeedDialChild(
                                         child: const Icon(Icons.book,
                                             color: Colors.white),
-                                        backgroundColor: Colors.purple,
+                                        backgroundColor: Theme.of(context)
+                                            .floatingActionButtonTheme
+                                            .backgroundColor,
+                                        foregroundColor: Theme.of(context)
+                                            .floatingActionButtonTheme
+                                            .foregroundColor,
                                         onTap: () async {
                                           var res = await Get.toNamed(
                                               Globals.routeBooks);
@@ -126,44 +151,63 @@ class DashboardView extends StatelessWidget {
                                         },
                                         label: 'View All Quotes',
                                         labelStyle: labelStyle,
-                                        labelBackgroundColor:
-                                            Colors.purple.shade800,
+                                        labelBackgroundColor: Theme.of(context)
+                                            .floatingActionButtonTheme
+                                            .backgroundColor,
                                       ),
                                     ],
                                     if (model.book == null) ...[
                                       SpeedDialChild(
                                         child: const Icon(Icons.refresh,
                                             color: Colors.white),
-                                        backgroundColor: Colors.purple,
+                                        backgroundColor: Theme.of(context)
+                                            .floatingActionButtonTheme
+                                            .backgroundColor,
+                                        foregroundColor: Theme.of(context)
+                                            .floatingActionButtonTheme
+                                            .foregroundColor,
                                         onTap: () => model.load(),
                                         label: 'Refresh',
                                         labelStyle: labelStyle,
-                                        labelBackgroundColor:
-                                            Colors.purple.shade800,
+                                        labelBackgroundColor: Theme.of(context)
+                                            .floatingActionButtonTheme
+                                            .backgroundColor,
                                       ),
                                     ],
                                     SpeedDialChild(
                                       child: const Icon(Icons.add,
                                           color: Colors.white),
-                                      backgroundColor: Colors.cyan,
+                                      backgroundColor: Theme.of(context)
+                                          .floatingActionButtonTheme
+                                          .backgroundColor,
+                                      foregroundColor: Theme.of(context)
+                                          .floatingActionButtonTheme
+                                          .foregroundColor,
                                       onTap: () =>
                                           Get.toNamed(Globals.routeSearchBooks),
                                       label: 'Add New Quote',
                                       labelStyle: labelStyle,
-                                      labelBackgroundColor:
-                                          Colors.cyan.shade800,
+                                      labelBackgroundColor: Theme.of(context)
+                                          .floatingActionButtonTheme
+                                          .backgroundColor,
                                     ),
                                     if (model.book != null) ...[
                                       SpeedDialChild(
                                         child: const Icon(Icons.share,
                                             color: Colors.white),
-                                        backgroundColor: Colors.teal,
+                                        backgroundColor: Theme.of(context)
+                                            .floatingActionButtonTheme
+                                            .backgroundColor,
+                                        foregroundColor: Theme.of(context)
+                                            .floatingActionButtonTheme
+                                            .foregroundColor,
                                         onTap: () => _shareService.share(
                                             book: model.book!),
                                         label: 'Share This Quote',
                                         labelStyle: labelStyle,
-                                        labelBackgroundColor:
-                                            Colors.teal.shade800,
+                                        labelBackgroundColor: Theme.of(context)
+                                            .floatingActionButtonTheme
+                                            .backgroundColor,
                                       ),
                                     ],
                                   ],
