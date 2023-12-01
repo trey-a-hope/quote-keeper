@@ -102,7 +102,8 @@ class EditBookView extends StatelessWidget {
                   activeColor: Colors.green,
                 ),
                 SwitchListTile(
-                  title: Text(model.isComplete ? 'Complete' : 'Incomplete'),
+                  title: Text(model.isComplete ? 'Complete' : 'Incomplete',
+                      style: Theme.of(context).textTheme.headlineSmall),
                   subtitle: Text(
                       'You have ${model.isComplete ? '' : 'not '}finished reading this book.',
                       style: Theme.of(context).textTheme.bodyMedium),

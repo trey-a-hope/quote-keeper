@@ -6,12 +6,6 @@ class AppThemes {
   /// Fonts
   static const String fontFamily = 'Montserrat';
 
-  /// Colors
-  static const colorBlack = Colors.black;
-  static const colorGrey = Color.fromRGBO(141, 141, 141, 1.0);
-  static const colorWhite = Colors.white;
-  static const colorDarkBlue = Color.fromRGBO(20, 25, 45, 1.0);
-
   /// Display Large
   static const TextStyle _displayLarge = TextStyle(
     fontWeight: FontWeight.w700,
