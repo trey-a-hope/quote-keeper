@@ -18,8 +18,6 @@ class LoginView extends StatelessWidget {
     return GetBuilder<_LoginViewModel>(
       init: _LoginViewModel(),
       builder: (model) {
-        // NewVersion().showAlertIfNecessary(context: context);
-
         return Container(
           width: double.infinity,
           height: double.infinity,

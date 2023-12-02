@@ -33,12 +33,18 @@ class SettingsScreen extends ConsumerWidget {
             tiles: [
               SettingsTile(
                 title: 'Version',
-                leading: const Icon(Icons.numbers),
+                leading: Icon(
+                  Icons.numbers,
+                  color: Theme.of(context).iconTheme.color,
+                ),
                 trailing: Text(Globals.version),
               ),
               SettingsTile(
                 title: 'Build Number',
-                leading: const Icon(Icons.build),
+                leading: Icon(
+                  Icons.build,
+                  color: Theme.of(context).iconTheme.color,
+                ),
                 trailing: Text(Globals.buildNumber),
               ),
             ],
@@ -48,7 +54,10 @@ class SettingsScreen extends ConsumerWidget {
             tiles: [
               SettingsTile(
                 title: 'Logout',
-                leading: const Icon(Icons.logout),
+                leading: Icon(
+                  Icons.logout,
+                  color: Theme.of(context).iconTheme.color,
+                ),
                 trailing: const Icon(Icons.chevron_right),
                 onPressed: (_) async {
                   bool? confirm = await _modalService.showConfirmation(
@@ -66,7 +75,10 @@ class SettingsScreen extends ConsumerWidget {
               ),
               SettingsTile(
                 title: 'Delete Account',
-                leading: const Icon(Icons.delete),
+                leading: Icon(
+                  Icons.delete,
+                  color: Theme.of(context).iconTheme.color,
+                ),
                 trailing: const Icon(Icons.chevron_right),
                 onPressed: (_) async {
                   UserModel user = await authProvider.getUser();

@@ -1,3 +1,4 @@
+import 'package:new_version_plus/new_version_plus.dart';
 import 'package:quote_keeper/data/services/share_service.dart';
 import 'package:quote_keeper/data/services/tutorial_service.dart';
 import 'package:quote_keeper/domain/models/books/book_model.dart';
@@ -20,6 +21,9 @@ class DashboardView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Prompt user for potential updated version of app.
+    Globals.newVersionPlus.showAlertIfNecessary(context: context);
+
     return GetBuilder<DashboardViewModel>(
       init: DashboardViewModel(),
       builder: (model) {

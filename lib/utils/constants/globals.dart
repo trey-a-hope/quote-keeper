@@ -1,4 +1,5 @@
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:new_version_plus/new_version_plus.dart';
 
 class Globals {
   Globals._();
@@ -50,6 +51,13 @@ class Globals {
 
   /// Book page fetch limit.
   static const int bookPageFetchLimit = 5;
+
+  static NewVersionPlus newVersionPlus = NewVersionPlus(
+    iOSId: 'com.example.book-quotes',
+    androidId: 'com.io.book_quotes',
+    androidPlayStoreCountry: "es_ES",
+    androidHtmlReleaseNotes: true,
+  );
 }
 
 class _AlgoliaConfig {
