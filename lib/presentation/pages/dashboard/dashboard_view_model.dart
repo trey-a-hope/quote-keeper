@@ -34,9 +34,11 @@ class DashboardViewModel extends GetxController {
         uid: _getStorage.read('uid'),
       );
 
-  void reload() {
-    _booksCollectionExists = true;
-    load();
+  void reload() async {
+    if (!_booksCollectionExists) {
+      _booksCollectionExists = await _checkIfBooksCollectionExists();
+    }
+    await load();
   }
 
   Future load() async {

@@ -156,7 +156,7 @@ class DashboardView extends StatelessWidget {
                                             .backgroundColor,
                                       ),
                                     ],
-                                    if (model.book != null) ...[
+                                    if (model.book == null) ...[
                                       SpeedDialChild(
                                         child: const Icon(Icons.refresh,
                                             color: Colors.white),
