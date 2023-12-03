@@ -7,20 +7,21 @@ class EditBookViewModel extends GetxController {
   final BookService _bookService = Get.find();
   final GetStorage _getStorage = Get.find();
 
-  final BookModel book = Get.arguments['book'];
-
   bool _isHidden = false;
   bool get isHidden => _isHidden;
 
   bool _isComplete = false;
   bool get isComplete => _isComplete;
 
+  BookModel _book = Get.arguments['book'];
+  BookModel get book => _book;
+
   @override
   void onInit() async {
     super.onInit();
 
-    _isHidden = book.hidden;
-    _isComplete = book.complete;
+    _isHidden = _book.hidden;
+    _isComplete = _book.complete;
 
     update();
   }
@@ -37,19 +38,34 @@ class EditBookViewModel extends GetxController {
 
   Future updateQuote({
     required String quote,
-  }) async =>
-      await _bookService.update(
-        uid: _getStorage.read('uid'),
-        id: book.id!,
-        data: {
-          'quote': quote,
-          'hidden': _isHidden,
-          'complete': _isComplete,
-        },
-      );
+  }) async {
+    // Udpdate book on the backend.
+    await _bookService.update(
+      id: _book.id!,
+      data: {
+        'quote': quote,
+        'hidden': _isHidden,
+        'complete': _isComplete,
+      },
+    );
+
+    // Update book locally.
+    _book = BookModel(
+      id: _book.id!,
+      quote: quote,
+      title: _book.title,
+      author: _book.author,
+      imgPath: _book.imgPath,
+      hidden: _isHidden,
+      uid: _book.uid,
+      complete: _isComplete,
+    );
+
+    update();
+  }
 
   Future deleteQuote() async => await _bookService.delete(
         uid: _getStorage.read('uid'),
-        id: book.id!,
+        id: _book.id!,
       );
 }

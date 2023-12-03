@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 class AppThemes {
   AppThemes._();
 
+  static final Color _primaryColor = Colors.blue.shade900;
+  static final Color _secondaryColor = Colors.orange.shade700;
+
   /// Fonts
   static const String fontFamily = 'Montserrat';
 
@@ -80,13 +83,14 @@ class AppThemes {
 
   /// Light theme
   static ThemeData lightTheme = ThemeData(
+    primaryColor: _primaryColor,
     brightness: Brightness.light,
     canvasColor: Colors.white,
     floatingActionButtonTheme: FloatingActionButtonThemeData(
-      backgroundColor: Colors.blue.shade900,
+      backgroundColor: _primaryColor,
       foregroundColor: Colors.white,
     ),
-    iconTheme: IconThemeData(color: Colors.orange.shade700),
+    iconTheme: IconThemeData(color: _secondaryColor),
     listTileTheme: ListTileThemeData(
       iconColor: Colors.green.shade700,
     ),
@@ -106,13 +110,14 @@ class AppThemes {
 
   /// Dark theme
   static ThemeData darkTheme = ThemeData(
+    primaryColor: _primaryColor,
     brightness: Brightness.dark,
     canvasColor: Colors.grey.shade900,
     floatingActionButtonTheme: FloatingActionButtonThemeData(
-      backgroundColor: Colors.blue.shade900,
+      backgroundColor: _primaryColor,
       foregroundColor: Colors.white,
     ),
-    iconTheme: IconThemeData(color: Colors.orange.shade700),
+    iconTheme: IconThemeData(color: _secondaryColor),
     listTileTheme: ListTileThemeData(
       iconColor: Colors.green.shade300,
     ),
