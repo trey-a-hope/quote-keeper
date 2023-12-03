@@ -156,7 +156,7 @@ class DashboardView extends StatelessWidget {
                                             .backgroundColor,
                                       ),
                                     ],
-                                    if (model.book == null) ...[
+                                    if (model.book != null) ...[
                                       SpeedDialChild(
                                         child: const Icon(Icons.refresh,
                                             color: Colors.white),
@@ -166,7 +166,7 @@ class DashboardView extends StatelessWidget {
                                         foregroundColor: Theme.of(context)
                                             .floatingActionButtonTheme
                                             .foregroundColor,
-                                        onTap: () => model.load(),
+                                        onTap: () => model.reload(),
                                         label: 'Refresh',
                                         labelStyle: labelStyle,
                                         labelBackgroundColor: Theme.of(context)
