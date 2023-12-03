@@ -8,11 +8,18 @@ class ModalService extends GetxService {
   void showInSnackBar({
     required BuildContext context,
     required String message,
+    required String title,
   }) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-      ),
+    Get.snackbar(
+      title, // Title of the Snackbar
+      message, // Message of the Snackbar
+      snackPosition: SnackPosition.BOTTOM, // Position of the Snackbar
+      backgroundColor: Theme.of(context).primaryColor,
+      colorText: Colors.white,
+      borderRadius: 20,
+      margin: const EdgeInsets.all(10),
+      duration: const Duration(seconds: 2), // Duration of the Snackbar display
+      // You can add more customization as needed
     );
   }
 
@@ -34,8 +41,8 @@ class ModalService extends GetxService {
     required BuildContext context,
     required String title,
     required String message,
-  }) =>
-      showDialog<bool>(
+  }) async =>
+      await showDialog<bool>(
         barrierDismissible: false,
         context: context,
         builder: (BuildContext context) => ConfirmationWidget(

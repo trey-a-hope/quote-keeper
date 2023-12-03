@@ -20,26 +20,40 @@ class DashboardViewModel extends GetxController {
   bool _showTutorial = false;
   bool get showTutorial => _showTutorial;
 
+  late bool _booksCollectionExists;
+
   @override
   void onInit() async {
     super.onInit();
+    _booksCollectionExists = await _checkIfBooksCollectionExists();
+    await load();
+  }
+
+  Future<bool> _checkIfBooksCollectionExists() async =>
+      await _bookService.booksCollectionExists(
+        uid: _getStorage.read('uid'),
+      );
+
+  void reload() async {
+    if (!_booksCollectionExists) {
+      _booksCollectionExists = await _checkIfBooksCollectionExists();
+    }
     await load();
   }
 
   Future load() async {
     try {
-      var exists = await _bookService.booksCollectionExists(
-        uid: _getStorage.read('uid'),
-      );
-
-      if (exists) {
+      if (_booksCollectionExists) {
+        // Fetch random book.
         _book = await _bookService.getRandom(
           uid: _getStorage.read('uid'),
         );
       }
 
+      // If first time using app, run tutorial.
       _showTutorial = !_getStorage.read(Globals.tutorialComplete);
 
+      // Loading complete.
       _isLoading = false;
 
       // await _firestoreUtilService.addPropertyToDocuments(
@@ -51,6 +65,8 @@ class DashboardViewModel extends GetxController {
       update();
     } catch (e) {
       debugPrint(e.toString());
+      _isLoading = false;
+      update();
     }
   }
 

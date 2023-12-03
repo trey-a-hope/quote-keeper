@@ -166,7 +166,7 @@ class DashboardView extends StatelessWidget {
                                         foregroundColor: Theme.of(context)
                                             .floatingActionButtonTheme
                                             .foregroundColor,
-                                        onTap: () => model.load(),
+                                        onTap: () => model.reload(),
                                         label: 'Refresh',
                                         labelStyle: labelStyle,
                                         labelBackgroundColor: Theme.of(context)
