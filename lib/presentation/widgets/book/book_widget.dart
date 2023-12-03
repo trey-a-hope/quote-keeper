@@ -1,16 +1,30 @@
+import 'package:quote_keeper/data/services/modal_service.dart';
 import 'package:quote_keeper/domain/models/books/book_model.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class BookWidget extends StatelessWidget {
-  const BookWidget({
-    super.key,
-    required this.book,
-  });
+//TODO †his is stateful widget! Update on book edit.
+
+class BookWidget extends StatefulWidget {
+  const BookWidget({Key? key, required this.book}) : super(key: key);
 
   final BookModel book;
+
+  @override
+  State<BookWidget> createState() => _BookWidgetState();
+}
+
+class _BookWidgetState extends State<BookWidget> {
+  late BookModel _book;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _book = widget.book;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +38,8 @@ class BookWidget extends StatelessWidget {
             SizedBox(
               width: 130,
               child: CachedNetworkImage(
-                imageUrl: book.imgPath != null
-                    ? book.imgPath!
+                imageUrl: _book.imgPath != null
+                    ? _book.imgPath!
                     : Globals.libraryBackground,
                 imageBuilder: (context, imageProvider) => Container(
                   decoration: BoxDecoration(
@@ -58,12 +72,12 @@ class BookWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      book.title,
+                      _book.title,
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                     const Divider(),
                     Text(
-                      '"${book.quote}"',
+                      '"${_book.quote}"',
                       overflow: TextOverflow.ellipsis,
                       maxLines: 3,
                       softWrap: false,
@@ -72,16 +86,17 @@ class BookWidget extends StatelessWidget {
                     const Divider(),
                     Row(
                       children: [
-                        if (book.hidden) ...[
-                            Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                        if (_book.hidden) ...[
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 4.0),
                             child: Icon(
                               Icons.hide_image,
                               color: Theme.of(context).iconTheme.color,
                             ),
                           )
                         ],
-                        if (book.complete) ...[
+                        if (_book.complete) ...[
                           Padding(
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 4.0),
@@ -93,7 +108,7 @@ class BookWidget extends StatelessWidget {
                         ],
                         const Spacer(),
                         Text(
-                          book.author,
+                          _book.author,
                           style: Theme.of(context).textTheme.titleLarge,
                         ),
                       ],
@@ -102,17 +117,23 @@ class BookWidget extends StatelessWidget {
                     Row(
                       children: [
                         ElevatedButton(
-                          onPressed: () => Navigator.of(context).pop(book),
+                          onPressed: () => Navigator.of(context).pop(_book),
                           child: const Text('Open'),
                         ),
                         const Spacer(),
                         ElevatedButton(
-                          onPressed: () => Get.toNamed(
-                            Globals.routeEditQuote,
-                            arguments: {
-                              'book': book,
-                            },
-                          ),
+                          onPressed: () async {
+                            var updatedBook = await Get.toNamed(
+                              Globals.routeEditQuote,
+                              arguments: {'book': _book},
+                            );
+
+                            if (updatedBook is BookModel) {
+                              setState(() {
+                                _book = updatedBook;
+                              });
+                            }
+                          },
                           child: const Text('Edit'),
                         )
                       ],

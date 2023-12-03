@@ -1,6 +1,5 @@
 import 'package:animated_search_bar/animated_search_bar.dart';
 import 'package:quote_keeper/data/services/book_service.dart';
-import 'package:quote_keeper/data/services/modal_service.dart';
 import 'package:quote_keeper/domain/models/books/book_model.dart';
 import 'package:quote_keeper/domain/providers/book_provider.dart';
 import 'package:quote_keeper/domain/providers/providers.dart';
@@ -26,7 +25,6 @@ class BooksScreen extends ConsumerWidget {
   Timestamp? _lastDate;
 
   final BookService _bookService = Get.find();
-  final ModalService _modalService = Get.find();
   final GetStorage _getStorage = Get.find();
 
   @override

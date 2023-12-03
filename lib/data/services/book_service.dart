@@ -105,14 +105,27 @@ class BookService extends GetxService {
   }
 
   Future<void> update({
-    required String uid,
     required String id,
     required Map<String, dynamic> data,
   }) async {
     try {
       data['modified'] = DateTime.now().toUtc();
       await _booksDB.doc(id).update(data);
+
       return;
+    } catch (e) {
+      throw Exception(
+        e.toString(),
+      );
+    }
+  }
+
+  Future<BookModel> get({
+    required String bookId,
+  }) async {
+    try {
+      var bookDoc = await _booksDB.doc(bookId).get();
+      return bookDoc.data()!;
     } catch (e) {
       throw Exception(
         e.toString(),

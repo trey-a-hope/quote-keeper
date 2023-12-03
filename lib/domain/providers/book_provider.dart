@@ -178,7 +178,6 @@ class BookProvider extends ChangeNotifier {
     try {
       // Update 'hidden' property on the BE.
       await _bookService.update(
-        uid: _uid,
         id: book.id!,
         data: {'hidden': true},
       );
@@ -199,7 +198,6 @@ class BookProvider extends ChangeNotifier {
     try {
       // Update 'hidden' property on the BE.
       await _bookService.update(
-        uid: _uid,
         id: book.id!,
         data: {'hidden': false},
       );
@@ -237,7 +235,6 @@ class BookProvider extends ChangeNotifier {
   Future updateBook({required BookModel book}) async {
     try {
       await _bookService.update(
-        uid: _getStorage.read('uid'),
         id: book.id!,
         data: {
           'quote': quote,
