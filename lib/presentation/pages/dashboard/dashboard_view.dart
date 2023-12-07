@@ -20,11 +20,16 @@ class DashboardView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Prompt user for potential updated version of app.
+    Globals.newVersionPlus.showAlertIfNecessary(context: context);
+
     return GetBuilder<DashboardViewModel>(
       init: DashboardViewModel(),
       builder: (model) {
         return model.isLoading
-            ? const Center(child: CircularProgressIndicator())
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
             : Builder(
                 builder: (context) {
                   if (model.showTutorial) {

@@ -5,7 +5,6 @@ import 'package:flutter_settings_ui/flutter_settings_ui.dart';
 import 'package:get/get.dart';
 import 'package:quote_keeper/data/services/modal_service.dart';
 import 'package:quote_keeper/domain/models/users/user_model.dart';
-import 'package:quote_keeper/domain/providers/auth_provider.dart';
 import 'package:quote_keeper/domain/providers/providers.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
 import 'package:simple_page_widget/ui/simple_page_widget.dart';
@@ -17,7 +16,7 @@ class SettingsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final AuthProvider authProvider = ref.watch(Providers.authProvider);
+    final authProvider = ref.watch(Providers.authProvider);
 
     return SimplePageWidget(
       title: 'Settings',
@@ -33,12 +32,18 @@ class SettingsScreen extends ConsumerWidget {
             tiles: [
               SettingsTile(
                 title: 'Version',
-                leading: const Icon(Icons.numbers),
+                leading: Icon(
+                  Icons.numbers,
+                  color: Theme.of(context).iconTheme.color,
+                ),
                 trailing: Text(Globals.version),
               ),
               SettingsTile(
                 title: 'Build Number',
-                leading: const Icon(Icons.build),
+                leading: Icon(
+                  Icons.build,
+                  color: Theme.of(context).iconTheme.color,
+                ),
                 trailing: Text(Globals.buildNumber),
               ),
             ],
@@ -48,7 +53,10 @@ class SettingsScreen extends ConsumerWidget {
             tiles: [
               SettingsTile(
                 title: 'Logout',
-                leading: const Icon(Icons.logout),
+                leading: Icon(
+                  Icons.logout,
+                  color: Theme.of(context).iconTheme.color,
+                ),
                 trailing: const Icon(Icons.chevron_right),
                 onPressed: (_) async {
                   bool? confirm = await _modalService.showConfirmation(
@@ -66,7 +74,10 @@ class SettingsScreen extends ConsumerWidget {
               ),
               SettingsTile(
                 title: 'Delete Account',
-                leading: const Icon(Icons.delete),
+                leading: Icon(
+                  Icons.delete,
+                  color: Theme.of(context).iconTheme.color,
+                ),
                 trailing: const Icon(Icons.chevron_right),
                 onPressed: (_) async {
                   UserModel user = await authProvider.getUser();

@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.io.book_quotes">
    <application
-        android:label="QuoteKeeper"
+        android:label="Quote Keeper"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
