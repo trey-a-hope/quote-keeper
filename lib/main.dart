@@ -43,7 +43,7 @@ void main() async {
           theme: AppThemes.lightTheme,
           darkTheme: AppThemes.darkTheme,
           themeMode: ThemeMode.system,
-          title: 'QuoteKeeper',
+          title: 'Quote Keeper',
           initialBinding: InitialBinding(),
           initialRoute: Globals.routeSplash,
           getPages: AppRoutes.routes,

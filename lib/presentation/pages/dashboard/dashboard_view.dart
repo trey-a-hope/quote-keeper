@@ -28,7 +28,9 @@ class DashboardView extends StatelessWidget {
       init: DashboardViewModel(),
       builder: (model) {
         return model.isLoading
-            ? const Center(child: CircularProgressIndicator())
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
             : Builder(
                 builder: (context) {
                   if (model.showTutorial) {

@@ -1,11 +1,8 @@
-import 'package:quote_keeper/data/services/modal_service.dart';
 import 'package:quote_keeper/domain/models/books/book_model.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-//TODO †his is stateful widget! Update on book edit.
 
 class BookWidget extends StatefulWidget {
   const BookWidget({Key? key, required this.book}) : super(key: key);

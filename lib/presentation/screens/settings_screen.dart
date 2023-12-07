@@ -5,7 +5,6 @@ import 'package:flutter_settings_ui/flutter_settings_ui.dart';
 import 'package:get/get.dart';
 import 'package:quote_keeper/data/services/modal_service.dart';
 import 'package:quote_keeper/domain/models/users/user_model.dart';
-import 'package:quote_keeper/domain/providers/auth_provider.dart';
 import 'package:quote_keeper/domain/providers/providers.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
 import 'package:simple_page_widget/ui/simple_page_widget.dart';
@@ -17,7 +16,7 @@ class SettingsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final AuthProvider authProvider = ref.watch(Providers.authProvider);
+    final authProvider = ref.watch(Providers.authProvider);
 
     return SimplePageWidget(
       title: 'Settings',

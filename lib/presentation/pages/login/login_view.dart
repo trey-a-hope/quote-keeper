@@ -32,7 +32,7 @@ class LoginView extends StatelessWidget {
             ),
           ),
           child: FlutterLogin(
-            title: 'QuoteKeeper',
+            title: 'Quote Keeper',
             theme: LoginTheme(
               primaryColor: Colors.deepOrange,
               accentColor: Colors.white,

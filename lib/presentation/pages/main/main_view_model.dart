@@ -25,8 +25,7 @@ class _MainViewModel extends GetxController {
 
   /// Listens for user auth changes.
   handleAuthChanged(firebaseUser) async {
-    // final VersionStatus? status = await NewVersionPlus().getVersionStatus();
-    if (firebaseUser == null /*|| (status != null && status.canUpdate)*/) {
+    if (firebaseUser == null) {
       Get.offAllNamed(Globals.routeLogin);
     }
     // Proceed to home page.

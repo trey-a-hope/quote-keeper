@@ -35,7 +35,7 @@ class TutorialService extends GetxService {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  'Welcome to QuoteKeeper',
+                  'Welcome to Quote Keeper',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
