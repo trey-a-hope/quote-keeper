@@ -1,4 +1,3 @@
-import 'package:new_version_plus/new_version_plus.dart';
 import 'package:quote_keeper/data/services/share_service.dart';
 import 'package:quote_keeper/data/services/tutorial_service.dart';
 import 'package:quote_keeper/domain/models/books/book_model.dart';
