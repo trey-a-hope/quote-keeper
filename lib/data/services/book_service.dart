@@ -22,7 +22,7 @@ extension on Query<BookModel> {
   Query<BookModel> queryBy(BookQuery query) {
     switch (query) {
       case BookQuery.title:
-        return orderBy('title', descending: true);
+        return orderBy('title', descending: false);
       case BookQuery.author:
         return orderBy('author', descending: true);
       case BookQuery.quote:
@@ -148,9 +148,11 @@ class BookService extends GetxService {
   }
 
   Future<List<BookModel>> fetchPage({
-    required Timestamp? created,
     required int limit,
     required String uid,
+    Timestamp? created,
+    String? title,
+    bool? complete,
   }) async {
     try {
       Query<BookModel> bookQuery = _booksDB
@@ -160,12 +162,20 @@ class BookService extends GetxService {
                   BookModel.fromJson(snapshot.data()!),
               toFirestore: (model, _) => model.toJson());
 
-      Query q = bookQuery.queryBy(BookQuery.created);
+      Query q = bookQuery.queryBy(BookQuery.title);
 
       q = q.limit(limit);
 
+      if (complete != null) {
+        q = q.where('complete', isEqualTo: complete);
+      }
+
       if (created != null) {
         q = q.startAfter([created]);
+      }
+
+      if (title != null) {
+        q = q.startAfter([title]);
       }
 
       List<QueryDocumentSnapshot<Object?>> docs = (await q.get()).docs;

@@ -113,11 +113,14 @@ class _BookWidgetState extends State<BookWidget> {
                     const Spacer(),
                     Row(
                       children: [
+                        const Spacer(),
                         ElevatedButton(
                           onPressed: () => Navigator.of(context).pop(_book),
                           child: const Text('Open'),
                         ),
-                        const Spacer(),
+                        const SizedBox(
+                          width: 10,
+                        ),
                         ElevatedButton(
                           onPressed: () async {
                             var updatedBook = await Get.toNamed(

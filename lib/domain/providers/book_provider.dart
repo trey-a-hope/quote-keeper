@@ -8,6 +8,11 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
 
+enum FilterOptions {
+  complete,
+  incomplete,
+}
+
 class BookProvider extends ChangeNotifier {
   // Initialize services.
   final BookService _bookService = Get.find();
@@ -27,6 +32,9 @@ class BookProvider extends ChangeNotifier {
   // Search text.
   String _search = '';
   String get search => _search;
+
+  FilterOptions? _selectedFilterOption;
+  FilterOptions? get selectedFilterOption => _selectedFilterOption;
 
   // Quote for submission.
   String _quote = '';
@@ -60,6 +68,11 @@ class BookProvider extends ChangeNotifier {
       _performSearch();
     }
 
+    notifyListeners();
+  }
+
+  void updateFilterOption(FilterOptions? val) {
+    _selectedFilterOption = val;
     notifyListeners();
   }
 

@@ -83,9 +83,12 @@ class AppThemes {
 
   /// Light theme
   static ThemeData lightTheme = ThemeData(
-    primaryColor: _primaryColor,
     brightness: Brightness.light,
     canvasColor: Colors.white,
+    chipTheme: ChipThemeData(
+      backgroundColor: _primaryColor,
+      labelStyle: const TextStyle(color: Colors.white),
+    ),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: _primaryColor,
       foregroundColor: Colors.white,
@@ -94,6 +97,7 @@ class AppThemes {
     listTileTheme: ListTileThemeData(
       iconColor: Colors.green.shade700,
     ),
+    primaryColor: _primaryColor,
     textTheme: TextTheme(
       displayLarge: _displayLarge.copyWith(color: Colors.black),
       displayMedium: _displayMedium.copyWith(color: Colors.black),
@@ -110,9 +114,12 @@ class AppThemes {
 
   /// Dark theme
   static ThemeData darkTheme = ThemeData(
-    primaryColor: _primaryColor,
     brightness: Brightness.dark,
     canvasColor: Colors.grey.shade900,
+    chipTheme: ChipThemeData(
+      backgroundColor: _secondaryColor,
+      labelStyle: const TextStyle(color: Colors.white),
+    ),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: _primaryColor,
       foregroundColor: Colors.white,
@@ -121,6 +128,7 @@ class AppThemes {
     listTileTheme: ListTileThemeData(
       iconColor: Colors.green.shade300,
     ),
+    primaryColor: _primaryColor,
     textTheme: TextTheme(
       displayLarge: _displayLarge.copyWith(color: Colors.white),
       displayMedium: _displayMedium.copyWith(color: Colors.white),
