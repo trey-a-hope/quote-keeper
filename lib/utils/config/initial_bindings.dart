@@ -1,5 +1,6 @@
 import 'package:quote_keeper/data/services/book_service.dart';
 import 'package:quote_keeper/data/services/fcm_service.dart';
+import 'package:quote_keeper/data/services/firestore_book_service.dart';
 import 'package:quote_keeper/data/services/firestore_util_service.dart';
 import 'package:quote_keeper/data/services/modal_service.dart';
 import 'package:quote_keeper/data/services/share_service.dart';
@@ -12,6 +13,7 @@ class InitialBinding implements Bindings {
   @override
   void dependencies() {
     Get.lazyPut(() => BookService());
+    Get.lazyPut(() => FirestoreBookService());
     Get.lazyPut(() => FCMService());
     Get.lazyPut(() => FirestoreUtilService());
     Get.lazyPut(() => ModalService(), fenix: true);

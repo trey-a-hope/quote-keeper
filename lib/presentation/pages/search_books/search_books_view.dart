@@ -1,11 +1,11 @@
 import 'package:quote_keeper/data/services/tutorial_service.dart';
 import 'package:quote_keeper/domain/models/search_book_result/search_books_result_model.dart';
 import 'package:quote_keeper/presentation/pages/search_books/search_books_view_model.dart';
+import 'package:quote_keeper/presentation/widgets/quoter_keeper_scaffold.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:simple_page_widget/ui/simple_page_widget.dart';
 
 class SearchBooksView extends StatelessWidget {
   SearchBooksView({Key? key}) : super(key: key);
@@ -27,7 +27,7 @@ class SearchBooksView extends StatelessWidget {
           _tutorialService.showSearchBookTutorial(context);
         }
 
-        return SimplePageWidget(
+        return QuoteKeeperScaffold(
           scaffoldKey: _scaffoldKey,
           leftIconButton: IconButton(
             icon: const Icon(Icons.chevron_left),

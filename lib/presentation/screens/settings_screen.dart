@@ -6,8 +6,8 @@ import 'package:get/get.dart';
 import 'package:quote_keeper/data/services/modal_service.dart';
 import 'package:quote_keeper/domain/models/users/user_model.dart';
 import 'package:quote_keeper/domain/providers/providers.dart';
+import 'package:quote_keeper/presentation/widgets/quoter_keeper_scaffold.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
-import 'package:simple_page_widget/ui/simple_page_widget.dart';
 
 class SettingsScreen extends ConsumerWidget {
   SettingsScreen({Key? key}) : super(key: key);
@@ -18,7 +18,7 @@ class SettingsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final authProvider = ref.watch(Providers.authProvider);
 
-    return SimplePageWidget(
+    return QuoteKeeperScaffold(
       title: 'Settings',
       leftIconButton: IconButton(
         icon: const Icon(Icons.chevron_left),

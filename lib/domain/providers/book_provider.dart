@@ -15,10 +15,6 @@ class BookProvider extends ChangeNotifier {
   final ShareService _shareService = Get.find();
   final GetStorage _getStorage = Get.find();
 
-  // Total book, or "quote" count.
-  int _totalBookAccount = 0;
-  int get totalBookAccount => _totalBookAccount;
-
   // UID of current user.
   late String _uid;
 
@@ -107,10 +103,6 @@ class BookProvider extends ChangeNotifier {
       isLoading = true;
       notifyListeners();
 
-      _totalBookAccount = await _bookService.getTotalBookCount(
-        uid: _uid,
-      );
-
       isLoading = false;
       notifyListeners();
     } catch (error) {
@@ -147,8 +139,6 @@ class BookProvider extends ChangeNotifier {
       await _bookService.create(
         book: book,
       );
-
-      _totalBookAccount += 1;
 
       isLoading = false;
 
@@ -216,17 +206,6 @@ class BookProvider extends ChangeNotifier {
       _shareService.share(
         book: book,
       );
-    } catch (e) {
-      throw Exception(e);
-    }
-  }
-
-  Future deleteBook({required BookModel book}) async {
-    try {
-      // Delete book from firestore.
-      await _bookService.delete(uid: _uid, id: book.id!);
-
-      _totalBookAccount -= 1;
     } catch (e) {
       throw Exception(e);
     }

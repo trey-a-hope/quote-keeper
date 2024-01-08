@@ -3,7 +3,7 @@ import 'package:quote_keeper/presentation/pages/edit_book/edit_book_view_model.d
 import 'package:quote_keeper/data/services/modal_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:simple_page_widget/ui/simple_page_widget.dart';
+import 'package:quote_keeper/presentation/widgets/quoter_keeper_scaffold.dart';
 
 class EditBookView extends StatelessWidget {
   EditBookView({Key? key}) : super(key: key);
@@ -42,7 +42,7 @@ class EditBookView extends StatelessWidget {
       builder: (model) {
         _quoteController.text = model.book.quote;
 
-        return SimplePageWidget(
+        return QuoteKeeperScaffold(
           scaffoldKey: _scaffoldKey,
           leftIconButton: IconButton(
             icon: const Icon(Icons.chevron_left),
@@ -66,6 +66,10 @@ class EditBookView extends StatelessWidget {
                 return;
               }
               await model.deleteQuote();
+
+              // ref
+              //     .read(totalBooksCountStateNotifierProvider.notifier)
+              //     .decrement();
 
               Get.back();
             },

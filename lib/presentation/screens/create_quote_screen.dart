@@ -2,12 +2,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quote_keeper/data/services/tutorial_service.dart';
 import 'package:quote_keeper/domain/models/search_book_result/search_books_result_model.dart';
 import 'package:quote_keeper/domain/providers/providers.dart';
+import 'package:quote_keeper/domain/providers/total_books_count_state_notifier_provider.dart';
+import 'package:quote_keeper/presentation/widgets/quoter_keeper_scaffold.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
 import 'package:quote_keeper/data/services/modal_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
-import 'package:simple_page_widget/ui/simple_page_widget.dart';
 
 class CreateQuoteScreen extends ConsumerWidget {
   CreateQuoteScreen({Key? key}) : super(key: key);
@@ -24,7 +25,7 @@ class CreateQuoteScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final bookProvider = ref.watch(Providers.bookProvider);
 
-    return SimplePageWidget(
+    return QuoteKeeperScaffold(
       scaffoldKey: _scaffoldKey,
       leftIconButton: IconButton(
         icon: const Icon(Icons.chevron_left),
@@ -109,6 +110,12 @@ class CreateQuoteScreen extends ConsumerWidget {
                                     author: book.author,
                                     imgUrl: book.imgUrl,
                                   );
+
+// Increment total book count.
+                                  ref
+                                      .read(totalBooksCountStateNotifierProvider
+                                          .notifier)
+                                      .increment();
 
                                   // Return to dashboard.
                                   Get.back();
