@@ -111,7 +111,7 @@ class CreateQuoteScreen extends ConsumerWidget {
                                     imgUrl: book.imgUrl,
                                   );
 
-// Increment total book count.
+                                  // Increment total book count.
                                   ref
                                       .read(totalBooksCountStateNotifierProvider
                                           .notifier)

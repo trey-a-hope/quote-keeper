@@ -1,4 +1,6 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quote_keeper/domain/models/books/book_model.dart';
+import 'package:quote_keeper/domain/providers/dashboard_book_state_notifier_provider.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -113,9 +115,19 @@ class _BookWidgetState extends State<BookWidget> {
                     const Spacer(),
                     Row(
                       children: [
-                        ElevatedButton(
-                          onPressed: () => Navigator.of(context).pop(_book),
-                          child: const Text('Open'),
+                        Consumer(
+                          builder: (context, ref, child) {
+                            return ElevatedButton(
+                              onPressed: () {
+                                ref
+                                    .read(dashboardBookStateNotifierProvider
+                                        .notifier)
+                                    .setBook(_book);
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text('Open'),
+                            );
+                          },
                         ),
                         const Spacer(),
                         ElevatedButton(

@@ -41,7 +41,6 @@ class BooksStateNotifier extends StateNotifier<List<BookModel>> {
       state = [...state, ...books];
     } catch (e) {
       if (e is StateError) {
-        print('No more books to fetch');
       } else {
         rethrow;
       }

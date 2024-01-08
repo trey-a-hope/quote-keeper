@@ -1,4 +1,4 @@
-import 'package:quote_keeper/presentation/pages/dashboard/dashboard_view.dart';
+import 'package:quote_keeper/presentation/pages/dashboard_page.dart';
 import 'package:quote_keeper/presentation/pages/edit_book/edit_book_view.dart';
 import 'package:quote_keeper/presentation/pages/main/main_view.dart';
 import 'package:quote_keeper/presentation/pages/search_books/search_books_view.dart';
@@ -26,7 +26,7 @@ class AppRoutes {
     ),
     GetPage(
       name: Globals.routeDashboard,
-      page: () => DashboardView(),
+      page: () => DashboardPage(),
     ),
     GetPage(
       name: Globals.routeBooks,
