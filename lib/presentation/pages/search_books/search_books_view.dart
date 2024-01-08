@@ -1,5 +1,7 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quote_keeper/data/services/tutorial_service.dart';
 import 'package:quote_keeper/domain/models/search_book_result/search_books_result_model.dart';
+import 'package:quote_keeper/domain/providers/should_display_tutorial_state_notifier_provider.dart';
 import 'package:quote_keeper/presentation/pages/search_books/search_books_view_model.dart';
 import 'package:quote_keeper/presentation/widgets/quoter_keeper_scaffold.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
@@ -7,7 +9,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class SearchBooksView extends StatelessWidget {
+class SearchBooksView extends ConsumerWidget {
   SearchBooksView({Key? key}) : super(key: key);
 
   /// Editing controller for message on critique.
@@ -19,11 +21,14 @@ class SearchBooksView extends StatelessWidget {
   final TutorialService _tutorialService = Get.find();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    var shouldShowTutorial =
+        ref.read(shouldDisplayTutorialStateNotifierProvider);
+
     return GetBuilder<SearchBooksViewModel>(
       init: SearchBooksViewModel(),
       builder: (model) {
-        if (model.showTutorial) {
+        if (shouldShowTutorial) {
           _tutorialService.showSearchBookTutorial(context);
         }
 

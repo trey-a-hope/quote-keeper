@@ -1,77 +1,71 @@
-// import 'package:quote_keeper/data/services/firestore_util_service.dart';
-import 'package:quote_keeper/domain/models/books/book_model.dart';
-import 'package:quote_keeper/data/services/book_service.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:quote_keeper/utils/constants/globals.dart';
+// // import 'package:quote_keeper/data/services/firestore_util_service.dart';
+// import 'package:quote_keeper/domain/models/books/book_model.dart';
+// import 'package:quote_keeper/data/services/book_service.dart';
+// import 'package:flutter/material.dart';
+// import 'package:get/get.dart';
+// import 'package:get_storage/get_storage.dart';
+// import 'package:quote_keeper/utils/constants/globals.dart';
 
-class DashboardViewModel extends GetxController {
-  final BookService _bookService = Get.find();
-  // final FirestoreUtilService _firestoreUtilService = Get.find();
-  final GetStorage _getStorage = Get.find();
+// class DashboardViewModel extends GetxController {
+//   final BookService _bookService = Get.find();
+//   // final FirestoreUtilService _firestoreUtilService = Get.find();
+//   final GetStorage _getStorage = Get.find();
 
-  BookModel? _book;
-  BookModel? get book => _book;
+//   BookModel? _book;
+//   BookModel? get book => _book;
 
-  bool _isLoading = true;
-  bool get isLoading => _isLoading;
+//   bool _isLoading = true;
+//   bool get isLoading => _isLoading;
 
-  bool _showTutorial = false;
-  bool get showTutorial => _showTutorial;
+//   late bool _booksCollectionExists;
 
-  late bool _booksCollectionExists;
+//   @override
+//   void onInit() async {
+//     super.onInit();
+//     _booksCollectionExists = await _checkIfBooksCollectionExists();
+//     await load();
+//   }
 
-  @override
-  void onInit() async {
-    super.onInit();
-    _booksCollectionExists = await _checkIfBooksCollectionExists();
-    await load();
-  }
+//   Future<bool> _checkIfBooksCollectionExists() async =>
+//       await _bookService.booksCollectionExists(
+//         uid: _getStorage.read('uid'),
+//       );
 
-  Future<bool> _checkIfBooksCollectionExists() async =>
-      await _bookService.booksCollectionExists(
-        uid: _getStorage.read('uid'),
-      );
+//   void reload() async {
+//     if (!_booksCollectionExists) {
+//       _booksCollectionExists = await _checkIfBooksCollectionExists();
+//     }
+//     await load();
+//   }
 
-  void reload() async {
-    if (!_booksCollectionExists) {
-      _booksCollectionExists = await _checkIfBooksCollectionExists();
-    }
-    await load();
-  }
+//   Future load() async {
+//     try {
+//       if (_booksCollectionExists) {
+//         // Fetch random book.
+//         _book = await _bookService.getRandom(
+//           uid: _getStorage.read('uid'),
+//         );
+//       }
 
-  Future load() async {
-    try {
-      if (_booksCollectionExists) {
-        // Fetch random book.
-        _book = await _bookService.getRandom(
-          uid: _getStorage.read('uid'),
-        );
-      }
+//       // Loading complete.
+//       _isLoading = false;
 
-      // If first time using app, run tutorial.
-      _showTutorial = !_getStorage.read(Globals.tutorialComplete);
+//       // await _firestoreUtilService.addPropertyToDocuments(
+//       //   collection: 'users',
+//       //   key: 'tutorialComplete',
+//       //   value: false,
+//       // );
 
-      // Loading complete.
-      _isLoading = false;
+//       update();
+//     } catch (e) {
+//       debugPrint(e.toString());
+//       _isLoading = false;
+//       update();
+//     }
+//   }
 
-      // await _firestoreUtilService.addPropertyToDocuments(
-      //   collection: 'users',
-      //   key: 'tutorialComplete',
-      //   value: false,
-      // );
-
-      update();
-    } catch (e) {
-      debugPrint(e.toString());
-      _isLoading = false;
-      update();
-    }
-  }
-
-  void updateBook({required BookModel newBook}) {
-    _book = newBook;
-    update();
-  }
-}
+//   void updateBook({required BookModel newBook}) {
+//     _book = newBook;
+//     update();
+//   }
+// }

@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quote_keeper/data/services/tutorial_service.dart';
 import 'package:quote_keeper/domain/models/search_book_result/search_books_result_model.dart';
 import 'package:quote_keeper/domain/providers/providers.dart';
+import 'package:quote_keeper/domain/providers/should_display_tutorial_state_notifier_provider.dart';
 import 'package:quote_keeper/domain/providers/total_books_count_state_notifier_provider.dart';
 import 'package:quote_keeper/presentation/widgets/quoter_keeper_scaffold.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
@@ -24,6 +25,8 @@ class CreateQuoteScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final bookProvider = ref.watch(Providers.bookProvider);
+    final shouldDisplayTutorial =
+        ref.read(shouldDisplayTutorialStateNotifierProvider);
 
     return QuoteKeeperScaffold(
       scaffoldKey: _scaffoldKey,
@@ -37,7 +40,7 @@ class CreateQuoteScreen extends ConsumerWidget {
       child: bookProvider.isLoading
           ? const Center(child: CircularProgressIndicator())
           : Builder(builder: (context) {
-              if (bookProvider.showTutorial) {
+              if (shouldDisplayTutorial) {
                 _tutorialService.showCreateQuoteTutorial(context);
               }
 
@@ -116,6 +119,13 @@ class CreateQuoteScreen extends ConsumerWidget {
                                       .read(totalBooksCountStateNotifierProvider
                                           .notifier)
                                       .increment();
+
+                                  // Turn off tutorial flag.
+                                  ref
+                                      .read(
+                                          shouldDisplayTutorialStateNotifierProvider
+                                              .notifier)
+                                      .setShouldDisplayTutorial(false);
 
                                   // Return to dashboard.
                                   Get.back();

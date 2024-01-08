@@ -29,9 +29,6 @@ class SearchBooksViewModel extends GetxController {
 
   final GetStorage _getStorage = Get.find();
 
-  bool _showTutorial = false;
-  bool get showTutorial => _showTutorial;
-
   @override
   void onInit() async {
     super.onInit();
@@ -39,10 +36,7 @@ class SearchBooksViewModel extends GetxController {
   }
 
   Future load() async {
-    try {
-      // Determine if the tutorial should be shown.
-      _showTutorial = !_getStorage.read(Globals.tutorialComplete);
-    } catch (e) {
+    try {} catch (e) {
       debugPrint(e.toString());
     }
   }

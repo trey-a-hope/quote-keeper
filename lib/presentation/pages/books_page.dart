@@ -1,7 +1,7 @@
 import 'package:quote_keeper/domain/models/books/book_model.dart';
 import 'package:quote_keeper/domain/providers/books_state_notifier_provider.dart';
 import 'package:quote_keeper/domain/providers/total_books_count_state_notifier_provider.dart';
-import 'package:quote_keeper/presentation/widgets/book/book_widget.dart';
+import 'package:quote_keeper/presentation/widgets/book_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

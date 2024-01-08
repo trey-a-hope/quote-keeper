@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quote_keeper/data/services/share_service.dart';
 import 'package:quote_keeper/data/services/tutorial_service.dart';
 import 'package:quote_keeper/domain/providers/dashboard_book_state_notifier_provider.dart';
+import 'package:quote_keeper/domain/providers/should_display_tutorial_state_notifier_provider.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
@@ -21,14 +22,17 @@ class DashboardPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     var book = ref.watch(dashboardBookStateNotifierProvider);
+    var shouldDisplayTutorial =
+        ref.read(shouldDisplayTutorialStateNotifierProvider);
+
     // Prompt user for potential updated version of app.
     Globals.newVersionPlus.showAlertIfNecessary(context: context);
 
     return Builder(
       builder: (context) {
-        // if (model.showTutorial) {
-        //   _tutorialService.showDashboardTutorial(context);
-        // }
+        if (shouldDisplayTutorial) {
+          _tutorialService.showDashboardTutorial(context);
+        }
 
         return Stack(
           children: [

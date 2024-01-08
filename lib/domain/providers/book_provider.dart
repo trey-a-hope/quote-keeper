@@ -38,13 +38,8 @@ class BookProvider extends ChangeNotifier {
     apiKey: Globals.algolia.apiKey,
   );
 
-  bool _showTutorial = false;
-  bool get showTutorial => _showTutorial;
-
   BookProvider() {
     _uid = _getStorage.read('uid');
-    // Determine if the tutorial should be shown.
-    _showTutorial = !_getStorage.read(Globals.tutorialComplete);
     load();
   }
 
@@ -149,9 +144,6 @@ class BookProvider extends ChangeNotifier {
           'tutorialComplete': true,
         },
       );
-
-      // Turn off tutorial flag.
-      _getStorage.write(Globals.tutorialComplete, true);
 
       notifyListeners();
     } catch (e) {
