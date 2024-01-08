@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:quote_keeper/data/services/user_service.dart';
 
+// Whether or not to display the tutorial.
 class ShouldDisplayTutorialStateNotifier extends StateNotifier<bool> {
   final UserService _userService = Get.find();
 

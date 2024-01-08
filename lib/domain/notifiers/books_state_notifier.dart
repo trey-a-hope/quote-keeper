@@ -5,6 +5,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:quote_keeper/domain/models/books/book_model.dart';
 import 'package:quote_keeper/data/services/firestore_book_service.dart';
 
+// Paginated list of books for a user.
 class BooksStateNotifier extends StateNotifier<List<BookModel>> {
   final GetStorage _getStorage = Get.find();
   final FirestoreBookService _firestoreBookService = Get.find();

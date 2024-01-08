@@ -4,7 +4,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:quote_keeper/data/services/book_service.dart';
 import 'package:quote_keeper/domain/models/books/book_model.dart';
 
-// The book that is displayed on the Dashboard.
+// Book that is displayed on the Dashboard.
 class DashboardBookStateNotifier extends StateNotifier<BookModel?> {
   final GetStorage _getStorage = Get.find();
   final BookService _bookService = Get.find();

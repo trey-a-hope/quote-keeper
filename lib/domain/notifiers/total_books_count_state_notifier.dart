@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:quote_keeper/data/services/firestore_book_service.dart';
 
+// Total number of books for a user.
 class TotalBooksCountStateNotifier extends StateNotifier<int> {
   final GetStorage _getStorage = Get.find();
   final FirestoreBookService _firestoreBookService = Get.find();
