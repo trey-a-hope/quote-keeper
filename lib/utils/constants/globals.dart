@@ -7,15 +7,15 @@ class Globals {
   static var algolia = _AlgoliaConfig();
 
   /// Routes
-  static const String routeBooks = '/books';
-  static const String routeCreateQuote = '/createQuote';
-  static const String routeDashboard = '/dashboard';
-  static const String routeEditQuote = '/editQuote';
-  static const String routeLogin = '/login';
-  static const String routeMain = '/main';
-  static const String routeSplash = '/splash';
-  static const String routeSearchBooks = '/searchBooks';
-  static const String routeSettings = '/settings';
+  static const String routeBooks = 'books';
+  static const String routeCreateQuote = 'createQuote';
+  static const String routeDashboard = 'dashboard';
+  static const String routeEditQuote = 'editQuote';
+  static const String routeLogin = 'login';
+  static const String routeAuthChecker = 'authChecker';
+  static const String routeSplash = 'splash';
+  static const String routeSearchBooks = 'searchBooks';
+  static const String routeSettings = 'settings';
 
   /// Images
   static const String libraryBackground =

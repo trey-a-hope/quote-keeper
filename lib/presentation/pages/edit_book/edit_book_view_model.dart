@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 class EditBookViewModel extends GetxController {
-  final BookService _bookService = Get.find();
-  final GetStorage _getStorage = Get.find();
+  final _bookService = BookService();
+  final _getStorage = GetStorage();
 
   bool _isHidden = false;
   bool get isHidden => _isHidden;

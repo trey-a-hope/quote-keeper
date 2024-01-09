@@ -1,7 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:quote_keeper/data/services/tutorial_service.dart';
 import 'package:quote_keeper/domain/models/search_book_result/search_books_result_model.dart';
-import 'package:quote_keeper/domain/providers/should_display_tutorial_state_notifier_provider.dart';
+import 'package:quote_keeper/utils/config/providers.dart';
 import 'package:quote_keeper/presentation/pages/search_books/search_books_view_model.dart';
 import 'package:quote_keeper/presentation/widgets/quoter_keeper_scaffold.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
@@ -18,12 +19,12 @@ class SearchBooksView extends ConsumerWidget {
   /// Key for the scaffold.
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  final TutorialService _tutorialService = Get.find();
+  final _tutorialService = TutorialService();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     var shouldShowTutorial =
-        ref.read(shouldDisplayTutorialStateNotifierProvider);
+        ref.read(Providers.shouldDisplayTutorialStateNotifierProvider);
 
     return GetBuilder<SearchBooksViewModel>(
       init: SearchBooksViewModel(),
@@ -36,9 +37,7 @@ class SearchBooksView extends ConsumerWidget {
           scaffoldKey: _scaffoldKey,
           leftIconButton: IconButton(
             icon: const Icon(Icons.chevron_left),
-            onPressed: () {
-              Get.back();
-            },
+            onPressed: () => Navigator.of(context).pop(),
           ),
           title: 'Search Books',
           child: Column(
@@ -81,12 +80,12 @@ class SearchBooksView extends ConsumerWidget {
                           child: ListView.builder(
                             itemCount: model.books.length,
                             itemBuilder: (BuildContext context, int index) {
-                              final SearchBooksResultModel book =
+                              final SearchBooksResultModel searchBooksResult =
                                   model.books[index];
 
                               return ListTile(
                                 leading: CachedNetworkImage(
-                                  imageUrl: '${book.imgUrl}',
+                                  imageUrl: '${searchBooksResult.imgUrl}',
                                   imageBuilder: (context, imageProvider) =>
                                       Image(
                                     image: imageProvider,
@@ -98,12 +97,12 @@ class SearchBooksView extends ConsumerWidget {
                                       const Icon(Icons.error),
                                 ),
                                 title: Text(
-                                  book.title,
+                                  searchBooksResult.title,
                                   style:
                                       Theme.of(context).textTheme.headlineSmall,
                                 ),
                                 subtitle: Text(
-                                  book.author ?? 'Unknown',
+                                  searchBooksResult.author ?? 'Unknown',
                                   style: Theme.of(context).textTheme.bodyLarge,
                                 ),
                                 trailing: Icon(
@@ -111,12 +110,12 @@ class SearchBooksView extends ConsumerWidget {
                                   color: Theme.of(context).iconTheme.color,
                                 ),
                                 onTap: () async {
-                                  Get.toNamed(
-                                    Globals.routeCreateQuote,
-                                    arguments: {
-                                      'book': book,
-                                    },
-                                  );
+                                  ref
+                                      .read(Providers
+                                          .selectedBookSearchNotifierProvider
+                                          .notifier)
+                                      .setSearchBooksResult(searchBooksResult);
+                                  context.goNamed(Globals.routeCreateQuote);
                                 },
                               );
                             },

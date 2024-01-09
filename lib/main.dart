@@ -9,7 +9,6 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:quote_keeper/utils/config/initial_bindings.dart';
 import 'package:quote_keeper/utils/config/app_routes.dart';
 import 'package:quote_keeper/utils/config/app_themes.dart';
 
@@ -30,23 +29,22 @@ void main() async {
     Globals.version = packageInfo.version;
     Globals.buildNumber = packageInfo.buildNumber;
 
+    final getStorage = GetStorage();
+
     // Set light/dark mode theme.
-    final GetStorage getStorage = Get.find();
     Get.changeThemeMode(getStorage.read(Globals.darkModeEnabled) ?? false
         ? ThemeMode.dark
         : ThemeMode.light);
 
     runApp(
       ProviderScope(
-        child: GetMaterialApp(
+        child: MaterialApp.router(
           debugShowCheckedModeBanner: false,
           theme: AppThemes.lightTheme,
           darkTheme: AppThemes.darkTheme,
           themeMode: ThemeMode.system,
           title: 'Quote Keeper',
-          initialBinding: InitialBinding(),
-          initialRoute: Globals.routeSplash,
-          getPages: AppRoutes.routes,
+          routerConfig: router,
         ),
       ),
     );

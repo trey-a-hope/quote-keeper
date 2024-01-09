@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:quote_keeper/domain/models/books/book_model.dart';
-import 'package:quote_keeper/domain/providers/dashboard_book_state_notifier_provider.dart';
+import 'package:quote_keeper/utils/config/providers.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -120,7 +121,8 @@ class _BookWidgetState extends State<BookWidget> {
                             return ElevatedButton(
                               onPressed: () {
                                 ref
-                                    .read(dashboardBookStateNotifierProvider
+                                    .read(Providers
+                                        .dashboardBookAsyncNotifierProvider
                                         .notifier)
                                     .setBook(_book);
                                 Navigator.of(context).pop();
@@ -130,20 +132,21 @@ class _BookWidgetState extends State<BookWidget> {
                           },
                         ),
                         const Spacer(),
-                        ElevatedButton(
-                          onPressed: () async {
-                            var updatedBook = await Get.toNamed(
-                              Globals.routeEditQuote,
-                              arguments: {'book': _book},
-                            );
+                        Consumer(
+                          builder: (context, ref, child) {
+                            return ElevatedButton(
+                              onPressed: () async {
+                                // Set book for the EditBookNotifier.
+                                ref
+                                    .read(Providers
+                                        .editBookNotifierProvider.notifier)
+                                    .setBook(_book);
 
-                            if (updatedBook is BookModel) {
-                              setState(() {
-                                _book = updatedBook;
-                              });
-                            }
+                                context.goNamed(Globals.routeEditQuote);
+                              },
+                              child: const Text('Edit'),
+                            );
                           },
-                          child: const Text('Edit'),
                         )
                       ],
                     )

@@ -1,13 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:quote_keeper/data/services/user_service.dart';
 
 // Whether or not to display the tutorial.
 class ShouldDisplayTutorialStateNotifier extends StateNotifier<bool> {
-  final UserService _userService = Get.find();
+  final _userService = UserService();
 
-  final GetStorage _getStorage = Get.find();
+  final _getStorage = GetStorage();
 
   late String _uid;
 
@@ -21,7 +20,14 @@ class ShouldDisplayTutorialStateNotifier extends StateNotifier<bool> {
     state = !user.tutorialComplete;
   }
 
-  void setShouldDisplayTutorial(bool value) {
-    state = value;
+  void markTutorialComplete() async {
+    await _userService.updateUser(
+      uid: _uid,
+      data: {
+        'tutorialComplete': true,
+      },
+    );
+
+    state = true;
   }
 }

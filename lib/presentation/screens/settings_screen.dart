@@ -5,24 +5,22 @@ import 'package:flutter_settings_ui/flutter_settings_ui.dart';
 import 'package:get/get.dart';
 import 'package:quote_keeper/data/services/modal_service.dart';
 import 'package:quote_keeper/domain/models/users/user_model.dart';
-import 'package:quote_keeper/domain/providers/providers.dart';
+import 'package:quote_keeper/utils/config/providers.dart';
 import 'package:quote_keeper/presentation/widgets/quoter_keeper_scaffold.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
 
 class SettingsScreen extends ConsumerWidget {
   SettingsScreen({Key? key}) : super(key: key);
 
-  final ModalService _modalService = Get.find();
+  final _modalService = ModalService();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final authProvider = ref.watch(Providers.authProvider);
-
     return QuoteKeeperScaffold(
       title: 'Settings',
       leftIconButton: IconButton(
         icon: const Icon(Icons.chevron_left),
-        onPressed: () => Get.back(),
+        onPressed: () => Navigator.of(context).pop(),
       ),
       child: SettingsList(
         backgroundColor: Colors.white,
@@ -70,6 +68,8 @@ class SettingsScreen extends ConsumerWidget {
                   }
 
                   FirebaseAuth.instance.signOut();
+
+                  Get.back();
                 },
               ),
               SettingsTile(
@@ -80,7 +80,9 @@ class SettingsScreen extends ConsumerWidget {
                 ),
                 trailing: const Icon(Icons.chevron_right),
                 onPressed: (_) async {
-                  UserModel user = await authProvider.getUser();
+                  final user = await ref
+                      .read(Providers.authAsyncNotifierProvider.notifier)
+                      .getCurrentUser();
 
                   bool? confirm =
                       await _modalService.showInputMatchConfirmation(
@@ -95,7 +97,9 @@ class SettingsScreen extends ConsumerWidget {
                   }
 
                   try {
-                    await authProvider.deleteAccount();
+                    await ref
+                        .read(Providers.authAsyncNotifierProvider.notifier)
+                        .deleteAccount();
                   } catch (e) {
                     _modalService.showAlert(
                       context: context,

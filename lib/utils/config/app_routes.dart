@@ -1,56 +1,73 @@
-import 'package:quote_keeper/presentation/pages/dashboard_page.dart';
-import 'package:quote_keeper/presentation/pages/edit_book/edit_book_view.dart';
-import 'package:quote_keeper/presentation/pages/main/main_view.dart';
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:quote_keeper/presentation/pages/search_books/search_books_view.dart';
-import 'package:quote_keeper/presentation/pages/splash/splash_view.dart';
-import 'package:quote_keeper/presentation/pages/books_page.dart';
+import 'package:quote_keeper/presentation/screens/auth_checker_screen.dart';
+import 'package:quote_keeper/presentation/screens/books_screen.dart';
 import 'package:quote_keeper/presentation/screens/create_quote_screen.dart';
+import 'package:quote_keeper/presentation/screens/dashboard_screen.dart';
+import 'package:quote_keeper/presentation/screens/edit_book_screen.dart';
 import 'package:quote_keeper/presentation/screens/settings_screen.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
-
-import 'package:get/get_navigation/src/routes/get_route.dart';
-
 import '../../presentation/pages/login/login_view.dart';
 
-class AppRoutes {
-  AppRoutes._();
-
-  static final List<GetPage> routes = [
-    GetPage(
-      name: Globals.routeSplash,
-      page: () => const SplashView(),
+final GoRouter router = GoRouter(
+  debugLogDiagnostics: true,
+  routes: [
+    GoRoute(
+      path: '/',
+      builder: (context, state) => const AuthCheckerScreen(),
     ),
-    GetPage(
-      name: Globals.routeCreateQuote,
-      page: () => CreateQuoteScreen(),
-    ),
-    GetPage(
-      name: Globals.routeDashboard,
-      page: () => DashboardPage(),
-    ),
-    GetPage(
-      name: Globals.routeBooks,
-      page: () => const BooksPage(),
-    ),
-    GetPage(
-      name: Globals.routeEditQuote,
-      page: () => EditBookView(),
-    ),
-    GetPage(
-      name: Globals.routeMain,
-      page: () => const MainView(),
-    ),
-    GetPage(
+    GoRoute(
+      path: '/${Globals.routeLogin}',
       name: Globals.routeLogin,
-      page: () => const LoginView(),
+      builder: (context, state) => const LoginView(),
     ),
-    GetPage(
-      name: Globals.routeSearchBooks,
-      page: () => SearchBooksView(),
+    GoRoute(
+      path: '/${Globals.routeDashboard}',
+      name: Globals.routeDashboard,
+      builder: (context, state) => DashboardScreen(),
+      routes: [
+        GoRoute(
+          path: Globals.routeSearchBooks,
+          name: Globals.routeSearchBooks,
+          builder: (context, state) => SearchBooksView(),
+          routes: [
+            GoRoute(
+              path: Globals.routeCreateQuote,
+              name: Globals.routeCreateQuote,
+              builder: (context, state) => CreateQuoteScreen(),
+            ),
+          ],
+        ),
+        GoRoute(
+          path: Globals.routeBooks,
+          name: Globals.routeBooks,
+          builder: (context, state) => const BooksScreen(),
+          routes: [
+            GoRoute(
+              path: Globals.routeEditQuote,
+              name: Globals.routeEditQuote,
+              builder: (context, state) => EditBookScreen(),
+            ),
+          ],
+        ),
+        GoRoute(
+          path: Globals.routeSettings,
+          name: Globals.routeSettings,
+          builder: (context, state) => SettingsScreen(),
+        ),
+      ],
     ),
-    GetPage(
-      name: Globals.routeSettings,
-      page: () => SettingsScreen(),
+  ],
+  errorPageBuilder: (context, state) => MaterialPage(
+    key: state.pageKey,
+    child: Scaffold(
+      body: Center(
+        child: Text(
+          'Page not found',
+          style: Theme.of(context).textTheme.displayLarge,
+        ),
+      ),
     ),
-  ];
-}
+  ),
+);

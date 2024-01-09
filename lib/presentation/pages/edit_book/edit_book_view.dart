@@ -13,7 +13,7 @@ class EditBookView extends StatelessWidget {
 
   final TextEditingController _quoteController = TextEditingController();
 
-  final ModalService _modalService = Get.find();
+  final _modalService = ModalService();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 

@@ -1,19 +1,11 @@
-import 'dart:async';
-
 import 'package:quote_keeper/utils/constants/globals.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-part 'splash_view_model.dart';
-
-class SplashView extends StatelessWidget {
-  const SplashView({Key? key}) : super(key: key);
+class SplashScreen extends StatelessWidget {
+  const SplashScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return GetBuilder<_SplashViewModel>(
-      init: _SplashViewModel(),
-      builder: (model) => Scaffold(
+  Widget build(BuildContext context) => Scaffold(
         body: Container(
           width: double.infinity,
           height: double.infinity,
@@ -53,7 +45,5 @@ class SplashView extends StatelessWidget {
             ],
           ),
         ),
-      ),
-    );
-  }
+      );
 }

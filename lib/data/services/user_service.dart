@@ -13,6 +13,13 @@ class UserService extends GetxService {
     return count;
   }
 
+  Future<bool> checkIfUserExists({required String uid}) async {
+    // Get user document reference.
+    DocumentReference userDocRef = _usersDB.doc(uid);
+    // Check if user already exists.
+    return (await userDocRef.get()).exists;
+  }
+
   /// Create a user.
   Future<void> createUser({required UserModel user}) async {
     try {
