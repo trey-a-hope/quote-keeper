@@ -7,6 +7,7 @@ import 'package:quote_keeper/data/services/user_service.dart';
 import 'package:quote_keeper/domain/models/users/user_model.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
 
+// Firebase authentication listener.
 class AuthAsyncNotifier extends AsyncNotifier<User?> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 

@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:quote_keeper/data/services/book_service.dart';

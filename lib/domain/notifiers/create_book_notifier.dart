@@ -4,6 +4,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:quote_keeper/domain/models/books/book_model.dart';
 import 'package:quote_keeper/utils/config/providers.dart';
 
+// Creating of the book or "quote".
 class CreateBookNotifier extends Notifier<BookModel?> {
   final _getStorage = GetStorage();
 
