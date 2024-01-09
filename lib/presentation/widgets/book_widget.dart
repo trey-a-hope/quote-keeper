@@ -125,7 +125,7 @@ class _BookWidgetState extends State<BookWidget> {
                                         .dashboardBookAsyncNotifierProvider
                                         .notifier)
                                     .setBook(_book);
-                                Navigator.of(context).pop();
+                                context.pop();
                               },
                               child: const Text('Open'),
                             );

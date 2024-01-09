@@ -44,7 +44,7 @@ class BookService extends GetxService {
   Future<bool> booksCollectionExists({required String uid}) async =>
       (await _booksDB.where('uid', isEqualTo: uid).get()).docs.isNotEmpty;
 
-  Future<void> create({required BookModel book}) async {
+  Future<void> create(BookModel book) async {
     try {
       // Create document reference of book.s
       final DocumentReference bookDocRef = _booksDB.doc();

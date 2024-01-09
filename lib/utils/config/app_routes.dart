@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:quote_keeper/domain/models/search_book_result/search_books_result_model.dart';
 import 'package:quote_keeper/presentation/pages/search_books/search_books_view.dart';
 import 'package:quote_keeper/presentation/screens/auth_checker_screen.dart';
 import 'package:quote_keeper/presentation/screens/books_screen.dart';
@@ -33,9 +36,17 @@ final GoRouter router = GoRouter(
           builder: (context, state) => SearchBooksView(),
           routes: [
             GoRoute(
-              path: Globals.routeCreateQuote,
+              path: '${Globals.routeCreateQuote}/:searchBooksResult',
               name: Globals.routeCreateQuote,
-              builder: (context, state) => CreateQuoteScreen(),
+              builder: (context, state) {
+                final searchBooksResultJson =
+                    jsonDecode(state.pathParameters['searchBooksResult']!);
+                final searchBooksResult =
+                    SearchBooksResultModel.fromJson(searchBooksResultJson);
+                return CreateQuoteScreen(
+                  searchBooksResult: searchBooksResult,
+                );
+              },
             ),
           ],
         ),

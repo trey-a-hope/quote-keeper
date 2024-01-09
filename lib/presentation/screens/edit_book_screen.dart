@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:quote_keeper/data/services/modal_service.dart';
 import 'package:quote_keeper/utils/config/providers.dart';
 import 'package:quote_keeper/presentation/widgets/quoter_keeper_scaffold.dart';
@@ -17,7 +18,7 @@ class EditBookScreen extends ConsumerWidget {
 
     // If book is null, that means it's been deleted. Return to previous page
     if (book == null) {
-      //TODO: Navigate back to previous page...
+      context.pop();
       return Container();
     }
 
@@ -26,9 +27,7 @@ class EditBookScreen extends ConsumerWidget {
     return QuoteKeeperScaffold(
       leftIconButton: IconButton(
         icon: const Icon(Icons.chevron_left),
-        onPressed: () async {
-          Navigator.of(context).pop();
-        },
+        onPressed: () => context.pop(),
       ),
       rightIconButton: IconButton(
         icon: const Icon(

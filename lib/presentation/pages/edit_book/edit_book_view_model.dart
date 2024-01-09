@@ -59,6 +59,8 @@ class EditBookViewModel extends GetxController {
       hidden: _isHidden,
       uid: _book.uid,
       complete: _isComplete,
+      created: _book.created,
+      modified: _book.modified,
     );
 
     update();

@@ -1,5 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:quote_keeper/data/services/tutorial_service.dart';
+import 'package:quote_keeper/domain/models/search_book_result/search_books_result_model.dart';
 import 'package:quote_keeper/utils/config/providers.dart';
 import 'package:quote_keeper/presentation/widgets/quoter_keeper_scaffold.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
@@ -9,7 +11,12 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 
 class CreateQuoteScreen extends ConsumerWidget {
-  CreateQuoteScreen({Key? key}) : super(key: key);
+  CreateQuoteScreen({
+    Key? key,
+    required this.searchBooksResult,
+  }) : super(key: key);
+
+  final SearchBooksResultModel searchBooksResult;
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -33,7 +40,7 @@ class CreateQuoteScreen extends ConsumerWidget {
       scaffoldKey: _scaffoldKey,
       leftIconButton: IconButton(
         icon: const Icon(Icons.chevron_left),
-        onPressed: () => Navigator.of(context).pop(),
+        onPressed: () => context.pop(),
       ),
       title: 'Create Quote',
       child: Padding(
@@ -48,10 +55,11 @@ class CreateQuoteScreen extends ConsumerWidget {
                 child: TextFormField(
                   onChanged: (val) {
                     if (book != null) {
-                      debugPrint(book.toString());
-                      debugPrint(val);
-                      var newBook = book.copyWith(quote: val);
-                      createBookNotifier.updateBook(newBook);
+                      createBookNotifier.updateBook(
+                        book.copyWith(
+                          quote: val,
+                        ),
+                      );
                     }
                   },
                   textCapitalization: TextCapitalization.sentences,
@@ -71,7 +79,7 @@ class CreateQuoteScreen extends ConsumerWidget {
                     counterStyle: TextStyle(
                         color: Theme.of(context).textTheme.titleLarge!.color),
                     hintText:
-                        'Enter your favorite quote from ${book?.title}...',
+                        'Enter your favorite quote from ${searchBooksResult.title}...',
                     hintStyle: const TextStyle(
                       color: Colors.grey,
                     ),
@@ -97,12 +105,8 @@ class CreateQuoteScreen extends ConsumerWidget {
 
                         try {
                           // Submit the quote.
-                          createBookNotifier.createBook();
-                          // await bookProvider.createBook(
-                          //   title: book.title,
-                          //   author: book.author,
-                          //   imgUrl: book.imgUrl,
-                          // );
+                          await createBookNotifier
+                              .createBook(searchBooksResult);
 
                           // Increment total book count.
                           ref
@@ -119,8 +123,8 @@ class CreateQuoteScreen extends ConsumerWidget {
                               .markTutorialComplete();
 
                           // Return to dashboard.
-                          Get.back();
-                          Get.back();
+                          context.pop();
+                          context.pop();
                         } catch (error) {
                           Get.showSnackbar(
                             GetSnackBar(

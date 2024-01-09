@@ -6,9 +6,9 @@ part of 'search_books_result_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_SearchBooksResultModel _$$_SearchBooksResultModelFromJson(
+_$SearchBooksResultModelImpl _$$SearchBooksResultModelImplFromJson(
         Map<String, dynamic> json) =>
-    _$_SearchBooksResultModel(
+    _$SearchBooksResultModelImpl(
       id: json['id'] as String,
       title: json['title'] as String,
       author: json['author'] as String?,
@@ -16,8 +16,8 @@ _$_SearchBooksResultModel _$$_SearchBooksResultModelFromJson(
       imgUrl: json['imgUrl'] as String?,
     );
 
-Map<String, dynamic> _$$_SearchBooksResultModelToJson(
-        _$_SearchBooksResultModel instance) =>
+Map<String, dynamic> _$$SearchBooksResultModelImplToJson(
+        _$SearchBooksResultModelImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'title': instance.title,

@@ -27,9 +27,9 @@ mixin _$BookModel {
   String? get imgPath => throw _privateConstructorUsedError;
   bool get hidden => throw _privateConstructorUsedError;
   @TimestampConverter()
-  dynamic get created => throw _privateConstructorUsedError;
+  DateTime get created => throw _privateConstructorUsedError;
   @TimestampConverter()
-  dynamic get modified => throw _privateConstructorUsedError;
+  DateTime get modified => throw _privateConstructorUsedError;
   String get uid => throw _privateConstructorUsedError;
   bool get complete => throw _privateConstructorUsedError;
 
@@ -51,8 +51,8 @@ abstract class $BookModelCopyWith<$Res> {
       String author,
       String? imgPath,
       bool hidden,
-      @TimestampConverter() dynamic created,
-      @TimestampConverter() dynamic modified,
+      @TimestampConverter() DateTime created,
+      @TimestampConverter() DateTime modified,
       String uid,
       bool complete});
 }
@@ -76,8 +76,8 @@ class _$BookModelCopyWithImpl<$Res, $Val extends BookModel>
     Object? author = null,
     Object? imgPath = freezed,
     Object? hidden = null,
-    Object? created = freezed,
-    Object? modified = freezed,
+    Object? created = null,
+    Object? modified = null,
     Object? uid = null,
     Object? complete = null,
   }) {
@@ -106,14 +106,14 @@ class _$BookModelCopyWithImpl<$Res, $Val extends BookModel>
           ? _value.hidden
           : hidden // ignore: cast_nullable_to_non_nullable
               as bool,
-      created: freezed == created
+      created: null == created
           ? _value.created
           : created // ignore: cast_nullable_to_non_nullable
-              as dynamic,
-      modified: freezed == modified
+              as DateTime,
+      modified: null == modified
           ? _value.modified
           : modified // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+              as DateTime,
       uid: null == uid
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
@@ -127,10 +127,11 @@ class _$BookModelCopyWithImpl<$Res, $Val extends BookModel>
 }
 
 /// @nodoc
-abstract class _$$_BookModelCopyWith<$Res> implements $BookModelCopyWith<$Res> {
-  factory _$$_BookModelCopyWith(
-          _$_BookModel value, $Res Function(_$_BookModel) then) =
-      __$$_BookModelCopyWithImpl<$Res>;
+abstract class _$$BookModelImplCopyWith<$Res>
+    implements $BookModelCopyWith<$Res> {
+  factory _$$BookModelImplCopyWith(
+          _$BookModelImpl value, $Res Function(_$BookModelImpl) then) =
+      __$$BookModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -140,18 +141,18 @@ abstract class _$$_BookModelCopyWith<$Res> implements $BookModelCopyWith<$Res> {
       String author,
       String? imgPath,
       bool hidden,
-      @TimestampConverter() dynamic created,
-      @TimestampConverter() dynamic modified,
+      @TimestampConverter() DateTime created,
+      @TimestampConverter() DateTime modified,
       String uid,
       bool complete});
 }
 
 /// @nodoc
-class __$$_BookModelCopyWithImpl<$Res>
-    extends _$BookModelCopyWithImpl<$Res, _$_BookModel>
-    implements _$$_BookModelCopyWith<$Res> {
-  __$$_BookModelCopyWithImpl(
-      _$_BookModel _value, $Res Function(_$_BookModel) _then)
+class __$$BookModelImplCopyWithImpl<$Res>
+    extends _$BookModelCopyWithImpl<$Res, _$BookModelImpl>
+    implements _$$BookModelImplCopyWith<$Res> {
+  __$$BookModelImplCopyWithImpl(
+      _$BookModelImpl _value, $Res Function(_$BookModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -163,12 +164,12 @@ class __$$_BookModelCopyWithImpl<$Res>
     Object? author = null,
     Object? imgPath = freezed,
     Object? hidden = null,
-    Object? created = freezed,
-    Object? modified = freezed,
+    Object? created = null,
+    Object? modified = null,
     Object? uid = null,
     Object? complete = null,
   }) {
-    return _then(_$_BookModel(
+    return _then(_$BookModelImpl(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -193,8 +194,14 @@ class __$$_BookModelCopyWithImpl<$Res>
           ? _value.hidden
           : hidden // ignore: cast_nullable_to_non_nullable
               as bool,
-      created: freezed == created ? _value.created! : created,
-      modified: freezed == modified ? _value.modified! : modified,
+      created: null == created
+          ? _value.created
+          : created // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      modified: null == modified
+          ? _value.modified
+          : modified // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       uid: null == uid
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
@@ -209,21 +216,21 @@ class __$$_BookModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_BookModel implements _BookModel {
-  const _$_BookModel(
+class _$BookModelImpl implements _BookModel {
+  const _$BookModelImpl(
       {this.id,
       required this.quote,
       required this.title,
       required this.author,
       required this.imgPath,
       required this.hidden,
-      @TimestampConverter() this.created,
-      @TimestampConverter() this.modified,
+      @TimestampConverter() required this.created,
+      @TimestampConverter() required this.modified,
       required this.uid,
       required this.complete});
 
-  factory _$_BookModel.fromJson(Map<String, dynamic> json) =>
-      _$$_BookModelFromJson(json);
+  factory _$BookModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$BookModelImplFromJson(json);
 
   @override
   final String? id;
@@ -239,10 +246,10 @@ class _$_BookModel implements _BookModel {
   final bool hidden;
   @override
   @TimestampConverter()
-  final dynamic created;
+  final DateTime created;
   @override
   @TimestampConverter()
-  final dynamic modified;
+  final DateTime modified;
   @override
   final String uid;
   @override
@@ -257,15 +264,16 @@ class _$_BookModel implements _BookModel {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_BookModel &&
+            other is _$BookModelImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.quote, quote) || other.quote == quote) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.author, author) || other.author == author) &&
             (identical(other.imgPath, imgPath) || other.imgPath == imgPath) &&
             (identical(other.hidden, hidden) || other.hidden == hidden) &&
-            const DeepCollectionEquality().equals(other.created, created) &&
-            const DeepCollectionEquality().equals(other.modified, modified) &&
+            (identical(other.created, created) || other.created == created) &&
+            (identical(other.modified, modified) ||
+                other.modified == modified) &&
             (identical(other.uid, uid) || other.uid == uid) &&
             (identical(other.complete, complete) ||
                 other.complete == complete));
@@ -273,28 +281,18 @@ class _$_BookModel implements _BookModel {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      quote,
-      title,
-      author,
-      imgPath,
-      hidden,
-      const DeepCollectionEquality().hash(created),
-      const DeepCollectionEquality().hash(modified),
-      uid,
-      complete);
+  int get hashCode => Object.hash(runtimeType, id, quote, title, author,
+      imgPath, hidden, created, modified, uid, complete);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_BookModelCopyWith<_$_BookModel> get copyWith =>
-      __$$_BookModelCopyWithImpl<_$_BookModel>(this, _$identity);
+  _$$BookModelImplCopyWith<_$BookModelImpl> get copyWith =>
+      __$$BookModelImplCopyWithImpl<_$BookModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_BookModelToJson(
+    return _$$BookModelImplToJson(
       this,
     );
   }
@@ -308,13 +306,13 @@ abstract class _BookModel implements BookModel {
       required final String author,
       required final String? imgPath,
       required final bool hidden,
-      @TimestampConverter() final dynamic created,
-      @TimestampConverter() final dynamic modified,
+      @TimestampConverter() required final DateTime created,
+      @TimestampConverter() required final DateTime modified,
       required final String uid,
-      required final bool complete}) = _$_BookModel;
+      required final bool complete}) = _$BookModelImpl;
 
   factory _BookModel.fromJson(Map<String, dynamic> json) =
-      _$_BookModel.fromJson;
+      _$BookModelImpl.fromJson;
 
   @override
   String? get id;
@@ -330,16 +328,16 @@ abstract class _BookModel implements BookModel {
   bool get hidden;
   @override
   @TimestampConverter()
-  dynamic get created;
+  DateTime get created;
   @override
   @TimestampConverter()
-  dynamic get modified;
+  DateTime get modified;
   @override
   String get uid;
   @override
   bool get complete;
   @override
   @JsonKey(ignore: true)
-  _$$_BookModelCopyWith<_$_BookModel> get copyWith =>
+  _$$BookModelImplCopyWith<_$BookModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

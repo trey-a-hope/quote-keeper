@@ -1,3 +1,4 @@
+import 'package:go_router/go_router.dart';
 import 'package:quote_keeper/utils/config/providers.dart';
 import 'package:quote_keeper/presentation/widgets/book_widget.dart';
 import 'package:flutter/material.dart';
@@ -43,9 +44,7 @@ class _BooksPageState extends ConsumerState<BooksScreen> {
       title: '$totalBookCount Books',
       leftIconButton: IconButton(
         icon: const Icon(Icons.chevron_left),
-        onPressed: () {
-          Navigator.of(context).pop();
-        },
+        onPressed: () => context.pop(),
       ),
       child: Consumer(
         builder: (context, ref, _) {

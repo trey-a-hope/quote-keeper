@@ -1,10 +1,8 @@
 import 'package:quote_keeper/domain/models/books/book_model.dart';
-import 'package:quote_keeper/domain/models/search_book_result/search_books_result_model.dart';
 import 'package:quote_keeper/domain/notifiers/books_async_notifier.dart';
 import 'package:quote_keeper/domain/notifiers/create_book_notifier.dart';
 import 'package:quote_keeper/domain/notifiers/dashboard_book_async_notifier.dart';
 import 'package:quote_keeper/domain/notifiers/edit_book_notifier.dart';
-import 'package:quote_keeper/domain/notifiers/selected_book_search_notifier.dart';
 import 'package:quote_keeper/domain/notifiers/should_display_tutorial_state_notifier.dart';
 import 'package:quote_keeper/domain/notifiers/total_books_count_state_notifier.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -34,11 +32,6 @@ class Providers {
   static final editBookNotifierProvider =
       NotifierProvider<EditBookNotifier, BookModel?>(
     EditBookNotifier.new,
-  );
-
-  static final selectedBookSearchNotifierProvider =
-      NotifierProvider<SelectedBookSearchNotifier, SearchBooksResultModel?>(
-    SelectedBookSearchNotifier.new,
   );
 
   static final shouldDisplayTutorialStateNotifierProvider =

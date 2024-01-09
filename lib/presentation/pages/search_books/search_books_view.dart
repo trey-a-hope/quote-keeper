@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:quote_keeper/data/services/tutorial_service.dart';
@@ -37,7 +39,7 @@ class SearchBooksView extends ConsumerWidget {
           scaffoldKey: _scaffoldKey,
           leftIconButton: IconButton(
             icon: const Icon(Icons.chevron_left),
-            onPressed: () => Navigator.of(context).pop(),
+            onPressed: () => context.pop(),
           ),
           title: 'Search Books',
           child: Column(
@@ -109,14 +111,14 @@ class SearchBooksView extends ConsumerWidget {
                                   Icons.chevron_right,
                                   color: Theme.of(context).iconTheme.color,
                                 ),
-                                onTap: () async {
-                                  ref
-                                      .read(Providers
-                                          .selectedBookSearchNotifierProvider
-                                          .notifier)
-                                      .setSearchBooksResult(searchBooksResult);
-                                  context.goNamed(Globals.routeCreateQuote);
-                                },
+                                onTap: () => context.goNamed(
+                                  Globals.routeCreateQuote,
+                                  pathParameters: <String, String>{
+                                    'searchBooksResult': jsonEncode(
+                                      searchBooksResult,
+                                    ),
+                                  },
+                                ),
                               );
                             },
                           ),

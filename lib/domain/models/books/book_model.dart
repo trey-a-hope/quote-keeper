@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:quote_keeper/utils/converters/timestamp_converters.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -17,8 +18,8 @@ class BookModel with _$BookModel {
     required String author,
     required String? imgPath,
     required bool hidden,
-    @TimestampConverter() created,
-    @TimestampConverter() modified,
+    @TimestampConverter() required DateTime created,
+    @TimestampConverter() required DateTime modified,
     required String uid,
     required bool complete,
   }) = _BookModel;
