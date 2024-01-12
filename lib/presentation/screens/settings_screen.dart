@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_settings_ui/flutter_settings_ui.dart';
-import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:quote_keeper/data/services/modal_service.dart';
 import 'package:quote_keeper/utils/config/providers.dart';
@@ -69,6 +68,8 @@ class SettingsScreen extends ConsumerWidget {
 
                   FirebaseAuth.instance.signOut();
 
+                  if (!context.mounted) return;
+
                   context.pop();
                 },
               ),
@@ -83,6 +84,8 @@ class SettingsScreen extends ConsumerWidget {
                   final user = await ref
                       .read(Providers.authAsyncNotifierProvider.notifier)
                       .getCurrentUser();
+
+                  if (!context.mounted) return;
 
                   bool? confirm =
                       await _modalService.showInputMatchConfirmation(
@@ -101,6 +104,8 @@ class SettingsScreen extends ConsumerWidget {
                         .read(Providers.authAsyncNotifierProvider.notifier)
                         .deleteAccount();
                   } catch (e) {
+                    if (!context.mounted) return;
+
                     _modalService.showAlert(
                       context: context,
                       title: 'Error',

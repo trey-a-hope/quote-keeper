@@ -7,20 +7,29 @@ import 'package:quote_keeper/presentation/widgets/modal/input_match_confirmation
 class ModalService extends GetxService {
   void showInSnackBar({
     required BuildContext context,
+    required Icon icon,
     required String message,
     required String title,
   }) {
-    Get.snackbar(
-      title, // Title of the Snackbar
-      message, // Message of the Snackbar
-      snackPosition: SnackPosition.BOTTOM, // Position of the Snackbar
-      backgroundColor: Theme.of(context).primaryColor,
-      colorText: Colors.white,
-      borderRadius: 20,
-      margin: const EdgeInsets.all(10),
-      duration: const Duration(seconds: 2), // Duration of the Snackbar display
-      // You can add more customization as needed
+    final snackBar = SnackBar(
+      backgroundColor: Theme.of(context).snackBarTheme.backgroundColor,
+      content: ListTile(
+        leading: icon,
+        title: Text(
+          title,
+          style: Theme.of(context).textTheme.displaySmall!.copyWith(
+                color: Colors.white,
+              ),
+        ),
+        subtitle: Text(
+          message,
+          style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                color: Colors.white,
+              ),
+        ),
+      ),
     );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   void showAlert({

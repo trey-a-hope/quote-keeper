@@ -229,7 +229,7 @@ class DashboardScreen extends ConsumerWidget {
       error: (error, stackTrace) => Center(
         child: Text(
           error.toString(),
-          style: context.textTheme.headline6,
+          style: context.textTheme.titleLarge,
         ),
       ),
     );

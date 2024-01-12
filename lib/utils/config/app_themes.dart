@@ -83,6 +83,9 @@ class AppThemes {
 
   /// Light theme
   static ThemeData lightTheme = ThemeData(
+    snackBarTheme: SnackBarThemeData(
+      backgroundColor: _primaryColor,
+    ),
     primaryColor: _primaryColor,
     brightness: Brightness.light,
     canvasColor: Colors.white,

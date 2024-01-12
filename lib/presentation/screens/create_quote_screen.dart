@@ -122,6 +122,8 @@ class CreateQuoteScreen extends ConsumerWidget {
                                   .notifier)
                               .markTutorialComplete();
 
+                          if (!context.mounted) return;
+
                           // Return to dashboard.
                           context.pop();
                           context.pop();

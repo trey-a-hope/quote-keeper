@@ -16,6 +16,21 @@ class EditBookNotifier extends Notifier<BookModel?> {
     state = book;
   }
 
+  void saveBook() async {
+    var book = state!;
+
+    _bookService.update(
+      id: book.id!,
+      data: {
+        'quote': book.quote,
+        'hidden': book.hidden,
+        'complete': book.complete,
+      },
+    );
+
+    //TODO: Need to update the book in the BooksAsyncNotifier to see changes on previous screen.
+  }
+
   void deleteBook() async {
     var book = state;
 
