@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:quote_keeper/data/services/book_service.dart';
-
 import 'package:quote_keeper/domain/models/books/book_model.dart';
 
 // Updating of the book.

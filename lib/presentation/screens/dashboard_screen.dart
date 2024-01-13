@@ -6,7 +6,6 @@ import 'package:quote_keeper/utils/config/providers.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:get/get.dart';
 
 class DashboardScreen extends ConsumerWidget {
   DashboardScreen({Key? key}) : super(key: key);
@@ -72,10 +71,10 @@ class DashboardScreen extends ConsumerWidget {
                         ? '"${book!.quote}"'
                         : 'No quotes yet...',
                     textAlign: TextAlign.center,
-                    style: context.textTheme.displayMedium!.copyWith(
-                      color: Colors.white,
-                      letterSpacing: 1.0,
-                    ),
+                    style: Theme.of(context).textTheme.displayMedium!.copyWith(
+                          color: Colors.white,
+                          letterSpacing: 1.0,
+                        ),
                   ),
                 ),
               ),
@@ -229,7 +228,7 @@ class DashboardScreen extends ConsumerWidget {
       error: (error, stackTrace) => Center(
         child: Text(
           error.toString(),
-          style: context.textTheme.titleLarge,
+          style: Theme.of(context).textTheme.titleLarge,
         ),
       ),
     );

@@ -1,10 +1,10 @@
 import 'package:go_router/go_router.dart';
 import 'package:quote_keeper/utils/config/providers.dart';
-import 'package:quote_keeper/presentation/widgets/book_widget.dart';
+import 'package:quote_keeper/presentation/widgets/book_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:quote_keeper/presentation/widgets/quoter_keeper_scaffold.dart';
+import 'package:quote_keeper/presentation/widgets/qk_scaffold_widget.dart';
 
 class BooksScreen extends ConsumerStatefulWidget {
   const BooksScreen({Key? key}) : super(key: key);
@@ -40,7 +40,7 @@ class _BooksPageState extends ConsumerState<BooksScreen> {
     final totalBookCount =
         ref.watch(Providers.totalBooksCountStateNotifierProvider);
 
-    return QuoteKeeperScaffold(
+    return QKScaffoldWidget(
       title: '$totalBookCount Books',
       leftIconButton: IconButton(
         icon: const Icon(Icons.chevron_left),

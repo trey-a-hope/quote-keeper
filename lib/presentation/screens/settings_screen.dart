@@ -1,11 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_settings_ui/flutter_settings_ui.dart';
 import 'package:go_router/go_router.dart';
 import 'package:quote_keeper/data/services/modal_service.dart';
 import 'package:quote_keeper/utils/config/providers.dart';
-import 'package:quote_keeper/presentation/widgets/quoter_keeper_scaffold.dart';
+import 'package:quote_keeper/presentation/widgets/qk_scaffold_widget.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
 
 class SettingsScreen extends ConsumerWidget {
@@ -15,7 +14,10 @@ class SettingsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return QuoteKeeperScaffold(
+    final authAsyncNotifier =
+        ref.read(Providers.authAsyncNotifierProvider.notifier);
+
+    return QKScaffoldWidget(
       title: 'Settings',
       leftIconButton: IconButton(
         icon: const Icon(Icons.chevron_left),
@@ -66,11 +68,7 @@ class SettingsScreen extends ConsumerWidget {
                     return;
                   }
 
-                  FirebaseAuth.instance.signOut();
-
-                  if (!context.mounted) return;
-
-                  context.pop();
+                  await authAsyncNotifier.signOut();
                 },
               ),
               SettingsTile(
@@ -81,9 +79,7 @@ class SettingsScreen extends ConsumerWidget {
                 ),
                 trailing: const Icon(Icons.chevron_right),
                 onPressed: (_) async {
-                  final user = await ref
-                      .read(Providers.authAsyncNotifierProvider.notifier)
-                      .getCurrentUser();
+                  final user = await authAsyncNotifier.getCurrentUser();
 
                   if (!context.mounted) return;
 
@@ -100,9 +96,7 @@ class SettingsScreen extends ConsumerWidget {
                   }
 
                   try {
-                    await ref
-                        .read(Providers.authAsyncNotifierProvider.notifier)
-                        .deleteAccount();
+                    await authAsyncNotifier.deleteAccount();
                   } catch (e) {
                     if (!context.mounted) return;
 

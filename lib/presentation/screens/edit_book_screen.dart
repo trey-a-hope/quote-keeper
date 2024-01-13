@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:quote_keeper/data/services/modal_service.dart';
 import 'package:quote_keeper/utils/config/providers.dart';
-import 'package:quote_keeper/presentation/widgets/quoter_keeper_scaffold.dart';
+import 'package:quote_keeper/presentation/widgets/qk_scaffold_widget.dart';
 
 class EditBookScreen extends ConsumerWidget {
   EditBookScreen({Key? key}) : super(key: key);
@@ -23,7 +23,7 @@ class EditBookScreen extends ConsumerWidget {
 
     _quoteController.text = book.quote;
 
-    return QuoteKeeperScaffold(
+    return QKScaffoldWidget(
       leftIconButton: IconButton(
         icon: const Icon(Icons.chevron_left),
         onPressed: () => context.pop(),

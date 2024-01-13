@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:quote_keeper/presentation/widgets/modal/alert_widget.dart';
-import 'package:quote_keeper/presentation/widgets/modal/confirmation_widget.dart';
-import 'package:quote_keeper/presentation/widgets/modal/input_match_confirmation_widget.dart';
+import 'package:quote_keeper/presentation/widgets/modal_alert_widget.dart';
+import 'package:quote_keeper/presentation/widgets/modal_confirmation_widget.dart';
+import 'package:quote_keeper/presentation/widgets/modal_input_match_confirmation_widget.dart';
 
-class ModalService extends GetxService {
+class ModalService {
   void showInSnackBar({
     required BuildContext context,
     required Icon icon,

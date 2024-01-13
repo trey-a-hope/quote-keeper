@@ -6,7 +6,7 @@ import 'package:quote_keeper/data/services/tutorial_service.dart';
 import 'package:quote_keeper/domain/models/search_book_result/search_books_result_model.dart';
 import 'package:quote_keeper/utils/config/providers.dart';
 import 'package:quote_keeper/presentation/pages/search_books/search_books_view_model.dart';
-import 'package:quote_keeper/presentation/widgets/quoter_keeper_scaffold.dart';
+import 'package:quote_keeper/presentation/widgets/qk_scaffold_widget.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +35,7 @@ class SearchBooksView extends ConsumerWidget {
           _tutorialService.showSearchBookTutorial(context);
         }
 
-        return QuoteKeeperScaffold(
+        return QKScaffoldWidget(
           scaffoldKey: _scaffoldKey,
           leftIconButton: IconButton(
             icon: const Icon(Icons.chevron_left),

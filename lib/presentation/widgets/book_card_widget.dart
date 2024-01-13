@@ -5,7 +5,6 @@ import 'package:quote_keeper/utils/config/providers.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class BookWidget extends StatefulWidget {
   const BookWidget({Key? key, required this.book}) : super(key: key);
@@ -81,7 +80,7 @@ class _BookWidgetState extends State<BookWidget> {
                       overflow: TextOverflow.ellipsis,
                       maxLines: 3,
                       softWrap: false,
-                      style: context.textTheme.bodySmall,
+                      style: Theme.of(context).textTheme.bodySmall,
                     ),
                     const Divider(),
                     Row(

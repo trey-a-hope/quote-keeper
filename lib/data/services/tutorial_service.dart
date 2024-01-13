@@ -1,8 +1,7 @@
-import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
-class TutorialService extends GetxService {
+class TutorialService {
   // Dashboard
   GlobalKey dashboardTarget = GlobalKey();
   final List<TargetFocus> _dashboardTargets = [];

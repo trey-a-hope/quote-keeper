@@ -3,12 +3,11 @@ import 'package:go_router/go_router.dart';
 import 'package:quote_keeper/data/services/tutorial_service.dart';
 import 'package:quote_keeper/domain/models/search_book_result/search_books_result_model.dart';
 import 'package:quote_keeper/utils/config/providers.dart';
-import 'package:quote_keeper/presentation/widgets/quoter_keeper_scaffold.dart';
+import 'package:quote_keeper/presentation/widgets/qk_scaffold_widget.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
 import 'package:quote_keeper/data/services/modal_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:get/get.dart';
 
 class CreateQuoteScreen extends ConsumerWidget {
   CreateQuoteScreen({
@@ -36,7 +35,7 @@ class CreateQuoteScreen extends ConsumerWidget {
       _tutorialService.showCreateQuoteTutorial(context);
     }
 
-    return QuoteKeeperScaffold(
+    return QKScaffoldWidget(
       scaffoldKey: _scaffoldKey,
       leftIconButton: IconButton(
         icon: const Icon(Icons.chevron_left),
@@ -128,15 +127,13 @@ class CreateQuoteScreen extends ConsumerWidget {
                           context.pop();
                           context.pop();
                         } catch (error) {
-                          Get.showSnackbar(
-                            GetSnackBar(
-                              title: 'Error',
+                          if (!context.mounted) return;
+
+                          _modalService.showInSnackBar(
+                              context: context,
+                              icon: const Icon(Icons.cancel),
                               message: error.toString(),
-                              backgroundColor: Colors.red,
-                              icon: const Icon(Icons.error),
-                              duration: const Duration(seconds: 3),
-                            ),
-                          );
+                              title: 'Error');
                         }
                       },
                 child: const Text('Submit Quote'),

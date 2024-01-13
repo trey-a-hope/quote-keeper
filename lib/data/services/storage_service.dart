@@ -1,8 +1,7 @@
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:get/get.dart';
 
-class StorageService extends GetxService {
+class StorageService {
   Future<String> uploadFile({
     required File file,
     required String path,

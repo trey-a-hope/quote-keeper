@@ -3,7 +3,7 @@ library simple_page_widget;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class QuoteKeeperScaffold extends StatelessWidget {
+class QKScaffoldWidget extends StatelessWidget {
   final Widget child;
   final String title;
   final Widget? floatingActionButton;
@@ -12,7 +12,7 @@ class QuoteKeeperScaffold extends StatelessWidget {
   final IconButton? rightIconButton;
   final GlobalKey<ScaffoldState>? scaffoldKey;
 
-  const QuoteKeeperScaffold({
+  const QKScaffoldWidget({
     Key? key,
     required this.child,
     required this.title,

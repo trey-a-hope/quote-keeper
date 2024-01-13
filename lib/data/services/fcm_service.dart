@@ -2,10 +2,9 @@ import 'dart:async';
 import 'dart:convert' show json;
 import 'package:quote_keeper/utils/constants/globals.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
-class FCMService extends GetxService {
+class FCMService {
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
   final String _endpoint = 'https://fcm.googleapis.com/fcm/send';
   final String _contentType = 'application/json';

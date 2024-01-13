@@ -8,6 +8,8 @@ import 'package:quote_keeper/domain/notifiers/total_books_count_state_notifier.d
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:quote_keeper/domain/notifiers/auth_async_notifier.dart';
+import 'package:go_router/go_router.dart';
+import 'package:quote_keeper/utils/config/app_routes.dart';
 
 class Providers {
   static final authAsyncNotifierProvider =
@@ -42,5 +44,14 @@ class Providers {
   static final totalBooksCountStateNotifierProvider =
       StateNotifierProvider<TotalBooksCountStateNotifier, int>(
     (ref) => TotalBooksCountStateNotifier(),
+  );
+
+  static final routerProvider = Provider<GoRouter>(
+    (ref) {
+      final authAsyncNotifierProvider =
+          ref.watch(Providers.authAsyncNotifierProvider);
+      final isAuthenticated = authAsyncNotifierProvider.value != null;
+      return appRoutes(isAuthenticated);
+    },
   );
 }

@@ -5,7 +5,6 @@ import 'package:quote_keeper/domain/models/search_books_result.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
 import 'package:quote_keeper/utils/extensions/int_extensions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -37,7 +36,7 @@ final _booksDB = _firestore.collection(books).withConverter<BookModel>(
     fromFirestore: (snapshot, _) => BookModel.fromJson(snapshot.data()!),
     toFirestore: (model, _) => model.toJson());
 
-class BookService extends GetxService {
+class BookService {
   BookQuery query = BookQuery.title;
 
   // Return true if a user already has books in their collection.
