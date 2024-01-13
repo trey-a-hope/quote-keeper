@@ -17,6 +17,9 @@ class SettingsScreen extends ConsumerWidget {
     final authAsyncNotifier =
         ref.read(Providers.authAsyncNotifierProvider.notifier);
 
+    final searchBooksAsyncNotifier =
+        ref.read(Providers.searchBooksAsyncNotifierProvider.notifier);
+
     return QKScaffoldWidget(
       title: 'Settings',
       leftIconButton: IconButton(
@@ -68,6 +71,8 @@ class SettingsScreen extends ConsumerWidget {
                     return;
                   }
 
+                  searchBooksAsyncNotifier.clear();
+
                   await authAsyncNotifier.signOut();
                 },
               ),
@@ -96,6 +101,8 @@ class SettingsScreen extends ConsumerWidget {
                   }
 
                   try {
+                    searchBooksAsyncNotifier.clear();
+
                     await authAsyncNotifier.deleteAccount();
                   } catch (e) {
                     if (!context.mounted) return;

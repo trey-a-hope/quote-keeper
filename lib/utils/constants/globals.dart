@@ -6,6 +6,8 @@ class Globals {
 
   static var algolia = _AlgoliaConfig();
 
+  static const String googleSignInCancelError = 'Must select a Google Account.';
+
   /// Routes
   static const String routeBooks = 'books';
   static const String routeCreateQuote = 'createQuote';

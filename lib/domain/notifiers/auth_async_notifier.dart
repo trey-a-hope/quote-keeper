@@ -140,7 +140,7 @@ class AuthAsyncNotifier extends AsyncNotifier<User?> {
 
       // If user cancels selection, throw error to prevent null check below.
       if (googleUser == null) {
-        return 'Must select a Google Account.';
+        return Globals.googleSignInCancelError;
         // throw Exception('Must select a Google Account.');
       }
 

@@ -2,12 +2,12 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:quote_keeper/domain/models/search_book_result/search_books_result_model.dart';
-import 'package:quote_keeper/presentation/pages/search_books/search_books_view.dart';
 import 'package:quote_keeper/presentation/screens/books_screen.dart';
 import 'package:quote_keeper/presentation/screens/create_quote_screen.dart';
 import 'package:quote_keeper/presentation/screens/dashboard_screen.dart';
 import 'package:quote_keeper/presentation/screens/edit_book_screen.dart';
 import 'package:quote_keeper/presentation/screens/login_screen.dart';
+import 'package:quote_keeper/presentation/screens/search_books_screen.dart';
 import 'package:quote_keeper/presentation/screens/settings_screen.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
 
@@ -29,7 +29,7 @@ GoRouter appRoutes(bool isAuthenticated) {
           GoRoute(
             path: Globals.routeSearchBooks,
             name: Globals.routeSearchBooks,
-            builder: (context, state) => SearchBooksView(),
+            builder: (context, state) => SearchBooksScreen(),
             routes: [
               GoRoute(
                 path: '${Globals.routeCreateQuote}/:searchBooksResult',

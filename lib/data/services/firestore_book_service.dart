@@ -30,13 +30,14 @@ class FirestoreBookService {
       isEqualTo: uid,
     );
 
-    Query booksQuery = booksColRef.limit(10);
+    Query booksQuery = booksColRef.limit(20);
 
     if (lastDocument != null) {
       booksQuery = booksQuery.startAfterDocument(lastDocument);
     }
 
     final QuerySnapshot querySnapshot = await booksQuery.get();
+
     return querySnapshot;
   }
 }
