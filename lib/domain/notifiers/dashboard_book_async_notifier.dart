@@ -21,6 +21,10 @@ class DashboardBookAsyncNotifier extends AsyncNotifier<BookModel?> {
     }
   }
 
+  void reset() {
+    state = const AsyncData(null);
+  }
+
   // Sets the book to the given book.
   void setBook(BookModel book) {
     state = AsyncData(book);

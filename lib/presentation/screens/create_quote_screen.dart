@@ -20,7 +20,7 @@ class CreateQuoteScreen extends ConsumerWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   final _modalService = ModalService();
-  final _tutorialService = TutorialService();
+  // final _tutorialService = TutorialService();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -28,12 +28,12 @@ class CreateQuoteScreen extends ConsumerWidget {
     final book = ref.watch(createBookNotifierProvider);
     final createBookNotifier = ref.read(createBookNotifierProvider.notifier);
 
-    final shouldDisplayTutorial =
-        ref.read(Providers.shouldDisplayTutorialStateNotifierProvider);
+    // final shouldDisplayTutorial =
+    //     !ref.read(Providers.tutorialCompleteStateNotifierProvider);
 
-    if (shouldDisplayTutorial) {
-      _tutorialService.showCreateQuoteTutorial(context);
-    }
+    // if (shouldDisplayTutorial) {
+    //   _tutorialService.showCreateQuoteTutorial(context);
+    // }
 
     return QKScaffoldWidget(
       scaffoldKey: _scaffoldKey,
@@ -87,7 +87,7 @@ class CreateQuoteScreen extends ConsumerWidget {
               ),
               const Spacer(),
               ElevatedButton(
-                key: _tutorialService.createQuoteTarget,
+                // key: _tutorialService.createQuoteTarget,
                 onPressed: book == null || book.quote.isEmpty
                     ? null
                     : () async {
@@ -117,7 +117,7 @@ class CreateQuoteScreen extends ConsumerWidget {
                           // Turn off tutorial flag.
                           ref
                               .read(Providers
-                                  .shouldDisplayTutorialStateNotifierProvider
+                                  .tutorialCompleteStateNotifierProvider
                                   .notifier)
                               .markTutorialComplete();
 

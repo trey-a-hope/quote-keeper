@@ -3,21 +3,21 @@ import 'package:get_storage/get_storage.dart';
 import 'package:quote_keeper/data/services/user_service.dart';
 
 // Whether or not to display the tutorial.
-class ShouldDisplayTutorialStateNotifier extends StateNotifier<bool> {
+class TutorialCompleteStateNotifier extends StateNotifier<bool> {
   final _userService = UserService();
 
   final _getStorage = GetStorage();
 
   late String _uid;
 
-  ShouldDisplayTutorialStateNotifier() : super(false) {
+  TutorialCompleteStateNotifier() : super(false) {
     _uid = _getStorage.read('uid');
     shouldDisplayTutorial();
   }
 
   Future<void> shouldDisplayTutorial() async {
     var user = await _userService.retrieveUser(uid: _uid);
-    state = !user.tutorialComplete;
+    state = user.tutorialComplete;
   }
 
   void markTutorialComplete() async {

@@ -42,9 +42,9 @@ class Providers {
       SearchBooksAsyncNotifier,
       List<SearchBooksResultModel>>(SearchBooksAsyncNotifier.new);
 
-  static final shouldDisplayTutorialStateNotifierProvider =
-      StateNotifierProvider<ShouldDisplayTutorialStateNotifier, bool>(
-    (ref) => ShouldDisplayTutorialStateNotifier(),
+  static final tutorialCompleteStateNotifierProvider =
+      StateNotifierProvider<TutorialCompleteStateNotifier, bool>(
+    (ref) => TutorialCompleteStateNotifier(),
   );
 
   static final totalBooksCountStateNotifierProvider =

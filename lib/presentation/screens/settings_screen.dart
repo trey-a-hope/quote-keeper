@@ -20,6 +20,9 @@ class SettingsScreen extends ConsumerWidget {
     final searchBooksAsyncNotifier =
         ref.read(Providers.searchBooksAsyncNotifierProvider.notifier);
 
+    final dashboardBookAsyncNotifier =
+        ref.read(Providers.dashboardBookAsyncNotifierProvider.notifier);
+
     return QKScaffoldWidget(
       title: 'Settings',
       leftIconButton: IconButton(
@@ -72,6 +75,8 @@ class SettingsScreen extends ConsumerWidget {
                   }
 
                   searchBooksAsyncNotifier.clear();
+
+                  dashboardBookAsyncNotifier.reset();
 
                   await authAsyncNotifier.signOut();
                 },

@@ -149,17 +149,16 @@ class BookService {
     // Request URL.
     final String baseUrl =
         'https://www.googleapis.com/books/v1/volumes?q=$term&key=${Globals.googleBooksAPIKey}';
+    try {
+      // Send http request.
+      final response = await http.get(Uri.parse(baseUrl));
 
-    // Send http request.
-    final response = await http.get(Uri.parse(baseUrl));
+      // Convert body to json.
+      final results = json.decode(response.body);
 
-    // Convert body to json.
-    final results = json.decode(response.body);
-
-    if (results['Response'] == 'False') {
-      throw Exception(results['Error']);
-    } else {
       return SearchBooksResult.fromJson(results);
+    } catch (e) {
+      throw Exception(e.toString());
     }
   }
 

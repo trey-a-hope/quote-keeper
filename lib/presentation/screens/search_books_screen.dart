@@ -20,12 +20,12 @@ class SearchBooksScreen extends ConsumerWidget {
   /// Key for the scaffold.
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  final _tutorialService = TutorialService();
+  // final _tutorialService = TutorialService();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final shouldShowTutorial =
-        ref.read(Providers.shouldDisplayTutorialStateNotifierProvider);
+    // final shouldShowTutorial =
+    //     !ref.read(Providers.tutorialCompleteStateNotifierProvider);
 
     final searchBooksAsyncNotifierProvider =
         ref.watch(Providers.searchBooksAsyncNotifierProvider);
@@ -33,9 +33,9 @@ class SearchBooksScreen extends ConsumerWidget {
     final searchBooksAsyncNotifier =
         ref.read(Providers.searchBooksAsyncNotifierProvider.notifier);
 
-    if (shouldShowTutorial) {
-      _tutorialService.showSearchBookTutorial(context);
-    }
+    // if (shouldShowTutorial) {
+    //   _tutorialService.showSearchBookTutorial(context);
+    // }
 
     return QKScaffoldWidget(
       scaffoldKey: _scaffoldKey,
@@ -47,7 +47,7 @@ class SearchBooksScreen extends ConsumerWidget {
       child: Column(
         children: [
           TextField(
-            key: _tutorialService.searchBookTarget,
+            // key: _tutorialService.searchBookTarget,
             style: context.textTheme.headlineSmall!,
             controller: _textController,
             autocorrect: false,

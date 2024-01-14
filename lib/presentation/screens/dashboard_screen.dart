@@ -16,7 +16,7 @@ class DashboardScreen extends ConsumerWidget {
   );
 
   final _shareService = ShareService();
-  final _tutorialService = TutorialService();
+  // final _tutorialService = TutorialService();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -24,7 +24,7 @@ class DashboardScreen extends ConsumerWidget {
         ref.watch(Providers.dashboardBookAsyncNotifierProvider);
 
     var shouldDisplayTutorial =
-        ref.read(Providers.shouldDisplayTutorialStateNotifierProvider);
+        !ref.read(Providers.tutorialCompleteStateNotifierProvider);
 
     // Prompt user for potential updated version of app.
     Globals.newVersionPlus.showAlertIfNecessary(context: context);
@@ -32,9 +32,9 @@ class DashboardScreen extends ConsumerWidget {
     return bookAsyncValue.when(
       data: (book) => Builder(
         builder: (context) {
-          if (shouldDisplayTutorial) {
-            _tutorialService.showDashboardTutorial(context);
-          }
+          // if (shouldDisplayTutorial) {
+          //   _tutorialService.showDashboardTutorial(context);
+          // }
 
           return Stack(
             children: [
@@ -109,7 +109,7 @@ class DashboardScreen extends ConsumerWidget {
                         ],
                         const Spacer(),
                         SpeedDial(
-                          key: _tutorialService.dashboardTarget,
+                          // key: _tutorialService.dashboardTarget,
                           animatedIcon: AnimatedIcons.menu_close,
                           animatedIconTheme: const IconThemeData(size: 28.0),
                           backgroundColor: Theme.of(context)
