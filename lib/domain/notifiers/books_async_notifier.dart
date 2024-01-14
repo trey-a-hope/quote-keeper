@@ -54,4 +54,25 @@ class BooksAsyncNotifier extends AsyncNotifier<List<BookModel>> {
         (doc) => doc.data() as BookModel,
       )
       .toList();
+
+  Future<void> updateBook({
+    required String id,
+    required Map<String, dynamic> data,
+  }) async {
+    var books = state.value!;
+
+    // Get index of book by id.
+    var index = books.indexWhere((book) => book.id == id);
+
+    // If the book is not in the list yet, then return.
+    if (index < 0) return;
+
+    books[index] = books[index].copyWith(
+      quote: data['quote'],
+      hidden: data['hidden'],
+      complete: data['complete'],
+    );
+
+    state = AsyncData(books);
+  }
 }

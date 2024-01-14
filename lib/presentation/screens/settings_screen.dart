@@ -27,7 +27,7 @@ class SettingsScreen extends ConsumerWidget {
         onPressed: () => context.pop(),
       ),
       child: SettingsList(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         sections: [
           SettingsSection(
             title: 'About',

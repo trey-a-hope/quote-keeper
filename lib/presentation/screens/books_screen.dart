@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quote_keeper/presentation/widgets/qk_scaffold_widget.dart';
+import 'package:uuid/uuid.dart';
 
 class BooksScreen extends ConsumerStatefulWidget {
   const BooksScreen({Key? key}) : super(key: key);
@@ -65,6 +66,8 @@ class _BooksPageState extends ConsumerState<BooksScreen> {
               itemBuilder: (context, index) {
                 final book = books[index];
                 return BookWidget(
+                  // Use key here to force rebuild when the book is updated.
+                  key: Key(const Uuid().v4()),
                   book: book,
                 ).animate().fadeIn(duration: 1000.ms).then(
                       delay: 1000.ms,
