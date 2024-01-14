@@ -141,6 +141,7 @@ class _BookWidgetState extends State<BookWidget> {
                                         .editBookNotifierProvider.notifier)
                                     .setBook(_book);
 
+                                // TODO: Pass book as param instead of through provider.
                                 context.goNamed(Globals.routeEditQuote);
                               },
                               child: const Text('Edit'),

@@ -7,37 +7,34 @@ import 'package:quote_keeper/utils/extensions/int_extensions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:http/http.dart' as http;
 
-final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-const String books = 'books';
-
-enum BookQuery {
-  title,
-  author,
-  quote,
-  created,
-}
-
-extension on Query<BookModel> {
-  Query<BookModel> queryBy(BookQuery query) {
-    switch (query) {
-      case BookQuery.title:
-        return orderBy('title', descending: true);
-      case BookQuery.author:
-        return orderBy('author', descending: true);
-      case BookQuery.quote:
-        return orderBy('quote', descending: true);
-      case BookQuery.created:
-        return orderBy('created', descending: false);
-    }
-  }
-}
-
-final _booksDB = _firestore.collection(books).withConverter<BookModel>(
-    fromFirestore: (snapshot, _) => BookModel.fromJson(snapshot.data()!),
-    toFirestore: (model, _) => model.toJson());
-
 class BookService {
-  BookQuery query = BookQuery.title;
+  static final _firestore = FirebaseFirestore.instance;
+
+  static final _booksDB = _firestore
+      .collection('books')
+      .withConverter<BookModel>(
+          fromFirestore: (snapshot, _) => BookModel.fromJson(snapshot.data()!),
+          toFirestore: (model, _) => model.toJson());
+
+  Future<QuerySnapshot<Object?>> getBooks({
+    required String uid,
+    DocumentSnapshot? lastDocument,
+  }) async {
+    final booksColRef = _booksDB.orderBy('created', descending: true).where(
+          'uid',
+          isEqualTo: uid,
+        );
+
+    Query booksQuery = booksColRef.limit(20);
+
+    if (lastDocument != null) {
+      booksQuery = booksQuery.startAfterDocument(lastDocument);
+    }
+
+    final QuerySnapshot querySnapshot = await booksQuery.get();
+
+    return querySnapshot;
+  }
 
   // Return true if a user already has books in their collection.
   Future<bool> booksCollectionExists({required String uid}) async =>
@@ -60,6 +57,7 @@ class BookService {
     }
   }
 
+  // Return total amount of books for a user.
   Future<int> getTotalBookCount({required String uid}) async {
     Query<BookModel> query = _booksDB.where('uid', isEqualTo: uid);
     AggregateQuery count = query.count();
@@ -139,43 +137,6 @@ class BookService {
     try {
       await _booksDB.doc(id).delete();
       return;
-    } catch (e) {
-      throw Exception(
-        e.toString(),
-      );
-    }
-  }
-
-  Future<List<BookModel>> fetchPage({
-    required Timestamp? created,
-    required int limit,
-    required String uid,
-  }) async {
-    try {
-      Query<BookModel> bookQuery = _booksDB
-          .where('uid', isEqualTo: uid)
-          .withConverter<BookModel>(
-              fromFirestore: (snapshot, _) =>
-                  BookModel.fromJson(snapshot.data()!),
-              toFirestore: (model, _) => model.toJson());
-
-      Query q = bookQuery.queryBy(BookQuery.created);
-
-      q = q.limit(limit);
-
-      if (created != null) {
-        q = q.startAfter([created]);
-      }
-
-      List<QueryDocumentSnapshot<Object?>> docs = (await q.get()).docs;
-
-      List<BookModel> books = docs
-          .map(
-            (doc) => doc.data() as BookModel,
-          )
-          .toList();
-
-      return books;
     } catch (e) {
       throw Exception(
         e.toString(),

@@ -6,7 +6,9 @@ import 'package:quote_keeper/utils/config/providers.dart';
 import 'package:quote_keeper/presentation/widgets/qk_scaffold_widget.dart';
 
 class EditBookScreen extends ConsumerWidget {
-  EditBookScreen({Key? key}) : super(key: key);
+  EditBookScreen({
+    Key? key,
+  }) : super(key: key);
 
   final _modalService = ModalService();
   final _quoteController = TextEditingController();
@@ -20,14 +22,8 @@ class EditBookScreen extends ConsumerWidget {
       builder: (BuildContext context, WidgetRef ref, Widget? child) {
         var book = ref.watch(Providers.editBookNotifierProvider);
 
-        // If book is null, that means it's been deleted. Return to previous page
-        if (book == null) {
-          context.pop();
-          return Container();
-        }
-
         // Set the quote controller to the quote of the book.
-        _quoteController.text = book.quote;
+        _quoteController.text = book!.quote;
 
         // Set the cursor position the previous position on last build.
         _quoteController.selection = _quoteController.selection.copyWith(
@@ -56,9 +52,11 @@ class EditBookScreen extends ConsumerWidget {
                 return;
               }
 
+              if (!context.mounted) return;
+
               ref
                   .read(Providers.editBookNotifierProvider.notifier)
-                  .deleteBook();
+                  .deleteBook(context);
             },
           ),
           title: 'Edit Book',

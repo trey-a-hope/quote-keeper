@@ -1,11 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:quote_keeper/data/services/firestore_book_service.dart';
+import 'package:quote_keeper/data/services/book_service.dart';
 
 // Total number of books for a user.
 class TotalBooksCountStateNotifier extends StateNotifier<int> {
   final _getStorage = GetStorage();
-  final _firestoreBookService = FirestoreBookService();
+  final _bookService = BookService();
 
   late String _uid;
 
@@ -15,7 +15,7 @@ class TotalBooksCountStateNotifier extends StateNotifier<int> {
   }
 
   void _getTotalBookCount() async =>
-      state = await _firestoreBookService.getTotalBookCount(uid: _uid);
+      state = await _bookService.getTotalBookCount(uid: _uid);
 
   void increment() => state++;
 

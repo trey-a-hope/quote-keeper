@@ -3,6 +3,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:quote_keeper/data/services/book_service.dart';
 import 'package:quote_keeper/domain/models/books/book_model.dart';
 import 'package:quote_keeper/domain/models/search_book_result/search_books_result_model.dart';
+import 'package:quote_keeper/utils/config/providers.dart';
 
 // Creating of the book or "quote".
 class CreateBookNotifier extends Notifier<BookModel?> {
@@ -41,6 +42,15 @@ class CreateBookNotifier extends Notifier<BookModel?> {
       complete: book.complete,
     );
 
+    // Add book to BE.
     await _bookService.create(newBook);
+
+    // Add book to FE.
+    ref.read(Providers.booksAsyncNotifierProvider.notifier).addBook(newBook);
+
+    // Set new book as dashboard default.
+    ref
+        .read(Providers.dashboardBookAsyncNotifierProvider.notifier)
+        .setBook(newBook);
   }
 }
