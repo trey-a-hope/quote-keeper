@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_settings_ui/flutter_settings_ui.dart';
-import 'package:go_router/go_router.dart';
 import 'package:quote_keeper/data/services/modal_service.dart';
+import 'package:quote_keeper/presentation/widgets/app_bar_widget.dart';
+import 'package:quote_keeper/presentation/widgets/custom_list_tile_widget.dart';
 import 'package:quote_keeper/utils/config/providers.dart';
-import 'package:quote_keeper/presentation/widgets/qk_scaffold_widget.dart';
-import 'package:quote_keeper/utils/constants/globals.dart';
 
 class SettingsScreen extends ConsumerWidget {
   SettingsScreen({Key? key}) : super(key: key);
@@ -17,47 +15,21 @@ class SettingsScreen extends ConsumerWidget {
     final authAsyncNotifier =
         ref.read(Providers.authAsyncNotifierProvider.notifier);
 
-    return QKScaffoldWidget(
-      title: 'Settings',
-      leftIconButton: IconButton(
-        icon: const Icon(Icons.chevron_left),
-        onPressed: () => context.pop(),
+    return Scaffold(
+      appBar: AppBarBuild.appBar(
+        title: 'Settings',
+        implyLeading: false,
+        context: context,
       ),
-      child: SettingsList(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        sections: [
-          SettingsSection(
-            title: 'About',
-            tiles: [
-              SettingsTile(
-                title: 'Version',
-                leading: Icon(
-                  Icons.numbers,
-                  color: Theme.of(context).iconTheme.color,
-                ),
-                trailing: Text(Globals.version),
-              ),
-              SettingsTile(
-                title: 'Build Number',
-                leading: Icon(
-                  Icons.build,
-                  color: Theme.of(context).iconTheme.color,
-                ),
-                trailing: Text(Globals.buildNumber),
-              ),
-            ],
-          ),
-          SettingsSection(
-            title: 'Profile',
-            tiles: [
-              SettingsTile(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            children: [
+              CustomListTileWidget(
+                icon: Icons.logout,
                 title: 'Logout',
-                leading: Icon(
-                  Icons.logout,
-                  color: Theme.of(context).iconTheme.color,
-                ),
-                trailing: const Icon(Icons.chevron_right),
-                onPressed: (_) async {
+                callback: () async {
                   bool? confirm = await _modalService.showConfirmation(
                     context: context,
                     title: 'Logout',
@@ -70,15 +42,12 @@ class SettingsScreen extends ConsumerWidget {
 
                   await authAsyncNotifier.signOut();
                 },
+                context: context,
               ),
-              SettingsTile(
+              CustomListTileWidget(
+                icon: Icons.delete,
                 title: 'Delete Account',
-                leading: Icon(
-                  Icons.delete,
-                  color: Theme.of(context).iconTheme.color,
-                ),
-                trailing: const Icon(Icons.chevron_right),
-                onPressed: (_) async {
+                callback: () async {
                   final user = await authAsyncNotifier.getCurrentUser();
 
                   if (!context.mounted) return;
@@ -107,10 +76,11 @@ class SettingsScreen extends ConsumerWidget {
                     );
                   }
                 },
-              ),
+                context: context,
+              )
             ],
           ),
-        ],
+        ),
       ),
     );
   }
