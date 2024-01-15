@@ -1,31 +1,30 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_settings_ui/flutter_settings_ui.dart';
-import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:quote_keeper/data/services/modal_service.dart';
-import 'package:quote_keeper/domain/models/users/user_model.dart';
-import 'package:quote_keeper/domain/providers/providers.dart';
+import 'package:quote_keeper/utils/config/providers.dart';
+import 'package:quote_keeper/presentation/widgets/qk_scaffold_widget.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
-import 'package:simple_page_widget/ui/simple_page_widget.dart';
 
 class SettingsScreen extends ConsumerWidget {
   SettingsScreen({Key? key}) : super(key: key);
 
-  final ModalService _modalService = Get.find();
+  final _modalService = ModalService();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final authProvider = ref.watch(Providers.authProvider);
+    final authAsyncNotifier =
+        ref.read(Providers.authAsyncNotifierProvider.notifier);
 
-    return SimplePageWidget(
+    return QKScaffoldWidget(
       title: 'Settings',
       leftIconButton: IconButton(
         icon: const Icon(Icons.chevron_left),
-        onPressed: () => Get.back(),
+        onPressed: () => context.pop(),
       ),
       child: SettingsList(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         sections: [
           SettingsSection(
             title: 'About',
@@ -69,7 +68,7 @@ class SettingsScreen extends ConsumerWidget {
                     return;
                   }
 
-                  FirebaseAuth.instance.signOut();
+                  await authAsyncNotifier.signOut();
                 },
               ),
               SettingsTile(
@@ -80,7 +79,9 @@ class SettingsScreen extends ConsumerWidget {
                 ),
                 trailing: const Icon(Icons.chevron_right),
                 onPressed: (_) async {
-                  UserModel user = await authProvider.getUser();
+                  final user = await authAsyncNotifier.getCurrentUser();
+
+                  if (!context.mounted) return;
 
                   bool? confirm =
                       await _modalService.showInputMatchConfirmation(
@@ -95,8 +96,10 @@ class SettingsScreen extends ConsumerWidget {
                   }
 
                   try {
-                    await authProvider.deleteAccount();
+                    await authAsyncNotifier.deleteAccount();
                   } catch (e) {
+                    if (!context.mounted) return;
+
                     _modalService.showAlert(
                       context: context,
                       title: 'Error',

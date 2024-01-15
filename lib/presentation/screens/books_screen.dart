@@ -1,111 +1,87 @@
-import 'package:animated_search_bar/animated_search_bar.dart';
-import 'package:quote_keeper/data/services/book_service.dart';
-import 'package:quote_keeper/domain/models/books/book_model.dart';
-import 'package:quote_keeper/domain/providers/book_provider.dart';
-import 'package:quote_keeper/domain/providers/providers.dart';
-import 'package:quote_keeper/utils/constants/globals.dart';
-import 'package:quote_keeper/presentation/widgets/book/book_widget.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:go_router/go_router.dart';
+import 'package:quote_keeper/utils/config/providers.dart';
+import 'package:quote_keeper/presentation/widgets/book_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:simple_page_widget/ui/simple_page_widget.dart';
+import 'package:quote_keeper/presentation/widgets/qk_scaffold_widget.dart';
+import 'package:uuid/uuid.dart';
 
-class BooksScreen extends ConsumerWidget {
-  final PagingController<int, BookModel> _pagingController =
-      PagingController(firstPageKey: 0);
-
-  BooksScreen({Key? key}) : super(key: key) {
-    _pagingController.addPageRequestListener((pageKey) => _fetchPage(pageKey));
-  }
-
-  Timestamp? _lastDate;
-
-  final BookService _bookService = Get.find();
-  final GetStorage _getStorage = Get.find();
+class BooksScreen extends ConsumerStatefulWidget {
+  const BooksScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final BookProvider bookProvider = ref.watch(Providers.bookProvider);
+  ConsumerState<BooksScreen> createState() => _BooksPageState();
+}
 
-    return SimplePageWidget(
-        leftIconButton: IconButton(
-          icon: const Icon(Icons.chevron_left),
-          onPressed: () {
-            Get.back(result: false);
-          },
-        ),
-        title: 'Books - ${bookProvider.totalBookAccount}',
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: AnimatedSearchBar(
-                label: 'Search Your Favorite Quotes',
-                onChanged: (value) => bookProvider.updateSearchText(value),
-                textInputAction: TextInputAction.done,
-              ),
-            ),
-            bookProvider.search.isNotEmpty
-                ? bookProvider.bookSearchResults.isEmpty
-                    ? const Center(
-                        child: Text('No Results Found'),
-                      )
-                    : Expanded(
-                        child: SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              for (var book
-                                  in bookProvider.bookSearchResults) ...[
-                                BookWidget(
-                                  book: book,
-                                ).animate().fadeIn(duration: 1000.ms).then(
-                                      delay: 1000.ms,
-                                    ),
-                              ]
-                            ],
-                          ),
-                        ),
-                      )
-                : Expanded(
-                    child: PagedListView<int, BookModel>(
-                      pagingController: _pagingController,
-                      builderDelegate: PagedChildBuilderDelegate<BookModel>(
-                        itemBuilder: (context, book, index) => BookWidget(
-                          book: book,
-                        ).animate().fadeIn(duration: 1000.ms).then(
-                              delay: 1000.ms,
-                            ),
-                      ),
-                    ),
-                  ),
-          ],
-        ));
+class _BooksPageState extends ConsumerState<BooksScreen> {
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_scrollListener);
   }
 
-  Future<void> _fetchPage(int pageKey) async {
-    try {
-      final List<BookModel> books = await _bookService.fetchPage(
-        uid: _getStorage.read('uid'),
-        created: _lastDate,
-        limit: Globals.bookPageFetchLimit,
-      );
+  @override
+  void dispose() {
+    super.dispose();
+    _scrollController.dispose();
+  }
 
-      final bool isLastPage = books.length < Globals.bookPageFetchLimit;
-
-      isLastPage
-          ? _pagingController.appendLastPage(books)
-          : _pagingController.appendPage(books, 0);
-
-      // Update the last date to pick up from in pagination.
-      if (books.isNotEmpty) {
-        _lastDate = books[books.length - 1].created;
-      }
-    } catch (error) {
-      _pagingController.error = error;
+  void _scrollListener() {
+    if (_scrollController.position.pixels ==
+        _scrollController.position.maxScrollExtent) {
+      ref.read(Providers.booksAsyncNotifierProvider.notifier).getNextBooks();
     }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final totalBookCountAsync =
+        ref.watch(Providers.totalBooksCountAsyncNotifierProvider);
+
+    final totalBookCount = totalBookCountAsync.value ?? 0;
+
+    return QKScaffoldWidget(
+      key: Key(const Uuid().v4()),
+      title: '$totalBookCount Book${totalBookCount == 1 ? '' : 's'}',
+      leftIconButton: IconButton(
+        icon: const Icon(Icons.chevron_left),
+        onPressed: () => context.pop(),
+      ),
+      child: Consumer(
+        builder: (context, ref, _) {
+          final booksAsyncValue =
+              ref.watch(Providers.booksAsyncNotifierProvider);
+
+          if (booksAsyncValue.hasError) {
+            return Center(
+              child: Text(
+                booksAsyncValue.error.toString(),
+              ),
+            );
+          } else if (booksAsyncValue.hasValue) {
+            var books = booksAsyncValue.value!;
+            return ListView.builder(
+              controller: _scrollController,
+              itemCount: books.length,
+              itemBuilder: (context, index) {
+                final book = books[index];
+                return BookWidget(
+                  // Use key here to force rebuild when the book is updated.
+                  key: Key(const Uuid().v4()),
+                  book: book,
+                ).animate().fadeIn(duration: 1000.ms).then(
+                      delay: 1000.ms,
+                    );
+              },
+            );
+          } else {
+            return Container();
+          }
+        },
+      ),
+    );
   }
 }

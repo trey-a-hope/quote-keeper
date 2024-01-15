@@ -5,6 +5,7 @@ class AppThemes {
 
   static final Color _primaryColor = Colors.blue.shade900;
   static final Color _secondaryColor = Colors.orange.shade700;
+  static final Color _accentColor = Colors.grey.shade900;
 
   /// Fonts
   static const String fontFamily = 'Montserrat';
@@ -94,6 +95,10 @@ class AppThemes {
     listTileTheme: ListTileThemeData(
       iconColor: Colors.green.shade700,
     ),
+    scaffoldBackgroundColor: Colors.white,
+    snackBarTheme: SnackBarThemeData(
+      backgroundColor: _primaryColor,
+    ),
     textTheme: TextTheme(
       displayLarge: _displayLarge.copyWith(color: Colors.black),
       displayMedium: _displayMedium.copyWith(color: Colors.black),
@@ -112,7 +117,7 @@ class AppThemes {
   static ThemeData darkTheme = ThemeData(
     primaryColor: _primaryColor,
     brightness: Brightness.dark,
-    canvasColor: Colors.grey.shade900,
+    canvasColor: _accentColor,
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: _primaryColor,
       foregroundColor: Colors.white,
@@ -120,6 +125,10 @@ class AppThemes {
     iconTheme: IconThemeData(color: _secondaryColor),
     listTileTheme: ListTileThemeData(
       iconColor: Colors.green.shade300,
+    ),
+    scaffoldBackgroundColor: _accentColor,
+    snackBarTheme: SnackBarThemeData(
+      backgroundColor: _primaryColor,
     ),
     textTheme: TextTheme(
       displayLarge: _displayLarge.copyWith(color: Colors.white),

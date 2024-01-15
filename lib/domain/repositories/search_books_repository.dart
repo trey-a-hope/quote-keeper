@@ -2,12 +2,11 @@ import 'package:quote_keeper/data/services/book_service.dart';
 import 'package:quote_keeper/data/cache/search_books_cache.dart';
 import 'package:quote_keeper/domain/models/search_books_result.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class SearchBooksRepository {
   final SearchBooksCache cache;
 
-  final BookService _bookService = Get.find();
+  final _bookService = BookService();
 
   SearchBooksRepository({required this.cache});
   Future<SearchBooksResult> search(String term) async {

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class AlertWidget extends StatelessWidget {
   final String title;
@@ -23,7 +24,7 @@ class AlertWidget extends StatelessWidget {
               isDefaultAction: true,
               child: const Text('OK'),
               onPressed: () {
-                Navigator.of(context).pop();
+                context.pop();
               },
             )
           ],
@@ -35,7 +36,7 @@ class AlertWidget extends StatelessWidget {
             TextButton(
               child: const Text('OK'),
               onPressed: () {
-                Navigator.of(context).pop();
+                context.pop();
               },
             ),
           ],

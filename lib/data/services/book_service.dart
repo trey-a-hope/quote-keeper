@@ -5,46 +5,42 @@ import 'package:quote_keeper/domain/models/search_books_result.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
 import 'package:quote_keeper/utils/extensions/int_extensions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
-final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-const String books = 'books';
+class BookService {
+  static final _firestore = FirebaseFirestore.instance;
 
-enum BookQuery {
-  title,
-  author,
-  quote,
-  created,
-}
+  static final _booksDB = _firestore
+      .collection('books')
+      .withConverter<BookModel>(
+          fromFirestore: (snapshot, _) => BookModel.fromJson(snapshot.data()!),
+          toFirestore: (model, _) => model.toJson());
 
-extension on Query<BookModel> {
-  Query<BookModel> queryBy(BookQuery query) {
-    switch (query) {
-      case BookQuery.title:
-        return orderBy('title', descending: true);
-      case BookQuery.author:
-        return orderBy('author', descending: true);
-      case BookQuery.quote:
-        return orderBy('quote', descending: true);
-      case BookQuery.created:
-        return orderBy('created', descending: false);
+  Future<QuerySnapshot<Object?>> getBooks({
+    required String uid,
+    DocumentSnapshot? lastDocument,
+  }) async {
+    final booksColRef = _booksDB.orderBy('created', descending: true).where(
+          'uid',
+          isEqualTo: uid,
+        );
+
+    Query booksQuery = booksColRef.limit(20);
+
+    if (lastDocument != null) {
+      booksQuery = booksQuery.startAfterDocument(lastDocument);
     }
+
+    final QuerySnapshot querySnapshot = await booksQuery.get();
+
+    return querySnapshot;
   }
-}
-
-final _booksDB = _firestore.collection(books).withConverter<BookModel>(
-    fromFirestore: (snapshot, _) => BookModel.fromJson(snapshot.data()!),
-    toFirestore: (model, _) => model.toJson());
-
-class BookService extends GetxService {
-  BookQuery query = BookQuery.title;
 
   // Return true if a user already has books in their collection.
   Future<bool> booksCollectionExists({required String uid}) async =>
       (await _booksDB.where('uid', isEqualTo: uid).get()).docs.isNotEmpty;
 
-  Future<void> create({required BookModel book}) async {
+  Future<void> create(BookModel book) async {
     try {
       // Create document reference of book.s
       final DocumentReference bookDocRef = _booksDB.doc();
@@ -61,6 +57,7 @@ class BookService extends GetxService {
     }
   }
 
+  // Return total amount of books for a user.
   Future<int> getTotalBookCount({required String uid}) async {
     Query<BookModel> query = _booksDB.where('uid', isEqualTo: uid);
     AggregateQuery count = query.count();
@@ -147,59 +144,21 @@ class BookService extends GetxService {
     }
   }
 
-  Future<List<BookModel>> fetchPage({
-    required Timestamp? created,
-    required int limit,
-    required String uid,
-  }) async {
-    try {
-      Query<BookModel> bookQuery = _booksDB
-          .where('uid', isEqualTo: uid)
-          .withConverter<BookModel>(
-              fromFirestore: (snapshot, _) =>
-                  BookModel.fromJson(snapshot.data()!),
-              toFirestore: (model, _) => model.toJson());
-
-      Query q = bookQuery.queryBy(BookQuery.created);
-
-      q = q.limit(limit);
-
-      if (created != null) {
-        q = q.startAfter([created]);
-      }
-
-      List<QueryDocumentSnapshot<Object?>> docs = (await q.get()).docs;
-
-      List<BookModel> books = docs
-          .map(
-            (doc) => doc.data() as BookModel,
-          )
-          .toList();
-
-      return books;
-    } catch (e) {
-      throw Exception(
-        e.toString(),
-      );
-    }
-  }
-
   /// Search for books by search term.
   Future<SearchBooksResult> search({required String term}) async {
     // Request URL.
     final String baseUrl =
         'https://www.googleapis.com/books/v1/volumes?q=$term&key=${Globals.googleBooksAPIKey}';
+    try {
+      // Send http request.
+      final response = await http.get(Uri.parse(baseUrl));
 
-    // Send http request.
-    final response = await http.get(Uri.parse(baseUrl));
+      // Convert body to json.
+      final results = json.decode(response.body);
 
-    // Convert body to json.
-    final results = json.decode(response.body);
-
-    if (results['Response'] == 'False') {
-      throw Exception(results['Error']);
-    } else {
       return SearchBooksResult.fromJson(results);
+    } catch (e) {
+      throw Exception(e.toString());
     }
   }
 

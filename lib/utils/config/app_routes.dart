@@ -1,56 +1,103 @@
-import 'package:quote_keeper/presentation/pages/dashboard/dashboard_view.dart';
-import 'package:quote_keeper/presentation/pages/edit_book/edit_book_view.dart';
-import 'package:quote_keeper/presentation/pages/main/main_view.dart';
-import 'package:quote_keeper/presentation/pages/search_books/search_books_view.dart';
-import 'package:quote_keeper/presentation/pages/splash/splash_view.dart';
+import 'dart:convert';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:quote_keeper/domain/models/books/book_model.dart';
+import 'package:quote_keeper/domain/models/search_book_result/search_books_result_model.dart';
 import 'package:quote_keeper/presentation/screens/books_screen.dart';
 import 'package:quote_keeper/presentation/screens/create_quote_screen.dart';
+import 'package:quote_keeper/presentation/screens/dashboard_screen.dart';
+import 'package:quote_keeper/presentation/screens/edit_book_screen.dart';
+import 'package:quote_keeper/presentation/screens/login_screen.dart';
+import 'package:quote_keeper/presentation/screens/search_books_screen.dart';
 import 'package:quote_keeper/presentation/screens/settings_screen.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
 
-import 'package:get/get_navigation/src/routes/get_route.dart';
+GoRouter appRoutes(bool isAuthenticated) {
+  return GoRouter(
+    debugLogDiagnostics: true,
+    initialLocation: '/${Globals.routeDashboard}',
+    routes: [
+      GoRoute(
+        path: '/${Globals.routeLogin}',
+        name: Globals.routeLogin,
+        builder: (context, state) => const LoginScreen(),
+      ),
+      GoRoute(
+        path: '/${Globals.routeDashboard}',
+        name: Globals.routeDashboard,
+        builder: (context, state) => DashboardScreen(),
+        routes: [
+          GoRoute(
+            path: Globals.routeSearchBooks,
+            name: Globals.routeSearchBooks,
+            builder: (context, state) => SearchBooksScreen(),
+            routes: [
+              GoRoute(
+                path: '${Globals.routeCreateQuote}/:searchBooksResult',
+                name: Globals.routeCreateQuote,
+                builder: (context, state) {
+                  final searchBooksResultJson =
+                      jsonDecode(state.pathParameters['searchBooksResult']!);
+                  final searchBooksResult =
+                      SearchBooksResultModel.fromJson(searchBooksResultJson);
+                  return CreateQuoteScreen(
+                    searchBooksResult: searchBooksResult,
+                  );
+                },
+              ),
+            ],
+          ),
+          GoRoute(
+            path: Globals.routeBooks,
+            name: Globals.routeBooks,
+            builder: (context, state) => const BooksScreen(),
+            routes: [
+              GoRoute(
+                path: '${Globals.routeEditQuote}/:book',
+                name: Globals.routeEditQuote,
+                builder: (context, state) {
+                  final bookJson = jsonDecode(state.pathParameters['book']!);
 
-import '../../presentation/pages/login/login_view.dart';
+                  // Note: Conversion between String and Timestamp since Timestamp can't be encodded.
+                  bookJson['created'] = Timestamp.fromDate(
+                    DateTime.parse(
+                      bookJson['created'],
+                    ),
+                  );
+                  bookJson['modified'] = Timestamp.fromDate(
+                    DateTime.parse(
+                      bookJson['modified'],
+                    ),
+                  );
 
-class AppRoutes {
-  AppRoutes._();
+                  final book = BookModel.fromJson(bookJson);
 
-  static final List<GetPage> routes = [
-    GetPage(
-      name: Globals.routeSplash,
-      page: () => const SplashView(),
+                  return EditBookScreen(book);
+                },
+              ),
+            ],
+          ),
+          GoRoute(
+            path: Globals.routeSettings,
+            name: Globals.routeSettings,
+            builder: (context, state) => SettingsScreen(),
+          ),
+        ],
+      ),
+    ],
+    redirect: (context, state) =>
+        isAuthenticated ? null : '/${Globals.routeLogin}',
+    errorPageBuilder: (context, state) => MaterialPage(
+      key: state.pageKey,
+      child: Scaffold(
+        body: Center(
+          child: Text(
+            'Page not found',
+            style: Theme.of(context).textTheme.displayLarge,
+          ),
+        ),
+      ),
     ),
-    GetPage(
-      name: Globals.routeCreateQuote,
-      page: () => CreateQuoteScreen(),
-    ),
-    GetPage(
-      name: Globals.routeDashboard,
-      page: () => DashboardView(),
-    ),
-    GetPage(
-      name: Globals.routeBooks,
-      page: () => BooksScreen(),
-    ),
-    GetPage(
-      name: Globals.routeEditQuote,
-      page: () => EditBookView(),
-    ),
-    GetPage(
-      name: Globals.routeMain,
-      page: () => const MainView(),
-    ),
-    GetPage(
-      name: Globals.routeLogin,
-      page: () => const LoginView(),
-    ),
-    GetPage(
-      name: Globals.routeSearchBooks,
-      page: () => SearchBooksView(),
-    ),
-    GetPage(
-      name: Globals.routeSettings,
-      page: () => SettingsScreen(),
-    ),
-  ];
+  );
 }

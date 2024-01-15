@@ -1,8 +1,12 @@
+import 'dart:convert';
+
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:quote_keeper/domain/models/books/book_model.dart';
+import 'package:quote_keeper/utils/config/providers.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class BookWidget extends StatefulWidget {
   const BookWidget({Key? key, required this.book}) : super(key: key);
@@ -78,7 +82,7 @@ class _BookWidgetState extends State<BookWidget> {
                       overflow: TextOverflow.ellipsis,
                       maxLines: 3,
                       softWrap: false,
-                      style: context.textTheme.bodySmall,
+                      style: Theme.of(context).textTheme.bodySmall,
                     ),
                     const Divider(),
                     Row(
@@ -113,25 +117,52 @@ class _BookWidgetState extends State<BookWidget> {
                     const Spacer(),
                     Row(
                       children: [
-                        ElevatedButton(
-                          onPressed: () => Navigator.of(context).pop(_book),
-                          child: const Text('Open'),
+                        Consumer(
+                          builder: (context, ref, child) {
+                            return ElevatedButton(
+                              onPressed: () {
+                                ref
+                                    .read(Providers
+                                        .dashboardBookAsyncNotifierProvider
+                                        .notifier)
+                                    .setBook(_book);
+                                context.pop();
+                              },
+                              child: const Text('Open'),
+                            );
+                          },
                         ),
                         const Spacer(),
-                        ElevatedButton(
-                          onPressed: () async {
-                            var updatedBook = await Get.toNamed(
-                              Globals.routeEditQuote,
-                              arguments: {'book': _book},
+                        Consumer(
+                          builder: (context, ref, child) {
+                            return ElevatedButton(
+                              onPressed: () async {
+                                context.goNamed(
+                                  Globals.routeEditQuote,
+                                  pathParameters: <String, String>{
+                                    // Note: Conversion between String and Timestamp since Timestamp can't be encodded.
+                                    'book': jsonEncode(
+                                      {
+                                        'id': _book.id,
+                                        'title': _book.title,
+                                        'author': _book.author,
+                                        'quote': _book.quote,
+                                        'imgPath': _book.imgPath,
+                                        'hidden': _book.hidden,
+                                        'complete': _book.complete,
+                                        'created':
+                                            _book.created.toIso8601String(),
+                                        'modified':
+                                            _book.modified.toIso8601String(),
+                                        'uid': _book.uid,
+                                      },
+                                    )
+                                  },
+                                );
+                              },
+                              child: const Text('Edit'),
                             );
-
-                            if (updatedBook is BookModel) {
-                              setState(() {
-                                _book = updatedBook;
-                              });
-                            }
                           },
-                          child: const Text('Edit'),
                         )
                       ],
                     )

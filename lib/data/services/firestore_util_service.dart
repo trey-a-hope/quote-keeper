@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-class FirestoreUtilService extends GetxService {
+class FirestoreUtilService {
   Future<void> addPropertyToDocuments({
     required String collection,
     required String key,

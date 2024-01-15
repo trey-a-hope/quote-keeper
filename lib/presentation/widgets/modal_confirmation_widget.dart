@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class ConfirmationWidget extends StatelessWidget {
   final String title;
@@ -22,16 +23,12 @@ class ConfirmationWidget extends StatelessWidget {
             CupertinoDialogAction(
               isDefaultAction: false,
               child: const Text('No'),
-              onPressed: () {
-                Navigator.of(context).pop(false);
-              },
+              onPressed: () => context.pop(false),
             ),
             CupertinoDialogAction(
               isDefaultAction: true,
               child: const Text('Yes'),
-              onPressed: () {
-                Navigator.of(context).pop(true);
-              },
+              onPressed: () => context.pop(true),
             ),
           ],
         )
@@ -41,15 +38,11 @@ class ConfirmationWidget extends StatelessWidget {
           actions: <Widget>[
             TextButton(
               child: const Text('NO', style: TextStyle(color: Colors.black)),
-              onPressed: () {
-                Navigator.of(context).pop(false);
-              },
+              onPressed: () => context.pop(false),
             ),
             TextButton(
               child: const Text('YES', style: TextStyle(color: Colors.black)),
-              onPressed: () {
-                Navigator.of(context).pop(true);
-              },
+              onPressed: () => context.pop(true),
             ),
           ],
         );

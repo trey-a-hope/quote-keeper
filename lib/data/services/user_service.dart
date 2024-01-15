@@ -1,8 +1,7 @@
 import 'package:quote_keeper/domain/models/users/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:get/get.dart';
 
-class UserService extends GetxService {
+class UserService {
   /// Users collection reference.
   final CollectionReference _usersDB =
       FirebaseFirestore.instance.collection('users');
@@ -11,6 +10,13 @@ class UserService extends GetxService {
     AggregateQuery query = _usersDB.count();
     int count = (await query.get()).count;
     return count;
+  }
+
+  Future<bool> checkIfUserExists({required String uid}) async {
+    // Get user document reference.
+    DocumentReference userDocRef = _usersDB.doc(uid);
+    // Check if user already exists.
+    return (await userDocRef.get()).exists;
   }
 
   /// Create a user.

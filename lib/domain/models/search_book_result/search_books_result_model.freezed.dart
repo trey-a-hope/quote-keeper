@@ -93,11 +93,12 @@ class _$SearchBooksResultModelCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_SearchBooksResultModelCopyWith<$Res>
+abstract class _$$SearchBooksResultModelImplCopyWith<$Res>
     implements $SearchBooksResultModelCopyWith<$Res> {
-  factory _$$_SearchBooksResultModelCopyWith(_$_SearchBooksResultModel value,
-          $Res Function(_$_SearchBooksResultModel) then) =
-      __$$_SearchBooksResultModelCopyWithImpl<$Res>;
+  factory _$$SearchBooksResultModelImplCopyWith(
+          _$SearchBooksResultModelImpl value,
+          $Res Function(_$SearchBooksResultModelImpl) then) =
+      __$$SearchBooksResultModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -109,12 +110,13 @@ abstract class _$$_SearchBooksResultModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_SearchBooksResultModelCopyWithImpl<$Res>
+class __$$SearchBooksResultModelImplCopyWithImpl<$Res>
     extends _$SearchBooksResultModelCopyWithImpl<$Res,
-        _$_SearchBooksResultModel>
-    implements _$$_SearchBooksResultModelCopyWith<$Res> {
-  __$$_SearchBooksResultModelCopyWithImpl(_$_SearchBooksResultModel _value,
-      $Res Function(_$_SearchBooksResultModel) _then)
+        _$SearchBooksResultModelImpl>
+    implements _$$SearchBooksResultModelImplCopyWith<$Res> {
+  __$$SearchBooksResultModelImplCopyWithImpl(
+      _$SearchBooksResultModelImpl _value,
+      $Res Function(_$SearchBooksResultModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -126,7 +128,7 @@ class __$$_SearchBooksResultModelCopyWithImpl<$Res>
     Object? description = freezed,
     Object? imgUrl = freezed,
   }) {
-    return _then(_$_SearchBooksResultModel(
+    return _then(_$SearchBooksResultModelImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -153,16 +155,16 @@ class __$$_SearchBooksResultModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_SearchBooksResultModel implements _SearchBooksResultModel {
-  _$_SearchBooksResultModel(
+class _$SearchBooksResultModelImpl implements _SearchBooksResultModel {
+  _$SearchBooksResultModelImpl(
       {required this.id,
       required this.title,
       required this.author,
       required this.description,
       required this.imgUrl});
 
-  factory _$_SearchBooksResultModel.fromJson(Map<String, dynamic> json) =>
-      _$$_SearchBooksResultModelFromJson(json);
+  factory _$SearchBooksResultModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$SearchBooksResultModelImplFromJson(json);
 
   @override
   final String id;
@@ -184,7 +186,7 @@ class _$_SearchBooksResultModel implements _SearchBooksResultModel {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_SearchBooksResultModel &&
+            other is _$SearchBooksResultModelImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.author, author) || other.author == author) &&
@@ -201,13 +203,13 @@ class _$_SearchBooksResultModel implements _SearchBooksResultModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_SearchBooksResultModelCopyWith<_$_SearchBooksResultModel> get copyWith =>
-      __$$_SearchBooksResultModelCopyWithImpl<_$_SearchBooksResultModel>(
-          this, _$identity);
+  _$$SearchBooksResultModelImplCopyWith<_$SearchBooksResultModelImpl>
+      get copyWith => __$$SearchBooksResultModelImplCopyWithImpl<
+          _$SearchBooksResultModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_SearchBooksResultModelToJson(
+    return _$$SearchBooksResultModelImplToJson(
       this,
     );
   }
@@ -219,10 +221,10 @@ abstract class _SearchBooksResultModel implements SearchBooksResultModel {
       required final String title,
       required final String? author,
       required final String? description,
-      required final String? imgUrl}) = _$_SearchBooksResultModel;
+      required final String? imgUrl}) = _$SearchBooksResultModelImpl;
 
   factory _SearchBooksResultModel.fromJson(Map<String, dynamic> json) =
-      _$_SearchBooksResultModel.fromJson;
+      _$SearchBooksResultModelImpl.fromJson;
 
   @override
   String get id;
@@ -236,6 +238,6 @@ abstract class _SearchBooksResultModel implements SearchBooksResultModel {
   String? get imgUrl;
   @override
   @JsonKey(ignore: true)
-  _$$_SearchBooksResultModelCopyWith<_$_SearchBooksResultModel> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$SearchBooksResultModelImplCopyWith<_$SearchBooksResultModelImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

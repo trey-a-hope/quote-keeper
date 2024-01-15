@@ -672,22 +672,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.2.0"
-  get:
-    dependency: "direct main"
-    description:
-      name: get
-      sha256: e4e7335ede17452b391ed3b2ede016545706c01a02292a6c97619705e7d2a85e
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.6.6"
-  get_storage:
-    dependency: "direct main"
-    description:
-      name: get_storage
-      sha256: "39db1fffe779d0c22b3a744376e86febe4ade43bf65e06eab5af707dc84185a2"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.1.1"
   glob:
     dependency: transitive
     description:
@@ -696,6 +680,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.2"
+  go_router:
+    dependency: "direct main"
+    description:
+      name: go_router
+      sha256: "3b40e751eaaa855179b416974d59d29669e750d2e50fcdb2b37f1cb0ca8c803a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "13.0.1"
   google_identity_services_web:
     dependency: transitive
     description:
@@ -1304,14 +1296,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.1"
-  simple_page_widget:
-    dependency: "direct main"
-    description:
-      name: simple_page_widget
-      sha256: "51bed49d37cf56c650dfb9476972cb0c1e8f8f740d0a38325df3cf3a4bbb41f7"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.1.0"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -1453,14 +1437,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.1"
-  tutorial_coach_mark:
-    dependency: "direct main"
-    description:
-      name: tutorial_coach_mark
-      sha256: "1f1fd234790afb929dec7391a4d90aa54ffe8c8e4d278d9283df8e3f5ac5d63e"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.2.11"
   typed_data:
     dependency: transitive
     description:

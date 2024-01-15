@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class InputMatchConfirmationWidget extends StatefulWidget {
   final String title;
@@ -54,17 +55,11 @@ class _InputMatchConfirmationWidget
             CupertinoDialogAction(
               isDefaultAction: false,
               child: const Text('NO'),
-              onPressed: () {
-                Navigator.of(context).pop(false);
-              },
+              onPressed: () => context.pop(false),
             ),
             CupertinoDialogAction(
               isDefaultAction: true,
-              onPressed: _isButtonEnabled
-                  ? () {
-                      Navigator.of(context).pop(true);
-                    }
-                  : null,
+              onPressed: () => _isButtonEnabled ? context.pop(true) : null,
               child: const Text('YES'),
             ),
           ],
@@ -78,16 +73,10 @@ class _InputMatchConfirmationWidget
           actions: <Widget>[
             ElevatedButton(
               child: const Text('NO', style: TextStyle(color: Colors.black)),
-              onPressed: () {
-                Navigator.of(context).pop(false);
-              },
+              onPressed: () => context.pop(false),
             ),
             ElevatedButton(
-              onPressed: _isButtonEnabled
-                  ? () {
-                      Navigator.of(context).pop(true);
-                    }
-                  : null,
+              onPressed: () => _isButtonEnabled ? context.pop(true) : null,
               child: const Text(
                 'YES',
                 style: TextStyle(
