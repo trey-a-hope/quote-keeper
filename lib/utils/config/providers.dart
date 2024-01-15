@@ -3,7 +3,6 @@ import 'package:quote_keeper/domain/models/search_book_result/search_books_resul
 import 'package:quote_keeper/domain/notifiers/books_async_notifier.dart';
 import 'package:quote_keeper/domain/notifiers/create_book_notifier.dart';
 import 'package:quote_keeper/domain/notifiers/dashboard_book_async_notifier.dart';
-import 'package:quote_keeper/domain/notifiers/edit_book_notifier.dart';
 import 'package:quote_keeper/domain/notifiers/search_books_async_notifier.dart';
 import 'package:quote_keeper/domain/notifiers/should_display_tutorial_state_notifier.dart';
 import 'package:quote_keeper/domain/notifiers/total_books_count_state_notifier.dart';
@@ -20,36 +19,31 @@ class Providers {
   );
 
   static final booksAsyncNotifierProvider =
-      AsyncNotifierProvider<BooksAsyncNotifier, List<BookModel>>(
+      AsyncNotifierProvider.autoDispose<BooksAsyncNotifier, List<BookModel>>(
     BooksAsyncNotifier.new,
   );
 
   static final createBookNotifierProvider =
-      NotifierProvider<CreateBookNotifier, BookModel?>(
+      NotifierProvider.autoDispose<CreateBookNotifier, BookModel?>(
     CreateBookNotifier.new,
   );
 
   static final dashboardBookAsyncNotifierProvider =
-      AsyncNotifierProvider<DashboardBookAsyncNotifier, BookModel?>(
+      AsyncNotifierProvider.autoDispose<DashboardBookAsyncNotifier, BookModel?>(
           DashboardBookAsyncNotifier.new);
 
-  static final editBookNotifierProvider =
-      NotifierProvider<EditBookNotifier, BookModel?>(
-    EditBookNotifier.new,
-  );
-
-  static final searchBooksAsyncNotifierProvider = AsyncNotifierProvider<
-      SearchBooksAsyncNotifier,
-      List<SearchBooksResultModel>>(SearchBooksAsyncNotifier.new);
+  static final searchBooksAsyncNotifierProvider =
+      AsyncNotifierProvider.autoDispose<SearchBooksAsyncNotifier,
+          List<SearchBooksResultModel>>(SearchBooksAsyncNotifier.new);
 
   static final tutorialCompleteStateNotifierProvider =
-      StateNotifierProvider<TutorialCompleteStateNotifier, bool>(
-    (ref) => TutorialCompleteStateNotifier(),
+      AsyncNotifierProvider<TutorialCompleteStateNotifier, bool>(
+    TutorialCompleteStateNotifier.new,
   );
 
-  static final totalBooksCountStateNotifierProvider =
-      StateNotifierProvider<TotalBooksCountStateNotifier, int>(
-    (ref) => TotalBooksCountStateNotifier(),
+  static final totalBooksCountAsyncNotifierProvider =
+      AsyncNotifierProvider.autoDispose<TotalBooksCountAsyncNotifier, int>(
+    TotalBooksCountAsyncNotifier.new,
   );
 
   static final routerProvider = Provider<GoRouter>(

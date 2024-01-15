@@ -2,14 +2,12 @@ import 'dart:convert';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:quote_keeper/data/services/tutorial_service.dart';
-import 'package:quote_keeper/domain/models/search_book_result/search_books_result_model.dart';
+
 import 'package:quote_keeper/utils/config/providers.dart';
 import 'package:quote_keeper/presentation/widgets/qk_scaffold_widget.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class SearchBooksScreen extends ConsumerWidget {
   SearchBooksScreen({Key? key}) : super(key: key);
@@ -20,22 +18,12 @@ class SearchBooksScreen extends ConsumerWidget {
   /// Key for the scaffold.
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  // final _tutorialService = TutorialService();
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final shouldShowTutorial =
-    //     !ref.read(Providers.tutorialCompleteStateNotifierProvider);
-
-    final searchBooksAsyncNotifierProvider =
-        ref.watch(Providers.searchBooksAsyncNotifierProvider);
+    final results = ref.watch(Providers.searchBooksAsyncNotifierProvider);
 
     final searchBooksAsyncNotifier =
         ref.read(Providers.searchBooksAsyncNotifierProvider.notifier);
-
-    // if (shouldShowTutorial) {
-    //   _tutorialService.showSearchBookTutorial(context);
-    // }
 
     return QKScaffoldWidget(
       scaffoldKey: _scaffoldKey,
@@ -47,8 +35,7 @@ class SearchBooksScreen extends ConsumerWidget {
       child: Column(
         children: [
           TextField(
-            // key: _tutorialService.searchBookTarget,
-            style: context.textTheme.headlineSmall!,
+            style: Theme.of(context).textTheme.headlineSmall!,
             controller: _textController,
             autocorrect: false,
             onChanged: (text) {
@@ -76,13 +63,12 @@ class SearchBooksScreen extends ConsumerWidget {
               hintStyle: Theme.of(context).textTheme.bodyLarge,
             ),
           ),
-          searchBooksAsyncNotifierProvider.when(
-            data: (results) => Expanded(
+          results.when(
+            data: (data) => Expanded(
               child: ListView.builder(
-                itemCount: results.length,
+                itemCount: data.length,
                 itemBuilder: (BuildContext context, int index) {
-                  final SearchBooksResultModel searchBooksResult =
-                      results[index];
+                  final searchBooksResult = data[index];
 
                   return ListTile(
                     leading: CachedNetworkImage(

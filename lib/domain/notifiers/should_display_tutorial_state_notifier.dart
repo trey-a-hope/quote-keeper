@@ -1,33 +1,26 @@
+import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:quote_keeper/data/services/user_service.dart';
+import 'package:quote_keeper/utils/config/providers.dart';
 
 // Whether or not to display the tutorial.
-class TutorialCompleteStateNotifier extends StateNotifier<bool> {
+class TutorialCompleteStateNotifier extends AsyncNotifier<bool> {
   final _userService = UserService();
 
-  final _getStorage = GetStorage();
-
-  late String _uid;
-
-  TutorialCompleteStateNotifier() : super(false) {
-    _uid = _getStorage.read('uid');
-    shouldDisplayTutorial();
-  }
-
-  Future<void> shouldDisplayTutorial() async {
-    var user = await _userService.retrieveUser(uid: _uid);
-    state = user.tutorialComplete;
-  }
+  @override
+  FutureOr<bool> build() async => (await ref
+          .read(Providers.authAsyncNotifierProvider.notifier)
+          .getCurrentUser())
+      .tutorialComplete;
 
   void markTutorialComplete() async {
     await _userService.updateUser(
-      uid: _uid,
+      uid: ref.read(Providers.authAsyncNotifierProvider.notifier).getUid(),
       data: {
         'tutorialComplete': true,
       },
     );
 
-    state = true;
+    state = const AsyncData(true);
   }
 }

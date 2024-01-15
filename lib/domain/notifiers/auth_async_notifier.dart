@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:quote_keeper/data/services/book_service.dart';
 import 'package:quote_keeper/data/services/user_service.dart';
@@ -15,7 +14,6 @@ class AuthAsyncNotifier extends AsyncNotifier<User?> {
 
   final _userService = UserService();
   final _bookService = BookService();
-  final _getStorage = GetStorage();
 
   @override
   User? build() => _auth.currentUser;
@@ -27,10 +25,13 @@ class AuthAsyncNotifier extends AsyncNotifier<User?> {
         );
   }
 
-  Future _prepareUser(User user) async {
-    // Set UID to storage for persistence.
-    await _getStorage.write('uid', user.uid);
+  // Return the UID of current user; method should only be called if user is logged in.
+  String getUid() {
+    if (state.value == null) throw Exception('User is not logged in.');
+    return state.value!.uid;
+  }
 
+  Future _prepareUser(User user) async {
     // Check if the user already exists.
     bool userExists = await _userService.checkIfUserExists(uid: user.uid);
 
@@ -80,17 +81,11 @@ class AuthAsyncNotifier extends AsyncNotifier<User?> {
     // Delete all books this user posted, as well as the user in firestore.
     await _bookService.deleteUserAndBooks(uid: state.value!.uid);
 
-    // Clear the uid from storage.
-    await _getStorage.remove('uid');
-
     // Sign the user out one last time.
     await _auth.signOut();
   }
 
   Future<void> signOut() async {
-    // Clear the uid from storage.
-    await _getStorage.remove('uid');
-
     // Sign the user out.
     await _auth.signOut();
   }

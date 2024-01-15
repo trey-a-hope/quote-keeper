@@ -9,7 +9,7 @@ class QKScaffoldWidget extends StatelessWidget {
   final Widget? floatingActionButton;
   final Widget? drawer;
   final IconButton? leftIconButton;
-  final IconButton? rightIconButton;
+  final Widget? rightIconButton;
   final GlobalKey<ScaffoldState>? scaffoldKey;
 
   const QKScaffoldWidget({
@@ -80,7 +80,7 @@ class QKScaffoldWidget extends StatelessWidget {
 }
 
 class _CustomIconBoxWidget extends StatelessWidget {
-  final IconButton iconButton;
+  final Widget iconButton;
 
   const _CustomIconBoxWidget({
     Key? key,

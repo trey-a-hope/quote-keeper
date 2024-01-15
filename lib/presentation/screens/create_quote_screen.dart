@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:quote_keeper/data/services/tutorial_service.dart';
 import 'package:quote_keeper/domain/models/search_book_result/search_books_result_model.dart';
 import 'package:quote_keeper/utils/config/providers.dart';
 import 'package:quote_keeper/presentation/widgets/qk_scaffold_widget.dart';
@@ -20,20 +19,12 @@ class CreateQuoteScreen extends ConsumerWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   final _modalService = ModalService();
-  // final _tutorialService = TutorialService();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final createBookNotifierProvider = Providers.createBookNotifierProvider;
     final book = ref.watch(createBookNotifierProvider);
     final createBookNotifier = ref.read(createBookNotifierProvider.notifier);
-
-    // final shouldDisplayTutorial =
-    //     !ref.read(Providers.tutorialCompleteStateNotifierProvider);
-
-    // if (shouldDisplayTutorial) {
-    //   _tutorialService.showCreateQuoteTutorial(context);
-    // }
 
     return QKScaffoldWidget(
       scaffoldKey: _scaffoldKey,
@@ -87,7 +78,6 @@ class CreateQuoteScreen extends ConsumerWidget {
               ),
               const Spacer(),
               ElevatedButton(
-                // key: _tutorialService.createQuoteTarget,
                 onPressed: book == null || book.quote.isEmpty
                     ? null
                     : () async {
@@ -110,7 +100,7 @@ class CreateQuoteScreen extends ConsumerWidget {
                           // Increment total book count.
                           ref
                               .read(Providers
-                                  .totalBooksCountStateNotifierProvider
+                                  .totalBooksCountAsyncNotifierProvider
                                   .notifier)
                               .increment();
 

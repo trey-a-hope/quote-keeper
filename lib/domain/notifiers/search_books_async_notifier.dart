@@ -7,7 +7,7 @@ import 'package:quote_keeper/domain/models/search_books_result.dart';
 import 'package:quote_keeper/domain/repositories/search_books_repository.dart';
 
 class SearchBooksAsyncNotifier
-    extends AsyncNotifier<List<SearchBooksResultModel>> {
+    extends AutoDisposeAsyncNotifier<List<SearchBooksResultModel>> {
   /// Repository for performing book search.
   final SearchBooksRepository searchBooksRepository = SearchBooksRepository(
     cache: SearchBooksCache(),
@@ -18,10 +18,6 @@ class SearchBooksAsyncNotifier
 
   @override
   FutureOr<List<SearchBooksResultModel>> build() => [];
-
-  void clear() {
-    state = const AsyncData([]);
-  }
 
   void udpateSearchText({required String text}) async {
     state = const AsyncLoading();

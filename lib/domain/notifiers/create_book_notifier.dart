@@ -1,13 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:quote_keeper/data/services/book_service.dart';
 import 'package:quote_keeper/domain/models/books/book_model.dart';
 import 'package:quote_keeper/domain/models/search_book_result/search_books_result_model.dart';
 import 'package:quote_keeper/utils/config/providers.dart';
 
 // Creating of the book or "quote".
-class CreateBookNotifier extends Notifier<BookModel?> {
-  final _getStorage = GetStorage();
+class CreateBookNotifier extends AutoDisposeNotifier<BookModel?> {
   final _bookService = BookService();
 
   @override
@@ -17,7 +15,7 @@ class CreateBookNotifier extends Notifier<BookModel?> {
         author: '',
         imgPath: '',
         hidden: false,
-        uid: _getStorage.read('uid'),
+        uid: ref.read(Providers.authAsyncNotifierProvider.notifier).getUid(),
         complete: false,
         created: DateTime.now(),
         modified: DateTime.now(),

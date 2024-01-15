@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:quote_keeper/domain/models/books/book_model.dart';
@@ -135,14 +137,28 @@ class _BookWidgetState extends State<BookWidget> {
                           builder: (context, ref, child) {
                             return ElevatedButton(
                               onPressed: () async {
-                                // Set book for the EditBookNotifier.
-                                ref
-                                    .read(Providers
-                                        .editBookNotifierProvider.notifier)
-                                    .setBook(_book);
-
-                                // TODO: Pass book as param instead of through provider.
-                                context.goNamed(Globals.routeEditQuote);
+                                context.goNamed(
+                                  Globals.routeEditQuote,
+                                  pathParameters: <String, String>{
+                                    // Note: Conversion between String and Timestamp since Timestamp can't be encodded.
+                                    'book': jsonEncode(
+                                      {
+                                        'id': _book.id,
+                                        'title': _book.title,
+                                        'author': _book.author,
+                                        'quote': _book.quote,
+                                        'imgPath': _book.imgPath,
+                                        'hidden': _book.hidden,
+                                        'complete': _book.complete,
+                                        'created':
+                                            _book.created.toIso8601String(),
+                                        'modified':
+                                            _book.modified.toIso8601String(),
+                                        'uid': _book.uid,
+                                      },
+                                    )
+                                  },
+                                );
                               },
                               child: const Text('Edit'),
                             );

@@ -2,7 +2,7 @@ name: quote_keeper
 description: A new Flutter project.
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
-version: 1.4.8+148
+version: 1.4.9+149
 
 environment:
   sdk: ">=2.19.6 <3.0.0"
@@ -29,8 +29,6 @@ dependencies:
   flutter_settings_ui: ^2.0.1
   flutter_speed_dial: ^7.0.0
   freezed_annotation:
-  get: ^4.6.1
-  get_storage:
   googleapis: ^11.3.0
   google_sign_in: ^6.1.4
   go_router: ^13.0.1

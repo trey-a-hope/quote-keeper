@@ -38,11 +38,14 @@ class _BooksPageState extends ConsumerState<BooksScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final totalBookCount =
-        ref.watch(Providers.totalBooksCountStateNotifierProvider);
+    final totalBookCountAsync =
+        ref.watch(Providers.totalBooksCountAsyncNotifierProvider);
+
+    final totalBookCount = totalBookCountAsync.value ?? 0;
 
     return QKScaffoldWidget(
-      title: '$totalBookCount Books',
+      key: Key(const Uuid().v4()),
+      title: '$totalBookCount Book${totalBookCount == 1 ? '' : 's'}',
       leftIconButton: IconButton(
         icon: const Icon(Icons.chevron_left),
         onPressed: () => context.pop(),

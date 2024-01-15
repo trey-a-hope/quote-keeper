@@ -1,23 +1,38 @@
+import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:quote_keeper/data/services/book_service.dart';
+import 'package:quote_keeper/utils/config/providers.dart';
 
 // Total number of books for a user.
-class TotalBooksCountStateNotifier extends StateNotifier<int> {
-  final _getStorage = GetStorage();
+class TotalBooksCountAsyncNotifier extends AutoDisposeAsyncNotifier<int> {
   final _bookService = BookService();
 
-  late String _uid;
-
-  TotalBooksCountStateNotifier() : super(0) {
-    _uid = _getStorage.read('uid');
-    _getTotalBookCount();
+  @override
+  Future<int> build() async {
+    final uid = ref.read(Providers.authAsyncNotifierProvider.notifier).getUid();
+    var count = await _bookService.getTotalBookCount(uid: uid);
+    return count;
   }
 
-  void _getTotalBookCount() async =>
-      state = await _bookService.getTotalBookCount(uid: _uid);
+  void increment() {
+    if (state.value == null) {
+      state = const AsyncData(0);
+    }
 
-  void increment() => state++;
+    final val = state.value!;
 
-  void decrement() => state--;
+    state = AsyncData(val + 1);
+  }
+
+  void decrement() {
+    if (state.value == null) {
+      state = const AsyncData(0);
+    }
+
+    final val = state.value!;
+
+    if (val > 0) {
+      state = AsyncData(val - 1);
+    }
+  }
 }

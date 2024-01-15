@@ -6,7 +6,6 @@ import 'package:quote_keeper/utils/constants/globals.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:quote_keeper/utils/config/app_themes.dart';
@@ -18,8 +17,6 @@ void main() async {
     await Firebase.initializeApp();
 
     await _setupCrashlytics();
-
-    await GetStorage.init();
 
     // Set app version and build number.
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
@@ -39,7 +36,7 @@ class QuoteKeeperApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final routerProvider = ref.watch(Providers.routerProvider);
+    final router = ref.watch(Providers.routerProvider);
 
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
@@ -47,9 +44,9 @@ class QuoteKeeperApp extends ConsumerWidget {
       darkTheme: AppThemes.darkTheme,
       themeMode: ThemeMode.system,
       title: 'Quote Keeper',
-      routeInformationParser: routerProvider.routeInformationParser,
-      routerDelegate: routerProvider.routerDelegate,
-      routeInformationProvider: routerProvider.routeInformationProvider,
+      routeInformationParser: router.routeInformationParser,
+      routerDelegate: router.routerDelegate,
+      routeInformationProvider: router.routeInformationProvider,
     );
   }
 }
