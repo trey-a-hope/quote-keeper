@@ -16,7 +16,7 @@ class SettingsScreen extends ConsumerWidget {
         ref.read(Providers.authAsyncNotifierProvider.notifier);
 
     return Scaffold(
-      appBar: AppBarBuild.appBar(
+      appBar: AppBarWidget.appBar(
         title: 'Settings',
         implyLeading: false,
         context: context,

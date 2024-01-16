@@ -94,17 +94,17 @@ class BooksAsyncNotifier extends AutoDisposeAsyncNotifier<List<BookModel>> {
         .read(Providers.totalBooksCountAsyncNotifierProvider.notifier)
         .decrement();
 
-    // If deleted book is on dashboard, fetch new random book.
-    var dashboardBook =
-        ref.read(Providers.dashboardBookAsyncNotifierProvider).value;
-    if (dashboardBook == null) {
-      throw Exception('Dashboard Book should not be null');
-    }
-    if (dashboardBook.id == id) {
-      ref
-          .read(Providers.dashboardBookAsyncNotifierProvider.notifier)
-          .getRandomBook();
-    }
+    // // If deleted book is on dashboard, fetch new random book.
+    // var dashboardBook =
+    //     ref.read(Providers.dashboardBookAsyncNotifierProvider).value;
+    // if (dashboardBook == null) {
+    //   throw Exception('Dashboard Book should not be null');
+    // }
+    // if (dashboardBook.id == id) {
+    //   ref
+    //       .read(Providers.dashboardBookAsyncNotifierProvider.notifier)
+    //       .getRandomBook();
+    // }
 
     var books = state.value!;
 
@@ -114,6 +114,7 @@ class BooksAsyncNotifier extends AutoDisposeAsyncNotifier<List<BookModel>> {
     // If the book is not in the list yet, then return.
     if (index < 0) return;
 
+    // Delete book on the FE.
     books.removeAt(index);
 
     state = AsyncData(books);

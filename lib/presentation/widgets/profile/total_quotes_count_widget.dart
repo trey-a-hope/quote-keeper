@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:quote_keeper/presentation/widgets/profile/profile_stat_badget_widget.dart';
 import 'package:quote_keeper/utils/config/providers.dart';
 
-class TotalBooksCountWidget extends ConsumerWidget {
-  const TotalBooksCountWidget({super.key});
+class TotalQuotesCountWidget extends ConsumerWidget {
+  const TotalQuotesCountWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

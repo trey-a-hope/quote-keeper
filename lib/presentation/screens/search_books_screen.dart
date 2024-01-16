@@ -2,9 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-
+import 'package:quote_keeper/presentation/widgets/app_bar_widget.dart';
 import 'package:quote_keeper/utils/config/providers.dart';
-import 'package:quote_keeper/presentation/widgets/qk_scaffold_widget.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -15,9 +14,6 @@ class SearchBooksScreen extends ConsumerWidget {
   /// Editing controller for message on critique.
   final _textController = TextEditingController();
 
-  /// Key for the scaffold.
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final results = ref.watch(Providers.searchBooksAsyncNotifierProvider);
@@ -25,14 +21,13 @@ class SearchBooksScreen extends ConsumerWidget {
     final searchBooksAsyncNotifier =
         ref.read(Providers.searchBooksAsyncNotifierProvider.notifier);
 
-    return QKScaffoldWidget(
-      scaffoldKey: _scaffoldKey,
-      leftIconButton: IconButton(
-        icon: const Icon(Icons.chevron_left),
-        onPressed: () => context.pop(),
+    return Scaffold(
+      appBar: AppBarWidget.appBar(
+        title: 'Choose Book To Quote',
+        implyLeading: true,
+        context: context,
       ),
-      title: 'Search Books',
-      child: Column(
+      body: Column(
         children: [
           TextField(
             style: Theme.of(context).textTheme.headlineSmall!,

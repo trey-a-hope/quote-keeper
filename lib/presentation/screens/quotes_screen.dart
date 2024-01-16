@@ -5,19 +5,17 @@ import 'package:quote_keeper/presentation/widgets/quote_card_widget.dart';
 import 'package:quote_keeper/utils/config/providers.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'dart:convert';
-
 import 'package:quote_keeper/utils/constants/globals.dart';
 
-class BooksScreen extends ConsumerStatefulWidget {
-  const BooksScreen({Key? key}) : super(key: key);
+class QuotesScreen extends ConsumerStatefulWidget {
+  const QuotesScreen({Key? key}) : super(key: key);
 
   @override
-  ConsumerState<BooksScreen> createState() => _BooksPageState();
+  ConsumerState<QuotesScreen> createState() => _QuotesScreenState();
 }
 
-class _BooksPageState extends ConsumerState<BooksScreen> {
+class _QuotesScreenState extends ConsumerState<QuotesScreen> {
   final ScrollController _scrollController = ScrollController();
 
   @override
@@ -42,10 +40,14 @@ class _BooksPageState extends ConsumerState<BooksScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarBuild.appBar(
+      appBar: AppBarWidget.appBar(
         title: 'Quotes',
         implyLeading: false,
         context: context,
+        action: IconButton(
+          icon: const Icon(Icons.add),
+          onPressed: () => context.goNamed(Globals.routeSearchBooks),
+        ),
       ),
       body: Consumer(
         builder: (context, ref, _) {
@@ -91,9 +93,8 @@ class _BooksPageState extends ConsumerState<BooksScreen> {
                         delay: 1000.ms,
                       );
                 });
-          } else {
-            return Container();
           }
+          return Container();
         },
       ),
     );

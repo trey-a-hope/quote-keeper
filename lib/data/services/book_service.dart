@@ -40,7 +40,7 @@ class BookService {
   Future<bool> booksCollectionExists({required String uid}) async =>
       (await _booksDB.where('uid', isEqualTo: uid).get()).docs.isNotEmpty;
 
-  Future<void> create(BookModel book) async {
+  Future<String> create(BookModel book) async {
     try {
       // Create document reference of book.s
       final DocumentReference bookDocRef = _booksDB.doc();
@@ -49,7 +49,9 @@ class BookService {
       book = book.copyWith(id: bookDocRef.id);
 
       // Set book data.
-      return bookDocRef.set(book);
+      bookDocRef.set(book);
+
+      return book.id!;
     } catch (e) {
       throw Exception(
         e.toString(),

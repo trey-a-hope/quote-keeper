@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 
-class AppBarBuild {
+class AppBarWidget {
   static AppBar appBar({
     required String title,
     required bool implyLeading,
     required BuildContext context,
-    String? stringColor,
-    bool? hasAction,
+    Widget? action,
   }) {
     return AppBar(
       centerTitle: true,
@@ -22,13 +21,21 @@ class AppBarBuild {
           ? Transform.scale(
               scale: 0.7,
               child: IconButton(
-                icon: const Icon(Icons.keyboard_backspace_rounded,
-                    size: 33, color: Colors.black),
+                icon: const Icon(
+                  Icons.keyboard_backspace_rounded,
+                  size: 33,
+                  color: Colors.grey,
+                ),
                 onPressed: () => context.pop(),
               ),
             )
           : const SizedBox(),
-      actions: hasAction == true ? const [Icon(Icons.search), Gap(15)] : null,
+      actions: [
+        if (action != null) ...[
+          action,
+          const Gap(15),
+        ]
+      ],
     );
   }
 }

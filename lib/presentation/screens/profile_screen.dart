@@ -8,7 +8,7 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarBuild.appBar(
+      appBar: AppBarWidget.appBar(
         title: 'Profile',
         implyLeading: false,
         context: context,

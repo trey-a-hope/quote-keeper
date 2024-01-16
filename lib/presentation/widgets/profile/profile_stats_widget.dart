@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:flutter/material.dart';
-import 'package:quote_keeper/presentation/widgets/profile/total_books_count_widget.dart';
+import 'package:quote_keeper/presentation/widgets/profile/total_quotes_count_widget.dart';
 import 'package:quote_keeper/utils/config/providers.dart';
 
 class ProfileStatsWidget extends ConsumerWidget {
@@ -48,7 +48,7 @@ class ProfileStatsWidget extends ConsumerWidget {
                       const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          TotalBooksCountWidget(),
+                          TotalQuotesCountWidget(),
                         ],
                       ),
                       const Gap(25)

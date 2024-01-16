@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quote_keeper/presentation/screens/books_screen.dart';
+import 'package:quote_keeper/presentation/screens/quotes_screen.dart';
 import 'package:quote_keeper/presentation/screens/profile_screen.dart';
 import 'package:quote_keeper/presentation/screens/settings_screen.dart';
 
@@ -20,12 +20,12 @@ class _NavigationContainerState extends State<NavigationContainer> {
       color: Colors.blue,
       child: const Center(
         child: Text(
-          'Dashboard\nSearch Quotes\nAdd Quotes',
+          'Dashboard\nSearch Quotes',
           style: TextStyle(color: Colors.black),
         ),
       ),
     ),
-    const BooksScreen(),
+    const QuotesScreen(),
     const ProfileScreen(),
     SettingsScreen(),
   ];
