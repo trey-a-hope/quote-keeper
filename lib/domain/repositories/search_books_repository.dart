@@ -1,7 +1,6 @@
 import 'package:quote_keeper/data/services/book_service.dart';
 import 'package:quote_keeper/data/cache/search_books_cache.dart';
 import 'package:quote_keeper/domain/models/search_books_result.dart';
-import 'package:flutter/material.dart';
 
 class SearchBooksRepository {
   final SearchBooksCache cache;
@@ -13,14 +12,9 @@ class SearchBooksRepository {
     if (cache.contains(term)) {
       return cache.get(term);
     } else {
-      try {
-        final result = await _bookService.search(term: term);
-        cache.set(term, result);
-        return result;
-      } catch (e) {
-        debugPrint(e.toString());
-        throw Exception(e);
-      }
+      final result = await _bookService.search(term: term);
+      cache.set(term, result);
+      return result;
     }
   }
 }

@@ -4,6 +4,7 @@ import 'package:quote_keeper/domain/notifiers/books_async_notifier.dart';
 import 'package:quote_keeper/domain/notifiers/create_book_notifier.dart';
 import 'package:quote_keeper/domain/notifiers/dashboard_book_async_notifier.dart';
 import 'package:quote_keeper/domain/notifiers/search_books_async_notifier.dart';
+import 'package:quote_keeper/domain/notifiers/search_quotes_async_notifier.dart';
 import 'package:quote_keeper/domain/notifiers/should_display_tutorial_state_notifier.dart';
 import 'package:quote_keeper/domain/notifiers/total_books_count_state_notifier.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -35,6 +36,11 @@ class Providers {
   static final searchBooksAsyncNotifierProvider =
       AsyncNotifierProvider.autoDispose<SearchBooksAsyncNotifier,
           List<SearchBooksResultModel>>(SearchBooksAsyncNotifier.new);
+
+  static final searchQuotesAsyncNotifierProvider = AsyncNotifierProvider
+      .autoDispose<SearchQuotesAsyncNotifier, List<BookModel>>(
+    SearchQuotesAsyncNotifier.new,
+  );
 
   static final tutorialCompleteStateNotifierProvider =
       AsyncNotifierProvider<TutorialCompleteStateNotifier, bool>(

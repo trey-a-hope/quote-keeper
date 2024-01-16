@@ -44,6 +44,7 @@ class Globals {
   ];
 
   static String splashMessage = 'Books are essential.';
+  static String searchLabel = 'Enter book title here...';
 
   /// Package info
   static const String appVersion = 'app_version';

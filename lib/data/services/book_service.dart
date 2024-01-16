@@ -158,9 +158,13 @@ class BookService {
       // Convert body to json.
       final results = json.decode(response.body);
 
+      if (results['error'] != null) {
+        throw Exception(results['error']['message']);
+      }
+
       return SearchBooksResult.fromJson(results);
     } catch (e) {
-      throw Exception(e.toString());
+      rethrow;
     }
   }
 

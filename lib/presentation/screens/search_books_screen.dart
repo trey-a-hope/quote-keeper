@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:animated_search_bar/animated_search_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:quote_keeper/presentation/widgets/app_bar_widget.dart';
@@ -9,10 +10,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class SearchBooksScreen extends ConsumerWidget {
-  SearchBooksScreen({Key? key}) : super(key: key);
-
-  /// Editing controller for message on critique.
-  final _textController = TextEditingController();
+  const SearchBooksScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -29,33 +27,14 @@ class SearchBooksScreen extends ConsumerWidget {
       ),
       body: Column(
         children: [
-          TextField(
-            style: Theme.of(context).textTheme.headlineSmall!,
-            controller: _textController,
-            autocorrect: false,
-            onChanged: (text) {
-              searchBooksAsyncNotifier.udpateSearchText(text: text);
-            },
-            cursorColor: Theme.of(context).textTheme.headlineSmall!.color,
-            decoration: InputDecoration(
-              errorStyle: const TextStyle(color: Colors.white),
-              prefixIcon: Icon(
-                Icons.search,
-                color: Theme.of(context).iconTheme.color,
-              ),
-              suffixIcon: GestureDetector(
-                child: Icon(
-                  Icons.clear,
-                  color: Theme.of(context).iconTheme.color,
-                ),
-                onTap: () {
-                  _textController.clear();
-                  searchBooksAsyncNotifier.udpateSearchText(text: '');
-                },
-              ),
-              border: InputBorder.none,
-              hintText: 'Enter title here...',
-              hintStyle: Theme.of(context).textTheme.bodyLarge,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 32),
+            child: AnimatedSearchBar(
+              label: Globals.searchLabel,
+              onChanged: searchBooksAsyncNotifier.onSearchTextChanged,
+              textInputAction: TextInputAction.done,
+              searchStyle: Theme.of(context).textTheme.headlineSmall!,
+              labelStyle: Theme.of(context).textTheme.headlineSmall!,
             ),
           ),
           results.when(
@@ -102,8 +81,12 @@ class SearchBooksScreen extends ConsumerWidget {
               ),
             ),
             error: (error, stackTrace) => Center(
-              child: Text(
-                error.toString(),
+              child: Padding(
+                padding: const EdgeInsets.all(32.0),
+                child: Text(
+                  error.toString(),
+                  style: Theme.of(context).textTheme.headlineSmall,
+                ),
               ),
             ),
             loading: () => const Center(

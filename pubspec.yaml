@@ -2,7 +2,7 @@ name: quote_keeper
 description: A new Flutter project.
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
-version: 1.5.4+154
+version: 1.5.5+155
 
 environment:
   sdk: ">=2.19.6 <3.0.0"

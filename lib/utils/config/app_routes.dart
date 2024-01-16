@@ -29,7 +29,7 @@ GoRouter appRoutes(bool isAuthenticated) {
           GoRoute(
             path: Globals.routeSearchBooks,
             name: Globals.routeSearchBooks,
-            builder: (context, state) => SearchBooksScreen(),
+            builder: (context, state) => const SearchBooksScreen(),
             routes: [
               GoRoute(
                 path: '${Globals.routeCreateQuote}/:searchBooksResult',
