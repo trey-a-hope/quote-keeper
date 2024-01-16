@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quote_keeper/presentation/screens/profile_screen.dart';
 import 'package:quote_keeper/presentation/screens/settings_screen.dart';
 
 /// This is the stateful widget that the main application instantiates.
@@ -32,15 +33,7 @@ class _NavigationContainerState extends State<NavigationContainer> {
         ),
       ),
     ),
-    Container(
-      color: Colors.green,
-      child: const Center(
-        child: Text(
-          'Profile',
-          style: TextStyle(color: Colors.black),
-        ),
-      ),
-    ),
+    const ProfileScreen(),
     SettingsScreen(),
   ];
 
