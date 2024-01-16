@@ -20,7 +20,7 @@ class _NavigationContainerState extends State<NavigationContainer> {
       color: Colors.blue,
       child: const Center(
         child: Text(
-          'Dashboard',
+          'Dashboard\nSearch Quotes\nAdd Quotes',
           style: TextStyle(color: Colors.black),
         ),
       ),

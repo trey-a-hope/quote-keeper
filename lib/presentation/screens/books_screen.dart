@@ -1,10 +1,14 @@
-import 'package:quote_keeper/presentation/widgets/app_bar_widget.dart';
-import 'package:quote_keeper/utils/config/providers.dart';
-import 'package:quote_keeper/presentation/widgets/book_card_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:quote_keeper/presentation/widgets/app_bar_widget.dart';
+import 'package:quote_keeper/presentation/widgets/quote_card_widget.dart';
+import 'package:quote_keeper/utils/config/providers.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:uuid/uuid.dart';
+
+import 'dart:convert';
+
+import 'package:quote_keeper/utils/constants/globals.dart';
 
 class BooksScreen extends ConsumerStatefulWidget {
   const BooksScreen({Key? key}) : super(key: key);
@@ -57,19 +61,36 @@ class _BooksPageState extends ConsumerState<BooksScreen> {
           } else if (booksAsyncValue.hasValue) {
             var books = booksAsyncValue.value!;
             return ListView.builder(
-              controller: _scrollController,
-              itemCount: books.length,
-              itemBuilder: (context, index) {
-                final book = books[index];
-                return BookWidget(
-                  // Use key here to force rebuild when the book is updated.
-                  key: Key(const Uuid().v4()),
-                  book: book,
-                ).animate().fadeIn(duration: 1000.ms).then(
-                      delay: 1000.ms,
-                    );
-              },
-            );
+                controller: _scrollController,
+                itemCount: books.length,
+                itemBuilder: (context, index) {
+                  final book = books[index];
+                  return QuoteCardWidget(
+                    book: book,
+                    onTap: () => context.goNamed(
+                      Globals.routeEditQuote,
+                      pathParameters: <String, String>{
+                        // Note: Conversion between String and Timestamp since Timestamp can't be encodded.
+                        'book': jsonEncode(
+                          {
+                            'id': book.id,
+                            'title': book.title,
+                            'author': book.author,
+                            'quote': book.quote,
+                            'imgPath': book.imgPath,
+                            'hidden': book.hidden,
+                            'complete': book.complete,
+                            'created': book.created.toIso8601String(),
+                            'modified': book.modified.toIso8601String(),
+                            'uid': book.uid,
+                          },
+                        )
+                      },
+                    ),
+                  ).animate().fadeIn(duration: 1000.ms).then(
+                        delay: 1000.ms,
+                      );
+                });
           } else {
             return Container();
           }

@@ -4,18 +4,18 @@ import 'package:flutter/material.dart';
 class CustomListTileWidget extends StatelessWidget {
   final IconData icon;
   final String title;
+  final BuildContext context;
   final VoidCallback? callback;
   final bool? isDarkMode;
-  final BuildContext context;
 
-  const CustomListTileWidget(
-      {Key? key,
-      required this.icon,
-      required this.title,
-      this.callback,
-      this.isDarkMode,
-      required this.context})
-      : super(key: key);
+  const CustomListTileWidget({
+    Key? key,
+    required this.icon,
+    required this.title,
+    required this.context,
+    this.callback,
+    this.isDarkMode,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -37,24 +37,14 @@ class CustomListTileWidget extends StatelessWidget {
       ),
       minLeadingWidth: 50,
       horizontalTitleGap: 13,
-      title: Text(title, style: const TextStyle(fontSize: 17)),
-      trailing: isDarkMode == true
-          ? CupertinoSwitch(
-              thumbColor: Colors.blue,
-              activeColor: Colors.green,
-              trackColor: Colors.black,
-              // value: vm.isDark,
-              onChanged: (v) {
-                // vm.setPref(v);
-                // vm.getPref();
-                // vm.setToDark();
-              },
-              value: true,
-            )
-          : Icon(
-              CupertinoIcons.arrow_right,
-              color: Colors.grey,
-            ),
+      title: Text(
+        title,
+        style: const TextStyle(fontSize: 17),
+      ),
+      trailing: const Icon(
+        CupertinoIcons.arrow_right,
+        color: Colors.grey,
+      ),
       onTap: callback,
     );
   }
