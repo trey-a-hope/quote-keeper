@@ -13,7 +13,7 @@ class TotalBooksCountWidget extends ConsumerWidget {
 
     return totalBooksCount.when(
       data: (data) =>
-          ProfileStatBadgetWidget(count: data, label: 'Total Books'),
+          ProfileStatBadgetWidget(count: data, label: 'Total Quotes'),
       error: (err, stack) => Center(child: Text(err.toString())),
       loading: () => const Center(child: CircularProgressIndicator()),
     );

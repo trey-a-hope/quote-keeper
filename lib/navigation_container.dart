@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quote_keeper/presentation/screens/books_screen.dart';
 import 'package:quote_keeper/presentation/screens/profile_screen.dart';
 import 'package:quote_keeper/presentation/screens/settings_screen.dart';
 
@@ -24,15 +25,7 @@ class _NavigationContainerState extends State<NavigationContainer> {
         ),
       ),
     ),
-    Container(
-      color: Colors.purple,
-      child: const Center(
-        child: Text(
-          'View All Quotes/Search Quotes (Add New Quote @ Top)',
-          style: TextStyle(color: Colors.black),
-        ),
-      ),
-    ),
+    const BooksScreen(),
     const ProfileScreen(),
     SettingsScreen(),
   ];
@@ -43,14 +36,18 @@ class _NavigationContainerState extends State<NavigationContainer> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _widgetOptions.elementAt(_selectedIndex),
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: _widgetOptions,
+      ),
+      // body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).navigationBarTheme.backgroundColor,
         showSelectedLabels: false,
         showUnselectedLabels: false,
         selectedLabelStyle: const TextStyle(fontSize: 20, color: Colors.blue),
         type: BottomNavigationBarType.fixed,
-        selectedItemColor: Colors.black,
+        selectedItemColor: Colors.white,
         unselectedItemColor: Colors.grey.withOpacity(0.7),
         items: const [
           BottomNavigationBarItem(

@@ -117,21 +117,6 @@ class _BookWidgetState extends State<BookWidget> {
                     const Spacer(),
                     Row(
                       children: [
-                        Consumer(
-                          builder: (context, ref, child) {
-                            return ElevatedButton(
-                              onPressed: () {
-                                ref
-                                    .read(Providers
-                                        .dashboardBookAsyncNotifierProvider
-                                        .notifier)
-                                    .setBook(_book);
-                                context.pop();
-                              },
-                              child: const Text('Open'),
-                            );
-                          },
-                        ),
                         const Spacer(),
                         Consumer(
                           builder: (context, ref, child) {

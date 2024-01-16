@@ -67,7 +67,7 @@ class _EditBookScreenState extends State<EditBookScreen> {
           );
         },
       ),
-      title: 'Edit Book',
+      title: 'Edit Quote',
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

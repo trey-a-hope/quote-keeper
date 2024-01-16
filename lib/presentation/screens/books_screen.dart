@@ -1,10 +1,9 @@
-import 'package:go_router/go_router.dart';
+import 'package:quote_keeper/presentation/widgets/app_bar_widget.dart';
 import 'package:quote_keeper/utils/config/providers.dart';
 import 'package:quote_keeper/presentation/widgets/book_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:quote_keeper/presentation/widgets/qk_scaffold_widget.dart';
 import 'package:uuid/uuid.dart';
 
 class BooksScreen extends ConsumerStatefulWidget {
@@ -38,14 +37,13 @@ class _BooksPageState extends ConsumerState<BooksScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return QKScaffoldWidget(
-      key: Key(const Uuid().v4()),
-      title: 'Books',
-      leftIconButton: IconButton(
-        icon: const Icon(Icons.chevron_left),
-        onPressed: () => context.pop(),
+    return Scaffold(
+      appBar: AppBarBuild.appBar(
+        title: 'Quotes',
+        implyLeading: false,
+        context: context,
       ),
-      child: Consumer(
+      body: Consumer(
         builder: (context, ref, _) {
           final booksAsyncValue =
               ref.watch(Providers.booksAsyncNotifierProvider);
