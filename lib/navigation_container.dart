@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quote_keeper/presentation/screens/dashboard_screen.dart';
 import 'package:quote_keeper/presentation/screens/quotes_screen.dart';
 import 'package:quote_keeper/presentation/screens/profile_screen.dart';
 import 'package:quote_keeper/presentation/screens/settings_screen.dart';
@@ -16,15 +17,7 @@ class _NavigationContainerState extends State<NavigationContainer> {
   int _selectedIndex = 0;
 
   static final List<Widget> _widgetOptions = <Widget>[
-    Container(
-      color: Colors.blue,
-      child: const Center(
-        child: Text(
-          'Dashboard\nSearch Quotes',
-          style: TextStyle(color: Colors.black),
-        ),
-      ),
-    ),
+    DashboardScreen(),
     const QuotesScreen(),
     const ProfileScreen(),
     SettingsScreen(),

@@ -1,13 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:flutter/material.dart';
-import 'package:quote_keeper/presentation/widgets/profile/total_quotes_count_widget.dart';
 import 'package:quote_keeper/utils/config/providers.dart';
 
 class ProfileStatsWidget extends ConsumerWidget {
   const ProfileStatsWidget({super.key});
 
-  final _containerHeight = 300.0;
+  final _containerHeight = 200.0;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -44,14 +43,6 @@ class ProfileStatsWidget extends ConsumerWidget {
                         data.email ?? 'No Email',
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
-                      const Gap(25),
-                      const Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          TotalQuotesCountWidget(),
-                        ],
-                      ),
-                      const Gap(25)
                     ],
                   ),
                 ),

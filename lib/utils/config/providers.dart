@@ -3,6 +3,8 @@ import 'package:quote_keeper/domain/models/search_book_result/search_books_resul
 import 'package:quote_keeper/domain/notifiers/books_async_notifier.dart';
 import 'package:quote_keeper/domain/notifiers/create_book_notifier.dart';
 import 'package:quote_keeper/domain/notifiers/dashboard_book_async_notifier.dart';
+import 'package:quote_keeper/domain/notifiers/most_recent_quote_async_notifier.dart';
+import 'package:quote_keeper/domain/notifiers/oldest_quote_async_notifier.dart';
 import 'package:quote_keeper/domain/notifiers/search_books_async_notifier.dart';
 import 'package:quote_keeper/domain/notifiers/search_quotes_async_notifier.dart';
 import 'package:quote_keeper/domain/notifiers/should_display_tutorial_state_notifier.dart';
@@ -32,6 +34,16 @@ class Providers {
   static final dashboardBookAsyncNotifierProvider =
       AsyncNotifierProvider.autoDispose<DashboardBookAsyncNotifier, BookModel?>(
           DashboardBookAsyncNotifier.new);
+
+  static final mostRecentQuoteAsyncNotifierProvider = AsyncNotifierProvider
+      .autoDispose<MostRecentQuoteAsyncNotifier, BookModel?>(
+    MostRecentQuoteAsyncNotifier.new,
+  );
+
+  static final oldestQuoteAsyncNotifierProvider =
+      AsyncNotifierProvider.autoDispose<OldestQuoteAsyncNotifier, BookModel?>(
+    OldestQuoteAsyncNotifier.new,
+  );
 
   static final searchBooksAsyncNotifierProvider =
       AsyncNotifierProvider.autoDispose<SearchBooksAsyncNotifier,

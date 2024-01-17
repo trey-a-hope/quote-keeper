@@ -20,7 +20,7 @@ class ProfileStatBadgetWidget extends StatelessWidget {
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: Theme.of(context).canvasColor,
+            color: Theme.of(context).primaryColor,
           ),
           child: Text(
             '$count',

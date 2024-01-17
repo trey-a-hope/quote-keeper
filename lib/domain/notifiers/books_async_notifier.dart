@@ -84,10 +84,7 @@ class BooksAsyncNotifier extends AutoDisposeAsyncNotifier<List<BookModel>> {
     required BuildContext context,
   }) async {
     // Delete book on BE.
-    await _bookService.delete(
-      uid: ref.read(Providers.authAsyncNotifierProvider.notifier).getUid(),
-      id: id,
-    );
+    await _bookService.delete(id: id);
 
     // Decrement total book count.
     ref
