@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:quote_keeper/domain/models/search_book_result/search_books_result_model.dart';
+import 'package:quote_keeper/presentation/widgets/app_bar_widget.dart';
 import 'package:quote_keeper/utils/config/providers.dart';
-import 'package:quote_keeper/presentation/widgets/qk_scaffold_widget.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
 import 'package:quote_keeper/data/services/modal_service.dart';
 import 'package:flutter/material.dart';
@@ -16,8 +16,6 @@ class CreateQuoteScreen extends ConsumerWidget {
 
   final SearchBooksResultModel searchBooksResult;
 
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
   final _modalService = ModalService();
 
   @override
@@ -26,14 +24,13 @@ class CreateQuoteScreen extends ConsumerWidget {
     final book = ref.watch(createBookNotifierProvider);
     final createBookNotifier = ref.read(createBookNotifierProvider.notifier);
 
-    return QKScaffoldWidget(
-      scaffoldKey: _scaffoldKey,
-      leftIconButton: IconButton(
-        icon: const Icon(Icons.chevron_left),
-        onPressed: () => context.pop(),
+    return Scaffold(
+      appBar: AppBarWidget.appBar(
+        title: 'Create Quote',
+        implyLeading: true,
+        context: context,
       ),
-      title: 'Create Quote',
-      child: Padding(
+      body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: AnimateList(
@@ -96,20 +93,6 @@ class CreateQuoteScreen extends ConsumerWidget {
                           // Submit the quote.
                           await createBookNotifier
                               .createBook(searchBooksResult);
-
-                          // Increment total book count.
-                          ref
-                              .read(Providers
-                                  .totalBooksCountAsyncNotifierProvider
-                                  .notifier)
-                              .increment();
-
-                          // Turn off tutorial flag.
-                          ref
-                              .read(Providers
-                                  .tutorialCompleteStateNotifierProvider
-                                  .notifier)
-                              .markTutorialComplete();
 
                           if (!context.mounted) return;
 

@@ -29,7 +29,6 @@ mixin _$UserModel {
   @TimestampConverter()
   dynamic get modified => throw _privateConstructorUsedError;
   String get username => throw _privateConstructorUsedError;
-  bool get tutorialComplete => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -49,8 +48,7 @@ abstract class $UserModelCopyWith<$Res> {
       String? fcmToken,
       @TimestampConverter() dynamic created,
       @TimestampConverter() dynamic modified,
-      String username,
-      bool tutorialComplete});
+      String username});
 }
 
 /// @nodoc
@@ -73,7 +71,6 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
     Object? created = freezed,
     Object? modified = freezed,
     Object? username = null,
-    Object? tutorialComplete = null,
   }) {
     return _then(_value.copyWith(
       uid: null == uid
@@ -104,10 +101,6 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
               as String,
-      tutorialComplete: null == tutorialComplete
-          ? _value.tutorialComplete
-          : tutorialComplete // ignore: cast_nullable_to_non_nullable
-              as bool,
     ) as $Val);
   }
 }
@@ -127,8 +120,7 @@ abstract class _$$UserModelImplCopyWith<$Res>
       String? fcmToken,
       @TimestampConverter() dynamic created,
       @TimestampConverter() dynamic modified,
-      String username,
-      bool tutorialComplete});
+      String username});
 }
 
 /// @nodoc
@@ -149,7 +141,6 @@ class __$$UserModelImplCopyWithImpl<$Res>
     Object? created = freezed,
     Object? modified = freezed,
     Object? username = null,
-    Object? tutorialComplete = null,
   }) {
     return _then(_$UserModelImpl(
       uid: null == uid
@@ -174,10 +165,6 @@ class __$$UserModelImplCopyWithImpl<$Res>
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
               as String,
-      tutorialComplete: null == tutorialComplete
-          ? _value.tutorialComplete
-          : tutorialComplete // ignore: cast_nullable_to_non_nullable
-              as bool,
     ));
   }
 }
@@ -192,8 +179,7 @@ class _$UserModelImpl implements _UserModel {
       this.fcmToken,
       @TimestampConverter() this.created,
       @TimestampConverter() this.modified,
-      required this.username,
-      required this.tutorialComplete});
+      required this.username});
 
   factory _$UserModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserModelImplFromJson(json);
@@ -214,12 +200,10 @@ class _$UserModelImpl implements _UserModel {
   final dynamic modified;
   @override
   final String username;
-  @override
-  final bool tutorialComplete;
 
   @override
   String toString() {
-    return 'UserModel(uid: $uid, email: $email, imgUrl: $imgUrl, fcmToken: $fcmToken, created: $created, modified: $modified, username: $username, tutorialComplete: $tutorialComplete)';
+    return 'UserModel(uid: $uid, email: $email, imgUrl: $imgUrl, fcmToken: $fcmToken, created: $created, modified: $modified, username: $username)';
   }
 
   @override
@@ -235,9 +219,7 @@ class _$UserModelImpl implements _UserModel {
             const DeepCollectionEquality().equals(other.created, created) &&
             const DeepCollectionEquality().equals(other.modified, modified) &&
             (identical(other.username, username) ||
-                other.username == username) &&
-            (identical(other.tutorialComplete, tutorialComplete) ||
-                other.tutorialComplete == tutorialComplete));
+                other.username == username));
   }
 
   @JsonKey(ignore: true)
@@ -250,8 +232,7 @@ class _$UserModelImpl implements _UserModel {
       fcmToken,
       const DeepCollectionEquality().hash(created),
       const DeepCollectionEquality().hash(modified),
-      username,
-      tutorialComplete);
+      username);
 
   @JsonKey(ignore: true)
   @override
@@ -275,8 +256,7 @@ abstract class _UserModel implements UserModel {
       final String? fcmToken,
       @TimestampConverter() final dynamic created,
       @TimestampConverter() final dynamic modified,
-      required final String username,
-      required final bool tutorialComplete}) = _$UserModelImpl;
+      required final String username}) = _$UserModelImpl;
 
   factory _UserModel.fromJson(Map<String, dynamic> json) =
       _$UserModelImpl.fromJson;
@@ -297,8 +277,6 @@ abstract class _UserModel implements UserModel {
   dynamic get modified;
   @override
   String get username;
-  @override
-  bool get tutorialComplete;
   @override
   @JsonKey(ignore: true)
   _$$UserModelImplCopyWith<_$UserModelImpl> get copyWith =>

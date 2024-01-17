@@ -1,15 +1,12 @@
-import 'package:quote_keeper/domain/models/books/book_model.dart';
 import 'package:share_plus/share_plus.dart';
 
 class ShareService {
-  void share({required BookModel book}) {
-    final text = '"${book.quote}"';
-    final subject =
-        'Here\'s one of my favorite quotes from ${book.title} by ${book.author}';
-
-    Share.share(
-      text,
-      subject: subject,
-    );
-  }
+  Future<void> share({
+    required String text,
+    required String subject,
+  }) async =>
+      Share.share(
+        text,
+        subject: subject,
+      );
 }

@@ -68,10 +68,13 @@ class ModalService {
       showDialog<bool>(
         barrierDismissible: false,
         context: context,
-        builder: (BuildContext context) => InputMatchConfirmationWidget(
-          hintText: hintText,
-          title: title,
-          match: match,
+        builder: (BuildContext context) => Material(
+          color: Colors.transparent,
+          child: InputMatchConfirmationWidget(
+            hintText: hintText,
+            title: title,
+            match: match,
+          ),
         ),
       );
 }

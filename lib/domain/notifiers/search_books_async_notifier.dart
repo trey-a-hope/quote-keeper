@@ -19,7 +19,7 @@ class SearchBooksAsyncNotifier
   @override
   FutureOr<List<SearchBooksResultModel>> build() => [];
 
-  void udpateSearchText({required String text}) async {
+  void onSearchTextChanged(val) async {
     state = const AsyncLoading();
 
     /// Cancel debouncer if it's active.
@@ -29,13 +29,13 @@ class SearchBooksAsyncNotifier
     _debounce = Timer(
       const Duration(milliseconds: 500),
       () async {
-        if (text.isEmpty) {
+        if (val.isEmpty) {
           state = const AsyncData([]);
         } else {
           try {
             /// Query search for books.
             final SearchBooksResult results =
-                await searchBooksRepository.search(text);
+                await searchBooksRepository.search(val);
 
             state = AsyncData(results.items);
           } catch (e) {

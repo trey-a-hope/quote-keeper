@@ -5,13 +5,14 @@ import 'package:quote_keeper/domain/models/books/book_model.dart';
 import 'package:quote_keeper/utils/config/providers.dart';
 
 // Book that is displayed on the Dashboard.
-class DashboardBookAsyncNotifier extends AutoDisposeAsyncNotifier<BookModel?> {
+class QuoteOfTheDayAsyncNotifier extends AutoDisposeAsyncNotifier<BookModel?> {
   final _bookService = BookService();
 
   @override
   FutureOr<BookModel?> build() async {
-    final uid =
-        ref.watch(Providers.authAsyncNotifierProvider.notifier).getUid();
+    ref.watch(Providers.booksAsyncNotifierProvider);
+
+    final uid = ref.read(Providers.authAsyncNotifierProvider.notifier).getUid();
 
     if (await _bookService.booksCollectionExists(uid: uid)) {
       final book = await _bookService.getRandom(uid: uid);
@@ -21,21 +22,14 @@ class DashboardBookAsyncNotifier extends AutoDisposeAsyncNotifier<BookModel?> {
     }
   }
 
-  void reset() {
-    state = const AsyncData(null);
-  }
-
-  // Sets the book to the given book.
-  void setBook(BookModel book) {
-    state = AsyncData(book);
-  }
-
   // Fetches a random book for the user.
   Future<void> getRandomBook() async {
     final uid = ref.read(Providers.authAsyncNotifierProvider.notifier).getUid();
 
+    final exists = await _bookService.booksCollectionExists(uid: uid);
+
     // Validate there is at least one book in the users' collection.
-    if (await _bookService.booksCollectionExists(uid: uid)) {
+    if (exists) {
       // Set book to random book in collection.
       final book = await _bookService.getRandom(uid: uid);
       state = AsyncData(book);

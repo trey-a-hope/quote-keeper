@@ -85,6 +85,7 @@ class AppThemes {
   /// Light theme
   static ThemeData lightTheme = ThemeData(
     primaryColor: _primaryColor,
+    splashColor: _secondaryColor,
     brightness: Brightness.light,
     canvasColor: Colors.white,
     floatingActionButtonTheme: FloatingActionButtonThemeData(
@@ -116,6 +117,7 @@ class AppThemes {
   /// Dark theme
   static ThemeData darkTheme = ThemeData(
     primaryColor: _primaryColor,
+    splashColor: _secondaryColor,
     brightness: Brightness.dark,
     canvasColor: _accentColor,
     floatingActionButtonTheme: FloatingActionButtonThemeData(

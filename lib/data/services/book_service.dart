@@ -40,7 +40,7 @@ class BookService {
   Future<bool> booksCollectionExists({required String uid}) async =>
       (await _booksDB.where('uid', isEqualTo: uid).get()).docs.isNotEmpty;
 
-  Future<void> create(BookModel book) async {
+  Future<String> create(BookModel book) async {
     try {
       // Create document reference of book.s
       final DocumentReference bookDocRef = _booksDB.doc();
@@ -49,7 +49,9 @@ class BookService {
       book = book.copyWith(id: bookDocRef.id);
 
       // Set book data.
-      return bookDocRef.set(book);
+      bookDocRef.set(book);
+
+      return book.id!;
     } catch (e) {
       throw Exception(
         e.toString(),
@@ -130,8 +132,45 @@ class BookService {
     }
   }
 
-  Future<void> delete({
+  Future<BookModel> getOldestQuote({
     required String uid,
+  }) async {
+    try {
+      Query<BookModel> query = _booksDB
+          .where('uid', isEqualTo: uid)
+          .orderBy('created', descending: false)
+          .limit(1);
+
+      var bookDoc = await query.get();
+
+      return bookDoc.docs.first.data();
+    } catch (e) {
+      throw Exception(
+        e.toString(),
+      );
+    }
+  }
+
+  Future<BookModel> getNewestQuote({
+    required String uid,
+  }) async {
+    try {
+      Query<BookModel> query = _booksDB
+          .where('uid', isEqualTo: uid)
+          .orderBy('created', descending: true)
+          .limit(1);
+
+      var bookDoc = await query.get();
+
+      return bookDoc.docs.first.data();
+    } catch (e) {
+      throw Exception(
+        e.toString(),
+      );
+    }
+  }
+
+  Future<void> delete({
     required String id,
   }) async {
     try {
@@ -145,10 +184,13 @@ class BookService {
   }
 
   /// Search for books by search term.
-  Future<SearchBooksResult> search({required String term}) async {
+  Future<SearchBooksResult> searchGoogleBooks({
+    required String term,
+    required int limit,
+  }) async {
     // Request URL.
     final String baseUrl =
-        'https://www.googleapis.com/books/v1/volumes?q=$term&key=${Globals.googleBooksAPIKey}';
+        'https://www.googleapis.com/books/v1/volumes?q=$term&maxResults=$limit&key=${Globals.googleBooksAPIKey}';
     try {
       // Send http request.
       final response = await http.get(Uri.parse(baseUrl));
@@ -156,9 +198,13 @@ class BookService {
       // Convert body to json.
       final results = json.decode(response.body);
 
+      if (results['error'] != null) {
+        throw Exception(results['error']['message']);
+      }
+
       return SearchBooksResult.fromJson(results);
     } catch (e) {
-      throw Exception(e.toString());
+      rethrow;
     }
   }
 

@@ -41,14 +41,11 @@ class CreateBookNotifier extends AutoDisposeNotifier<BookModel?> {
     );
 
     // Add book to BE.
-    await _bookService.create(newBook);
+    final id = await _bookService.create(newBook);
 
     // Add book to FE.
-    ref.read(Providers.booksAsyncNotifierProvider.notifier).addBook(newBook);
-
-    // Set new book as dashboard default.
     ref
-        .read(Providers.dashboardBookAsyncNotifierProvider.notifier)
-        .setBook(newBook);
+        .read(Providers.booksAsyncNotifierProvider.notifier)
+        .addBook(newBook.copyWith(id: id));
   }
 }

@@ -9,19 +9,23 @@ class Globals {
   static const String googleSignInCancelError = 'Must select a Google Account.';
 
   /// Routes
+  static const String routeAbout = 'about';
+  static const String routeAuthChecker = 'authChecker';
   static const String routeBooks = 'books';
   static const String routeCreateQuote = 'createQuote';
   static const String routeDashboard = 'dashboard';
   static const String routeEditQuote = 'editQuote';
   static const String routeLogin = 'login';
-  static const String routeAuthChecker = 'authChecker';
-  static const String routeSplash = 'splash';
+  static const String routeNavigationContainer = 'navigationContainer';
   static const String routeSearchBooks = 'searchBooks';
   static const String routeSettings = 'settings';
+  static const String routeSplash = 'splash';
 
   /// Images
   static const String libraryBackground =
       'https://images.unsplash.com/photo-1521587760476-6c12a4b040da?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bGlicmFyeSUyMGJhY2tncm91bmR8ZW58MHx8MHx8fDA%3D&w=1000&q=80MGJhY2tncm91bmR8ZW58MHx8MHx8fDA%253D%26w%3D1000%26q%3D80%22&aqs=chrome..69i57.393j0j7&sourceid=chrome&ie=UTF-8';
+  static const String dummyProfilePhotoUrl =
+      'https://firebasestorage.googleapis.com/v0/b/critic-a9e44.appspot.com/o/Images%2FProfile.jpeg?alt=media&token=f8d67c2f-9b1c-4cbe-aca5-6da014c504a0';
 
   /// API Keys
   static const String googleBooksAPIKey =
@@ -30,8 +34,6 @@ class Globals {
       'AAAAzo15CQU:APA91bH040ySf7LL4P-m68WqWqY3uVPeQspn93KZq3335E-K4e3UhkD9jX6m27xKB1P9IG7XIfVwL5evi59TJOyLioIilO3G0ea5NEELUEe0VciUGV-pRg3phNHGPntVnx_DszYPnzmP';
 
   /// Dummy Variables
-  static const String dummyProfilePhotoUrl =
-      'https://firebasestorage.googleapis.com/v0/b/critic-a9e44.appspot.com/o/Images%2FProfile.jpeg?alt=media&token=f8d67c2f-9b1c-4cbe-aca5-6da014c504a0';
 
   static const String darkModeEnabled = 'dark_mode_enabled';
 
@@ -43,6 +45,7 @@ class Globals {
   ];
 
   static String splashMessage = 'Books are essential.';
+  static String searchLabel = 'Enter book title here...';
 
   /// Package info
   static const String appVersion = 'app_version';
