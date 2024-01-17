@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:quote_keeper/navigation_container.dart';
 import 'package:quote_keeper/domain/models/books/book_model.dart';
 import 'package:quote_keeper/domain/models/search_book_result/search_books_result_model.dart';
+import 'package:quote_keeper/presentation/screens/about_screen.dart';
 import 'package:quote_keeper/presentation/screens/create_quote_screen.dart';
 import 'package:quote_keeper/presentation/screens/edit_quote_screen.dart';
 import 'package:quote_keeper/presentation/screens/login_screen.dart';
@@ -68,6 +69,11 @@ GoRouter appRoutes(bool isAuthenticated) {
 
               return EditQuoteScreen(book);
             },
+          ),
+          GoRoute(
+            path: Globals.routeAbout,
+            name: Globals.routeAbout,
+            builder: (context, state) => const AboutScreen(),
           ),
         ],
       ),

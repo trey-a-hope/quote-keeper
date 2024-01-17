@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:quote_keeper/data/services/modal_service.dart';
 import 'package:quote_keeper/presentation/widgets/app_bar_widget.dart';
 import 'package:quote_keeper/presentation/widgets/custom_list_tile_widget.dart';
 import 'package:quote_keeper/utils/config/providers.dart';
+import 'package:quote_keeper/utils/constants/globals.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -26,6 +28,12 @@ class SettingsScreen extends ConsumerWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             children: [
+              CustomListTileWidget(
+                icon: Icons.info,
+                title: 'About',
+                callback: () => context.goNamed(Globals.routeAbout),
+                context: context,
+              ),
               CustomListTileWidget(
                 icon: Icons.logout,
                 title: 'Logout',
