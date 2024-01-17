@@ -124,6 +124,15 @@ class _QuotesScreenState extends ConsumerState<QuotesScreen> {
                   );
                 } else if (booksAsyncValue.hasValue) {
                   var books = booksAsyncValue.value!;
+
+                  if (books.isEmpty) {
+                    return const Center(
+                      child: Text(
+                        'You don\'t have any quotes.\nAdd one now!',
+                        textAlign: TextAlign.center,
+                      ),
+                    );
+                  }
                   return ListView.builder(
                     controller: _scrollController,
                     itemCount: books.length,

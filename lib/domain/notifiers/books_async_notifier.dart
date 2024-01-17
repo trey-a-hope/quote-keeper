@@ -17,9 +17,15 @@ class BooksAsyncNotifier extends AutoDisposeAsyncNotifier<List<BookModel>> {
   FutureOr<List<BookModel>> build() async {
     state = const AsyncLoading();
 
-    final data = await _bookService.getBooks(
-      uid: ref.read(Providers.authAsyncNotifierProvider.notifier).getUid(),
-    );
+    final uid = ref.read(Providers.authAsyncNotifierProvider.notifier).getUid();
+
+    final exists = await _bookService.booksCollectionExists(uid: uid);
+
+    if (!exists) {
+      return [];
+    }
+
+    final data = await _bookService.getBooks(uid: uid);
 
     _lastDocument = data.docs.last;
 
@@ -85,23 +91,6 @@ class BooksAsyncNotifier extends AutoDisposeAsyncNotifier<List<BookModel>> {
   }) async {
     // Delete book on BE.
     await _bookService.delete(id: id);
-
-    // Decrement total book count.
-    ref
-        .read(Providers.totalBooksCountAsyncNotifierProvider.notifier)
-        .decrement();
-
-    // // If deleted book is on dashboard, fetch new random book.
-    // var dashboardBook =
-    //     ref.read(Providers.dashboardBookAsyncNotifierProvider).value;
-    // if (dashboardBook == null) {
-    //   throw Exception('Dashboard Book should not be null');
-    // }
-    // if (dashboardBook.id == id) {
-    //   ref
-    //       .read(Providers.dashboardBookAsyncNotifierProvider.notifier)
-    //       .getRandomBook();
-    // }
 
     var books = state.value!;
 

@@ -15,7 +15,6 @@ _$UserModelImpl _$$UserModelImplFromJson(Map<String, dynamic> json) =>
       created: json['created'],
       modified: json['modified'],
       username: json['username'] as String,
-      tutorialComplete: json['tutorialComplete'] as bool,
     );
 
 Map<String, dynamic> _$$UserModelImplToJson(_$UserModelImpl instance) =>
@@ -27,5 +26,4 @@ Map<String, dynamic> _$$UserModelImplToJson(_$UserModelImpl instance) =>
       'created': instance.created,
       'modified': instance.modified,
       'username': instance.username,
-      'tutorialComplete': instance.tutorialComplete,
     };

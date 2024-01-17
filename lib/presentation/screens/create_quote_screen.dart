@@ -94,20 +94,6 @@ class CreateQuoteScreen extends ConsumerWidget {
                           await createBookNotifier
                               .createBook(searchBooksResult);
 
-                          // Increment total book count.
-                          ref
-                              .read(Providers
-                                  .totalBooksCountAsyncNotifierProvider
-                                  .notifier)
-                              .increment();
-
-                          // Turn off tutorial flag.
-                          ref
-                              .read(Providers
-                                  .tutorialCompleteStateNotifierProvider
-                                  .notifier)
-                              .markTutorialComplete();
-
                           if (!context.mounted) return;
 
                           // Return to dashboard.

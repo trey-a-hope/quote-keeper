@@ -17,10 +17,10 @@ class _NavigationContainerState extends State<NavigationContainer> {
   int _selectedIndex = 0;
 
   static final List<Widget> _widgetOptions = <Widget>[
-    DashboardScreen(),
+    const DashboardScreen(),
     const QuotesScreen(),
     const ProfileScreen(),
-    SettingsScreen(),
+    const SettingsScreen(),
   ];
 
   // Update the selected index each time the user taps a button.

@@ -18,7 +18,6 @@ class UserModel with _$UserModel {
     @TimestampConverter() created,
     @TimestampConverter() modified,
     required String username,
-    required bool tutorialComplete,
   }) = _UserModel;
 
   /// Creates a UserModel from Json map

@@ -2,12 +2,12 @@ import 'package:quote_keeper/domain/models/books/book_model.dart';
 import 'package:quote_keeper/domain/models/search_book_result/search_books_result_model.dart';
 import 'package:quote_keeper/domain/notifiers/books_async_notifier.dart';
 import 'package:quote_keeper/domain/notifiers/create_book_notifier.dart';
-import 'package:quote_keeper/domain/notifiers/dashboard_book_async_notifier.dart';
+import 'package:quote_keeper/domain/notifiers/quote_of_the_day_async_notifier.dart';
 import 'package:quote_keeper/domain/notifiers/most_recent_quote_async_notifier.dart';
 import 'package:quote_keeper/domain/notifiers/oldest_quote_async_notifier.dart';
 import 'package:quote_keeper/domain/notifiers/search_books_async_notifier.dart';
 import 'package:quote_keeper/domain/notifiers/search_quotes_async_notifier.dart';
-import 'package:quote_keeper/domain/notifiers/should_display_tutorial_state_notifier.dart';
+import 'package:quote_keeper/domain/notifiers/tutorial_complete_async_notifier.dart';
 import 'package:quote_keeper/domain/notifiers/total_books_count_state_notifier.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -31,9 +31,9 @@ class Providers {
     CreateBookNotifier.new,
   );
 
-  static final dashboardBookAsyncNotifierProvider =
-      AsyncNotifierProvider.autoDispose<DashboardBookAsyncNotifier, BookModel?>(
-          DashboardBookAsyncNotifier.new);
+  static final quoteOfTheDayAsyncNotifierProvider =
+      AsyncNotifierProvider.autoDispose<QuoteOfTheDayAsyncNotifier, BookModel?>(
+          QuoteOfTheDayAsyncNotifier.new);
 
   static final mostRecentQuoteAsyncNotifierProvider = AsyncNotifierProvider
       .autoDispose<MostRecentQuoteAsyncNotifier, BookModel?>(
@@ -55,8 +55,8 @@ class Providers {
   );
 
   static final tutorialCompleteStateNotifierProvider =
-      AsyncNotifierProvider<TutorialCompleteStateNotifier, bool>(
-    TutorialCompleteStateNotifier.new,
+      AsyncNotifierProvider.autoDispose<TutorialCompleteAsyncNotifier, bool>(
+    TutorialCompleteAsyncNotifier.new,
   );
 
   static final totalBooksCountAsyncNotifierProvider =

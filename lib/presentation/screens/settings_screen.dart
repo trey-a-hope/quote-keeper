@@ -6,12 +6,12 @@ import 'package:quote_keeper/presentation/widgets/custom_list_tile_widget.dart';
 import 'package:quote_keeper/utils/config/providers.dart';
 
 class SettingsScreen extends ConsumerWidget {
-  SettingsScreen({Key? key}) : super(key: key);
-
-  final _modalService = ModalService();
+  const SettingsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final modalService = ModalService();
+
     final authAsyncNotifier =
         ref.read(Providers.authAsyncNotifierProvider.notifier);
 
@@ -30,7 +30,7 @@ class SettingsScreen extends ConsumerWidget {
                 icon: Icons.logout,
                 title: 'Logout',
                 callback: () async {
-                  bool? confirm = await _modalService.showConfirmation(
+                  bool? confirm = await modalService.showConfirmation(
                     context: context,
                     title: 'Logout',
                     message: 'Are you sure?',
@@ -52,8 +52,7 @@ class SettingsScreen extends ConsumerWidget {
 
                   if (!context.mounted) return;
 
-                  bool? confirm =
-                      await _modalService.showInputMatchConfirmation(
+                  bool? confirm = await modalService.showInputMatchConfirmation(
                     context: context,
                     title: 'Delete Account?',
                     hintText: 'Enter your email to confirm.',
@@ -69,7 +68,7 @@ class SettingsScreen extends ConsumerWidget {
                   } catch (e) {
                     if (!context.mounted) return;
 
-                    _modalService.showAlert(
+                    modalService.showAlert(
                       context: context,
                       title: 'Error',
                       message: e.toString(),

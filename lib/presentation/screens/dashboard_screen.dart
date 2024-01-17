@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
+import 'package:quote_keeper/data/services/modal_service.dart';
 import 'package:quote_keeper/data/services/share_service.dart';
 import 'package:quote_keeper/presentation/widgets/profile/total_quotes_count_widget.dart';
 import 'package:quote_keeper/presentation/widgets/quote_card_widget.dart';
@@ -9,17 +10,18 @@ import 'package:quote_keeper/utils/constants/globals.dart';
 import 'package:flutter/material.dart';
 
 class DashboardScreen extends ConsumerWidget {
-  DashboardScreen({Key? key}) : super(key: key);
+  const DashboardScreen({Key? key}) : super(key: key);
 
   static const TextStyle labelStyle = TextStyle(
     fontWeight: FontWeight.w500,
     color: Colors.white,
   );
 
-  final _shareService = ShareService();
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final shareService = ShareService();
+    final modalService = ModalService();
+
     // Prompt user for potential updated version of app.
     Globals.newVersionPlus.showAlertIfNecessary(context: context);
 
@@ -91,7 +93,9 @@ class DashboardScreen extends ConsumerWidget {
                           child: Consumer(
                             builder: (context, ref, child) {
                               final book = ref.watch(
-                                  Providers.dashboardBookAsyncNotifierProvider);
+                                Providers.quoteOfTheDayAsyncNotifierProvider,
+                              );
+
                               return book.when(
                                 data: (data) => IconButton(
                                   icon: const Icon(
@@ -99,11 +103,24 @@ class DashboardScreen extends ConsumerWidget {
                                     color: Colors.grey,
                                   ),
                                   onPressed: () {
-                                    _shareService.share(
-                                      text: '"${data!.quote}"',
-                                      subject:
-                                          'Here\'s my quote of the day from ${data.title} by ${data.author}',
-                                    );
+                                    if (data == null) {
+                                      modalService.showInSnackBar(
+                                        context: context,
+                                        icon: const Icon(
+                                          Icons.cancel,
+                                          color: Colors.red,
+                                        ),
+                                        message:
+                                            'Create a quote to use this feature.',
+                                        title: 'Error',
+                                      );
+                                    } else {
+                                      shareService.share(
+                                        text: '"${data.quote}"',
+                                        subject:
+                                            'Here\'s my quote of the day from ${data.title} by ${data.author}',
+                                      );
+                                    }
                                   },
                                 ),
                                 loading: () => const Center(
@@ -125,10 +142,13 @@ class DashboardScreen extends ConsumerWidget {
                   const Gap(25),
                   Consumer(
                     builder: (context, ref, child) {
-                      final book = ref
-                          .watch(Providers.dashboardBookAsyncNotifierProvider);
+                      final book = ref.watch(
+                        Providers.quoteOfTheDayAsyncNotifierProvider,
+                      );
                       return book.when(
-                        data: (data) => QuoteCardWidget(book: data!),
+                        data: (data) => data == null
+                            ? const NullQuoteCardWidget()
+                            : QuoteCardWidget(book: data),
                         loading: () =>
                             const Center(child: CircularProgressIndicator()),
                         error: (error, stackTrace) => Center(
@@ -173,7 +193,9 @@ class DashboardScreen extends ConsumerWidget {
                 final mostRecentQuoteAsync =
                     ref.watch(Providers.mostRecentQuoteAsyncNotifierProvider);
                 return mostRecentQuoteAsync.when(
-                  data: (data) => QuoteCardWidget(book: data!),
+                  data: (data) => data == null
+                      ? const NullQuoteCardWidget()
+                      : QuoteCardWidget(book: data),
                   loading: () =>
                       const Center(child: CircularProgressIndicator()),
                   error: (error, stackTrace) => Center(
@@ -200,7 +222,9 @@ class DashboardScreen extends ConsumerWidget {
                 final oldestQuoteAsync =
                     ref.watch(Providers.oldestQuoteAsyncNotifierProvider);
                 return oldestQuoteAsync.when(
-                  data: (data) => QuoteCardWidget(book: data!),
+                  data: (data) => data == null
+                      ? const NullQuoteCardWidget()
+                      : QuoteCardWidget(book: data),
                   loading: () =>
                       const Center(child: CircularProgressIndicator()),
                   error: (error, stackTrace) => Center(

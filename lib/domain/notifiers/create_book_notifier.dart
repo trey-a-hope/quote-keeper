@@ -47,10 +47,5 @@ class CreateBookNotifier extends AutoDisposeNotifier<BookModel?> {
     ref
         .read(Providers.booksAsyncNotifierProvider.notifier)
         .addBook(newBook.copyWith(id: id));
-
-    // Set new book as dashboard default.
-    ref
-        .read(Providers.dashboardBookAsyncNotifierProvider.notifier)
-        .setBook(newBook);
   }
 }

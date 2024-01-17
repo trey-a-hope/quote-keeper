@@ -61,7 +61,6 @@ class AuthAsyncNotifier extends AsyncNotifier<User?> {
         uid: user.uid,
         username: user.displayName ?? user.email ?? 'NO USERNAME ASSIGNED',
         email: user.email ?? '',
-        tutorialComplete: false,
       );
 
       // Create new user in firestore.
@@ -71,15 +70,18 @@ class AuthAsyncNotifier extends AsyncNotifier<User?> {
     state = AsyncData(user);
   }
 
-  Future<UserModel> getCurrentUser() async =>
-      await _userService.retrieveUser(uid: state.value!.uid);
+  Future<UserModel> getCurrentUser() async => await _userService.retrieveUser(
+        uid: state.value!.uid,
+      );
 
   Future<void> deleteAccount() async {
+    var user = state.value!;
+
     // Delete auth user.
-    await state.value!.delete();
+    await user.delete();
 
     // Delete all books this user posted, as well as the user in firestore.
-    await _bookService.deleteUserAndBooks(uid: state.value!.uid);
+    await _bookService.deleteUserAndBooks(uid: user.uid);
 
     // Sign the user out one last time.
     await _auth.signOut();

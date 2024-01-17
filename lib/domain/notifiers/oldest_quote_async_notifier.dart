@@ -10,6 +10,9 @@ class OldestQuoteAsyncNotifier extends AutoDisposeAsyncNotifier<BookModel?> {
 
   @override
   FutureOr<BookModel?> build() async {
+    // Watch for changes to the BooksAsyncNotifierProvider.
+    ref.watch(Providers.booksAsyncNotifierProvider);
+
     final uid = ref.read(Providers.authAsyncNotifierProvider.notifier).getUid();
     final exists = await _bookService.booksCollectionExists(uid: uid);
     if (exists) {
