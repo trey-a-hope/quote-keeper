@@ -3,7 +3,10 @@ import 'package:gap/gap.dart';
 import 'package:quote_keeper/data/services/modal_service.dart';
 import 'package:quote_keeper/data/services/share_service.dart';
 import 'package:quote_keeper/presentation/widgets/dashboard/most_recent_quote_widget.dart';
-import 'package:quote_keeper/presentation/widgets/profile/total_quotes_count_widget.dart';
+import 'package:quote_keeper/presentation/widgets/dashboard/quotes_this_month_count_widget.dart';
+import 'package:quote_keeper/presentation/widgets/dashboard/quotes_all_time_count_widget.dart';
+import 'package:quote_keeper/presentation/widgets/dashboard/quotes_this_week_count_widget.dart';
+import 'package:quote_keeper/presentation/widgets/dashboard/quotes_this_year_count_widget.dart';
 import 'package:quote_keeper/presentation/widgets/quote_card_widget.dart';
 import 'package:quote_keeper/utils/config/providers.dart';
 import 'package:quote_keeper/utils/config/size_config.dart';
@@ -170,9 +173,12 @@ class DashboardScreen extends ConsumerWidget {
                       color: Colors.black,
                     ),
                     child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        TotalQuotesCountWidget(),
+                        QuotesThisWeekCountWidget(),
+                        QuotesThisMonthCountWidget(),
+                        QuotesThisYearCountWidget(),
+                        QuotesAllTimeCountWidget(),
                       ],
                     ),
                   ),

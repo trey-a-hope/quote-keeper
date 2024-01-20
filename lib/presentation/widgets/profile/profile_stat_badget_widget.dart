@@ -6,10 +6,12 @@ class ProfileStatBadgetWidget extends StatelessWidget {
     Key? key,
     required this.count,
     required this.label,
+    required this.color,
   }) : super(key: key);
 
   final int count;
   final String label;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class ProfileStatBadgetWidget extends StatelessWidget {
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: Theme.of(context).primaryColor,
+            color: color,
           ),
           child: Text(
             '$count',

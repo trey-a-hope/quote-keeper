@@ -61,8 +61,19 @@ class BookService {
   }
 
   // Return total amount of books for a user.
-  Future<int> getTotalBookCount({required String uid}) async {
+  Future<int> getTotalBookCount({
+    required String uid,
+    DateTime? rangeStart,
+    DateTime? rangeEnd,
+  }) async {
     Query<BookModel> query = _booksDB.where('uid', isEqualTo: uid);
+
+    if (rangeStart != null && rangeEnd != null) {
+      query = query
+          .where('created', isGreaterThanOrEqualTo: rangeStart)
+          .where('created', isLessThanOrEqualTo: rangeEnd);
+    }
+
     AggregateQuery count = query.count();
     AggregateQuerySnapshot snapshot = await count.get();
     return snapshot.count;
