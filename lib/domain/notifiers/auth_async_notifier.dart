@@ -70,10 +70,6 @@ class AuthAsyncNotifier extends AsyncNotifier<User?> {
     state = AsyncData(user);
   }
 
-  Future<UserModel> getCurrentUser() async => await _userService.retrieveUser(
-        uid: state.value!.uid,
-      );
-
   Future<void> deleteAccount() async {
     var user = state.value!;
 

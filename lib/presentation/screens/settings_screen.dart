@@ -17,6 +17,8 @@ class SettingsScreen extends ConsumerWidget {
     final authAsyncNotifier =
         ref.read(Providers.authAsyncNotifierProvider.notifier);
 
+    final user = ref.read(Providers.userAsyncNotifierProvider);
+
     return Scaffold(
       appBar: AppBarWidget.appBar(
         title: 'Settings',
@@ -56,7 +58,9 @@ class SettingsScreen extends ConsumerWidget {
                 icon: Icons.delete,
                 title: 'Delete Account',
                 callback: () async {
-                  final user = await authAsyncNotifier.getCurrentUser();
+                  if (!user.hasValue || user.value == null) {
+                    return;
+                  }
 
                   if (!context.mounted) return;
 
@@ -64,7 +68,7 @@ class SettingsScreen extends ConsumerWidget {
                     context: context,
                     title: 'Delete Account?',
                     hintText: 'Enter your email to confirm.',
-                    match: user.email,
+                    match: user.value!.email,
                   );
 
                   if (confirm == null || confirm == false) {

@@ -25,11 +25,11 @@ class BooksAsyncNotifier extends AutoDisposeAsyncNotifier<List<BookModel>> {
       return [];
     }
 
-    final data = await _bookService.getBooks(uid: uid);
+    final querySnapshot = await _bookService.getBooks(uid: uid, limit: 5);
 
-    _lastDocument = data.docs.last;
+    _lastDocument = querySnapshot.docs.last;
 
-    List<BookModel> books = _convertDataToBooks(data);
+    List<BookModel> books = _convertQuerySnapshotToBooks(querySnapshot);
 
     return books;
   }
@@ -37,12 +37,17 @@ class BooksAsyncNotifier extends AutoDisposeAsyncNotifier<List<BookModel>> {
   void getNextBooks() async {
     try {
       state = const AsyncLoading();
-      final data = await _bookService.getBooks(
+
+      final querySnapshot = await _bookService.getBooks(
         uid: ref.read(Providers.authAsyncNotifierProvider.notifier).getUid(),
         lastDocument: _lastDocument,
+        limit: 10,
       );
-      _lastDocument = data.docs.last;
-      List<BookModel> books = _convertDataToBooks(data);
+
+      _lastDocument = querySnapshot.docs.last;
+
+      List<BookModel> books = _convertQuerySnapshotToBooks(querySnapshot);
+
       state = AsyncData([...state.value!, ...books]);
     } catch (e) {
       if (e is StateError) {
@@ -125,9 +130,10 @@ class BooksAsyncNotifier extends AutoDisposeAsyncNotifier<List<BookModel>> {
   }
 
   // Converts a querysnapshot into an array of books.
-  List<BookModel> _convertDataToBooks(QuerySnapshot<Object?> o) => o.docs
-      .map(
-        (doc) => doc.data() as BookModel,
-      )
-      .toList();
+  List<BookModel> _convertQuerySnapshotToBooks(QuerySnapshot<Object?> o) =>
+      o.docs
+          .map(
+            (doc) => doc.data() as BookModel,
+          )
+          .toList();
 }

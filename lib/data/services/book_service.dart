@@ -18,14 +18,15 @@ class BookService {
 
   Future<QuerySnapshot<Object?>> getBooks({
     required String uid,
+    required int limit,
     DocumentSnapshot? lastDocument,
   }) async {
-    final booksColRef = _booksDB.orderBy('created', descending: true).where(
+    final booksColRef = _booksDB.orderBy('title', descending: false).where(
           'uid',
           isEqualTo: uid,
         );
 
-    Query booksQuery = booksColRef.limit(20);
+    Query booksQuery = booksColRef.limit(limit);
 
     if (lastDocument != null) {
       booksQuery = booksQuery.startAfterDocument(lastDocument);
@@ -151,18 +152,21 @@ class BookService {
     }
   }
 
-  Future<BookModel> getNewestQuote({
+  Future<List<BookModel>> getNewestQuotes({
     required String uid,
+    required int limit,
   }) async {
     try {
       Query<BookModel> query = _booksDB
           .where('uid', isEqualTo: uid)
           .orderBy('created', descending: true)
-          .limit(1);
+          .limit(limit);
 
-      var bookDoc = await query.get();
+      final querySnapshot = await query.get();
 
-      return bookDoc.docs.first.data();
+      final books = querySnapshot.docs.map((e) => e.data()).toList();
+
+      return books;
     } catch (e) {
       throw Exception(
         e.toString(),
