@@ -77,14 +77,14 @@ class BooksAsyncNotifier extends AutoDisposeAsyncNotifier<List<BookModel>> {
     // Get index of book by id.
     var index = books.indexWhere((book) => book.id == id);
 
-    // If the book is not in the list yet, then return.
-    if (index < 0) return;
-
-    books[index] = books[index].copyWith(
-      quote: data['quote'],
-      hidden: data['hidden'],
-      complete: data['complete'],
-    );
+    // If the book is in the list, update it.
+    if (index > -1) {
+      books[index] = books[index].copyWith(
+        quote: data['quote'],
+        hidden: data['hidden'],
+        complete: data['complete'],
+      );
+    }
 
     state = AsyncData(books);
   }
@@ -102,17 +102,13 @@ class BooksAsyncNotifier extends AutoDisposeAsyncNotifier<List<BookModel>> {
     // Get index of book by id.
     var index = books.indexWhere((book) => book.id == id);
 
-    // If the book is not in the list yet, then return.
-    if (index < 0) return;
-
-    // Delete book on the FE.
-    books.removeAt(index);
+    // Remove book if it's in the provider.
+    if (index > -1) {
+      // Delete book on the FE.
+      books.removeAt(index);
+    }
 
     state = AsyncData(books);
-
-    if (!context.mounted) return;
-
-    context.pop();
   }
 
   // Add the book on the FE.
