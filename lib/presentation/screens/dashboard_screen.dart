@@ -173,7 +173,7 @@ class DashboardScreen extends ConsumerWidget {
                       color: Colors.black,
                     ),
                     child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         QuotesThisWeekCountWidget(),
                         QuotesThisMonthCountWidget(),

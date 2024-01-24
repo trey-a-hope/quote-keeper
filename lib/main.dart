@@ -42,7 +42,7 @@ class QuoteKeeperApp extends ConsumerWidget {
       debugShowCheckedModeBanner: false,
       theme: AppThemes.lightTheme,
       darkTheme: AppThemes.darkTheme,
-      themeMode: ThemeMode.system,
+      themeMode: ThemeMode.dark,
       title: 'Quote Keeper',
       routeInformationParser: router.routeInformationParser,
       routerDelegate: router.routerDelegate,

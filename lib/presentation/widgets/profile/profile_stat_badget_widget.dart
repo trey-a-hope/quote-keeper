@@ -13,20 +13,24 @@ class ProfileStatBadgetWidget extends StatelessWidget {
   final String label;
   final Color color;
 
+  final _badgeDiameter = 50.0;
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Container(
-          margin: const EdgeInsets.symmetric(horizontal: 15),
-          padding: const EdgeInsets.all(20),
+          height: _badgeDiameter,
+          width: _badgeDiameter,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: color,
           ),
-          child: Text(
-            '$count',
-            style: Theme.of(context).textTheme.displaySmall,
+          child: Center(
+            child: Text(
+              '$count',
+              style: Theme.of(context).textTheme.displaySmall,
+            ),
           ),
         ),
         const Gap(5),

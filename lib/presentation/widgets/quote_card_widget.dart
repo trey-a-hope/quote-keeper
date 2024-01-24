@@ -48,7 +48,7 @@ class QuoteCardWidget extends StatelessWidget {
                             .copyWith(color: Colors.white),
                       ),
                       Text(book.title,
-                          style: Theme.of(context).textTheme.displayMedium!),
+                          style: Theme.of(context).textTheme.displaySmall!),
                       const Gap(10),
                       Row(
                         children: [
@@ -74,13 +74,13 @@ class QuoteCardWidget extends StatelessWidget {
                         children: [
                           if (book.hidden) ...[
                             Container(
-                              padding: const EdgeInsets.all(10),
+                              padding: const EdgeInsets.all(5),
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 color: Theme.of(context).canvasColor,
                               ),
                               child: Icon(
-                                size: 20,
+                                size: 15,
                                 Icons.hide_image,
                                 color: Theme.of(context).iconTheme.color,
                               ),
@@ -89,13 +89,13 @@ class QuoteCardWidget extends StatelessWidget {
                           ],
                           if (book.complete) ...[
                             Container(
-                              padding: const EdgeInsets.all(10),
+                              padding: const EdgeInsets.all(5),
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 color: Theme.of(context).canvasColor,
                               ),
                               child: Icon(
-                                size: 20,
+                                size: 15,
                                 Icons.check,
                                 color: Theme.of(context).iconTheme.color,
                               ),
