@@ -15,6 +15,8 @@ class Globals {
   static const String routeCreateQuote = 'createQuote';
   static const String routeDashboard = 'dashboard';
   static const String routeEditQuote = 'editQuote';
+  static const String routeEditProfile = 'editProfile';
+
   static const String routeLogin = 'login';
   static const String routeNavigationContainer = 'navigationContainer';
   static const String routeSearchBooks = 'searchBooks';

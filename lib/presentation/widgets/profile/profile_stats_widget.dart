@@ -10,7 +10,7 @@ class ProfileStatsWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var user = ref.watch(Providers.authAsyncNotifierProvider);
+    var user = ref.watch(Providers.userAsyncNotifierProvider);
 
     return user.when(
       data: (data) => Column(
@@ -34,13 +34,13 @@ class ProfileStatsWidget extends ConsumerWidget {
                       const Gap(60),
                       Center(
                         child: Text(
-                          data!.displayName ?? 'No Display Name',
+                          data!.username,
                           style: Theme.of(context).textTheme.headlineMedium,
                         ),
                       ),
                       const Gap(10),
                       Text(
-                        data.email ?? 'No Email',
+                        data.email,
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
                     ],
@@ -59,7 +59,7 @@ class ProfileStatsWidget extends ConsumerWidget {
                   ),
                   child: Center(
                     child: Text(
-                      data.email![0].toUpperCase(),
+                      data.username[0].toUpperCase(),
                       style: const TextStyle(fontSize: 50, color: Colors.white),
                     ),
                   ),

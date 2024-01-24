@@ -8,12 +8,19 @@ class MostRecentQuoteWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var mostRecentQuoteAsync =
-        ref.watch(Providers.mostRecentQuoteAsyncNotifierProvider);
+    var mostRecentQuotesAsync =
+        ref.watch(Providers.mostRecentQuotesAsyncNotifierProvider);
 
-    return mostRecentQuoteAsync.when(
-      data: (data) =>
-          data == null ? const Text('Null') : QuoteCardWidget(book: data),
+    return mostRecentQuotesAsync.when(
+      data: (data) => data == null
+          ? const NullQuoteCardWidget()
+          : Column(
+              children: [
+                for (int i = 0; i < data.length; i++) ...[
+                  QuoteCardWidget(book: data[i])
+                ]
+              ],
+            ),
       error: (err, stack) => Center(child: Text(err.toString())),
       loading: () => const Center(child: CircularProgressIndicator()),
     );

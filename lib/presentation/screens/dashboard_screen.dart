@@ -2,7 +2,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:quote_keeper/data/services/modal_service.dart';
 import 'package:quote_keeper/data/services/share_service.dart';
-import 'package:quote_keeper/presentation/widgets/profile/total_quotes_count_widget.dart';
+import 'package:quote_keeper/presentation/widgets/dashboard/most_recent_quote_widget.dart';
+import 'package:quote_keeper/presentation/widgets/dashboard/quotes_this_month_count_widget.dart';
+import 'package:quote_keeper/presentation/widgets/dashboard/quotes_all_time_count_widget.dart';
+import 'package:quote_keeper/presentation/widgets/dashboard/quotes_this_week_count_widget.dart';
+import 'package:quote_keeper/presentation/widgets/dashboard/quotes_this_year_count_widget.dart';
 import 'package:quote_keeper/presentation/widgets/quote_card_widget.dart';
 import 'package:quote_keeper/utils/config/providers.dart';
 import 'package:quote_keeper/utils/config/size_config.dart';
@@ -55,12 +59,12 @@ class DashboardScreen extends ConsumerWidget {
                           Consumer(
                             builder: (context, ref, child) {
                               var user = ref
-                                  .watch(Providers.authAsyncNotifierProvider);
+                                  .watch(Providers.userAsyncNotifierProvider);
 
                               return user.when(
                                 data: (data) {
                                   return Text(
-                                    'Welcome back\n${data!.email}',
+                                    'Welcome back ${data!.username}',
                                     style: TextStyle(
                                       color: Colors.white.withOpacity(0.7),
                                       fontSize: 16,
@@ -171,7 +175,10 @@ class DashboardScreen extends ConsumerWidget {
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        TotalQuotesCountWidget(),
+                        QuotesThisWeekCountWidget(),
+                        QuotesThisMonthCountWidget(),
+                        QuotesThisYearCountWidget(),
+                        QuotesAllTimeCountWidget(),
                       ],
                     ),
                   ),
@@ -180,62 +187,16 @@ class DashboardScreen extends ConsumerWidget {
               ),
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
+                const Gap(20),
                 Text(
-                  'Most Recent Quote',
-                  style: Theme.of(context).textTheme.displayMedium!,
+                  'Your Newest Quotes',
+                  style: Theme.of(context).textTheme.displaySmall!,
                 ),
               ],
             ),
-            Consumer(
-              builder: (context, ref, child) {
-                final mostRecentQuoteAsync =
-                    ref.watch(Providers.mostRecentQuoteAsyncNotifierProvider);
-                return mostRecentQuoteAsync.when(
-                  data: (data) => data == null
-                      ? const NullQuoteCardWidget()
-                      : QuoteCardWidget(book: data),
-                  loading: () =>
-                      const Center(child: CircularProgressIndicator()),
-                  error: (error, stackTrace) => Center(
-                    child: Text(
-                      error.toString(),
-                      style: Theme.of(context).textTheme.titleLarge,
-                    ),
-                  ),
-                );
-              },
-            ),
+            const MostRecentQuoteWidget(),
             const Gap(16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Text(
-                  'Oldest Quote',
-                  style: Theme.of(context).textTheme.displayMedium!,
-                ),
-              ],
-            ),
-            Consumer(
-              builder: (context, ref, child) {
-                final oldestQuoteAsync =
-                    ref.watch(Providers.oldestQuoteAsyncNotifierProvider);
-                return oldestQuoteAsync.when(
-                  data: (data) => data == null
-                      ? const NullQuoteCardWidget()
-                      : QuoteCardWidget(book: data),
-                  loading: () =>
-                      const Center(child: CircularProgressIndicator()),
-                  error: (error, stackTrace) => Center(
-                    child: Text(
-                      error.toString(),
-                      style: Theme.of(context).textTheme.titleLarge,
-                    ),
-                  ),
-                );
-              },
-            ),
           ],
         ),
       ],

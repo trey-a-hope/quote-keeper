@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:quote_keeper/data/services/book_service.dart';
 import 'package:quote_keeper/domain/models/books/book_model.dart';
 import 'package:quote_keeper/utils/config/providers.dart';
@@ -25,11 +24,11 @@ class BooksAsyncNotifier extends AutoDisposeAsyncNotifier<List<BookModel>> {
       return [];
     }
 
-    final data = await _bookService.getBooks(uid: uid);
+    final querySnapshot = await _bookService.getBooks(uid: uid, limit: 5);
 
-    _lastDocument = data.docs.last;
+    _lastDocument = querySnapshot.docs.last;
 
-    List<BookModel> books = _convertDataToBooks(data);
+    List<BookModel> books = _convertQuerySnapshotToBooks(querySnapshot);
 
     return books;
   }
@@ -37,12 +36,17 @@ class BooksAsyncNotifier extends AutoDisposeAsyncNotifier<List<BookModel>> {
   void getNextBooks() async {
     try {
       state = const AsyncLoading();
-      final data = await _bookService.getBooks(
+
+      final querySnapshot = await _bookService.getBooks(
         uid: ref.read(Providers.authAsyncNotifierProvider.notifier).getUid(),
         lastDocument: _lastDocument,
+        limit: 10,
       );
-      _lastDocument = data.docs.last;
-      List<BookModel> books = _convertDataToBooks(data);
+
+      _lastDocument = querySnapshot.docs.last;
+
+      List<BookModel> books = _convertQuerySnapshotToBooks(querySnapshot);
+
       state = AsyncData([...state.value!, ...books]);
     } catch (e) {
       if (e is StateError) {
@@ -72,14 +76,14 @@ class BooksAsyncNotifier extends AutoDisposeAsyncNotifier<List<BookModel>> {
     // Get index of book by id.
     var index = books.indexWhere((book) => book.id == id);
 
-    // If the book is not in the list yet, then return.
-    if (index < 0) return;
-
-    books[index] = books[index].copyWith(
-      quote: data['quote'],
-      hidden: data['hidden'],
-      complete: data['complete'],
-    );
+    // If the book is in the list, update it.
+    if (index > -1) {
+      books[index] = books[index].copyWith(
+        quote: data['quote'],
+        hidden: data['hidden'],
+        complete: data['complete'],
+      );
+    }
 
     state = AsyncData(books);
   }
@@ -97,17 +101,13 @@ class BooksAsyncNotifier extends AutoDisposeAsyncNotifier<List<BookModel>> {
     // Get index of book by id.
     var index = books.indexWhere((book) => book.id == id);
 
-    // If the book is not in the list yet, then return.
-    if (index < 0) return;
-
-    // Delete book on the FE.
-    books.removeAt(index);
+    // Remove book if it's in the current book list.
+    if (index > -1) {
+      // Delete book on the FE.
+      books.removeAt(index);
+    }
 
     state = AsyncData(books);
-
-    if (!context.mounted) return;
-
-    context.pop();
   }
 
   // Add the book on the FE.
@@ -125,9 +125,10 @@ class BooksAsyncNotifier extends AutoDisposeAsyncNotifier<List<BookModel>> {
   }
 
   // Converts a querysnapshot into an array of books.
-  List<BookModel> _convertDataToBooks(QuerySnapshot<Object?> o) => o.docs
-      .map(
-        (doc) => doc.data() as BookModel,
-      )
-      .toList();
+  List<BookModel> _convertQuerySnapshotToBooks(QuerySnapshot<Object?> o) =>
+      o.docs
+          .map(
+            (doc) => doc.data() as BookModel,
+          )
+          .toList();
 }
