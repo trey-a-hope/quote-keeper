@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:feedback/feedback.dart';
 import 'package:flutter/foundation.dart';
 import 'package:quote_keeper/utils/config/providers.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
@@ -25,7 +26,9 @@ void main() async {
 
     runApp(
       const ProviderScope(
-        child: QuoteKeeperApp(),
+        child: BetterFeedback(
+          child: QuoteKeeperApp(),
+        ),
       ),
     );
   }, (error, stack) => FirebaseCrashlytics.instance.recordError(error, stack));

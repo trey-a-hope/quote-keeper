@@ -1,11 +1,14 @@
+import 'package:feedback/feedback.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:quote_keeper/data/services/modal_service.dart';
+import 'package:quote_keeper/domain/models/feedback/feedback_model.dart';
 import 'package:quote_keeper/presentation/widgets/app_bar_widget.dart';
 import 'package:quote_keeper/presentation/widgets/custom_list_tile_widget.dart';
 import 'package:quote_keeper/utils/config/providers.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
+import 'package:uuid/uuid.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -34,6 +37,24 @@ class SettingsScreen extends ConsumerWidget {
                 icon: Icons.info,
                 title: 'About',
                 callback: () => context.goNamed(Globals.routeAbout),
+                context: context,
+              ),
+              CustomListTileWidget(
+                icon: Icons.bug_report,
+                title: 'Give Feedback',
+                callback: () => BetterFeedback.of(context).show(
+                  (UserFeedback ufb) {
+                    final feedback = FeedbackModel(
+                      id: const Uuid().v4(),
+                      created: DateTime.now(),
+                      text: ufb.text,
+                      screenshot: ufb.screenshot,
+                      uid: user.value!.uid,
+                    );
+
+                    //TODO: Upload feedback to Firestore.
+                  },
+                ),
                 context: context,
               ),
               CustomListTileWidget(

@@ -2,7 +2,7 @@ name: quote_keeper
 description: A new Flutter project.
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
-version: 1.6.0+160
+version: 1.6.1+161
 
 environment:
   sdk: ">=2.19.6 <3.0.0"
@@ -17,6 +17,7 @@ dependencies:
   cloud_firestore: ^4.3.0
   cupertino_icons: ^1.0.2
   dotted_border: ^2.0.0+3
+  feedback: ^3.0.0
   firebase_auth: ^4.2.3
   firebase_core: ^2.10.0
   firebase_crashlytics: ^3.3.3
