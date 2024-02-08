@@ -2,7 +2,7 @@ name: quote_keeper
 description: A new Flutter project.
 publish_to: "none"
 
-version: 1.6.4+164
+version: 1.6.5+165
 
 environment:
   sdk: ">=2.19.6 <3.0.0"
