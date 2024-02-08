@@ -76,7 +76,7 @@ class BookService {
 
     AggregateQuery count = query.count();
     AggregateQuerySnapshot snapshot = await count.get();
-    return snapshot.count;
+    return snapshot.count ?? 0;
   }
 
   // https://stackoverflow.com/questions/46798981/firestore-how-to-get-random-documents-in-a-collection
