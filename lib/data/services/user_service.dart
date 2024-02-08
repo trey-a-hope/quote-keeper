@@ -8,7 +8,7 @@ class UserService {
 
   Future<int> getTotalUserCount() async {
     AggregateQuery query = _usersDB.count();
-    int count = (await query.get()).count;
+    int count = (await query.get()).count ?? 0;
     return count;
   }
 
