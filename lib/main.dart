@@ -37,7 +37,7 @@ class QuoteKeeperApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final router = ref.watch(Providers.routerProvider);
-
+    var s = 't';
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       theme: AppThemes.lightTheme,
