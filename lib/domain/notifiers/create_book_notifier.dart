@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quote_keeper/data/services/book_service.dart';
-import 'package:quote_keeper/domain/models/books/book_model.dart';
-import 'package:quote_keeper/domain/models/search_book_result/search_books_result_model.dart';
+import 'package:quote_keeper/domain/models/book_model.dart';
+import 'package:quote_keeper/domain/models/search_books_result_model.dart';
 import 'package:quote_keeper/utils/config/providers.dart';
 
 // Creating of the book or "quote".

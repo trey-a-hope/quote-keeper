@@ -2,8 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:quote_keeper/utils/converters/timestamp_converters.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'book_model.freezed.dart';
-part 'book_model.g.dart';
+part 'books/book_model.freezed.dart';
+part 'books/book_model.g.dart';
 
 /// {@template book_model}
 /// BookModel description

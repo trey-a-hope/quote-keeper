@@ -1,6 +1,6 @@
-import 'package:quote_keeper/domain/models/books/book_model.dart';
-import 'package:quote_keeper/domain/models/search_book_result/search_books_result_model.dart';
-import 'package:quote_keeper/domain/models/users/user_model.dart';
+import 'package:quote_keeper/domain/models/book_model.dart';
+import 'package:quote_keeper/domain/models/search_books_result_model.dart';
+import 'package:quote_keeper/domain/models/user_model.dart';
 import 'package:quote_keeper/domain/notifiers/books_async_notifier.dart';
 import 'package:quote_keeper/domain/notifiers/create_book_notifier.dart';
 import 'package:quote_keeper/domain/notifiers/quote_of_the_day_async_notifier.dart';

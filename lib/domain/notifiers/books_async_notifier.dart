@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quote_keeper/data/services/book_service.dart';
-import 'package:quote_keeper/domain/models/books/book_model.dart';
+import 'package:quote_keeper/domain/models/book_model.dart';
 import 'package:quote_keeper/utils/config/providers.dart';
 
 // Paginated list of books for a user.

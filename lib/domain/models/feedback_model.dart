@@ -2,8 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:quote_keeper/utils/converters/timestamp_converters.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'feedback_model.freezed.dart';
-part 'feedback_model.g.dart';
+part 'feedback/feedback_model.freezed.dart';
+part 'feedback/feedback_model.g.dart';
 
 /// {@template feed_back_model}
 /// FeedbackModel description

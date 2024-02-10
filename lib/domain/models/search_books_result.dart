@@ -1,4 +1,4 @@
-import 'package:quote_keeper/domain/models/search_book_result/search_books_result_model.dart';
+import 'package:quote_keeper/domain/models/search_books_result_model.dart';
 
 class SearchBooksResult {
   final List<SearchBooksResultModel> items;

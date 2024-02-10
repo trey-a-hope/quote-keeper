@@ -1,4 +1,4 @@
-import 'package:quote_keeper/domain/models/users/user_model.dart';
+import 'package:quote_keeper/domain/models/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserService {

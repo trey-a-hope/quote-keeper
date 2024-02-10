@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:algoliasearch/algoliasearch.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:quote_keeper/domain/models/books/book_model.dart';
+import 'package:quote_keeper/domain/models/book_model.dart';
 import 'package:quote_keeper/utils/config/providers.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
 

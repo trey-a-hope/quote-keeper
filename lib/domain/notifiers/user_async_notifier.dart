@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quote_keeper/data/services/user_service.dart';
-import 'package:quote_keeper/domain/models/users/user_model.dart';
+import 'package:quote_keeper/domain/models/user_model.dart';
 import 'package:quote_keeper/utils/config/providers.dart';
 
 class UserAsyncNotifier extends AsyncNotifier<UserModel?> {

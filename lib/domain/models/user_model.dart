@@ -1,8 +1,8 @@
 import 'package:quote_keeper/utils/converters/timestamp_converters.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'user_model.freezed.dart';
-part 'user_model.g.dart';
+part 'users/user_model.freezed.dart';
+part 'users/user_model.g.dart';
 
 /// {@template user_model}
 /// UserModel description

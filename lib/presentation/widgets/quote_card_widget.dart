@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:quote_keeper/domain/models/books/book_model.dart';
+import 'package:quote_keeper/domain/models/book_model.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
 
 class QuoteCardWidget extends StatelessWidget {
