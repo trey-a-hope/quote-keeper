@@ -14,7 +14,7 @@ class FeedbackModel with _$FeedbackModel {
   const factory FeedbackModel({
     String? id,
     required String text,
-    required dynamic screenshot,
+    required String screenshot,
     @TimestampConverter() required DateTime created,
     required String uid,
   }) = _FeedbackModel;

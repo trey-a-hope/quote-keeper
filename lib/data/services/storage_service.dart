@@ -7,9 +7,9 @@ class StorageService {
     required String path,
   }) async {
     try {
-      final Reference reference = FirebaseStorage.instance.ref().child(path);
-      final UploadTask uploadTask = reference.putFile(file);
-      final Reference secondReference = (await uploadTask).ref;
+      final reference = FirebaseStorage.instance.ref().child(path);
+      final uploadTask = reference.putFile(file);
+      final secondReference = (await uploadTask).ref;
       return (await secondReference.getDownloadURL()).toString();
     } catch (e) {
       throw Exception(
