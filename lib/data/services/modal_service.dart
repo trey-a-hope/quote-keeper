@@ -37,6 +37,7 @@ class ModalService {
     required String message,
   }) {
     showDialog(
+      useRootNavigator: false,
       context: context,
       builder: (BuildContext buildContext) => AlertWidget(
         title: title,
@@ -51,6 +52,7 @@ class ModalService {
     required String message,
   }) async =>
       await showDialog<bool>(
+        useRootNavigator: false,
         barrierDismissible: false,
         context: context,
         builder: (BuildContext context) => ConfirmationWidget(
@@ -66,6 +68,7 @@ class ModalService {
     required String match,
   }) =>
       showDialog<bool>(
+        useRootNavigator: false,
         barrierDismissible: false,
         context: context,
         builder: (BuildContext context) => Material(

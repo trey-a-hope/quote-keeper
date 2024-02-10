@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:quote_keeper/data/services/book_service.dart';
 import 'package:quote_keeper/data/services/user_service.dart';
-import 'package:quote_keeper/domain/models/users/user_model.dart';
+import 'package:quote_keeper/domain/models/user_model.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 

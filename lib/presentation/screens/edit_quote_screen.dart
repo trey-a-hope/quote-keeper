@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:quote_keeper/data/services/modal_service.dart';
-import 'package:quote_keeper/domain/models/books/book_model.dart';
+import 'package:quote_keeper/domain/models/book_model.dart';
 import 'package:quote_keeper/presentation/widgets/app_bar_widget.dart';
 import 'package:quote_keeper/presentation/widgets/qk_full_button.dart';
 import 'package:quote_keeper/utils/config/providers.dart';

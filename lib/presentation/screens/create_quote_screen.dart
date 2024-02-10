@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:quote_keeper/domain/models/search_book_result/search_books_result_model.dart';
+import 'package:quote_keeper/domain/models/search_books_result_model.dart';
 import 'package:quote_keeper/presentation/widgets/app_bar_widget.dart';
 import 'package:quote_keeper/presentation/widgets/qk_full_button.dart';
 import 'package:quote_keeper/utils/config/providers.dart';
