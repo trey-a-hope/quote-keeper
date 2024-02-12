@@ -37,8 +37,6 @@ void main() async {
 class QuoteKeeperApp extends ConsumerWidget {
   const QuoteKeeperApp({super.key});
 
-  //TODO: Let's trigger a build in Codemagic!
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final router = ref.watch(Providers.routerProvider);
