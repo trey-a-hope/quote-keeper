@@ -39,7 +39,6 @@ class AuthAsyncNotifier extends AsyncNotifier<User?> {
     await FirebaseCrashlytics.instance.setUserIdentifier(user.uid);
 
     if (userExists) {
-      // TODO: Push Notifications currently throwing error in production.
       // // Request permission from user to receive push notifications.
       // if (Platform.isIOS) {
       //   await _firebaseMessaging.requestPermission();

@@ -105,7 +105,6 @@ class EditProfileScreen extends ConsumerWidget {
           );
 
   void _submitForm(BuildContext context, WidgetRef ref) async {
-    // TODO: Add form submission here.
     if (_usernameController.text.isEmpty) {
       _modalService.showInSnackBar(
         context: context,
