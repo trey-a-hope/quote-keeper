@@ -49,7 +49,7 @@ class _QuotesScreenState extends ConsumerState<QuotesScreen> {
         context: context,
         action: IconButton(
           icon: const Icon(Icons.add),
-          onPressed: () => context.goNamed(Globals.routeSearchBooks),
+          onPressed: () => context.goNamed(Globals.routes.searchBooks),
         ),
       ),
       body: Column(
@@ -57,7 +57,7 @@ class _QuotesScreenState extends ConsumerState<QuotesScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 32),
             child: AnimatedSearchBar(
-              label: Globals.searchLabel,
+              label: Globals.labels.enterBookTitle,
               onChanged: (value) {
                 _search = value;
                 ref
@@ -91,7 +91,7 @@ class _QuotesScreenState extends ConsumerState<QuotesScreen> {
                             return QuoteCardWidget(
                               book: book,
                               onTap: () => context.goNamed(
-                                Globals.routeEditQuote,
+                                Globals.routes.editQuote,
                                 pathParameters: <String, String>{
                                   // Note: Conversion between String and Timestamp since Timestamp can't be encodded.
                                   'book': jsonEncode(
@@ -141,7 +141,7 @@ class _QuotesScreenState extends ConsumerState<QuotesScreen> {
                       return QuoteCardWidget(
                         book: book,
                         onTap: () => context.goNamed(
-                          Globals.routeEditQuote,
+                          Globals.routes.editQuote,
                           pathParameters: <String, String>{
                             // Note: Conversion between String and Timestamp since Timestamp can't be encodded.
                             'book': jsonEncode(

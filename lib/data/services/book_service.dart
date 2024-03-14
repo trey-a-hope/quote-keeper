@@ -205,7 +205,7 @@ class BookService {
   }) async {
     // Request URL.
     final String baseUrl =
-        'https://www.googleapis.com/books/v1/volumes?q=$term&maxResults=$limit&key=${Globals.googleBooksAPIKey}';
+        'https://www.googleapis.com/books/v1/volumes?q=$term&maxResults=$limit&key=${Globals.googleAPIKeys.booksAPIKey}';
     try {
       // Send http request.
       final response = await http.get(Uri.parse(baseUrl));

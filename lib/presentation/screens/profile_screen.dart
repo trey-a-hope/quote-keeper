@@ -22,7 +22,7 @@ class ProfileScreen extends StatelessWidget {
               Icons.edit,
               color: Colors.white,
             ),
-            onPressed: () => context.goNamed(Globals.routeEditProfile),
+            onPressed: () => context.goNamed(Globals.routes.editProfile),
           ),
         ),
       ),

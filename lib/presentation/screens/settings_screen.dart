@@ -36,7 +36,7 @@ class SettingsScreen extends ConsumerWidget {
               CustomListTileWidget(
                 icon: Icons.info,
                 title: 'About',
-                callback: () => context.goNamed(Globals.routeAbout),
+                callback: () => context.goNamed(Globals.routes.about),
                 context: context,
               ),
               CustomListTileWidget(

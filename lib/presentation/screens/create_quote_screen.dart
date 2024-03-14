@@ -37,7 +37,7 @@ class CreateQuoteScreen extends ConsumerWidget {
           child: Column(
             children: AnimateList(
               interval: 400.ms,
-              effects: Globals.fadeEffect,
+              effects: Globals.effects.fade,
               children: [
                 Padding(
                   padding: const EdgeInsets.all(16.0),

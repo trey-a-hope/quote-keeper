@@ -1,5 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
+import 'package:lottie/lottie.dart';
+import 'package:new_version_plus/new_version_plus.dart';
 import 'package:quote_keeper/data/services/modal_service.dart';
 import 'package:quote_keeper/data/services/share_service.dart';
 import 'package:quote_keeper/presentation/widgets/dashboard/most_recent_quote_widget.dart';
@@ -27,7 +29,12 @@ class DashboardScreen extends ConsumerWidget {
     final modalService = ModalService();
 
     // Prompt user for potential updated version of app.
-    Globals.newVersionPlus.showAlertIfNecessary(context: context);
+    NewVersionPlus(
+      iOSId: 'com.example.book-quotes',
+      androidId: 'com.io.book_quotes',
+      androidPlayStoreCountry: "es_ES",
+      androidHtmlReleaseNotes: true,
+    ).showAlertIfNecessary(context: context);
 
     SizeConfig.init(context);
 
@@ -46,7 +53,6 @@ class DashboardScreen extends ConsumerWidget {
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
-              // padding: const EdgeInsets.all(0),
               child: Column(
                 children: [
                   Gap(getProportionateScreenHeight(50)),
@@ -75,8 +81,9 @@ class DashboardScreen extends ConsumerWidget {
                                     Text(
                                   error.toString(),
                                 ),
-                                loading: () =>
-                                    const CircularProgressIndicator(),
+                                loading: () => Lottie.asset(
+                                  Globals.lottie.books,
+                                ),
                               );
                             },
                           ),

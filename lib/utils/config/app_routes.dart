@@ -16,26 +16,26 @@ import 'package:quote_keeper/utils/constants/globals.dart';
 GoRouter appRoutes(bool isAuthenticated) {
   return GoRouter(
     debugLogDiagnostics: true,
-    initialLocation: '/${Globals.routeNavigationContainer}',
+    initialLocation: '/${Globals.routes.navigationContainer}',
     routes: [
       GoRoute(
-        path: '/${Globals.routeLogin}',
-        name: Globals.routeLogin,
+        path: '/${Globals.routes.login}',
+        name: Globals.routes.login,
         builder: (context, state) => const LoginScreen(),
       ),
       GoRoute(
-        path: '/${Globals.routeNavigationContainer}',
-        name: Globals.routeNavigationContainer,
+        path: '/${Globals.routes.navigationContainer}',
+        name: Globals.routes.navigationContainer,
         builder: (context, state) => const NavigationContainer(),
         routes: [
           GoRoute(
-            path: Globals.routeSearchBooks,
-            name: Globals.routeSearchBooks,
+            path: Globals.routes.searchBooks,
+            name: Globals.routes.searchBooks,
             builder: (context, state) => const SearchBooksScreen(),
             routes: [
               GoRoute(
-                path: '${Globals.routeCreateQuote}/:searchBooksResult',
-                name: Globals.routeCreateQuote,
+                path: '${Globals.routes.createQuote}/:searchBooksResult',
+                name: Globals.routes.createQuote,
                 builder: (context, state) {
                   final searchBooksResultJson =
                       jsonDecode(state.pathParameters['searchBooksResult']!);
@@ -49,8 +49,8 @@ GoRouter appRoutes(bool isAuthenticated) {
             ],
           ),
           GoRoute(
-            path: '${Globals.routeEditQuote}/:book',
-            name: Globals.routeEditQuote,
+            path: '${Globals.routes.editQuote}/:book',
+            name: Globals.routes.editQuote,
             builder: (context, state) {
               final bookJson = jsonDecode(state.pathParameters['book']!);
 
@@ -72,20 +72,20 @@ GoRouter appRoutes(bool isAuthenticated) {
             },
           ),
           GoRoute(
-            path: Globals.routeEditProfile,
-            name: Globals.routeEditProfile,
+            path: Globals.routes.editProfile,
+            name: Globals.routes.editProfile,
             builder: (context, state) => EditProfileScreen(),
           ),
           GoRoute(
-            path: Globals.routeAbout,
-            name: Globals.routeAbout,
+            path: Globals.routes.about,
+            name: Globals.routes.about,
             builder: (context, state) => const AboutScreen(),
           ),
         ],
       ),
     ],
     redirect: (context, state) =>
-        isAuthenticated ? null : '/${Globals.routeLogin}',
+        isAuthenticated ? null : '/${Globals.routes.login}',
     errorPageBuilder: (context, state) => MaterialPage(
       key: state.pageKey,
       child: Scaffold(

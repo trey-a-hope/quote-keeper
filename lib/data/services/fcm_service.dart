@@ -8,7 +8,8 @@ class FCMService {
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
   final String _endpoint = 'https://fcm.googleapis.com/fcm/send';
   final String _contentType = 'application/json';
-  final String _authorization = 'key=${Globals.cloudMessagingServerKey}';
+  final String _authorization =
+      'key=${Globals.googleAPIKeys.cloudMessagingServerKey}';
 
   Future<http.Response> _sendNotification(
     String to,
