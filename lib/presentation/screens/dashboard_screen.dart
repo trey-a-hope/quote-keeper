@@ -103,7 +103,7 @@ class DashboardScreen extends ConsumerWidget {
                   height: double.infinity,
                   width: double.infinity,
                   alignment: Alignment.center,
-                  opacity: const AlwaysStoppedAnimation(.05),
+                  opacity: const AlwaysStoppedAnimation(.1),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(32.0),
