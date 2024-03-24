@@ -15,7 +15,7 @@ class QuotesThisMonthCountWidget extends ConsumerWidget {
       data: (data) => ProfileStatBadgetWidget(
         count: data,
         label: 'Monthly',
-        color: Colors.cyan,
+        color: Colors.deepOrangeAccent,
       ),
       error: (err, stack) => Center(child: Text(err.toString())),
       loading: () => const Center(child: CircularProgressIndicator()),

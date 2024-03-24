@@ -4,6 +4,10 @@ import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
 import 'package:quote_keeper/presentation/widgets/app_bar_widget.dart';
+import 'package:quote_keeper/presentation/widgets/dashboard/quotes_all_time_count_widget.dart';
+import 'package:quote_keeper/presentation/widgets/dashboard/quotes_this_month_count_widget.dart';
+import 'package:quote_keeper/presentation/widgets/dashboard/quotes_this_week_count_widget.dart';
+import 'package:quote_keeper/presentation/widgets/dashboard/quotes_this_year_count_widget.dart';
 import 'package:quote_keeper/presentation/widgets/profile/profile_stats_widget.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
 
@@ -33,12 +37,28 @@ class ProfileScreen extends StatelessWidget {
               horizontal: 32,
             ),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const ProfileStatsWidget(),
+                Text(
+                  'Quote Stats',
+                  style: Theme.of(context).textTheme.headlineSmall,
+                ),
                 const Gap(32),
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    QuotesThisMonthCountWidget(),
+                    QuotesThisWeekCountWidget(),
+                    QuotesThisYearCountWidget(),
+                    QuotesAllTimeCountWidget(),
+                  ],
+                ),
+                const Gap(16),
+                const Divider(),
+                const Gap(16),
                 Lottie.asset(
-                  Globals.lottie.booksStacked,
-                  height: 200,
+                  Globals.lottie.books,
                 ),
               ],
             ),

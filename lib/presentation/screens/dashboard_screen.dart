@@ -67,11 +67,14 @@ class DashboardScreen extends ConsumerWidget {
                           textAlign: TextAlign.center,
                         ),
                         const Gap(16),
-                        Lottie.asset(Globals.lottie.books),
+                        Lottie.asset(
+                          Globals.lottie.quotes,
+                          height: 150,
+                        ),
                         const Gap(16),
                         Text(
-                          '~ ${data.author}',
-                          style: Theme.of(context).textTheme.bodyLarge,
+                          '~ ${data.author}, ${data.title}',
+                          style: Theme.of(context).textTheme.headlineMedium,
                           textAlign: TextAlign.center,
                         ),
                         const Gap(32),

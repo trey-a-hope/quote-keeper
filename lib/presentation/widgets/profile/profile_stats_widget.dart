@@ -15,7 +15,6 @@ class ProfileStatsWidget extends ConsumerWidget {
     return user.when(
       data: (data) => Column(
         children: [
-          const Gap(40),
           Stack(
             children: [
               Container(
@@ -35,7 +34,7 @@ class ProfileStatsWidget extends ConsumerWidget {
                       Center(
                         child: Text(
                           data!.username,
-                          style: Theme.of(context).textTheme.headlineMedium,
+                          style: Theme.of(context).textTheme.displayLarge,
                         ),
                       ),
                       const Gap(10),
@@ -55,7 +54,7 @@ class ProfileStatsWidget extends ConsumerWidget {
                   width: 100,
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Color(0xFFE486DD),
+                    color: Colors.deepOrangeAccent,
                   ),
                   child: Center(
                     child: Text(
