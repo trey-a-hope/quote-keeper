@@ -48,8 +48,8 @@ class ProfileScreen extends StatelessWidget {
                 const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    QuotesThisMonthCountWidget(),
                     QuotesThisWeekCountWidget(),
+                    QuotesThisMonthCountWidget(),
                     QuotesThisYearCountWidget(),
                     QuotesAllTimeCountWidget(),
                   ],
