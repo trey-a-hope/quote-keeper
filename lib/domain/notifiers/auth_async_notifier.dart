@@ -54,7 +54,7 @@ class AuthAsyncNotifier extends AsyncNotifier<User?> {
     } else {
       // Build new user model.
       UserModel newUser = UserModel(
-        imgUrl: user.photoURL ?? Globals.dummyProfilePhotoUrl,
+        imgUrl: user.photoURL ?? Globals.networkImages.dummyProfile,
         created: DateTime.now().toUtc(),
         modified: DateTime.now().toUtc(),
         uid: user.uid,
@@ -132,8 +132,7 @@ class AuthAsyncNotifier extends AsyncNotifier<User?> {
 
       // If user cancels selection, throw error to prevent null check below.
       if (googleUser == null) {
-        return Globals.googleSignInCancelError;
-        // throw Exception('Must select a Google Account.');
+        return 'Must select a Google Account.';
       }
 
       // Obtain the auth details from the request

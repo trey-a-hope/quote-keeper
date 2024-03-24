@@ -93,6 +93,12 @@ class AppThemes {
       foregroundColor: Colors.white,
     ),
     iconTheme: IconThemeData(color: _secondaryColor),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ButtonStyle(
+        foregroundColor: MaterialStateProperty.all(Colors.white),
+        backgroundColor: MaterialStateProperty.all(_primaryColor),
+      ),
+    ),
     listTileTheme: ListTileThemeData(
       iconColor: Colors.green.shade700,
     ),
@@ -125,6 +131,12 @@ class AppThemes {
       foregroundColor: Colors.white,
     ),
     iconTheme: IconThemeData(color: _secondaryColor),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ButtonStyle(
+        foregroundColor: MaterialStateProperty.all(Colors.white),
+        backgroundColor: MaterialStateProperty.all(_secondaryColor),
+      ),
+    ),
     listTileTheme: ListTileThemeData(
       iconColor: Colors.green.shade300,
     ),

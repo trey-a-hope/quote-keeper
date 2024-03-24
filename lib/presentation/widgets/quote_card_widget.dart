@@ -111,7 +111,7 @@ class QuoteCardWidget extends StatelessWidget {
                   child: CachedNetworkImage(
                     imageUrl: book.imgPath != null
                         ? book.imgPath!
-                        : Globals.libraryBackground,
+                        : Globals.networkImages.libraryBackground,
                     imageBuilder: (context, imageProvider) => Container(
                       decoration: BoxDecoration(
                         border:
@@ -202,7 +202,7 @@ class NullQuoteCardWidget extends StatelessWidget {
               SizedBox(
                 width: 130,
                 child: CachedNetworkImage(
-                  imageUrl: Globals.libraryBackground,
+                  imageUrl: Globals.networkImages.libraryBackground,
                   imageBuilder: (context, imageProvider) => Container(
                     decoration: BoxDecoration(
                       border:

@@ -30,7 +30,7 @@ class SearchBooksScreen extends ConsumerWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 32),
             child: AnimatedSearchBar(
-              label: Globals.searchLabel,
+              label: Globals.labels.enterBookTitle,
               onChanged: searchBooksAsyncNotifier.onSearchTextChanged,
               textInputAction: TextInputAction.done,
               searchStyle: Theme.of(context).textTheme.headlineSmall!,
@@ -69,7 +69,7 @@ class SearchBooksScreen extends ConsumerWidget {
                       color: Theme.of(context).iconTheme.color,
                     ),
                     onTap: () => context.goNamed(
-                      Globals.routeCreateQuote,
+                      Globals.routes.createQuote,
                       pathParameters: <String, String>{
                         'searchBooksResult': jsonEncode(
                           searchBooksResult,

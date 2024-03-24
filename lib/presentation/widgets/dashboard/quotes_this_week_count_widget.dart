@@ -15,7 +15,7 @@ class QuotesThisWeekCountWidget extends ConsumerWidget {
       data: (data) => ProfileStatBadgetWidget(
         count: data,
         label: 'Weekly',
-        color: Colors.green,
+        color: Colors.deepOrangeAccent,
       ),
       error: (err, stack) => Center(child: Text(err.toString())),
       loading: () => const Center(child: CircularProgressIndicator()),

@@ -15,7 +15,7 @@ class QuotesAllTimeCountWidget extends ConsumerWidget {
       data: (count) => ProfileStatBadgetWidget(
         count: count,
         label: 'All',
-        color: Colors.purple,
+        color: Colors.deepOrangeAccent,
       ),
       error: (err, stack) => Center(child: Text(err.toString())),
       loading: () => const Center(child: CircularProgressIndicator()),
