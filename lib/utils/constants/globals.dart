@@ -39,6 +39,8 @@ class _Labels {
 
 class _Lottie {
   final String books = 'assets/lotties/books.json';
+  final String booksStacked = 'assets/lotties/books_stacked.json';
+  final String error = 'assets/lotties/error.json';
 }
 
 class _NetworkImages {

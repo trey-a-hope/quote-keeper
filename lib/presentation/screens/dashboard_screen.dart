@@ -2,14 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:lottie/lottie.dart';
 import 'package:new_version_plus/new_version_plus.dart';
-import 'package:quote_keeper/data/services/modal_service.dart';
 import 'package:quote_keeper/data/services/share_service.dart';
-import 'package:quote_keeper/presentation/widgets/dashboard/most_recent_quote_widget.dart';
-import 'package:quote_keeper/presentation/widgets/dashboard/quotes_this_month_count_widget.dart';
-import 'package:quote_keeper/presentation/widgets/dashboard/quotes_all_time_count_widget.dart';
-import 'package:quote_keeper/presentation/widgets/dashboard/quotes_this_week_count_widget.dart';
-import 'package:quote_keeper/presentation/widgets/dashboard/quotes_this_year_count_widget.dart';
-import 'package:quote_keeper/presentation/widgets/quote_card_widget.dart';
 import 'package:quote_keeper/utils/config/providers.dart';
 import 'package:quote_keeper/utils/config/size_config.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
@@ -26,7 +19,10 @@ class DashboardScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final shareService = ShareService();
-    final modalService = ModalService();
+
+    final book = ref.watch(
+      Providers.quoteOfTheDayAsyncNotifierProvider,
+    );
 
     // Prompt user for potential updated version of app.
     NewVersionPlus(
@@ -38,175 +34,102 @@ class DashboardScreen extends ConsumerWidget {
 
     SizeConfig.init(context);
 
-    final size = MediaQuery.of(context).size;
-
-    return Stack(
-      children: [
-        Container(
-          width: double.infinity,
-          height: size.height * 0.44,
-          color: Theme.of(context).primaryColor,
-        ),
-        ListView(
-          physics: const BouncingScrollPhysics(),
-          padding: const EdgeInsets.all(0),
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: Column(
+    return book.when(
+      data: (data) => data != null
+          ? SafeArea(
+              child: Stack(
                 children: [
-                  Gap(getProportionateScreenHeight(50)),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Consumer(
-                            builder: (context, ref, child) {
-                              var user = ref
-                                  .watch(Providers.userAsyncNotifierProvider);
-
-                              return user.when(
-                                data: (data) {
-                                  return Text(
-                                    'Welcome back ${data!.username}',
-                                    style: TextStyle(
-                                      color: Colors.white.withOpacity(0.7),
-                                      fontSize: 16,
-                                    ),
-                                  );
-                                },
-                                error: (Object error, StackTrace stackTrace) =>
-                                    Text(
-                                  error.toString(),
-                                ),
-                                loading: () => Lottie.asset(
-                                  Globals.lottie.books,
-                                ),
-                              );
-                            },
-                          ),
-                          const Gap(3),
-                          const Text('Quote of The Day',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold))
-                        ],
-                      ),
-                      InkWell(
-                        child: Container(
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.white,
-                          ),
-                          child: Consumer(
-                            builder: (context, ref, child) {
-                              final book = ref.watch(
-                                Providers.quoteOfTheDayAsyncNotifierProvider,
-                              );
-
-                              return book.when(
-                                data: (data) => IconButton(
-                                  icon: const Icon(
-                                    Icons.ios_share,
-                                    color: Colors.grey,
-                                  ),
-                                  onPressed: () {
-                                    if (data == null) {
-                                      modalService.showInSnackBar(
-                                        context: context,
-                                        icon: const Icon(
-                                          Icons.cancel,
-                                          color: Colors.red,
-                                        ),
-                                        message:
-                                            'Create a quote to use this feature.',
-                                        title: 'Error',
-                                      );
-                                    } else {
-                                      shareService.share(
-                                        text: '"${data.quote}"',
-                                        subject:
-                                            'Here\'s my quote of the day from ${data.title} by ${data.author}',
-                                      );
-                                    }
-                                  },
-                                ),
-                                loading: () => const Center(
-                                    child: CircularProgressIndicator()),
-                                error: (error, stackTrace) => Center(
-                                  child: Text(
-                                    error.toString(),
-                                    style:
-                                        Theme.of(context).textTheme.titleLarge,
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                      )
-                    ],
+                  Image.network(
+                    data.imgPath ?? Globals.networkImages.libraryBackground,
+                    fit: BoxFit.cover,
+                    height: double.infinity,
+                    width: double.infinity,
+                    alignment: Alignment.center,
+                    opacity: const AlwaysStoppedAnimation(.05),
                   ),
-                  const Gap(25),
-                  Consumer(
-                    builder: (context, ref, child) {
-                      final book = ref.watch(
-                        Providers.quoteOfTheDayAsyncNotifierProvider,
-                      );
-                      return book.when(
-                        data: (data) => data == null
-                            ? const NullQuoteCardWidget()
-                            : QuoteCardWidget(book: data),
-                        loading: () =>
-                            const Center(child: CircularProgressIndicator()),
-                        error: (error, stackTrace) => Center(
-                          child: Text(
-                            error.toString(),
-                            style: Theme.of(context).textTheme.titleLarge,
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                  const Gap(15),
-                  Container(
+                  Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 12),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: Colors.black,
+                      horizontal: 32,
+                      vertical: 16,
                     ),
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        QuotesThisWeekCountWidget(),
-                        QuotesThisMonthCountWidget(),
-                        QuotesThisYearCountWidget(),
-                        QuotesAllTimeCountWidget(),
+                        Text(
+                          'Quote of the Day',
+                          style: Theme.of(context).textTheme.bodyLarge,
+                          textAlign: TextAlign.center,
+                        ),
+                        const Gap(32),
+                        Text(
+                          '"${data.quote}"',
+                          style: Theme.of(context).textTheme.displayMedium,
+                          textAlign: TextAlign.center,
+                        ),
+                        const Gap(16),
+                        Lottie.asset(Globals.lottie.books),
+                        const Gap(16),
+                        Text(
+                          '~ ${data.author}',
+                          style: Theme.of(context).textTheme.bodyLarge,
+                          textAlign: TextAlign.center,
+                        ),
+                        const Gap(32),
+                        ElevatedButton.icon(
+                          onPressed: () => shareService.share(
+                            text: '"${data.quote}"',
+                            subject:
+                                'Here\'s my quote of the day from ${data.title} by ${data.author}',
+                          ),
+                          icon: const Icon(
+                            Icons.share,
+                          ),
+                          label: const Text('Share'),
+                        )
                       ],
                     ),
-                  ),
-                  const Gap(20),
+                  )
                 ],
               ),
-            ),
-            Row(
+            )
+          : Stack(
               children: [
-                const Gap(20),
-                Text(
-                  'Your Newest Quotes',
-                  style: Theme.of(context).textTheme.displaySmall!,
+                Image.network(
+                  Globals.networkImages.libraryBackground,
+                  fit: BoxFit.cover,
+                  height: double.infinity,
+                  width: double.infinity,
+                  alignment: Alignment.center,
+                  opacity: const AlwaysStoppedAnimation(.05),
                 ),
+                Padding(
+                  padding: const EdgeInsets.all(32.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'No Book Found...',
+                        style: Theme.of(context).textTheme.displayLarge,
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                )
               ],
             ),
-            const MostRecentQuoteWidget(),
-            const Gap(16),
-          ],
+      error: (err, stack) => Center(
+        child: Lottie.asset(
+          Globals.lottie.error,
+          height: 100,
         ),
-      ],
+      ),
+      loading: () => Center(
+        child: Lottie.asset(
+          Globals.lottie.books,
+          height: 100,
+        ),
+      ),
     );
   }
 }
