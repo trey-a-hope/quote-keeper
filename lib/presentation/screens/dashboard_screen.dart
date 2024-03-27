@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:lottie/lottie.dart';
@@ -21,7 +22,7 @@ class DashboardScreen extends ConsumerWidget {
     final shareService = ShareService();
 
     final book = ref.watch(
-      Providers.quoteOfTheDayAsyncProvider,
+      Providers.dashboardQuoteAsyncProvider,
     );
 
     // Prompt user for potential updated version of app.
@@ -56,7 +57,7 @@ class DashboardScreen extends ConsumerWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Quote of the Day',
+                          'A Wise Person Once Said...',
                           style: Theme.of(context).textTheme.bodyLarge,
                           textAlign: TextAlign.center,
                         ),
@@ -67,9 +68,46 @@ class DashboardScreen extends ConsumerWidget {
                           textAlign: TextAlign.center,
                         ),
                         const Gap(16),
-                        Lottie.asset(
-                          Globals.lottie.quotes,
-                          height: 150,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Lottie.asset(
+                              Globals.lottie.quotes,
+                              height: 100,
+                            ),
+                            const Gap(8),
+                            SizedBox(
+                              height: 130,
+                              width: 85,
+                              child: CachedNetworkImage(
+                                imageUrl: data.imgPath != null
+                                    ? data.imgPath!
+                                    : Globals.networkImages.libraryBackground,
+                                imageBuilder: (context, imageProvider) =>
+                                    Container(
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: Colors.grey.shade300,
+                                        width: 1.0),
+                                    image: DecorationImage(
+                                      image: imageProvider,
+                                      fit: BoxFit.fitHeight,
+                                    ),
+                                    borderRadius: BorderRadius.circular(
+                                      10,
+                                    ),
+                                  ),
+                                ),
+                                errorWidget: (context, url, error) =>
+                                    const Icon(Icons.error),
+                              ),
+                            ),
+                            const Gap(8),
+                            Lottie.asset(
+                              Globals.lottie.quotes,
+                              height: 100,
+                            ),
+                          ],
                         ),
                         const Gap(16),
                         Text(

@@ -16,7 +16,7 @@ enum BookSearchTerm {
 /// Holds the current query for searching quotes.
 class BookSearchTermNotifier extends AutoDisposeNotifier<BookSearchTerm> {
   @override
-  BookSearchTerm build() => BookSearchTerm.author;
+  BookSearchTerm build() => BookSearchTerm.created;
 
   void updateTerm(BookSearchTerm term) => state = term;
 }

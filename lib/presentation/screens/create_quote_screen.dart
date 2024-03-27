@@ -78,7 +78,7 @@ class CreateQuoteScreen extends ConsumerWidget {
                 const Spacer(),
                 QKFullButton(
                   iconData: Icons.check,
-                  label: 'SAVE QUOTE',
+                  label: 'SAVE',
                   onTap: () async {
                     if (book == null) throw Exception('Book is null');
 
