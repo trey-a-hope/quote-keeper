@@ -9,7 +9,7 @@ class MostRecentQuoteWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     var mostRecentQuotesAsync =
-        ref.watch(Providers.mostRecentQuotesAsyncNotifierProvider);
+        ref.watch(Providers.mostRecentQuotesAsyncProvider);
 
     return mostRecentQuotesAsync.when(
       data: (data) => data == null

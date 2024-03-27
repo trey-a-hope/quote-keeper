@@ -11,7 +11,7 @@ class UserAsyncNotifier extends AsyncNotifier<UserModel?> {
   @override
   FutureOr<UserModel?> build() async {
     // Listen to changes with authencation to the app.
-    final authUser = ref.watch(Providers.authAsyncNotifierProvider);
+    final authUser = ref.watch(Providers.authAsyncProvider);
 
     // If user is not logged in, return null.
     if (!authUser.hasValue || authUser.value == null) {
@@ -29,7 +29,7 @@ class UserAsyncNotifier extends AsyncNotifier<UserModel?> {
 
     // Update username on BE.
     await _userService.updateUser(
-      uid: ref.read(Providers.authAsyncNotifierProvider.notifier).getUid(),
+      uid: ref.read(Providers.authAsyncProvider.notifier).getUid(),
       data: {
         'username': newUsername,
       },

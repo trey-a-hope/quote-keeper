@@ -8,8 +8,7 @@ class QuotesAllTimeCountWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final countValue =
-        ref.watch(Providers.quotesAllTimeCountAsyncNotifierProvider);
+    final countValue = ref.watch(Providers.quotesAllTimeCountAsyncProvider);
 
     return countValue.when(
       data: (count) => ProfileStatBadgetWidget(

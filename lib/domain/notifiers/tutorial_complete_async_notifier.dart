@@ -9,9 +9,9 @@ class TutorialCompleteAsyncNotifier extends AutoDisposeAsyncNotifier<bool> {
 
   @override
   FutureOr<bool> build() async {
-    ref.watch(Providers.booksAsyncNotifierProvider);
+    ref.watch(Providers.booksAsyncProvider);
 
-    final uid = ref.read(Providers.authAsyncNotifierProvider.notifier).getUid();
+    final uid = ref.read(Providers.authAsyncProvider.notifier).getUid();
 
     // Assume that if a user has added a book, they've completed the tutorial.
     final exists = await _bookService.booksCollectionExists(uid: uid);

@@ -21,9 +21,9 @@ class CreateQuoteScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final createBookNotifierProvider = Providers.createBookNotifierProvider;
-    final book = ref.watch(createBookNotifierProvider);
-    final createBookNotifier = ref.read(createBookNotifierProvider.notifier);
+    final createBookProvider = Providers.createBookProvider;
+    final book = ref.watch(createBookProvider);
+    final createBookNotifier = ref.read(createBookProvider.notifier);
 
     return Scaffold(
       appBar: AppBarWidget.appBar(

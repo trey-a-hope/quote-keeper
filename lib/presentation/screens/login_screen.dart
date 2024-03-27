@@ -11,8 +11,7 @@ class LoginScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final authAsyncNotifier =
-        ref.read(Providers.authAsyncNotifierProvider.notifier);
+    final authAsyncNotifier = ref.read(Providers.authAsyncProvider.notifier);
 
     return Container(
       width: double.infinity,

@@ -11,10 +11,10 @@ class MostRecentQuotesAsyncNotifier
 
   @override
   FutureOr<List<BookModel>?> build() async {
-    // Watch for changes to the BooksAsyncNotifierProvider.
-    ref.watch(Providers.booksAsyncNotifierProvider);
+    // Watch for changes to the BooksAsyncProvider.
+    ref.watch(Providers.booksAsyncProvider);
 
-    final uid = ref.read(Providers.authAsyncNotifierProvider.notifier).getUid();
+    final uid = ref.read(Providers.authAsyncProvider.notifier).getUid();
     final exists = await _bookService.booksCollectionExists(uid: uid);
     if (exists) {
       final books = await _bookService.getNewestQuotes(uid: uid, limit: 3);

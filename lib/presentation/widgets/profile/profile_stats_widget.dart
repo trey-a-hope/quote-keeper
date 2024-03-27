@@ -10,7 +10,7 @@ class ProfileStatsWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var user = ref.watch(Providers.userAsyncNotifierProvider);
+    var user = ref.watch(Providers.userAsyncProvider);
 
     return user.when(
       data: (data) => Column(

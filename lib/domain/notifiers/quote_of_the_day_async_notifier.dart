@@ -10,7 +10,7 @@ class QuoteOfTheDayAsyncNotifier extends AutoDisposeAsyncNotifier<BookModel?> {
 
   @override
   FutureOr<BookModel?> build() async {
-    final uid = ref.read(Providers.authAsyncNotifierProvider.notifier).getUid();
+    final uid = ref.read(Providers.authAsyncProvider.notifier).getUid();
 
     if (await _bookService.booksCollectionExists(uid: uid)) {
       final book = await _bookService.getRandom(uid: uid);
@@ -22,7 +22,7 @@ class QuoteOfTheDayAsyncNotifier extends AutoDisposeAsyncNotifier<BookModel?> {
 
   /// Fetches a random book for the user.
   Future<void> getRandomBook() async {
-    final uid = ref.read(Providers.authAsyncNotifierProvider.notifier).getUid();
+    final uid = ref.read(Providers.authAsyncProvider.notifier).getUid();
 
     final exists = await _bookService.booksCollectionExists(uid: uid);
 

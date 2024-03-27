@@ -14,7 +14,7 @@ class EditProfileScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) =>
-      ref.read(Providers.userAsyncNotifierProvider).when(
+      ref.read(Providers.userAsyncProvider).when(
             data: (user) {
               if (user == null) {
                 throw Exception('User is null');
@@ -130,7 +130,7 @@ class EditProfileScreen extends ConsumerWidget {
     }
 
     try {
-      ref.read(Providers.userAsyncNotifierProvider.notifier).updateUser({
+      ref.read(Providers.userAsyncProvider.notifier).updateUser({
         'username': _usernameController.text,
       });
 

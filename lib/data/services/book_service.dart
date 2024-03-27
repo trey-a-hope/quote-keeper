@@ -19,14 +19,20 @@ class BookService {
   Future<QuerySnapshot<Object?>> getBooks({
     required String uid,
     required int limit,
+    required String orderBy,
+    required bool descending,
     DocumentSnapshot? lastDocument,
   }) async {
-    final booksColRef = _booksDB.orderBy('title', descending: false).where(
+    var booksQuery = _booksDB
+        .orderBy(
+          orderBy,
+          descending: descending,
+        )
+        .where(
           'uid',
           isEqualTo: uid,
-        );
-
-    Query booksQuery = booksColRef.limit(limit);
+        )
+        .limit(limit);
 
     if (lastDocument != null) {
       booksQuery = booksQuery.startAfterDocument(lastDocument);

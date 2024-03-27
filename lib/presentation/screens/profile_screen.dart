@@ -20,16 +20,18 @@ class ProfileScreen extends StatelessWidget {
           title: 'Profile',
           implyLeading: false,
           context: context,
-          action: Consumer(
-            builder: (BuildContext context, WidgetRef ref, Widget? child) =>
-                IconButton(
-              icon: const Icon(
-                Icons.edit,
-                color: Colors.white,
+          actions: [
+            Consumer(
+              builder: (BuildContext context, WidgetRef ref, Widget? child) =>
+                  IconButton(
+                icon: const Icon(
+                  Icons.edit,
+                  color: Colors.white,
+                ),
+                onPressed: () => context.goNamed(Globals.routes.editProfile),
               ),
-              onPressed: () => context.goNamed(Globals.routes.editProfile),
             ),
-          ),
+          ],
         ),
         body: SafeArea(
           child: Padding(

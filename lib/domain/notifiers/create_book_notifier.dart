@@ -15,7 +15,7 @@ class CreateBookNotifier extends AutoDisposeNotifier<BookModel?> {
         author: '',
         imgPath: '',
         hidden: false,
-        uid: ref.read(Providers.authAsyncNotifierProvider.notifier).getUid(),
+        uid: ref.read(Providers.authAsyncProvider.notifier).getUid(),
         complete: false,
         created: DateTime.now(),
         modified: DateTime.now(),
@@ -45,7 +45,7 @@ class CreateBookNotifier extends AutoDisposeNotifier<BookModel?> {
 
     // Add book to FE.
     ref
-        .read(Providers.booksAsyncNotifierProvider.notifier)
+        .read(Providers.booksAsyncProvider.notifier)
         .addBook(newBook.copyWith(id: id));
   }
 }

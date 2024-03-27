@@ -14,10 +14,10 @@ class SearchBooksScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final results = ref.watch(Providers.searchBooksAsyncNotifierProvider);
+    final results = ref.watch(Providers.searchBooksAsyncProvider);
 
     final searchBooksAsyncNotifier =
-        ref.read(Providers.searchBooksAsyncNotifierProvider.notifier);
+        ref.read(Providers.searchBooksAsyncProvider.notifier);
 
     return Scaffold(
       appBar: AppBarWidget.appBar(

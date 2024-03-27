@@ -38,39 +38,41 @@ class _EditQuoteScreenState extends State<EditQuoteScreen> {
         title: 'Edit Quote',
         implyLeading: true,
         context: context,
-        action: Consumer(
-          builder: (BuildContext context, WidgetRef ref, Widget? child) =>
-              IconButton(
-            icon: const Icon(
-              Icons.delete,
-              color: Colors.red,
+        actions: [
+          Consumer(
+            builder: (BuildContext context, WidgetRef ref, Widget? child) =>
+                IconButton(
+              icon: const Icon(
+                Icons.delete,
+                color: Colors.red,
+              ),
+              onPressed: () async {
+                bool? confirm = await _modalService.showConfirmation(
+                  context: context,
+                  title: 'Delete Quote',
+                  message: 'Are you sure?',
+                );
+
+                if (confirm == null || confirm == false) {
+                  return;
+                }
+
+                if (!context.mounted) return;
+
+                await ref
+                    .read(Providers.booksAsyncProvider.notifier)
+                    .deleteBook(
+                      id: widget.book.id!,
+                      context: context,
+                    );
+
+                if (!context.mounted) return;
+
+                context.pop();
+              },
             ),
-            onPressed: () async {
-              bool? confirm = await _modalService.showConfirmation(
-                context: context,
-                title: 'Delete Quote',
-                message: 'Are you sure?',
-              );
-
-              if (confirm == null || confirm == false) {
-                return;
-              }
-
-              if (!context.mounted) return;
-
-              await ref
-                  .read(Providers.booksAsyncNotifierProvider.notifier)
-                  .deleteBook(
-                    id: widget.book.id!,
-                    context: context,
-                  );
-
-              if (!context.mounted) return;
-
-              context.pop();
-            },
           ),
-        ),
+        ],
       ),
       body: SafeArea(
         child: Padding(
@@ -164,8 +166,7 @@ class _EditQuoteScreenState extends State<EditQuoteScreen> {
 
                           try {
                             ref
-                                .read(Providers
-                                    .booksAsyncNotifierProvider.notifier)
+                                .read(Providers.booksAsyncProvider.notifier)
                                 .updateBook(
                               id: widget.book.id!,
                               data: {

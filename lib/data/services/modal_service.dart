@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:quote_keeper/presentation/widgets/modal_alert_widget.dart';
 import 'package:quote_keeper/presentation/widgets/modal_confirmation_widget.dart';
 import 'package:quote_keeper/presentation/widgets/modal_input_match_confirmation_widget.dart';
+import 'package:tuple/tuple.dart';
 
 class ModalService {
   void showInSnackBar({
@@ -78,6 +80,38 @@ class ModalService {
             title: title,
             match: match,
           ),
+        ),
+      );
+
+  /// Takes in a list of Tuples of type <String, T>.
+  /// Each tuple contains a "String" label and "T" value.
+  /// Returns the selected "T" value.
+  /// Provides an optional title and message.
+  static Future<T?> showActionSheet<T>({
+    required BuildContext context,
+    required List<Tuple2<String, T>> options,
+    String? title,
+    String? message,
+  }) async =>
+      await showCupertinoModalPopup<T>(
+        context: context,
+        builder: (BuildContext context) => CupertinoActionSheet(
+          title: title != null ? Text(title) : null,
+          message: message != null ? Text(message) : null,
+          actions: <CupertinoActionSheetAction>[
+            for (int i = 0; i < options.length; i++) ...[
+              CupertinoActionSheetAction(
+                onPressed: () {
+                  Navigator.of(context).pop(
+                    options[i].item2,
+                  );
+                },
+                child: Text(
+                  options[i].item1,
+                ),
+              ),
+            ],
+          ],
         ),
       );
 }

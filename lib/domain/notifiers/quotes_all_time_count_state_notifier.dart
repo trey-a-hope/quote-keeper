@@ -9,9 +9,9 @@ class QuotesAllTimeCountAsyncNotifier extends AutoDisposeAsyncNotifier<int> {
 
   @override
   Future<int> build() async {
-    ref.watch(Providers.booksAsyncNotifierProvider);
+    ref.watch(Providers.booksAsyncProvider);
 
-    final uid = ref.read(Providers.authAsyncNotifierProvider.notifier).getUid();
+    final uid = ref.read(Providers.authAsyncProvider.notifier).getUid();
     var count = await _bookService.getTotalBookCount(
       uid: uid,
     );

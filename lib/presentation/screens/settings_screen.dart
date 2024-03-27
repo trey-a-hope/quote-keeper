@@ -18,10 +18,9 @@ class SettingsScreen extends ConsumerWidget {
     final modalService = ModalService();
     final feedbackService = FeedbackService();
 
-    final authAsyncNotifier =
-        ref.read(Providers.authAsyncNotifierProvider.notifier);
+    final authAsyncNotifier = ref.read(Providers.authAsyncProvider.notifier);
 
-    final user = ref.read(Providers.userAsyncNotifierProvider);
+    final user = ref.read(Providers.userAsyncProvider);
 
     return Scaffold(
       appBar: AppBarWidget.appBar(

@@ -9,7 +9,7 @@ class QuotesThisWeekCountWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     var quotesThisWeekCount =
-        ref.watch(Providers.quotesThisWeekCountStateNotifierProvider);
+        ref.watch(Providers.quotesThisWeekCountStateProvider);
 
     return quotesThisWeekCount.when(
       data: (data) => ProfileStatBadgetWidget(
