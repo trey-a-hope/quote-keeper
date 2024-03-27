@@ -6,17 +6,22 @@ import 'package:quote_keeper/data/services/book_service.dart';
 import 'package:quote_keeper/domain/models/book_model.dart';
 import 'package:quote_keeper/utils/config/providers.dart';
 
-// Paginated list of books for a user.
+/// Paginated list of books for a user.
 class BooksAsyncNotifier extends AutoDisposeAsyncNotifier<List<BookModel>> {
   final _bookService = BookService();
 
+  /// The last document queried, (used for pagination in firebase).
   late DocumentSnapshot _lastDocument;
 
   @override
   FutureOr<List<BookModel>> build() async {
+    final searchTerm = ref.watch(Providers.bookSearchTermProvider);
+    final searchIsDescending =
+        ref.watch(Providers.bookSearchIsDescendingProvider);
+
     state = const AsyncLoading();
 
-    final uid = ref.read(Providers.authAsyncNotifierProvider.notifier).getUid();
+    final uid = ref.read(Providers.authAsyncProvider.notifier).getUid();
 
     final exists = await _bookService.booksCollectionExists(uid: uid);
 
@@ -24,7 +29,12 @@ class BooksAsyncNotifier extends AutoDisposeAsyncNotifier<List<BookModel>> {
       return [];
     }
 
-    final querySnapshot = await _bookService.getBooks(uid: uid, limit: 5);
+    final querySnapshot = await _bookService.getBooks(
+      descending: searchIsDescending,
+      orderBy: searchTerm.query,
+      uid: uid,
+      limit: 5,
+    );
 
     _lastDocument = querySnapshot.docs.last;
 
@@ -33,12 +43,15 @@ class BooksAsyncNotifier extends AutoDisposeAsyncNotifier<List<BookModel>> {
     return books;
   }
 
+  /// Fetch the next list of books using pagination.
   void getNextBooks() async {
     try {
       state = const AsyncLoading();
 
       final querySnapshot = await _bookService.getBooks(
-        uid: ref.read(Providers.authAsyncNotifierProvider.notifier).getUid(),
+        orderBy: ref.read(Providers.bookSearchTermProvider).query,
+        descending: ref.read(Providers.bookSearchIsDescendingProvider),
+        uid: ref.read(Providers.authAsyncProvider.notifier).getUid(),
         lastDocument: _lastDocument,
         limit: 10,
       );

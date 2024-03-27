@@ -45,7 +45,7 @@ class SearchQuotesAsyncNotifier
   }
 
   void _performSearch(String query) async {
-    final uid = ref.read(Providers.authAsyncNotifierProvider.notifier).getUid();
+    final uid = ref.read(Providers.authAsyncProvider.notifier).getUid();
 
     // Constructing a query to search for hits in the index.
     final SearchForHits queryHits = SearchForHits(

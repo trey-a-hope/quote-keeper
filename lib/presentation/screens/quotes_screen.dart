@@ -1,6 +1,8 @@
 import 'package:animated_search_bar/animated_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:quote_keeper/data/services/modal_service.dart';
+import 'package:quote_keeper/domain/notifiers/book_search_term_notifier.dart';
 import 'package:quote_keeper/presentation/widgets/app_bar_widget.dart';
 import 'package:quote_keeper/presentation/widgets/quote_card_widget.dart';
 import 'package:quote_keeper/utils/config/providers.dart';
@@ -8,6 +10,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'dart:convert';
 import 'package:quote_keeper/utils/constants/globals.dart';
+import 'package:tuple/tuple.dart';
 
 class QuotesScreen extends ConsumerStatefulWidget {
   const QuotesScreen({Key? key}) : super(key: key);
@@ -36,7 +39,26 @@ class _QuotesScreenState extends ConsumerState<QuotesScreen> {
   void _scrollListener() {
     if (_scrollController.position.pixels ==
         _scrollController.position.maxScrollExtent) {
-      ref.read(Providers.booksAsyncNotifierProvider.notifier).getNextBooks();
+      ref.read(Providers.booksAsyncProvider.notifier).getNextBooks();
+    }
+  }
+
+  IconData _getIconFromSearchDescending() =>
+      ref.watch(Providers.bookSearchIsDescendingProvider)
+          ? Icons.arrow_downward
+          : Icons.arrow_upward;
+
+  IconData _getIconFromSearchTerm() {
+    final res = ref.watch(Providers.bookSearchTermProvider);
+    switch (res) {
+      case BookSearchTerm.title:
+        return Icons.title;
+      case BookSearchTerm.author:
+        return Icons.sort_by_alpha;
+      case BookSearchTerm.modified:
+        return Icons.edit;
+      case BookSearchTerm.created:
+        return Icons.check;
     }
   }
 
@@ -47,10 +69,42 @@ class _QuotesScreenState extends ConsumerState<QuotesScreen> {
         title: 'Quotes',
         implyLeading: false,
         context: context,
-        action: IconButton(
+        leading: IconButton(
           icon: const Icon(Icons.add),
           onPressed: () => context.goNamed(Globals.routes.searchBooks),
         ),
+        actions: [
+          IconButton(
+            icon: Icon(_getIconFromSearchDescending()),
+            onPressed: () => ref
+                .read(Providers.bookSearchIsDescendingProvider.notifier)
+                .toggle(),
+          ),
+          IconButton(
+            icon: Icon(_getIconFromSearchTerm()),
+            onPressed: () async {
+              final result = await ModalService.showActionSheet<BookSearchTerm>(
+                context: context,
+                title: 'Sort By',
+                message: 'Select query...',
+                options: [
+                  for (int i = 0; i < BookSearchTerm.values.length; i++) ...[
+                    Tuple2(
+                      BookSearchTerm.values[i].label,
+                      BookSearchTerm.values[i],
+                    ),
+                  ],
+                ],
+              );
+
+              if (result == null) return;
+
+              ref
+                  .read(Providers.bookSearchTermProvider.notifier)
+                  .updateTerm(result);
+            },
+          ),
+        ],
       ),
       body: Column(
         children: [
@@ -61,7 +115,7 @@ class _QuotesScreenState extends ConsumerState<QuotesScreen> {
               onChanged: (value) {
                 _search = value;
                 ref
-                    .read(Providers.searchQuotesAsyncNotifierProvider.notifier)
+                    .read(Providers.searchQuotesAsyncProvider.notifier)
                     .onSearchTextChanges(value);
               },
               textInputAction: TextInputAction.done,
@@ -72,10 +126,9 @@ class _QuotesScreenState extends ConsumerState<QuotesScreen> {
           Expanded(
             child: Consumer(
               builder: (context, ref, _) {
-                final booksAsyncValue =
-                    ref.watch(Providers.booksAsyncNotifierProvider);
+                final booksAsyncValue = ref.watch(Providers.booksAsyncProvider);
                 final searchQuotesValue =
-                    ref.watch(Providers.searchQuotesAsyncNotifierProvider);
+                    ref.watch(Providers.searchQuotesAsyncProvider);
                 if (_search.isNotEmpty && searchQuotesValue.hasValue) {
                   final results = searchQuotesValue.value!;
 

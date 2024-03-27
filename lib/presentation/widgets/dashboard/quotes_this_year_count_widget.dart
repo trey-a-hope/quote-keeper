@@ -8,8 +8,7 @@ class QuotesThisYearCountWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final countValue =
-        ref.watch(Providers.quotesThisYearCountStateNotifierProvider);
+    final countValue = ref.watch(Providers.quotesThisYearCountStateProvider);
 
     return countValue.when(
       data: (data) => ProfileStatBadgetWidget(

@@ -1,9 +1,11 @@
 import 'package:quote_keeper/domain/models/book_model.dart';
 import 'package:quote_keeper/domain/models/search_books_result_model.dart';
 import 'package:quote_keeper/domain/models/user_model.dart';
+import 'package:quote_keeper/domain/notifiers/book_search_descending_notifier.dart';
+import 'package:quote_keeper/domain/notifiers/book_search_term_notifier.dart';
 import 'package:quote_keeper/domain/notifiers/books_async_notifier.dart';
 import 'package:quote_keeper/domain/notifiers/create_book_notifier.dart';
-import 'package:quote_keeper/domain/notifiers/quote_of_the_day_async_notifier.dart';
+import 'package:quote_keeper/domain/notifiers/dashboard_quote_async_notifier.dart';
 import 'package:quote_keeper/domain/notifiers/most_recent_quotes_async_notifier.dart';
 import 'package:quote_keeper/domain/notifiers/quotes_this_month_count_state_notifier.dart';
 import 'package:quote_keeper/domain/notifiers/quotes_this_week_count_state_notifier.dart';
@@ -20,74 +22,82 @@ import 'package:quote_keeper/domain/notifiers/user_async_notifier.dart';
 import 'package:quote_keeper/utils/config/app_routes.dart';
 
 class Providers {
-  static final authAsyncNotifierProvider =
+  static final authAsyncProvider =
       AsyncNotifierProvider<AuthAsyncNotifier, User?>(
     AuthAsyncNotifier.new,
   );
 
-  static final booksAsyncNotifierProvider =
+  static final booksAsyncProvider =
       AsyncNotifierProvider.autoDispose<BooksAsyncNotifier, List<BookModel>>(
     BooksAsyncNotifier.new,
   );
 
-  static final createBookNotifierProvider =
+  static final bookSearchIsDescendingProvider =
+      NotifierProvider.autoDispose<BookSearchIsDescendingNotifier, bool>(
+    BookSearchIsDescendingNotifier.new,
+  );
+
+  static final bookSearchTermProvider =
+      NotifierProvider.autoDispose<BookSearchTermNotifier, BookSearchTerm>(
+    BookSearchTermNotifier.new,
+  );
+
+  static final createBookProvider =
       NotifierProvider.autoDispose<CreateBookNotifier, BookModel?>(
     CreateBookNotifier.new,
   );
 
-  static final quoteOfTheDayAsyncNotifierProvider =
-      AsyncNotifierProvider.autoDispose<QuoteOfTheDayAsyncNotifier, BookModel?>(
-          QuoteOfTheDayAsyncNotifier.new);
+  static final dashboardQuoteAsyncProvider = AsyncNotifierProvider.autoDispose<
+      DashboardQuoteAsyncNotifier, BookModel?>(DashboardQuoteAsyncNotifier.new);
 
-  static final mostRecentQuotesAsyncNotifierProvider = AsyncNotifierProvider
+  static final mostRecentQuotesAsyncProvider = AsyncNotifierProvider
       .autoDispose<MostRecentQuotesAsyncNotifier, List<BookModel>?>(
     MostRecentQuotesAsyncNotifier.new,
   );
 
-  static final quotesAllTimeCountAsyncNotifierProvider =
+  static final quotesAllTimeCountAsyncProvider =
       AsyncNotifierProvider.autoDispose<QuotesAllTimeCountAsyncNotifier, int>(
     QuotesAllTimeCountAsyncNotifier.new,
   );
 
-  static final quotesThisMonthCountStateNotifierProvider =
+  static final quotesThisMonthCountStateProvider =
       AsyncNotifierProvider.autoDispose<QuotesThisMonthCountStateNotifier, int>(
     QuotesThisMonthCountStateNotifier.new,
   );
 
-  static final quotesThisWeekCountStateNotifierProvider =
+  static final quotesThisWeekCountStateProvider =
       AsyncNotifierProvider.autoDispose<QuotesThisWeekCountStateNotifier, int>(
     QuotesThisWeekCountStateNotifier.new,
   );
 
-  static final quotesThisYearCountStateNotifierProvider =
+  static final quotesThisYearCountStateProvider =
       AsyncNotifierProvider.autoDispose<QuotesThisYearCountStateNotifier, int>(
     QuotesThisYearCountStateNotifier.new,
   );
 
   static final routerProvider = Provider<GoRouter>(
     (ref) {
-      final authAsyncNotifierProvider =
-          ref.watch(Providers.authAsyncNotifierProvider);
-      final isAuthenticated = authAsyncNotifierProvider.value != null;
+      final authAsyncProvider = ref.watch(Providers.authAsyncProvider);
+      final isAuthenticated = authAsyncProvider.value != null;
       return appRoutes(isAuthenticated);
     },
   );
 
-  static final searchBooksAsyncNotifierProvider =
-      AsyncNotifierProvider.autoDispose<SearchBooksAsyncNotifier,
-          List<SearchBooksResultModel>>(SearchBooksAsyncNotifier.new);
+  static final searchBooksAsyncProvider = AsyncNotifierProvider.autoDispose<
+      SearchBooksAsyncNotifier,
+      List<SearchBooksResultModel>>(SearchBooksAsyncNotifier.new);
 
-  static final searchQuotesAsyncNotifierProvider = AsyncNotifierProvider
-      .autoDispose<SearchQuotesAsyncNotifier, List<BookModel>>(
+  static final searchQuotesAsyncProvider = AsyncNotifierProvider.autoDispose<
+      SearchQuotesAsyncNotifier, List<BookModel>>(
     SearchQuotesAsyncNotifier.new,
   );
 
-  static final tutorialCompleteStateNotifierProvider =
+  static final tutorialCompleteStateProvider =
       AsyncNotifierProvider.autoDispose<TutorialCompleteAsyncNotifier, bool>(
     TutorialCompleteAsyncNotifier.new,
   );
 
-  static final userAsyncNotifierProvider =
+  static final userAsyncProvider =
       AsyncNotifierProvider<UserAsyncNotifier, UserModel?>(
     UserAsyncNotifier.new,
   );

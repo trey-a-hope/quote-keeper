@@ -9,9 +9,9 @@ class QuotesThisYearCountStateNotifier extends AutoDisposeAsyncNotifier<int> {
 
   @override
   Future<int> build() async {
-    ref.watch(Providers.booksAsyncNotifierProvider);
+    ref.watch(Providers.booksAsyncProvider);
 
-    final uid = ref.read(Providers.authAsyncNotifierProvider.notifier).getUid();
+    final uid = ref.read(Providers.authAsyncProvider.notifier).getUid();
 
     // Create date range for this month.
     final now = DateTime.now();

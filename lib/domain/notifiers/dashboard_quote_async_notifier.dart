@@ -5,12 +5,12 @@ import 'package:quote_keeper/domain/models/book_model.dart';
 import 'package:quote_keeper/utils/config/providers.dart';
 
 /// Book that is displayed on the Dashboard.
-class QuoteOfTheDayAsyncNotifier extends AutoDisposeAsyncNotifier<BookModel?> {
+class DashboardQuoteAsyncNotifier extends AutoDisposeAsyncNotifier<BookModel?> {
   final _bookService = BookService();
 
   @override
   FutureOr<BookModel?> build() async {
-    final uid = ref.read(Providers.authAsyncNotifierProvider.notifier).getUid();
+    final uid = ref.read(Providers.authAsyncProvider.notifier).getUid();
 
     if (await _bookService.booksCollectionExists(uid: uid)) {
       final book = await _bookService.getRandom(uid: uid);
@@ -22,7 +22,7 @@ class QuoteOfTheDayAsyncNotifier extends AutoDisposeAsyncNotifier<BookModel?> {
 
   /// Fetches a random book for the user.
   Future<void> getRandomBook() async {
-    final uid = ref.read(Providers.authAsyncNotifierProvider.notifier).getUid();
+    final uid = ref.read(Providers.authAsyncProvider.notifier).getUid();
 
     final exists = await _bookService.booksCollectionExists(uid: uid);
 
@@ -30,10 +30,13 @@ class QuoteOfTheDayAsyncNotifier extends AutoDisposeAsyncNotifier<BookModel?> {
     if (exists) {
       // Set book to random book in collection.
       final book = await _bookService.getRandom(uid: uid);
-      state = AsyncData(book);
+      updateBook(book);
     } else {
       // Otherwise, set book to null.
       state = const AsyncData(null);
     }
   }
+
+  /// Updates the current dashboard quote.
+  void updateBook(BookModel book) => state = AsyncData(book);
 }
