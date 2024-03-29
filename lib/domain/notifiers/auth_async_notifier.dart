@@ -70,7 +70,7 @@ class AuthAsyncNotifier extends AsyncNotifier<User?> {
   }
 
   Future<void> deleteAccount() async {
-    var user = state.value!;
+    final user = state.value!;
 
     // Delete auth user.
     await user.delete();

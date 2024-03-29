@@ -33,7 +33,6 @@ class BooksAsyncNotifier extends AutoDisposeAsyncNotifier<List<BookModel>> {
       descending: searchIsDescending,
       orderBy: searchTerm.query,
       uid: uid,
-      limit: 5,
     );
 
     _lastDocument = querySnapshot.docs.last;

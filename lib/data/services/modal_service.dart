@@ -100,19 +100,17 @@ class ModalService {
   }) async =>
       await showCupertinoModalPopup<T>(
         context: context,
-        builder: (BuildContext context) => CupertinoActionSheet(
+        builder: (c) => CupertinoActionSheet(
           title: title != null
               ? Text(
                   title,
-                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+                  style: Theme.of(context).textTheme.bodyLarge,
                 )
               : null,
           message: message != null
               ? Text(
                   message,
-                  style: Theme.of(context).textTheme.bodyMedium,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 )
               : null,
           cancelButton: showCancelButton
@@ -122,7 +120,7 @@ class ModalService {
                     'Cancel',
                     style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                           fontWeight: FontWeight.bold,
-                          color: Colors.blue,
+                          color: Colors.white,
                         ),
                   ),
                 )
@@ -131,7 +129,7 @@ class ModalService {
             for (int i = 0; i < options.length; i++) ...[
               CupertinoActionSheetAction(
                 // Return the value of the ActionSheetOption.
-                onPressed: () => Navigator.of(context).pop(
+                onPressed: () => Navigator.of(c).pop(
                   options[i].value,
                 ),
                 isDestructiveAction: options[i].isDestructive,
@@ -141,6 +139,7 @@ class ModalService {
                       alignment: Alignment.center,
                       child: Text(
                         options[i].label,
+                        style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ),
                     // Display arrow to show there are nested options.
