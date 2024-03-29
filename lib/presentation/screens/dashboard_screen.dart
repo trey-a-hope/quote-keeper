@@ -123,7 +123,7 @@ class DashboardScreen extends ConsumerWidget {
                                 'Here\'s my quote of the day from ${data.title} by ${data.author}',
                           ),
                           icon: const Icon(
-                            Icons.share,
+                            Icons.ios_share,
                           ),
                           label: const Text('Share'),
                         )
