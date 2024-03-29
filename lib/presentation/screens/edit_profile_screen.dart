@@ -51,8 +51,6 @@ class EditProfileScreen extends ConsumerWidget {
                                 onChanged: (val) {
                                   _usernameController.text = val;
                                 },
-                                textCapitalization:
-                                    TextCapitalization.sentences,
                                 cursorColor: Theme.of(context)
                                     .textTheme
                                     .headlineMedium!

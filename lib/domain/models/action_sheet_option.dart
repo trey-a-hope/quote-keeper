@@ -10,13 +10,13 @@ class ActionSheetOption<T> {
   /// Display an arrow to show that there are nested options.
   final bool hasMore;
 
-  /// Display as info or error type action.
-  final bool isDestructive;
+  /// Is the option currently selected or not.
+  final bool selected;
 
   ActionSheetOption({
     required this.label,
     required this.value,
     this.hasMore = false,
-    this.isDestructive = false,
+    this.selected = false,
   });
 }

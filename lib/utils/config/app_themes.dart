@@ -55,7 +55,7 @@ class AppThemes {
   /// Body Large
   static const TextStyle _bodyLarge = TextStyle(
     fontWeight: FontWeight.w500,
-    fontSize: 14,
+    fontSize: 16,
     height: 1.5,
     fontFamily: fontFamily,
   );
