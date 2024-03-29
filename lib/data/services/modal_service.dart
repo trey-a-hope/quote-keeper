@@ -87,8 +87,8 @@ class ModalService {
         ),
       );
 
-  /// Takes in a list of Tuples of type <String, T, bool>.
-  /// Each tuple contains a "String" label, "T" value, and "bool" has more options.
+  /// Takes in a list of ActionSheetOption of type <T>.
+  /// Each ActionSheetOption contains info about the option.
   /// Returns the selected "T" value.
   /// Provides an optional title and message.
   static Future<T?> showActionSheet<T>({
