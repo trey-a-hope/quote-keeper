@@ -5,9 +5,9 @@ import 'package:quote_keeper/data/services/modal_service.dart';
 import 'package:quote_keeper/presentation/widgets/app_bar_widget.dart';
 import 'package:quote_keeper/presentation/widgets/qk_full_button.dart';
 import 'package:quote_keeper/utils/config/providers.dart';
+import 'package:quote_keeper/utils/constants/toast_type.dart';
 
 class EditProfileScreen extends ConsumerWidget {
-  final _modalService = ModalService();
   final _usernameController = TextEditingController();
 
   EditProfileScreen({super.key});
@@ -106,20 +106,16 @@ class EditProfileScreen extends ConsumerWidget {
 
   void _submitForm(BuildContext context, WidgetRef ref) async {
     if (_usernameController.text.isEmpty) {
-      _modalService.showInSnackBar(
+      ModalService.showToast(
         context: context,
-        icon: const Icon(
-          Icons.cancel,
-          color: Colors.red,
-        ),
         message: 'Username cannot be empty.',
-        title: 'Error',
+        toastType: ToastType.failure,
       );
 
       return;
     }
 
-    bool? confirm = await _modalService.showConfirmation(
+    bool? confirm = await ModalService.showConfirmation(
       context: context,
       title: 'Update Profile',
       message: 'Are you sure?',
@@ -136,26 +132,17 @@ class EditProfileScreen extends ConsumerWidget {
 
       if (!context.mounted) return;
 
-      _modalService.showInSnackBar(
+      ModalService.showToast(
         context: context,
-        icon: const Icon(
-          Icons.check,
-          color: Colors.white,
-        ),
         message: 'Username updated.',
-        title: 'Saved',
       );
     } catch (e) {
       if (!context.mounted) return;
 
-      _modalService.showInSnackBar(
+      ModalService.showToast(
         context: context,
-        icon: const Icon(
-          Icons.cancel,
-          color: Colors.white,
-        ),
-        message: 'Error',
-        title: e.toString(),
+        message: e.toString(),
+        toastType: ToastType.failure,
       );
     }
   }

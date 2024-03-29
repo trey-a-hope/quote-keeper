@@ -6,6 +6,7 @@ import 'package:quote_keeper/domain/models/book_model.dart';
 import 'package:quote_keeper/presentation/widgets/app_bar_widget.dart';
 import 'package:quote_keeper/presentation/widgets/qk_full_button.dart';
 import 'package:quote_keeper/utils/config/providers.dart';
+import 'package:quote_keeper/utils/constants/toast_type.dart';
 
 class EditQuoteScreen extends ConsumerStatefulWidget {
   const EditQuoteScreen(this.book, {Key? key}) : super(key: key);
@@ -17,7 +18,6 @@ class EditQuoteScreen extends ConsumerStatefulWidget {
 }
 
 class _EditQuoteScreenState extends ConsumerState<EditQuoteScreen> {
-  final _modalService = ModalService();
   final _quoteController = TextEditingController();
 
   late bool _complete;
@@ -48,14 +48,9 @@ class _EditQuoteScreenState extends ConsumerState<EditQuoteScreen> {
                   .read(Providers.dashboardQuoteAsyncProvider.notifier)
                   .updateBook(widget.book);
 
-              ModalService().showInSnackBar(
+              ModalService.showToast(
                 context: context,
-                icon: const Icon(
-                  Icons.check,
-                  color: Colors.green,
-                ),
-                message: 'Check your home page.',
-                title: 'Quote Opened',
+                message: 'Quote opened, check your home page.',
               );
 
               context.pop();
@@ -67,7 +62,7 @@ class _EditQuoteScreenState extends ConsumerState<EditQuoteScreen> {
               color: Colors.red,
             ),
             onPressed: () async {
-              bool? confirm = await _modalService.showConfirmation(
+              bool? confirm = await ModalService.showConfirmation(
                 context: context,
                 title: 'Delete Quote',
                 message: 'Are you sure?',
@@ -159,7 +154,7 @@ class _EditQuoteScreenState extends ConsumerState<EditQuoteScreen> {
               QKFullButton(
                 label: 'SAVE',
                 onTap: () async {
-                  bool? confirm = await _modalService.showConfirmation(
+                  bool? confirm = await ModalService.showConfirmation(
                     context: context,
                     title: 'Update Quote',
                     message: 'Are you sure?',
@@ -183,26 +178,17 @@ class _EditQuoteScreenState extends ConsumerState<EditQuoteScreen> {
 
                     context.pop();
 
-                    _modalService.showInSnackBar(
+                    ModalService.showToast(
                       context: context,
-                      icon: const Icon(
-                        Icons.check,
-                        color: Colors.white,
-                      ),
                       message: 'Your changes were saved.',
-                      title: 'Updated',
                     );
                   } catch (e) {
                     if (!context.mounted) return;
 
-                    _modalService.showInSnackBar(
+                    ModalService.showToast(
                       context: context,
-                      icon: const Icon(
-                        Icons.cancel,
-                        color: Colors.white,
-                      ),
-                      message: 'Error',
-                      title: e.toString(),
+                      message: e.toString(),
+                      toastType: ToastType.failure,
                     );
                   }
                 },

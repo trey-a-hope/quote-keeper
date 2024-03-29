@@ -8,16 +8,15 @@ import 'package:quote_keeper/utils/constants/globals.dart';
 import 'package:quote_keeper/data/services/modal_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:quote_keeper/utils/constants/toast_type.dart';
 
 class CreateQuoteScreen extends ConsumerWidget {
-  CreateQuoteScreen({
+  const CreateQuoteScreen({
     Key? key,
     required this.searchBooksResult,
   }) : super(key: key);
 
   final SearchBooksResultModel searchBooksResult;
-
-  final _modalService = ModalService();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -83,21 +82,17 @@ class CreateQuoteScreen extends ConsumerWidget {
                     if (book == null) throw Exception('Book is null');
 
                     if (book.quote.isEmpty) {
-                      _modalService.showInSnackBar(
-                        icon: const Icon(
-                          Icons.cancel,
-                          color: Colors.red,
-                        ),
+                      ModalService.showToast(
                         context: context,
-                        title: 'Error',
                         message: 'Quote cannot be empty.',
+                        toastType: ToastType.failure,
                       );
 
                       return;
                     }
 
                     // Prompt user for submitting quote.
-                    bool? confirm = await _modalService.showConfirmation(
+                    bool? confirm = await ModalService.showConfirmation(
                       context: context,
                       title: 'Submit Quote for ${book.title}',
                       message: 'Are you sure?',
@@ -119,11 +114,11 @@ class CreateQuoteScreen extends ConsumerWidget {
                     } catch (error) {
                       if (!context.mounted) return;
 
-                      _modalService.showInSnackBar(
-                          context: context,
-                          icon: const Icon(Icons.cancel),
-                          message: error.toString(),
-                          title: 'Error');
+                      ModalService.showToast(
+                        context: context,
+                        message: error.toString(),
+                        toastType: ToastType.failure,
+                      );
                     }
                   },
                 ),
