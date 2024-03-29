@@ -2,6 +2,7 @@ import 'package:animated_search_bar/animated_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:quote_keeper/data/services/modal_service.dart';
+import 'package:quote_keeper/domain/models/action_sheet_option.dart';
 import 'package:quote_keeper/domain/notifiers/book_search_term_notifier.dart';
 import 'package:quote_keeper/presentation/widgets/app_bar_widget.dart';
 import 'package:quote_keeper/presentation/widgets/quote_card_widget.dart';
@@ -10,7 +11,6 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'dart:convert';
 import 'package:quote_keeper/utils/constants/globals.dart';
-import 'package:tuple/tuple.dart';
 
 class QuotesScreen extends ConsumerStatefulWidget {
   const QuotesScreen({Key? key}) : super(key: key);
@@ -89,9 +89,9 @@ class _QuotesScreenState extends ConsumerState<QuotesScreen> {
                 message: 'Select query...',
                 options: [
                   for (int i = 0; i < BookSearchTerm.values.length; i++) ...[
-                    Tuple2(
-                      BookSearchTerm.values[i].label,
-                      BookSearchTerm.values[i],
+                    ActionSheetOption(
+                      label: BookSearchTerm.values[i].label,
+                      value: BookSearchTerm.values[i],
                     ),
                   ],
                 ],

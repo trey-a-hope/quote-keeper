@@ -1,39 +1,43 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:quote_keeper/domain/models/action_sheet_option.dart';
 import 'package:quote_keeper/presentation/widgets/modal_alert_widget.dart';
 import 'package:quote_keeper/presentation/widgets/modal_confirmation_widget.dart';
 import 'package:quote_keeper/presentation/widgets/modal_input_match_confirmation_widget.dart';
-import 'package:tuple/tuple.dart';
+import 'package:quote_keeper/utils/constants/toast_type.dart';
+import 'package:toastification/toastification.dart';
 
 class ModalService {
-  void showInSnackBar({
+  /// Displays a toast message.
+  /// Takes in a required context and message.
+  /// The toastType modifies ui icons and colors.
+  /// The alignment determines position on screen.
+  static void showToast({
     required BuildContext context,
-    required Icon icon,
     required String message,
-    required String title,
-  }) {
-    final snackBar = SnackBar(
-      backgroundColor: Theme.of(context).snackBarTheme.backgroundColor,
-      content: ListTile(
-        leading: icon,
-        title: Text(
-          title,
-          style: Theme.of(context).textTheme.displaySmall!.copyWith(
-                color: Colors.white,
-              ),
-        ),
-        subtitle: Text(
-          message,
-          style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                color: Colors.white,
-              ),
-        ),
-      ),
-    );
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-  }
+    ToastType toastType = ToastType.success,
+    Alignment alignment = Alignment.bottomCenter,
+  }) =>
+      toastification.show(
+        context: context,
+        style: ToastificationStyle.minimal,
+        autoCloseDuration: const Duration(seconds: 5),
+        title: Text(message),
+        alignment: alignment,
+        animationDuration: const Duration(milliseconds: 300),
+        icon: toastType.icon,
+        primaryColor: toastType.color,
+        backgroundColor: toastType.color.shade50,
+        foregroundColor: Colors.black,
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+        margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        borderRadius: BorderRadius.circular(12),
+        showProgressBar: false,
+        closeButtonShowType: CloseButtonShowType.onHover,
+        closeOnClick: true,
+      );
 
-  void showAlert({
+  static void showAlert({
     required BuildContext context,
     required String title,
     required String message,
@@ -48,7 +52,7 @@ class ModalService {
     );
   }
 
-  Future<bool?> showConfirmation({
+  static Future<bool?> showConfirmation({
     required BuildContext context,
     required String title,
     required String message,
@@ -63,7 +67,7 @@ class ModalService {
         ),
       );
 
-  Future<bool?> showInputMatchConfirmation({
+  static Future<bool?> showInputMatchConfirmation({
     required BuildContext context,
     required String title,
     required String hintText,
@@ -83,31 +87,72 @@ class ModalService {
         ),
       );
 
-  /// Takes in a list of Tuples of type <String, T>.
-  /// Each tuple contains a "String" label and "T" value.
+  /// Takes in a list of Tuples of type <String, T, bool>.
+  /// Each tuple contains a "String" label, "T" value, and "bool" has more options.
   /// Returns the selected "T" value.
   /// Provides an optional title and message.
   static Future<T?> showActionSheet<T>({
     required BuildContext context,
-    required List<Tuple2<String, T>> options,
+    required List<ActionSheetOption<T>> options,
     String? title,
     String? message,
+    bool showCancelButton = false,
   }) async =>
       await showCupertinoModalPopup<T>(
         context: context,
         builder: (BuildContext context) => CupertinoActionSheet(
-          title: title != null ? Text(title) : null,
-          message: message != null ? Text(message) : null,
+          title: title != null
+              ? Text(
+                  title,
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                )
+              : null,
+          message: message != null
+              ? Text(
+                  message,
+                  style: Theme.of(context).textTheme.bodyMedium,
+                )
+              : null,
+          cancelButton: showCancelButton
+              ? CupertinoActionSheetAction(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text(
+                    'Cancel',
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blue,
+                        ),
+                  ),
+                )
+              : null,
           actions: <CupertinoActionSheetAction>[
             for (int i = 0; i < options.length; i++) ...[
               CupertinoActionSheetAction(
-                onPressed: () {
-                  Navigator.of(context).pop(
-                    options[i].item2,
-                  );
-                },
-                child: Text(
-                  options[i].item1,
+                // Return the value of the ActionSheetOption.
+                onPressed: () => Navigator.of(context).pop(
+                  options[i].value,
+                ),
+                isDestructiveAction: options[i].isDestructive,
+                child: Stack(
+                  children: [
+                    Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        options[i].label,
+                      ),
+                    ),
+                    // Display arrow to show there are nested options.
+                    if (options[i].hasMore) ...[
+                      const Align(
+                        alignment: Alignment.centerRight,
+                        child: Icon(
+                          Icons.chevron_right,
+                        ),
+                      ),
+                    ]
+                  ],
                 ),
               ),
             ],

@@ -15,7 +15,6 @@ class SettingsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final modalService = ModalService();
     final feedbackService = FeedbackService();
 
     final authAsyncNotifier = ref.read(Providers.authAsyncProvider.notifier);
@@ -52,7 +51,7 @@ class SettingsScreen extends ConsumerWidget {
                     await feedbackService.create(ufb, user.value!.uid);
                   } catch (e) {
                     if (!context.mounted) return;
-                    modalService.showAlert(
+                    ModalService.showAlert(
                       context: context,
                       title: 'Error',
                       message: e.toString(),
@@ -66,7 +65,7 @@ class SettingsScreen extends ConsumerWidget {
               icon: Icons.logout,
               title: 'Logout',
               callback: () async {
-                bool? confirm = await modalService.showConfirmation(
+                bool? confirm = await ModalService.showConfirmation(
                   context: context,
                   title: 'Logout',
                   message: 'Are you sure?',
@@ -90,7 +89,7 @@ class SettingsScreen extends ConsumerWidget {
 
                 if (!context.mounted) return;
 
-                bool? confirm = await modalService.showInputMatchConfirmation(
+                bool? confirm = await ModalService.showInputMatchConfirmation(
                   context: context,
                   title: 'Delete Account?',
                   hintText: 'Enter your email to confirm.',
@@ -106,7 +105,7 @@ class SettingsScreen extends ConsumerWidget {
                 } catch (e) {
                   if (!context.mounted) return;
 
-                  modalService.showAlert(
+                  ModalService.showAlert(
                     context: context,
                     title: 'Error',
                     message: e.toString(),

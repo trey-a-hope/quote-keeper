@@ -2,7 +2,7 @@ name: quote_keeper
 description: A new Flutter project.
 publish_to: "none"
 
-version: 1.6.9+169
+version: 1.7.0+170
 
 environment:
   sdk: ">=2.19.6 <3.0.0"
@@ -51,9 +51,9 @@ dependencies:
   shimmer: ^3.0.0
   sign_in_with_apple: ^5.0.0
   timeago: ^3.3.0
-  tuple: ^2.0.2
+  toastification: ^1.2.1
   # tutorial_coach_mark: ^1.2.11
-  uuid: ^3.0.7
+  uuid: ^4.3.3
 
 dev_dependencies:
   build_runner: ^2.3.3
