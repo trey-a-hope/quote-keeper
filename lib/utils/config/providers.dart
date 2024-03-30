@@ -7,6 +7,7 @@ import 'package:quote_keeper/domain/notifiers/books_async_notifier.dart';
 import 'package:quote_keeper/domain/notifiers/create_book_notifier.dart';
 import 'package:quote_keeper/domain/notifiers/dashboard_quote_async_notifier.dart';
 import 'package:quote_keeper/domain/notifiers/most_recent_quotes_async_notifier.dart';
+import 'package:quote_keeper/domain/notifiers/navigation_notifier.dart';
 import 'package:quote_keeper/domain/notifiers/quotes_this_month_count_state_notifier.dart';
 import 'package:quote_keeper/domain/notifiers/quotes_this_week_count_state_notifier.dart';
 import 'package:quote_keeper/domain/notifiers/quotes_this_year_count_state_notifier.dart';
@@ -47,12 +48,16 @@ class Providers {
     CreateBookNotifier.new,
   );
 
-  static final dashboardQuoteAsyncProvider = AsyncNotifierProvider.autoDispose<
+  static final dashboardQuoteProvider = AsyncNotifierProvider.autoDispose<
       DashboardQuoteAsyncNotifier, BookModel?>(DashboardQuoteAsyncNotifier.new);
 
   static final mostRecentQuotesAsyncProvider = AsyncNotifierProvider
       .autoDispose<MostRecentQuotesAsyncNotifier, List<BookModel>?>(
     MostRecentQuotesAsyncNotifier.new,
+  );
+  static final navigationProvider =
+      NotifierProvider.autoDispose<NavigationNotifier, Navigation>(
+    NavigationNotifier.new,
   );
 
   static final quotesAllTimeCountAsyncProvider =
