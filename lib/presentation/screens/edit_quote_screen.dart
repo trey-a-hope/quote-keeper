@@ -41,23 +41,6 @@ class _EditQuoteScreenState extends ConsumerState<EditQuoteScreen> {
         actions: [
           IconButton(
             icon: const Icon(
-              Icons.open_in_full,
-            ),
-            onPressed: () async {
-              ref
-                  .read(Providers.dashboardQuoteAsyncProvider.notifier)
-                  .updateBook(widget.book);
-
-              ModalService.showToast(
-                context: context,
-                message: 'Quote opened, check your home page.',
-              );
-
-              context.pop();
-            },
-          ),
-          IconButton(
-            icon: const Icon(
               Icons.delete,
               color: Colors.red,
             ),
@@ -175,8 +158,6 @@ class _EditQuoteScreenState extends ConsumerState<EditQuoteScreen> {
                     );
 
                     if (!context.mounted) return;
-
-                    context.pop();
 
                     ModalService.showToast(
                       context: context,

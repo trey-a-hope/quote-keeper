@@ -9,7 +9,6 @@ import 'package:quote_keeper/presentation/widgets/quote_card_widget.dart';
 import 'package:quote_keeper/utils/config/providers.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'dart:convert';
 import 'package:quote_keeper/utils/constants/globals.dart';
 
 class QuotesScreen extends ConsumerStatefulWidget {
@@ -75,6 +74,14 @@ class _QuotesScreenState extends ConsumerState<QuotesScreen> {
         ),
         actions: [
           IconButton(
+            onPressed: () => ModalService.showAlert(
+              context: context,
+              title: 'Info',
+              message: 'Hold down a quote to open it.',
+            ),
+            icon: const Icon(Icons.info),
+          ),
+          IconButton(
             icon: Icon(_getIconFromSearchDescending()),
             onPressed: () => ref
                 .read(Providers.bookSearchIsDescendingProvider.notifier)
@@ -129,6 +136,7 @@ class _QuotesScreenState extends ConsumerState<QuotesScreen> {
                 final booksAsyncValue = ref.watch(Providers.booksAsyncProvider);
                 final searchQuotesValue =
                     ref.watch(Providers.searchQuotesAsyncProvider);
+
                 if (_search.isNotEmpty && searchQuotesValue.hasValue) {
                   final results = searchQuotesValue.value!;
 
@@ -139,31 +147,10 @@ class _QuotesScreenState extends ConsumerState<QuotesScreen> {
                       : ListView.builder(
                           controller: _scrollController,
                           itemCount: results.length,
-                          itemBuilder: (context, index) {
+                          itemBuilder: (c, index) {
                             final book = results[index];
                             return QuoteCardWidget(
                               book: book,
-                              onTap: () => context.goNamed(
-                                Globals.routes.editQuote,
-                                pathParameters: <String, String>{
-                                  // Note: Conversion between String and Timestamp since Timestamp can't be encodded.
-                                  'book': jsonEncode(
-                                    {
-                                      'id': book.id,
-                                      'title': book.title,
-                                      'author': book.author,
-                                      'quote': book.quote,
-                                      'imgPath': book.imgPath,
-                                      'hidden': book.hidden,
-                                      'complete': book.complete,
-                                      'created': book.created.toIso8601String(),
-                                      'modified':
-                                          book.modified.toIso8601String(),
-                                      'uid': book.uid,
-                                    },
-                                  )
-                                },
-                              ),
                             ).animate().fadeIn(duration: 1000.ms).then(
                                   delay: 1000.ms,
                                 );
@@ -189,30 +176,10 @@ class _QuotesScreenState extends ConsumerState<QuotesScreen> {
                   return ListView.builder(
                     controller: _scrollController,
                     itemCount: books.length,
-                    itemBuilder: (context, index) {
+                    itemBuilder: (c, index) {
                       final book = books[index];
                       return QuoteCardWidget(
                         book: book,
-                        onTap: () => context.goNamed(
-                          Globals.routes.editQuote,
-                          pathParameters: <String, String>{
-                            // Note: Conversion between String and Timestamp since Timestamp can't be encodded.
-                            'book': jsonEncode(
-                              {
-                                'id': book.id,
-                                'title': book.title,
-                                'author': book.author,
-                                'quote': book.quote,
-                                'imgPath': book.imgPath,
-                                'hidden': book.hidden,
-                                'complete': book.complete,
-                                'created': book.created.toIso8601String(),
-                                'modified': book.modified.toIso8601String(),
-                                'uid': book.uid,
-                              },
-                            )
-                          },
-                        ),
                       ).animate().fadeIn(duration: 1000.ms).then(
                             delay: 1000.ms,
                           );

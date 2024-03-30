@@ -22,7 +22,7 @@ class DashboardScreen extends ConsumerWidget {
     final shareService = ShareService();
 
     final book = ref.watch(
-      Providers.dashboardQuoteAsyncProvider,
+      Providers.dashboardQuoteProvider,
     );
 
     // Prompt user for potential updated version of app.

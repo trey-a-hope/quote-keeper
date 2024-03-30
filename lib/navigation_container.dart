@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:quote_keeper/domain/notifiers/navigation_notifier.dart';
 import 'package:quote_keeper/presentation/screens/dashboard_screen.dart';
 import 'package:quote_keeper/presentation/screens/quotes_screen.dart';
 import 'package:quote_keeper/presentation/screens/profile_screen.dart';
 import 'package:quote_keeper/presentation/screens/settings_screen.dart';
+import 'package:quote_keeper/utils/config/providers.dart';
 
 /// This is the stateful widget that the main application instantiates.
-class NavigationContainer extends StatefulWidget {
+class NavigationContainer extends ConsumerStatefulWidget {
   const NavigationContainer({Key? key}) : super(key: key);
 
   @override
-  State<NavigationContainer> createState() => _NavigationContainerState();
+  ConsumerState<NavigationContainer> createState() =>
+      _NavigationContainerState();
 }
 
-/// This is the private State class that goes with MyStatefulWidget.
-class _NavigationContainerState extends State<NavigationContainer> {
-  int _selectedIndex = 0;
-
+class _NavigationContainerState extends ConsumerState<NavigationContainer> {
   static final List<Widget> _widgetOptions = <Widget>[
     const DashboardScreen(),
     const QuotesScreen(),
@@ -23,17 +24,15 @@ class _NavigationContainerState extends State<NavigationContainer> {
     const SettingsScreen(),
   ];
 
-  // Update the selected index each time the user taps a button.
-  void _onItemTapped(int index) => setState(() => _selectedIndex = index);
-
   @override
   Widget build(BuildContext context) {
+    final nav = ref.watch(Providers.navigationProvider);
+
     return Scaffold(
       body: IndexedStack(
-        index: _selectedIndex,
+        index: nav.curIndex,
         children: _widgetOptions,
       ),
-      // body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Theme.of(context).navigationBarTheme.backgroundColor,
         showSelectedLabels: false,
@@ -60,8 +59,11 @@ class _NavigationContainerState extends State<NavigationContainer> {
             label: 'Settings',
           ),
         ],
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
+        currentIndex: nav.curIndex,
+        onTap: (val) =>
+            ref.read(Providers.navigationProvider.notifier).updateNav(
+                  Navigation.values.firstWhere((e) => e.curIndex == val),
+                ),
       ),
     );
   }
