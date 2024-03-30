@@ -1,25 +1,62 @@
+import 'dart:convert';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 import 'package:quote_keeper/domain/models/book_model.dart';
+import 'package:quote_keeper/domain/notifiers/navigation_notifier.dart';
+import 'package:quote_keeper/utils/config/providers.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
 
-class QuoteCardWidget extends StatelessWidget {
+class QuoteCardWidget extends ConsumerWidget {
   const QuoteCardWidget({
     Key? key,
     required this.book,
-    this.onTap,
   }) : super(key: key);
 
   final BookModel book;
-  final VoidCallback? onTap;
+
+  void _onTap(BuildContext context) {
+    // Navigate to edit quote screen.
+    context.goNamed(
+      Globals.routes.editQuote,
+      pathParameters: <String, String>{
+        // Note: Conversion between String and Timestamp since Timestamp can't be encodded.
+        'book': jsonEncode(
+          {
+            'id': book.id,
+            'title': book.title,
+            'author': book.author,
+            'quote': book.quote,
+            'imgPath': book.imgPath,
+            'hidden': book.hidden,
+            'complete': book.complete,
+            'created': book.created.toIso8601String(),
+            'modified': book.modified.toIso8601String(),
+            'uid': book.uid,
+          },
+        )
+      },
+    );
+  }
+
+  void _onLongPress(WidgetRef ref) {
+    // Update the book on the home page.
+    ref.read(Providers.dashboardQuoteProvider.notifier).updateBook(book);
+
+    // Navigate back to the home page.
+    ref.read(Providers.navigationProvider.notifier).updateNav(Navigation.home);
+  }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.of(context).size;
 
     return GestureDetector(
-      onTap: onTap,
+      onTap: () => _onTap(context),
+      onLongPress: () => _onLongPress(ref),
       child: Padding(
         padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
         child: FittedBox(
