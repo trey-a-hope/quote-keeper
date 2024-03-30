@@ -37,7 +37,10 @@ class _NavigationContainerState extends ConsumerState<NavigationContainer> {
         backgroundColor: Theme.of(context).navigationBarTheme.backgroundColor,
         showSelectedLabels: false,
         showUnselectedLabels: false,
-        selectedLabelStyle: const TextStyle(fontSize: 20, color: Colors.blue),
+        selectedLabelStyle: const TextStyle(
+          fontSize: 20,
+          color: Colors.blue,
+        ),
         type: BottomNavigationBarType.fixed,
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.grey.withOpacity(0.7),

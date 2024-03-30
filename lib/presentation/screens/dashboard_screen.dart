@@ -111,7 +111,7 @@ class DashboardScreen extends ConsumerWidget {
                         ),
                         const Gap(16),
                         Text(
-                          '~ ${data.author}, ${data.title}',
+                          '~ ${data.author} | ${data.title}',
                           style: Theme.of(context).textTheme.headlineMedium,
                           textAlign: TextAlign.center,
                         ),
