@@ -18,9 +18,9 @@ class BookService {
 
   Future<QuerySnapshot<Object?>> getBooks({
     required String uid,
-    required int limit,
     required String orderBy,
     required bool descending,
+    int limit = 5,
     DocumentSnapshot? lastDocument,
   }) async {
     var booksQuery = _booksDB

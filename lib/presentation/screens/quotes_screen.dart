@@ -47,20 +47,6 @@ class _QuotesScreenState extends ConsumerState<QuotesScreen> {
           ? Icons.arrow_downward
           : Icons.arrow_upward;
 
-  IconData _getIconFromSearchTerm() {
-    final res = ref.watch(Providers.bookSearchTermProvider);
-    switch (res) {
-      case BookSearchTerm.title:
-        return Icons.title;
-      case BookSearchTerm.author:
-        return Icons.sort_by_alpha;
-      case BookSearchTerm.modified:
-        return Icons.edit;
-      case BookSearchTerm.created:
-        return Icons.check;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,17 +74,18 @@ class _QuotesScreenState extends ConsumerState<QuotesScreen> {
                 .toggle(),
           ),
           IconButton(
-            icon: Icon(_getIconFromSearchTerm()),
+            icon: const Icon(Icons.sort_by_alpha),
             onPressed: () async {
               final result = await ModalService.showActionSheet<BookSearchTerm>(
                 context: context,
                 title: 'Sort By',
-                message: 'Select query...',
                 options: [
                   for (int i = 0; i < BookSearchTerm.values.length; i++) ...[
                     ActionSheetOption(
                       label: BookSearchTerm.values[i].label,
                       value: BookSearchTerm.values[i],
+                      selected: ref.read(Providers.bookSearchTermProvider) ==
+                          BookSearchTerm.values[i],
                     ),
                   ],
                 ],

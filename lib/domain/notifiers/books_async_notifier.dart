@@ -33,7 +33,6 @@ class BooksAsyncNotifier extends AutoDisposeAsyncNotifier<List<BookModel>> {
       descending: searchIsDescending,
       orderBy: searchTerm.query,
       uid: uid,
-      limit: 5,
     );
 
     _lastDocument = querySnapshot.docs.last;
@@ -49,10 +48,15 @@ class BooksAsyncNotifier extends AutoDisposeAsyncNotifier<List<BookModel>> {
       state = const AsyncLoading();
 
       final querySnapshot = await _bookService.getBooks(
+        // Order by term, i.e. name, author, title, etc.
         orderBy: ref.read(Providers.bookSearchTermProvider).query,
+        // Is the list descending or not.
         descending: ref.read(Providers.bookSearchIsDescendingProvider),
+        // Return the quotes for this user.
         uid: ref.read(Providers.authAsyncProvider.notifier).getUid(),
+        // Previous firestore document used for pagination.
         lastDocument: _lastDocument,
+        // Number of results to fetch with each query.
         limit: 10,
       );
 

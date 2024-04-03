@@ -55,7 +55,7 @@ class AppThemes {
   /// Body Large
   static const TextStyle _bodyLarge = TextStyle(
     fontWeight: FontWeight.w500,
-    fontSize: 14,
+    fontSize: 16,
     height: 1.5,
     fontFamily: fontFamily,
   );
@@ -114,7 +114,7 @@ class AppThemes {
       headlineSmall: _headlineSmall.copyWith(color: Colors.black),
       titleLarge: _titleLarge.copyWith(color: Colors.black),
       bodyLarge: _bodyLarge.copyWith(color: Colors.grey),
-      bodyMedium: _bodyMedium.copyWith(color: Colors.grey),
+      bodyMedium: _bodyMedium.copyWith(color: Colors.black),
       titleMedium: _titleMedium.copyWith(color: Colors.black),
       titleSmall: _titleSmall.copyWith(color: Colors.grey),
     ),
@@ -151,8 +151,8 @@ class AppThemes {
       headlineMedium: _headlineMedium.copyWith(color: Colors.white),
       headlineSmall: _headlineSmall.copyWith(color: Colors.white),
       titleLarge: _titleLarge.copyWith(color: Colors.white),
-      bodyLarge: _bodyLarge.copyWith(color: Colors.grey),
-      bodyMedium: _bodyMedium.copyWith(color: Colors.grey),
+      bodyLarge: _bodyLarge.copyWith(color: Colors.white),
+      bodyMedium: _bodyMedium.copyWith(color: Colors.white),
       titleMedium: _titleMedium.copyWith(color: Colors.white),
       titleSmall: _titleSmall.copyWith(color: Colors.grey),
     ),
