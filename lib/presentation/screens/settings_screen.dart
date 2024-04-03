@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:quote_keeper/data/services/feedback_service.dart';
 import 'package:quote_keeper/data/services/modal_service.dart';
 import 'package:quote_keeper/presentation/widgets/app_bar_widget.dart';
@@ -40,6 +41,12 @@ class SettingsScreen extends ConsumerWidget {
               icon: Icons.info,
               title: 'About',
               callback: () => context.goNamed(Globals.routes.about),
+              context: context,
+            ),
+            CustomListTileWidget(
+              icon: MdiIcons.fileDocument,
+              title: 'Licenses',
+              callback: () => showLicensePage(context: context),
               context: context,
             ),
             CustomListTileWidget(
