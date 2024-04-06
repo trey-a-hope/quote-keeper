@@ -1,8 +1,7 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:quote_keeper/domain/notifiers/platform_notifier.dart';
 import 'package:quote_keeper/utils/config/providers.dart';
 import 'package:quote_keeper/utils/extensions/string_extensions.dart';
 
@@ -12,6 +11,7 @@ class LoginScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final authAsyncNotifier = ref.read(Providers.authAsyncProvider.notifier);
+    final platform = ref.read(Providers.platformProvidier);
 
     return Container(
       width: double.infinity,
@@ -43,12 +43,14 @@ class LoginScreen extends ConsumerWidget {
           password: loginData.password,
         ),
         loginProviders: <LoginProvider>[
-          LoginProvider(
-            button: Buttons.googleDark,
-            label: 'Sign In with Google',
-            callback: () => authAsyncNotifier.googleSignIn(),
-          ),
-          if (Platform.isIOS) ...[
+          if (platform == PlatformType.isAndroid) ...[
+            LoginProvider(
+              button: Buttons.googleDark,
+              label: 'Sign In with Google',
+              callback: () => authAsyncNotifier.googleSignIn(),
+            ),
+          ],
+          if (platform == PlatformType.isIOS) ...[
             LoginProvider(
               button: Buttons.appleDark,
               label: 'Sign In with Apple',

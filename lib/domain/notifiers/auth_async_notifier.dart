@@ -5,6 +5,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:quote_keeper/data/services/book_service.dart';
 import 'package:quote_keeper/data/services/user_service.dart';
 import 'package:quote_keeper/domain/models/user_model.dart';
+import 'package:quote_keeper/domain/notifiers/platform_notifier.dart';
+import 'package:quote_keeper/utils/config/providers.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
@@ -36,11 +38,14 @@ class AuthAsyncNotifier extends AsyncNotifier<User?> {
     bool userExists = await _userService.checkIfUserExists(uid: user.uid);
 
     // Records a user ID (identifier) that's associated with subsequent fatal and non-fatal reports.
-    await FirebaseCrashlytics.instance.setUserIdentifier(user.uid);
+    final platform = Providers.ref.read(Providers.platformProvidier);
+    if (platform != PlatformType.isWeb) {
+      await FirebaseCrashlytics.instance.setUserIdentifier(user.uid);
+    }
 
     if (userExists) {
       // // Request permission from user to receive push notifications.
-      // if (Platform.isIOS) {
+      // if (platform == PlatformType.isIOS) {
       //   await _firebaseMessaging.requestPermission();
       // }
 

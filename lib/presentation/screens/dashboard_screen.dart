@@ -40,13 +40,22 @@ class DashboardScreen extends ConsumerWidget {
           ? SafeArea(
               child: Stack(
                 children: [
-                  Image.network(
-                    data.imgPath ?? Globals.networkImages.libraryBackground,
-                    fit: BoxFit.cover,
-                    height: double.infinity,
+                  Container(
                     width: double.infinity,
-                    alignment: Alignment.center,
-                    opacity: const AlwaysStoppedAnimation(.05),
+                    height: double.infinity,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: NetworkImage(
+                          data.imgPath ??
+                              Globals.networkImages.libraryBackground,
+                        ),
+                        fit: BoxFit.cover,
+                        colorFilter: ColorFilter.mode(
+                          Colors.black.withOpacity(0.85),
+                          BlendMode.darken,
+                        ),
+                      ),
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
