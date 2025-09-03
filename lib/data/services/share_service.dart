@@ -5,8 +5,7 @@ class ShareService {
     required String text,
     required String subject,
   }) async =>
-      Share.share(
-        text,
-        subject: subject,
+      SharePlus.instance.share(
+        ShareParams(text: text, subject: subject),
       );
 }

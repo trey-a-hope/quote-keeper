@@ -1,6 +1,7 @@
 import 'package:animated_search_bar/animated_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:modal_util/modal_util.dart';
 import 'package:quote_keeper/data/services/modal_service.dart';
 import 'package:quote_keeper/domain/models/action_sheet_option.dart';
 import 'package:quote_keeper/domain/notifiers/book_search_term_notifier.dart';
@@ -12,7 +13,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
 
 class QuotesScreen extends ConsumerStatefulWidget {
-  const QuotesScreen({Key? key}) : super(key: key);
+  const QuotesScreen({super.key});
 
   @override
   ConsumerState<QuotesScreen> createState() => _QuotesScreenState();
@@ -60,10 +61,9 @@ class _QuotesScreenState extends ConsumerState<QuotesScreen> {
         ),
         actions: [
           IconButton(
-            onPressed: () => ModalService.showAlert(
-              context: context,
-              title: 'Info',
-              message: 'Hold down a quote to open it.',
+            onPressed: () => ModalUtil.showInfo(
+              context,
+              title: 'Hold down a quote to open it.',
             ),
             icon: const Icon(Icons.info),
           ),

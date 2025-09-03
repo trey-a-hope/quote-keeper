@@ -3,11 +3,11 @@ import 'package:gap/gap.dart';
 
 class ProfileStatBadgetWidget extends StatelessWidget {
   const ProfileStatBadgetWidget({
-    Key? key,
+    super.key,
     required this.count,
     required this.label,
     required this.color,
-  }) : super(key: key);
+  });
 
   final int count;
   final String label;

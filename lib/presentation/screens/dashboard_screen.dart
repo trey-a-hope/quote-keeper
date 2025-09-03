@@ -2,15 +2,15 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:lottie/lottie.dart';
-import 'package:new_version_plus/new_version_plus.dart';
 import 'package:quote_keeper/data/services/share_service.dart';
 import 'package:quote_keeper/utils/config/providers.dart';
 import 'package:quote_keeper/utils/config/size_config.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
 import 'package:flutter/material.dart';
+import 'package:quote_keeper/utils/extensions/string_extensions.dart';
 
 class DashboardScreen extends ConsumerWidget {
-  const DashboardScreen({Key? key}) : super(key: key);
+  const DashboardScreen({super.key});
 
   static const TextStyle labelStyle = TextStyle(
     fontWeight: FontWeight.w500,
@@ -25,14 +25,6 @@ class DashboardScreen extends ConsumerWidget {
       Providers.dashboardQuoteProvider,
     );
 
-    // Prompt user for potential updated version of app.
-    NewVersionPlus(
-      iOSId: 'com.example.book-quotes',
-      androidId: 'com.io.book_quotes',
-      androidPlayStoreCountry: "es_ES",
-      androidHtmlReleaseNotes: true,
-    ).showAlertIfNecessary(context: context);
-
     SizeConfig.init(context);
 
     return book.when(
@@ -41,7 +33,8 @@ class DashboardScreen extends ConsumerWidget {
               child: Stack(
                 children: [
                   Image.network(
-                    data.imgPath ?? Globals.networkImages.libraryBackground,
+                    data.imgPath?.hitDatBitchWitDaProxy() ??
+                        Globals.networkImages.libraryBackground,
                     fit: BoxFit.cover,
                     height: double.infinity,
                     width: double.infinity,
@@ -80,9 +73,9 @@ class DashboardScreen extends ConsumerWidget {
                               height: 130,
                               width: 85,
                               child: CachedNetworkImage(
-                                imageUrl: data.imgPath != null
-                                    ? data.imgPath!
-                                    : Globals.networkImages.libraryBackground,
+                                imageUrl:
+                                    data.imgPath?.hitDatBitchWitDaProxy() ??
+                                        Globals.networkImages.libraryBackground,
                                 imageBuilder: (context, imageProvider) =>
                                     Container(
                                   decoration: BoxDecoration(

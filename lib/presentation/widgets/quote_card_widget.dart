@@ -9,12 +9,13 @@ import 'package:quote_keeper/domain/models/book_model.dart';
 import 'package:quote_keeper/domain/notifiers/navigation_notifier.dart';
 import 'package:quote_keeper/utils/config/providers.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
+import 'package:quote_keeper/utils/extensions/string_extensions.dart';
 
 class QuoteCardWidget extends ConsumerWidget {
   const QuoteCardWidget({
-    Key? key,
+    super.key,
     required this.book,
-  }) : super(key: key);
+  });
 
   final BookModel book;
 
@@ -146,9 +147,8 @@ class QuoteCardWidget extends ConsumerWidget {
                 SizedBox(
                   width: 130,
                   child: CachedNetworkImage(
-                    imageUrl: book.imgPath != null
-                        ? book.imgPath!
-                        : Globals.networkImages.libraryBackground,
+                    imageUrl: book.imgPath?.hitDatBitchWitDaProxy() ??
+                        Globals.networkImages.libraryBackground,
                     imageBuilder: (context, imageProvider) => Container(
                       decoration: BoxDecoration(
                         border:
@@ -178,8 +178,8 @@ class QuoteCardWidget extends ConsumerWidget {
 
 class NullQuoteCardWidget extends StatelessWidget {
   const NullQuoteCardWidget({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

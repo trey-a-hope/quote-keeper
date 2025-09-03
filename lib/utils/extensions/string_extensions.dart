@@ -15,4 +15,6 @@ extension StringExtensions on String {
 
     return Color(val);
   }
+
+  String hitDatBitchWitDaProxy() => 'https://corsproxy.io/?$this';
 }

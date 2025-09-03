@@ -7,11 +7,11 @@ class QKFullButton extends StatelessWidget {
   final String label;
 
   const QKFullButton({
-    Key? key,
+    super.key,
     required this.onTap,
     required this.iconData,
     required this.label,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

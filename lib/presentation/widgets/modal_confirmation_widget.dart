@@ -1,21 +1,21 @@
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:universal_platform/universal_platform.dart';
 
 class ConfirmationWidget extends StatelessWidget {
   final String title;
   final String message;
 
   const ConfirmationWidget({
-    Key? key,
+    super.key,
     required this.title,
     required this.message,
-  }) : super(key: key);
+  });
 
   @override
-  Widget build(BuildContext context) => Platform.isIOS
+  Widget build(BuildContext context) => UniversalPlatform.isIOS ||
+          UniversalPlatform.isMacOS
       ? CupertinoAlertDialog(
           title: Text(title),
           content: Text(message),

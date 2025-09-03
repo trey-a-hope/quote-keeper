@@ -95,8 +95,8 @@ class AppThemes {
     iconTheme: IconThemeData(color: _secondaryColor),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
-        foregroundColor: MaterialStateProperty.all(Colors.white),
-        backgroundColor: MaterialStateProperty.all(_primaryColor),
+        foregroundColor: WidgetStateProperty.all(Colors.white),
+        backgroundColor: WidgetStateProperty.all(_primaryColor),
       ),
     ),
     listTileTheme: ListTileThemeData(
@@ -133,8 +133,8 @@ class AppThemes {
     iconTheme: IconThemeData(color: _secondaryColor),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
-        foregroundColor: MaterialStateProperty.all(Colors.white),
-        backgroundColor: MaterialStateProperty.all(_secondaryColor),
+        foregroundColor: WidgetStateProperty.all(Colors.white),
+        backgroundColor: WidgetStateProperty.all(_secondaryColor),
       ),
     ),
     listTileTheme: ListTileThemeData(

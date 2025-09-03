@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
-import 'package:quote_keeper/data/services/modal_service.dart';
+import 'package:modal_util/modal_util.dart';
 import 'package:quote_keeper/presentation/widgets/app_bar_widget.dart';
 import 'package:quote_keeper/presentation/widgets/qk_full_button.dart';
 import 'package:quote_keeper/utils/config/providers.dart';
-import 'package:quote_keeper/utils/constants/toast_type.dart';
 
 class EditProfileScreen extends ConsumerWidget {
   final _usernameController = TextEditingController();
@@ -104,17 +103,16 @@ class EditProfileScreen extends ConsumerWidget {
 
   void _submitForm(BuildContext context, WidgetRef ref) async {
     if (_usernameController.text.isEmpty) {
-      ModalService.showToast(
-        context: context,
-        message: 'Username cannot be empty.',
-        toastType: ToastType.failure,
+      ModalUtil.showError(
+        context,
+        title: 'Username cannot be empty.',
       );
 
       return;
     }
 
-    bool? confirm = await ModalService.showConfirmation(
-      context: context,
+    bool? confirm = await ModalUtil.showConfirmation(
+      context,
       title: 'Update Profile',
       message: 'Are you sure?',
     );
@@ -130,17 +128,16 @@ class EditProfileScreen extends ConsumerWidget {
 
       if (!context.mounted) return;
 
-      ModalService.showToast(
-        context: context,
-        message: 'Username updated.',
+      ModalUtil.showSuccess(
+        context,
+        title: 'Username updated.',
       );
     } catch (e) {
       if (!context.mounted) return;
 
-      ModalService.showToast(
-        context: context,
-        message: e.toString(),
-        toastType: ToastType.failure,
+      ModalUtil.showError(
+        context,
+        title: e.toString(),
       );
     }
   }

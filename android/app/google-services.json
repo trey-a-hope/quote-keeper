@@ -14,11 +14,27 @@
       },
       "oauth_client": [
         {
+          "client_id": "20452466446-8tsij3scvblev1u41njif9p86l9rccei.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.io.book_quotes",
+            "certificate_hash": "1f7ff468ab8fc8c7069ef64102905708f411e514"
+          }
+        },
+        {
           "client_id": "20452466446-iqafvf7kvi77ssl043l7ci4c9e9hogea.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.io.book_quotes",
             "certificate_hash": "139601a909adc9c0faf6308543c4177d992ce6a8"
+          }
+        },
+        {
+          "client_id": "20452466446-nc93po3gh9o5dc5rj6dqq9vf7b1hqa4k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.io.book_quotes",
+            "certificate_hash": "fd0f5606324c2ae6959f0821320eae9ea435e05f"
           }
         },
         {

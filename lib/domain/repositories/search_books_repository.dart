@@ -12,7 +12,8 @@ class SearchBooksRepository {
     if (cache.contains(term)) {
       return cache.get(term);
     } else {
-      final result = await _bookService.searchGoogleBooks(term: term, limit: 5);
+      final result =
+          await _bookService.searchGoogleBooks(term: term, limit: 10);
       cache.set(term, result);
       return result;
     }

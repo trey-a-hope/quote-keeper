@@ -1,20 +1,19 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:modal_util/modal_util.dart';
 import 'package:quote_keeper/domain/models/search_books_result_model.dart';
 import 'package:quote_keeper/presentation/widgets/app_bar_widget.dart';
 import 'package:quote_keeper/presentation/widgets/qk_full_button.dart';
 import 'package:quote_keeper/utils/config/providers.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
-import 'package:quote_keeper/data/services/modal_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:quote_keeper/utils/constants/toast_type.dart';
 
 class CreateQuoteScreen extends ConsumerWidget {
   const CreateQuoteScreen({
-    Key? key,
+    super.key,
     required this.searchBooksResult,
-  }) : super(key: key);
+  });
 
   final SearchBooksResultModel searchBooksResult;
 
@@ -82,18 +81,17 @@ class CreateQuoteScreen extends ConsumerWidget {
                     if (book == null) throw Exception('Book is null');
 
                     if (book.quote.isEmpty) {
-                      ModalService.showToast(
-                        context: context,
-                        message: 'Quote cannot be empty.',
-                        toastType: ToastType.failure,
+                      ModalUtil.showError(
+                        context,
+                        title: 'Quote cannot be empty.',
                       );
 
                       return;
                     }
 
                     // Prompt user for submitting quote.
-                    bool? confirm = await ModalService.showConfirmation(
-                      context: context,
+                    bool? confirm = await ModalUtil.showConfirmation(
+                      context,
                       title: 'Submit Quote for ${book.title}',
                       message: 'Are you sure?',
                     );
@@ -114,10 +112,9 @@ class CreateQuoteScreen extends ConsumerWidget {
                     } catch (error) {
                       if (!context.mounted) return;
 
-                      ModalService.showToast(
-                        context: context,
-                        message: error.toString(),
-                        toastType: ToastType.failure,
+                      ModalUtil.showError(
+                        context,
+                        title: error.toString(),
                       );
                     }
                   },

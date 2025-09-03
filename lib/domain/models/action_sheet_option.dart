@@ -1,4 +1,3 @@
-// TODO: Freeze
 /// Object that holds option info for the ActionSheet.
 class ActionSheetOption<T> {
   /// How the option is viewed in the modal.

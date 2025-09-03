@@ -4,7 +4,7 @@ import 'package:quote_keeper/presentation/widgets/app_bar_widget.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
 
 class AboutScreen extends ConsumerWidget {
-  const AboutScreen({Key? key}) : super(key: key);
+  const AboutScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

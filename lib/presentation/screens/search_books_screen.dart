@@ -8,9 +8,10 @@ import 'package:quote_keeper/utils/config/providers.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:quote_keeper/utils/extensions/string_extensions.dart';
 
 class SearchBooksScreen extends ConsumerWidget {
-  const SearchBooksScreen({Key? key}) : super(key: key);
+  const SearchBooksScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -46,7 +47,8 @@ class SearchBooksScreen extends ConsumerWidget {
 
                   return ListTile(
                     leading: CachedNetworkImage(
-                      imageUrl: '${searchBooksResult.imgUrl}',
+                      imageUrl:
+                          '${searchBooksResult.imgUrl?.hitDatBitchWitDaProxy()}',
                       imageBuilder: (context, imageProvider) => Image(
                         image: imageProvider,
                         height: 100,

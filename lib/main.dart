@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:feedback/feedback.dart';
-import 'package:flutter/foundation.dart';
+import 'package:quote_keeper/firebase_options.dart';
 import 'package:quote_keeper/utils/config/providers.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -15,9 +15,11 @@ void main() async {
   runZonedGuarded<Future<void>>(() async {
     WidgetsFlutterBinding.ensureInitialized();
 
-    await Firebase.initializeApp();
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
 
-    await _setupCrashlytics();
+    // await _setupCrashlytics();
 
     // Set app version and build number.
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
@@ -53,19 +55,19 @@ class QuoteKeeperApp extends ConsumerWidget {
   }
 }
 
-Future<void> _setupCrashlytics() async {
-  final FirebaseCrashlytics crashlytics = FirebaseCrashlytics.instance;
+// Future<void> _setupCrashlytics() async {
+//   final FirebaseCrashlytics crashlytics = FirebaseCrashlytics.instance;
 
-  await crashlytics.setCrashlyticsCollectionEnabled(true);
+//   await crashlytics.setCrashlyticsCollectionEnabled(true);
 
-  FlutterError.onError = (errorDetails) async {
-    await crashlytics.recordFlutterFatalError(errorDetails);
-    await crashlytics.recordFlutterError(errorDetails);
-  };
+//   FlutterError.onError = (errorDetails) async {
+//     await crashlytics.recordFlutterFatalError(errorDetails);
+//     await crashlytics.recordFlutterError(errorDetails);
+//   };
 
-  // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
-  PlatformDispatcher.instance.onError = (error, stack) {
-    crashlytics.recordError(error, stack, fatal: true);
-    return true;
-  };
-}
+//   // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
+//   PlatformDispatcher.instance.onError = (error, stack) {
+//     crashlytics.recordError(error, stack, fatal: true);
+//     return true;
+//   };
+// }

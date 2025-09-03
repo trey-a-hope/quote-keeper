@@ -1,8 +1,7 @@
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:universal_platform/universal_platform.dart';
 
 class InputMatchConfirmationWidget extends StatefulWidget {
   final String title;
@@ -44,46 +43,48 @@ class _InputMatchConfirmationWidget
   }
 
   @override
-  Widget build(BuildContext context) => Platform.isIOS
-      ? CupertinoAlertDialog(
-          title: Text(widget.title),
-          content: TextField(
-            controller: _textEditingController,
-            decoration: InputDecoration(hintText: widget.hintText),
-          ),
-          actions: <Widget>[
-            CupertinoDialogAction(
-              isDefaultAction: false,
-              child: const Text('NO'),
-              onPressed: () => context.pop(false),
-            ),
-            CupertinoDialogAction(
-              isDefaultAction: true,
-              onPressed: () => _isButtonEnabled ? context.pop(true) : null,
-              child: const Text('YES'),
-            ),
-          ],
-        )
-      : AlertDialog(
-          title: Text(widget.title),
-          content: TextField(
-            controller: _textEditingController,
-            decoration: InputDecoration(hintText: widget.hintText),
-          ),
-          actions: <Widget>[
-            ElevatedButton(
-              child: const Text('NO', style: TextStyle(color: Colors.black)),
-              onPressed: () => context.pop(false),
-            ),
-            ElevatedButton(
-              onPressed: () => _isButtonEnabled ? context.pop(true) : null,
-              child: const Text(
-                'YES',
-                style: TextStyle(
-                  color: Colors.black,
-                ),
+  Widget build(BuildContext context) =>
+      UniversalPlatform.isIOS || UniversalPlatform.isMacOS
+          ? CupertinoAlertDialog(
+              title: Text(widget.title),
+              content: TextField(
+                controller: _textEditingController,
+                decoration: InputDecoration(hintText: widget.hintText),
               ),
-            ),
-          ],
-        );
+              actions: <Widget>[
+                CupertinoDialogAction(
+                  isDefaultAction: false,
+                  child: const Text('NO'),
+                  onPressed: () => context.pop(false),
+                ),
+                CupertinoDialogAction(
+                  isDefaultAction: true,
+                  onPressed: () => _isButtonEnabled ? context.pop(true) : null,
+                  child: const Text('YES'),
+                ),
+              ],
+            )
+          : AlertDialog(
+              title: Text(widget.title),
+              content: TextField(
+                controller: _textEditingController,
+                decoration: InputDecoration(hintText: widget.hintText),
+              ),
+              actions: <Widget>[
+                ElevatedButton(
+                  child:
+                      const Text('NO', style: TextStyle(color: Colors.black)),
+                  onPressed: () => context.pop(false),
+                ),
+                ElevatedButton(
+                  onPressed: () => _isButtonEnabled ? context.pop(true) : null,
+                  child: const Text(
+                    'YES',
+                    style: TextStyle(
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ],
+            );
 }

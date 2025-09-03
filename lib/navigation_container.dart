@@ -9,7 +9,7 @@ import 'package:quote_keeper/utils/config/providers.dart';
 
 /// This is the stateful widget that the main application instantiates.
 class NavigationContainer extends ConsumerStatefulWidget {
-  const NavigationContainer({Key? key}) : super(key: key);
+  const NavigationContainer({super.key});
 
   @override
   ConsumerState<NavigationContainer> createState() =>
@@ -43,7 +43,7 @@ class _NavigationContainerState extends ConsumerState<NavigationContainer> {
         ),
         type: BottomNavigationBarType.fixed,
         selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.grey.withOpacity(0.7),
+        unselectedItemColor: Colors.grey.withValues(alpha: 0.7),
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),

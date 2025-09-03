@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:modal_util/modal_util.dart';
 import 'package:quote_keeper/data/services/feedback_service.dart';
 import 'package:quote_keeper/data/services/modal_service.dart';
 import 'package:quote_keeper/presentation/widgets/app_bar_widget.dart';
@@ -12,7 +13,7 @@ import 'package:quote_keeper/utils/config/providers.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
 
 class SettingsScreen extends ConsumerWidget {
-  const SettingsScreen({Key? key}) : super(key: key);
+  const SettingsScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -72,8 +73,8 @@ class SettingsScreen extends ConsumerWidget {
               icon: Icons.logout,
               title: 'Logout',
               callback: () async {
-                bool? confirm = await ModalService.showConfirmation(
-                  context: context,
+                bool? confirm = await ModalUtil.showConfirmation(
+                  context,
                   title: 'Logout',
                   message: 'Are you sure?',
                 );
@@ -96,7 +97,7 @@ class SettingsScreen extends ConsumerWidget {
 
                 if (!context.mounted) return;
 
-                bool? confirm = await ModalService.showInputMatchConfirmation(
+                bool? confirm = await ModalUtil.showInputMatchConfirmation(
                   context: context,
                   title: 'Delete Account?',
                   hintText: 'Enter your email to confirm.',

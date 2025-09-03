@@ -9,13 +9,13 @@ class CustomListTileWidget extends StatelessWidget {
   final bool? isDarkMode;
 
   const CustomListTileWidget({
-    Key? key,
+    super.key,
     required this.icon,
     required this.title,
     required this.context,
     this.callback,
     this.isDarkMode,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

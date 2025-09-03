@@ -1,10 +1,9 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quote_keeper/utils/config/providers.dart';
 import 'package:quote_keeper/utils/extensions/string_extensions.dart';
+import 'package:universal_platform/universal_platform.dart';
 
 class LoginScreen extends ConsumerWidget {
   const LoginScreen({super.key});
@@ -48,7 +47,7 @@ class LoginScreen extends ConsumerWidget {
             label: 'Sign In with Google',
             callback: () => authAsyncNotifier.googleSignIn(),
           ),
-          if (Platform.isIOS) ...[
+          if (UniversalPlatform.isIOS || UniversalPlatform.isMacOS) ...[
             LoginProvider(
               button: Buttons.appleDark,
               label: 'Sign In with Apple',

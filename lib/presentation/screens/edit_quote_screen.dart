@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:quote_keeper/data/services/modal_service.dart';
+import 'package:modal_util/modal_util.dart';
 import 'package:quote_keeper/domain/models/book_model.dart';
 import 'package:quote_keeper/presentation/widgets/app_bar_widget.dart';
 import 'package:quote_keeper/presentation/widgets/qk_full_button.dart';
 import 'package:quote_keeper/utils/config/providers.dart';
-import 'package:quote_keeper/utils/constants/toast_type.dart';
 
 class EditQuoteScreen extends ConsumerStatefulWidget {
-  const EditQuoteScreen(this.book, {Key? key}) : super(key: key);
+  const EditQuoteScreen(this.book, {super.key});
 
   final BookModel book;
 
@@ -45,8 +44,8 @@ class _EditQuoteScreenState extends ConsumerState<EditQuoteScreen> {
               color: Colors.red,
             ),
             onPressed: () async {
-              bool? confirm = await ModalService.showConfirmation(
-                context: context,
+              bool? confirm = await ModalUtil.showConfirmation(
+                context,
                 title: 'Delete Quote',
                 message: 'Are you sure?',
               );
@@ -118,7 +117,7 @@ class _EditQuoteScreenState extends ConsumerState<EditQuoteScreen> {
                 secondary: Icon(_hidden ? Icons.hide_image : Icons.image,
                     color: Theme.of(context).iconTheme.color),
                 activeTrackColor: Colors.lightGreenAccent,
-                activeColor: Colors.green,
+                activeThumbColor: Colors.green,
               ),
               SwitchListTile(
                 title: Text(_complete ? 'Complete' : 'Incomplete',
@@ -131,14 +130,14 @@ class _EditQuoteScreenState extends ConsumerState<EditQuoteScreen> {
                 secondary: Icon(_complete ? Icons.check : Icons.cancel,
                     color: Theme.of(context).iconTheme.color),
                 activeTrackColor: Colors.lightGreenAccent,
-                activeColor: Colors.green,
+                activeThumbColor: Colors.green,
               ),
               const Spacer(),
               QKFullButton(
                 label: 'SAVE',
                 onTap: () async {
-                  bool? confirm = await ModalService.showConfirmation(
-                    context: context,
+                  bool? confirm = await ModalUtil.showConfirmation(
+                    context,
                     title: 'Update Quote',
                     message: 'Are you sure?',
                   );
@@ -159,17 +158,16 @@ class _EditQuoteScreenState extends ConsumerState<EditQuoteScreen> {
 
                     if (!context.mounted) return;
 
-                    ModalService.showToast(
-                      context: context,
-                      message: 'Your changes were saved.',
+                    ModalUtil.showSuccess(
+                      context,
+                      title: 'Your changes were saved.',
                     );
                   } catch (e) {
                     if (!context.mounted) return;
 
-                    ModalService.showToast(
-                      context: context,
-                      message: e.toString(),
-                      toastType: ToastType.failure,
+                    ModalUtil.showError(
+                      context,
+                      title: e.toString(),
                     );
                   }
                 },

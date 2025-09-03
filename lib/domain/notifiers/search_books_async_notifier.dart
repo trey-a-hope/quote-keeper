@@ -19,7 +19,7 @@ class SearchBooksAsyncNotifier
   @override
   FutureOr<List<SearchBooksResultModel>> build() => [];
 
-  void onSearchTextChanged(val) async {
+  void onSearchTextChanged(String val) async {
     state = const AsyncLoading();
 
     /// Cancel debouncer if it's active.

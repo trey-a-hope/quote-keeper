@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:quote_keeper/data/services/book_service.dart';
@@ -36,7 +35,7 @@ class AuthAsyncNotifier extends AsyncNotifier<User?> {
     bool userExists = await _userService.checkIfUserExists(uid: user.uid);
 
     // Records a user ID (identifier) that's associated with subsequent fatal and non-fatal reports.
-    await FirebaseCrashlytics.instance.setUserIdentifier(user.uid);
+    // await FirebaseCrashlytics.instance.setUserIdentifier(user.uid);
 
     if (userExists) {
       // // Request permission from user to receive push notifications.
@@ -128,28 +127,32 @@ class AuthAsyncNotifier extends AsyncNotifier<User?> {
   Future<String?> googleSignIn() async {
     try {
       // Trigger the authentication flow
-      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-
-      // If user cancels selection, throw error to prevent null check below.
-      if (googleUser == null) {
-        return 'Must select a Google Account.';
-      }
+      final googleUser = await GoogleSignIn.instance.authenticate();
 
       // Obtain the auth details from the request
-      final GoogleSignInAuthentication googleAuth =
-          await googleUser.authentication;
+      final GoogleSignInAuthentication googleAuth = googleUser.authentication;
 
       // Create a new credential
       final OAuthCredential credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
+        accessToken: googleAuth.idToken,
         idToken: googleAuth.idToken,
       );
 
       // Once signed in, return the UserCredential
       await _auth.signInWithCredential(credential);
       return null;
-    } catch (error) {
-      return error.toString();
+    } on GoogleSignInException catch (e) {
+      switch (e.code) {
+        case GoogleSignInExceptionCode.unknownError:
+        case GoogleSignInExceptionCode.interrupted:
+        case GoogleSignInExceptionCode.clientConfigurationError:
+        case GoogleSignInExceptionCode.providerConfigurationError:
+        case GoogleSignInExceptionCode.uiUnavailable:
+        case GoogleSignInExceptionCode.userMismatch:
+          rethrow;
+        case GoogleSignInExceptionCode.canceled:
+          return null;
+      }
     }
   }
 
