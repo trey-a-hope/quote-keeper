@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cors_proxy/cors_proxy.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:lottie/lottie.dart';
@@ -7,7 +8,6 @@ import 'package:quote_keeper/utils/config/providers.dart';
 import 'package:quote_keeper/utils/config/size_config.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
 import 'package:flutter/material.dart';
-import 'package:quote_keeper/utils/extensions/string_extensions.dart';
 
 class DashboardScreen extends ConsumerWidget {
   const DashboardScreen({super.key});
@@ -33,8 +33,9 @@ class DashboardScreen extends ConsumerWidget {
               child: Stack(
                 children: [
                   Image.network(
-                    data.imgPath?.hitDatBitchWitDaProxy() ??
-                        Globals.networkImages.libraryBackground,
+                    data.imgPath == null
+                        ? Globals.networkImages.libraryBackground
+                        : CorsProxy.getEndpoint(data.imgPath!),
                     fit: BoxFit.cover,
                     height: double.infinity,
                     width: double.infinity,
@@ -73,9 +74,9 @@ class DashboardScreen extends ConsumerWidget {
                               height: 130,
                               width: 85,
                               child: CachedNetworkImage(
-                                imageUrl:
-                                    data.imgPath?.hitDatBitchWitDaProxy() ??
-                                        Globals.networkImages.libraryBackground,
+                                imageUrl: data.imgPath == null
+                                    ? Globals.networkImages.libraryBackground
+                                    : CorsProxy.getEndpoint(data.imgPath!),
                                 imageBuilder: (context, imageProvider) =>
                                     Container(
                                   decoration: BoxDecoration(

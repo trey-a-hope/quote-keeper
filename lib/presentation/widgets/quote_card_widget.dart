@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cors_proxy/cors_proxy.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
@@ -9,7 +10,6 @@ import 'package:quote_keeper/domain/models/book_model.dart';
 import 'package:quote_keeper/domain/notifiers/navigation_notifier.dart';
 import 'package:quote_keeper/utils/config/providers.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
-import 'package:quote_keeper/utils/extensions/string_extensions.dart';
 
 class QuoteCardWidget extends ConsumerWidget {
   const QuoteCardWidget({
@@ -147,8 +147,9 @@ class QuoteCardWidget extends ConsumerWidget {
                 SizedBox(
                   width: 130,
                   child: CachedNetworkImage(
-                    imageUrl: book.imgPath?.hitDatBitchWitDaProxy() ??
-                        Globals.networkImages.libraryBackground,
+                    imageUrl: book.imgPath == null
+                        ? Globals.networkImages.libraryBackground
+                        : CorsProxy.getEndpoint(book.imgPath!),
                     imageBuilder: (context, imageProvider) => Container(
                       decoration: BoxDecoration(
                         border:

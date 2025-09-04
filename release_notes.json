@@ -1,6 +1,6 @@
 [
     {
         "language": "en-US",
-        "text": "Replaced ModalService with ModalUtil for better modal management across the application."
+        "text": "Introduced `cors_proxy` dependency in `pubspec.yaml` for improved image URL handling."
     }
 ]

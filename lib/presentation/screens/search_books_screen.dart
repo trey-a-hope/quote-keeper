@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:animated_search_bar/animated_search_bar.dart';
+import 'package:cors_proxy/cors_proxy.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:quote_keeper/presentation/widgets/app_bar_widget.dart';
@@ -8,7 +9,6 @@ import 'package:quote_keeper/utils/config/providers.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:quote_keeper/utils/extensions/string_extensions.dart';
 
 class SearchBooksScreen extends ConsumerWidget {
   const SearchBooksScreen({super.key});
@@ -47,8 +47,9 @@ class SearchBooksScreen extends ConsumerWidget {
 
                   return ListTile(
                     leading: CachedNetworkImage(
-                      imageUrl:
-                          '${searchBooksResult.imgUrl?.hitDatBitchWitDaProxy()}',
+                      imageUrl: searchBooksResult.imgUrl == null
+                          ? Globals.networkImages.libraryBackground
+                          : CorsProxy.getEndpoint(searchBooksResult.imgUrl!),
                       imageBuilder: (context, imageProvider) => Image(
                         image: imageProvider,
                         height: 100,
