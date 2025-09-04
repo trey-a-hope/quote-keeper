@@ -117,7 +117,14 @@ class _EditQuoteScreenState extends ConsumerState<EditQuoteScreen> {
                 secondary: Icon(_hidden ? Icons.hide_image : Icons.image,
                     color: Theme.of(context).iconTheme.color),
                 activeTrackColor: Colors.lightGreenAccent,
-                activeThumbColor: Colors.green,
+                thumbColor: WidgetStateProperty.resolveWith<Color?>(
+                  (Set<WidgetState> states) {
+                    if (states.contains(WidgetState.selected)) {
+                      return Colors.green; // Active state color
+                    }
+                    return null; // Default color for inactive state
+                  },
+                ),
               ),
               SwitchListTile(
                 title: Text(_complete ? 'Complete' : 'Incomplete',
@@ -130,7 +137,14 @@ class _EditQuoteScreenState extends ConsumerState<EditQuoteScreen> {
                 secondary: Icon(_complete ? Icons.check : Icons.cancel,
                     color: Theme.of(context).iconTheme.color),
                 activeTrackColor: Colors.lightGreenAccent,
-                activeThumbColor: Colors.green,
+                thumbColor: WidgetStateProperty.resolveWith<Color?>(
+                  (Set<WidgetState> states) {
+                    if (states.contains(WidgetState.selected)) {
+                      return Colors.green; // Active state color
+                    }
+                    return null; // Default color for inactive state
+                  },
+                ),
               ),
               const Spacer(),
               QKFullButton(
