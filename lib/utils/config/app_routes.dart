@@ -1,5 +1,8 @@
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fluo/fluo.dart';
+import 'package:fluo/fluo_onboarding.dart';
+import 'package:fluo/fluo_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:quote_keeper/navigation_container.dart';
@@ -15,14 +18,28 @@ import 'package:quote_keeper/utils/constants/globals.dart';
 
 GoRouter appRoutes(bool isAuthenticated) {
   return GoRouter(
+    redirect: (context, state) {
+      return !Fluo.instance.isUserReady() ? '/fluo' : null;
+    },
     debugLogDiagnostics: true,
     initialLocation: '/${Globals.routes.navigationContainer}',
     routes: [
+      GoRoute(
+        path: '/fluo',
+        name: '/fluo',
+        builder: (context, state) => FluoOnboarding(
+          fluoTheme: FluoTheme.native(),
+          onUserReady: () {
+            // setState(() {});
+          },
+        ),
+      ),
       GoRoute(
         path: '/${Globals.routes.login}',
         name: Globals.routes.login,
         builder: (context, state) => const LoginScreen(),
       ),
+      // TODO: Use shell routes here
       GoRoute(
         path: '/${Globals.routes.navigationContainer}',
         name: Globals.routes.navigationContainer,
@@ -84,8 +101,6 @@ GoRouter appRoutes(bool isAuthenticated) {
         ],
       ),
     ],
-    redirect: (context, state) =>
-        isAuthenticated ? null : '/${Globals.routes.login}',
     errorPageBuilder: (context, state) => MaterialPage(
       key: state.pageKey,
       child: Scaffold(

@@ -125,35 +125,35 @@ class AuthAsyncNotifier extends AsyncNotifier<User?> {
   }
 
   Future<String?> googleSignIn() async {
-    try {
-      // Trigger the authentication flow
-      final googleUser = await GoogleSignIn.instance.authenticate();
+    // try {
+    //   // Trigger the authentication flow
+    //   final googleUser = await GoogleSignIn.instance.authenticate();
 
-      // Obtain the auth details from the request
-      final GoogleSignInAuthentication googleAuth = googleUser.authentication;
+    //   // Obtain the auth details from the request
+    //   final GoogleSignInAuthentication googleAuth = googleUser.authentication;
 
-      // Create a new credential
-      final OAuthCredential credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.idToken,
-        idToken: googleAuth.idToken,
-      );
+    //   // Create a new credential
+    //   final OAuthCredential credential = GoogleAuthProvider.credential(
+    //     accessToken: googleAuth.idToken,
+    //     idToken: googleAuth.idToken,
+    //   );
 
-      // Once signed in, return the UserCredential
-      await _auth.signInWithCredential(credential);
-      return null;
-    } on GoogleSignInException catch (e) {
-      switch (e.code) {
-        case GoogleSignInExceptionCode.unknownError:
-        case GoogleSignInExceptionCode.interrupted:
-        case GoogleSignInExceptionCode.clientConfigurationError:
-        case GoogleSignInExceptionCode.providerConfigurationError:
-        case GoogleSignInExceptionCode.uiUnavailable:
-        case GoogleSignInExceptionCode.userMismatch:
-          rethrow;
-        case GoogleSignInExceptionCode.canceled:
-          return null;
-      }
-    }
+    //   // Once signed in, return the UserCredential
+    //   await _auth.signInWithCredential(credential);
+    //   return null;
+    // } on GoogleSignInException catch (e) {
+    //   switch (e.code) {
+    //     case GoogleSignInExceptionCode.unknownError:
+    //     case GoogleSignInExceptionCode.interrupted:
+    //     case GoogleSignInExceptionCode.clientConfigurationError:
+    //     case GoogleSignInExceptionCode.providerConfigurationError:
+    //     case GoogleSignInExceptionCode.uiUnavailable:
+    //     case GoogleSignInExceptionCode.userMismatch:
+    //       rethrow;
+    //     case GoogleSignInExceptionCode.canceled:
+    //       return null;
+    //   }
+    // }
   }
 
   Future<String?> appleSignIn() async {

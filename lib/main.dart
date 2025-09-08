@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:feedback/feedback.dart';
+import 'package:fluo/fluo.dart';
+import 'package:fluo/l10n/fluo_localizations.dart';
 import 'package:quote_keeper/firebase_options.dart';
 import 'package:quote_keeper/utils/config/providers.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
@@ -18,6 +20,8 @@ void main() async {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
+
+    await Fluo.init('AScLMlGFTpjaaDCIe7gkediO_P1eScC1C58gu-sQLWM=');
 
     // await _setupCrashlytics();
 
@@ -43,6 +47,8 @@ class QuoteKeeperApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final router = ref.watch(Providers.routerProvider);
     return MaterialApp.router(
+      localizationsDelegates: FluoLocalizations.localizationsDelegates,
+      supportedLocales: FluoLocalizations.supportedLocales,
       debugShowCheckedModeBanner: false,
       theme: AppThemes.darkTheme,
       darkTheme: AppThemes.darkTheme,
