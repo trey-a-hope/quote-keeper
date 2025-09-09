@@ -82,9 +82,8 @@ class Providers {
 
   static final routerProvider = Provider<GoRouter>(
     (ref) {
-      final authAsyncProvider = ref.watch(Providers.authAsyncProvider);
-      final isAuthenticated = authAsyncProvider.value != null;
-      return appRoutes(isAuthenticated);
+      ref.watch(Providers.authAsyncProvider);
+      return appRoutes();
     },
   );
 

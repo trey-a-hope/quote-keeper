@@ -1,10 +1,12 @@
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluo/fluo.dart';
 import 'package:fluo/fluo_onboarding.dart';
 import 'package:fluo/fluo_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:quote_keeper/data/enums/go_routes.dart';
 import 'package:quote_keeper/main.dart';
 import 'package:quote_keeper/navigation_container.dart';
 import 'package:quote_keeper/domain/models/book_model.dart';
@@ -13,34 +15,35 @@ import 'package:quote_keeper/presentation/screens/about_screen.dart';
 import 'package:quote_keeper/presentation/screens/create_quote_screen.dart';
 import 'package:quote_keeper/presentation/screens/edit_profile_screen.dart';
 import 'package:quote_keeper/presentation/screens/edit_quote_screen.dart';
-import 'package:quote_keeper/presentation/screens/login_screen.dart';
 import 'package:quote_keeper/presentation/screens/search_books_screen.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
 
-GoRouter appRoutes(bool isAuthenticated) {
+GoRouter appRoutes() {
   return GoRouter(
-    redirect: (context, state) {
-      return !Fluo.instance.isUserReady() ? '/fluo' : null;
-    },
+    redirect: (context, state) =>
+        Fluo.instance.isUserReady() ? null : GoRoutes.LOGIN.name,
     debugLogDiagnostics: true,
     initialLocation: '/${Globals.routes.navigationContainer}',
     routes: [
       GoRoute(
-        path: '/fluo',
-        name: '/fluo',
+        path: GoRoutes.LOGIN.name,
+        name: GoRoutes.LOGIN.name,
         builder: (context, state) => FluoOnboarding(
           fluoTheme: FluoTheme.native(),
-          onUserReady: () {
-            logger.d('flue: onUserReady');
-            context.go('/${Globals.routes.navigationContainer}');
+          onUserReady: () async {
+            final session = Fluo.instance.session!;
+            await FirebaseAuth.instance
+                .signInWithCustomToken(session.firebaseToken!);
+
+            logger.i('Welcome back, ${session.user.firstName} 👋🏾');
           },
         ),
       ),
-      GoRoute(
-        path: '/${Globals.routes.login}',
-        name: Globals.routes.login,
-        builder: (context, state) => const LoginScreen(),
-      ),
+      // GoRoute(
+      //   path: '/${Globals.routes.login}',
+      //   name: Globals.routes.login,
+      //   builder: (context, state) => const LoginScreen(),
+      // ),
       // TODO: Use shell routes here
       GoRoute(
         path: '/${Globals.routes.navigationContainer}',

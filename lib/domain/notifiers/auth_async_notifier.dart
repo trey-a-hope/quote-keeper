@@ -1,16 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluo/fluo.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quote_keeper/data/services/book_service.dart';
-import 'package:quote_keeper/data/services/user_service.dart';
-import 'package:quote_keeper/domain/models/user_model.dart';
-import 'package:quote_keeper/utils/constants/globals.dart';
+import 'package:quote_keeper/main.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 // Firebase authentication listener.
 class AuthAsyncNotifier extends AsyncNotifier<User?> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  final _userService = UserService();
+  // final _userService = UserService();
   final _bookService = BookService();
 
   @override
@@ -18,54 +17,54 @@ class AuthAsyncNotifier extends AsyncNotifier<User?> {
 
   AuthAsyncNotifier() : super() {
     _auth.authStateChanges().listen(
-          (user) =>
-              user == null ? state = const AsyncData(null) : _prepareUser(user),
+          (user) => state = AsyncData(user),
         );
   }
 
   // Return the UID of current user; method should only be called if user is logged in.
   String getUid() {
-    if (state.value == null) throw Exception('User is not logged in.');
-    return state.value!.uid;
+    final uid = Fluo.instance.session?.user.id;
+    if (uid == null) throw Exception('User is not logged in.');
+    return uid;
   }
 
-  Future _prepareUser(User user) async {
-    // Check if the user already exists.
-    bool userExists = await _userService.checkIfUserExists(uid: user.uid);
+  // Future _prepareUser(User user) async {
+  //   // Check if the user already exists.
+  //   bool userExists = await _userService.checkIfUserExists(uid: user.uid);
 
-    // Records a user ID (identifier) that's associated with subsequent fatal and non-fatal reports.
-    // await FirebaseCrashlytics.instance.setUserIdentifier(user.uid);
+  //   // Records a user ID (identifier) that's associated with subsequent fatal and non-fatal reports.
+  //   // await FirebaseCrashlytics.instance.setUserIdentifier(user.uid);
 
-    if (userExists) {
-      // // Request permission from user to receive push notifications.
-      // if (Platform.isIOS) {
-      //   await _firebaseMessaging.requestPermission();
-      // }
+  //   if (userExists) {
+  //     // // Request permission from user to receive push notifications.
+  //     // if (Platform.isIOS) {
+  //     //   await _firebaseMessaging.requestPermission();
+  //     // }
 
-      // // Fetch the fcm token for this device.
-      // String? token = await _firebaseMessaging.getToken();
+  //     // // Fetch the fcm token for this device.
+  //     // String? token = await _firebaseMessaging.getToken();
 
-      // // Update fcm token for this device in firestore.
-      // if (token != null) {
-      //   _userService.updateUser(uid: user.uid, data: {'fcmToken': token});
-      // }
-    } else {
-      // Build new user model.
-      UserModel newUser = UserModel(
-        imgUrl: user.photoURL ?? Globals.networkImages.dummyProfile,
-        created: DateTime.now().toUtc(),
-        modified: DateTime.now().toUtc(),
-        uid: user.uid,
-        username: user.displayName ?? user.email ?? 'NO USERNAME ASSIGNED',
-        email: user.email ?? '',
-      );
+  //     // // Update fcm token for this device in firestore.
+  //     // if (token != null) {
+  //     //   _userService.updateUser(uid: user.uid, data: {'fcmToken': token});
+  //     // }
+  //   } else {
+  //     // Build new user model.
+  //     UserModel newUser = UserModel(
+  //       imgUrl: user.photoURL ?? Globals.networkImages.dummyProfile,
+  //       created: DateTime.now().toUtc(),
+  //       modified: DateTime.now().toUtc(),
+  //       uid: user.uid,
+  //       username: user.displayName ?? user.email ?? 'NO USERNAME ASSIGNED',
+  //       email: user.email ?? '',
+  //     );
 
-      // Create new user in firestore.
-      await _userService.createUser(user: newUser);
-    }
+  //     // Create new user in firestore.
+  //     await _userService.createUser(user: newUser);
+  //   }
 
-    state = AsyncData(user);
-  }
+  //   state = AsyncData(user);
+  // }
 
   Future<void> deleteAccount() async {
     final user = state.value!;
@@ -81,7 +80,11 @@ class AuthAsyncNotifier extends AsyncNotifier<User?> {
   }
 
   Future<void> signOut() async {
-    // Sign the user out.
+    final user = Fluo.instance.session!.user;
+
+    logger.i('Logged out, see you later ${user.firstName} 👋🏾');
+
+    await Fluo.instance.clearSession();
     await _auth.signOut();
   }
 
@@ -123,37 +126,37 @@ class AuthAsyncNotifier extends AsyncNotifier<User?> {
     }
   }
 
-  Future<String?> googleSignIn() async {
-    // try {
-    //   // Trigger the authentication flow
-    //   final googleUser = await GoogleSignIn.instance.authenticate();
+  // Future<String?> googleSignIn() async {
+  // try {
+  //   // Trigger the authentication flow
+  //   final googleUser = await GoogleSignIn.instance.authenticate();
 
-    //   // Obtain the auth details from the request
-    //   final GoogleSignInAuthentication googleAuth = googleUser.authentication;
+  //   // Obtain the auth details from the request
+  //   final GoogleSignInAuthentication googleAuth = googleUser.authentication;
 
-    //   // Create a new credential
-    //   final OAuthCredential credential = GoogleAuthProvider.credential(
-    //     accessToken: googleAuth.idToken,
-    //     idToken: googleAuth.idToken,
-    //   );
+  //   // Create a new credential
+  //   final OAuthCredential credential = GoogleAuthProvider.credential(
+  //     accessToken: googleAuth.idToken,
+  //     idToken: googleAuth.idToken,
+  //   );
 
-    //   // Once signed in, return the UserCredential
-    //   await _auth.signInWithCredential(credential);
-    //   return null;
-    // } on GoogleSignInException catch (e) {
-    //   switch (e.code) {
-    //     case GoogleSignInExceptionCode.unknownError:
-    //     case GoogleSignInExceptionCode.interrupted:
-    //     case GoogleSignInExceptionCode.clientConfigurationError:
-    //     case GoogleSignInExceptionCode.providerConfigurationError:
-    //     case GoogleSignInExceptionCode.uiUnavailable:
-    //     case GoogleSignInExceptionCode.userMismatch:
-    //       rethrow;
-    //     case GoogleSignInExceptionCode.canceled:
-    //       return null;
-    //   }
-    // }
-  }
+  //   // Once signed in, return the UserCredential
+  //   await _auth.signInWithCredential(credential);
+  //   return null;
+  // } on GoogleSignInException catch (e) {
+  //   switch (e.code) {
+  //     case GoogleSignInExceptionCode.unknownError:
+  //     case GoogleSignInExceptionCode.interrupted:
+  //     case GoogleSignInExceptionCode.clientConfigurationError:
+  //     case GoogleSignInExceptionCode.providerConfigurationError:
+  //     case GoogleSignInExceptionCode.uiUnavailable:
+  //     case GoogleSignInExceptionCode.userMismatch:
+  //       rethrow;
+  //     case GoogleSignInExceptionCode.canceled:
+  //       return null;
+  //   }
+  // }
+  // }
 
   Future<String?> appleSignIn() async {
     try {
