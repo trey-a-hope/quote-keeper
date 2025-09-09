@@ -42,11 +42,11 @@ class LoginScreen extends ConsumerWidget {
           password: loginData.password,
         ),
         loginProviders: <LoginProvider>[
-          LoginProvider(
-            button: Buttons.googleDark,
-            label: 'Sign In with Google',
-            callback: () => authAsyncNotifier.googleSignIn(),
-          ),
+          // LoginProvider(
+          //   button: Buttons.googleDark,
+          //   label: 'Sign In with Google',
+          //   callback: () => authAsyncNotifier.googleSignIn(),
+          // ),
           if (UniversalPlatform.isIOS || UniversalPlatform.isMacOS) ...[
             LoginProvider(
               button: Buttons.appleDark,

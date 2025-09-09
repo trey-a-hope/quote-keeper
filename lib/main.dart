@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:feedback/feedback.dart';
 import 'package:fluo/fluo.dart';
 import 'package:fluo/l10n/fluo_localizations.dart';
+import 'package:logger/logger.dart';
 import 'package:quote_keeper/firebase_options.dart';
 import 'package:quote_keeper/utils/config/providers.dart';
 import 'package:quote_keeper/utils/constants/globals.dart';
@@ -13,6 +14,8 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:quote_keeper/utils/config/app_themes.dart';
 
+late Logger logger;
+
 void main() async {
   runZonedGuarded<Future<void>>(() async {
     WidgetsFlutterBinding.ensureInitialized();
@@ -22,6 +25,20 @@ void main() async {
     );
 
     await Fluo.init('AScLMlGFTpjaaDCIe7gkediO_P1eScC1C58gu-sQLWM=');
+
+    logger = Logger(
+      printer: PrefixPrinter(
+        PrettyPrinter(
+          methodCount: 0,
+          errorMethodCount: 8,
+          lineLength: 120,
+          colors: true,
+          printEmojis: true,
+          noBoxingByDefault: false,
+        ),
+      ),
+      output: null,
+    );
 
     // await _setupCrashlytics();
 

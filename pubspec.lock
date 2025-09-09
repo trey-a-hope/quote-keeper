@@ -573,10 +573,10 @@ packages:
     dependency: "direct main"
     description:
       name: fluo
-      sha256: dae2e0f71a286790b71fa476d4258d477df02ab54bafb8d6b7b34aff56a8c2f6
+      sha256: ea2c4cbe2b594c9441159acc0fc8edada42672a1c2d3bf121df8b0ca999f9b4c
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.2"
+    version: "3.0.0"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -1181,6 +1181,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.0.0"
+  logger:
+    dependency: "direct main"
+    description:
+      name: logger
+      sha256: "55d6c23a6c15db14920e037fe7e0dc32e7cdaf3b64b4b25df2d541b5b6b81c0c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.6.1"
   logging:
     dependency: transitive
     description:

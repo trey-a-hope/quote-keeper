@@ -5,6 +5,7 @@ import 'package:fluo/fluo_onboarding.dart';
 import 'package:fluo/fluo_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:quote_keeper/main.dart';
 import 'package:quote_keeper/navigation_container.dart';
 import 'package:quote_keeper/domain/models/book_model.dart';
 import 'package:quote_keeper/domain/models/search_books_result_model.dart';
@@ -30,7 +31,8 @@ GoRouter appRoutes(bool isAuthenticated) {
         builder: (context, state) => FluoOnboarding(
           fluoTheme: FluoTheme.native(),
           onUserReady: () {
-            // setState(() {});
+            logger.d('flue: onUserReady');
+            context.go('/${Globals.routes.navigationContainer}');
           },
         ),
       ),
