@@ -14,6 +14,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "20452466446-15cpisredk27mudi8evrmf9bk6tv2fvh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.io.book_quotes",
+            "certificate_hash": "1bc80d7182bb795ee21ff6e0cb7c9a0efc9d6873"
+          }
+        },
+        {
+          "client_id": "20452466446-6qb12ombmv44fb41l1tasvn6p7oie2ob.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.io.book_quotes",
+            "certificate_hash": "2436577ea808aa4ea4d478fa2134f57cf3515b6e"
+          }
+        },
+        {
           "client_id": "20452466446-8tsij3scvblev1u41njif9p86l9rccei.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -22,7 +38,7 @@
           }
         },
         {
-          "client_id": "20452466446-iqafvf7kvi77ssl043l7ci4c9e9hogea.apps.googleusercontent.com",
+          "client_id": "20452466446-97r54hpj1ptc50klrm38k8f7dojluc02.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.io.book_quotes",
@@ -30,7 +46,7 @@
           }
         },
         {
-          "client_id": "20452466446-nc93po3gh9o5dc5rj6dqq9vf7b1hqa4k.apps.googleusercontent.com",
+          "client_id": "20452466446-m4aocgr260bd384kmct6rvtn9ldopdq0.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.io.book_quotes",
