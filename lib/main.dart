@@ -24,7 +24,7 @@ void main() async {
       options: DefaultFirebaseOptions.currentPlatform,
     );
 
-    await Fluo.init('AScLMlGFTpjaaDCIe7gkediO_P1eScC1C58gu-sQLWM=');
+    await Fluo.init(Globals.fluo.apiKey);
 
     logger = Logger(
       printer: PrefixPrinter(

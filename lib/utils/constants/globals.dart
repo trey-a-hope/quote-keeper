@@ -8,6 +8,7 @@ class Globals {
 
   static final algolia = _AlgoliaConfig();
   static final effects = _Effects();
+  static final fluo = _Fluo();
   static final googleAPIKeys = _GoogleAPIKeys();
   static final labels = _Labels();
   static final lottie = _Lottie();
@@ -25,6 +26,10 @@ class _Effects {
   final List<Effect<dynamic>> fade = <Effect>[
     FadeEffect(duration: 300.ms),
   ];
+}
+
+class _Fluo {
+  final String apiKey = 'AScLMlGFTpjaaDCIe7gkediO_P1eScC1C58gu-sQLWM=';
 }
 
 class _GoogleAPIKeys {

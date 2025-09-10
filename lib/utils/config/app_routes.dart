@@ -28,22 +28,35 @@ GoRouter appRoutes() {
       GoRoute(
         path: GoRoutes.LOGIN.name,
         name: GoRoutes.LOGIN.name,
-        builder: (context, state) => FluoOnboarding(
-          fluoTheme: FluoTheme.native(),
-          onUserReady: () async {
-            final session = Fluo.instance.session!;
-            await FirebaseAuth.instance
-                .signInWithCustomToken(session.firebaseToken!);
+        builder: (context, state) {
+          return FluoOnboarding(
+            fluoTheme: FluoTheme.native(
+              legalTextStyle: const TextStyle(color: Colors.white),
+            ),
+            onUserReady: () async {
+              final session = Fluo.instance.session!;
+              await FirebaseAuth.instance
+                  .signInWithCustomToken(session.firebaseToken!);
 
-            logger.i('Welcome back, ${session.user.firstName} 👋🏾');
-          },
-        ),
+              logger.i('Welcome back, ${session.user.firstName} 👋🏾');
+            },
+            introBuilder: (context, bottomContainerHeight) {
+              return Padding(
+                padding: EdgeInsetsGeometry.only(bottom: bottomContainerHeight),
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsetsGeometry.all(64),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(120),
+                      child: Image.asset('assets/images/logo_foreground.png'),
+                    ),
+                  ),
+                ),
+              );
+            },
+          );
+        },
       ),
-      // GoRoute(
-      //   path: '/${Globals.routes.login}',
-      //   name: Globals.routes.login,
-      //   builder: (context, state) => const LoginScreen(),
-      // ),
       // TODO: Use shell routes here
       GoRoute(
         path: '/${Globals.routes.navigationContainer}',

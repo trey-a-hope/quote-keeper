@@ -1,6 +1,6 @@
 [
     {
         "language": "en-US",
-        "text": "Replaced ModalService with ModalUtil for better modal management across the application."
+        "text": "Enhanced routing to improve onboarding experience with Fluo."
     }
 ]
