@@ -1,5 +1,7 @@
 # Quote Keeper
 
+[![Codemagic build status](https://api.codemagic.io/apps/644fdf175b14c6aef039f947/65c516422376213f61d218f5/status_badge.svg)](https://codemagic.io/app/644fdf175b14c6aef039f947/65c516422376213f61d218f5/latest_build)
+
 A new Flutter project.
 
 ## Getting Started
